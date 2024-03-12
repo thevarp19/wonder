@@ -8,3 +8,7 @@ export interface SellerRegisterRequest {
     sellerId: string;
     tokenKaspi: string;
 }
+
+export interface SellerEmailConfirmRequest {
+    code: string;
+}

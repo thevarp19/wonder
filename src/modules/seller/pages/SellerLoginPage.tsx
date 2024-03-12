@@ -1,6 +1,6 @@
 import { LoginForm } from "@/components/shared/LoginForm";
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface SellerLoginPageProps {}
 
@@ -9,8 +9,18 @@ export const SellerLoginPage: FC<SellerLoginPageProps> = ({}) => {
     const navigateToHome = () => navigate("/seller");
     return (
         <div className="flex flex-col items-center mt-[10vh]">
-            <h1 className="py-5 text-2xl font-semibold">Log in as seller</h1>
-            <LoginForm navigate={navigateToHome} />
+            <section className="flex flex-col items-center w-full max-w-sm">
+                <h1 className="py-5 text-2xl font-semibold">
+                    Log in as a seller
+                </h1>
+                <LoginForm navigate={navigateToHome} />
+                <Link
+                    to="/seller/register"
+                    className="w-full mt-5 text-blue-500"
+                >
+                    Don't have an account? Register here
+                </Link>
+            </section>
         </div>
     );
 };

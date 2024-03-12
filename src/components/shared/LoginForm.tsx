@@ -35,7 +35,7 @@ export const LoginForm: FC<LoginFormProps> = ({ navigate }) => {
                 htmlType="submit"
                 type="primary"
                 size={"large"}
-                className={cn("w-full max-w-xs")}
+                className={cn("w-full")}
                 loading={mutation.isPending}
             >
                 Log in

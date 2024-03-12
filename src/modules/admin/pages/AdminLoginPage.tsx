@@ -9,7 +9,7 @@ export const AdminLoginPage: FC<AdminLoginPageProps> = ({}) => {
     const navigateToHome = () => navigate("/admin");
     return (
         <div className="flex flex-col items-center mt-[10vh]">
-            <h1 className="py-5 text-2xl font-semibold">Log in as admin</h1>
+            <h1 className="py-5 text-2xl font-semibold">Log in as an admin</h1>
             <LoginForm navigate={navigateToHome} />
         </div>
     );
