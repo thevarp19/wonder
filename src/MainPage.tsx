@@ -1,7 +1,7 @@
 import { cn } from "@/utils/shared.util";
 import { Button } from "antd";
 import { FC } from "react";
-import { Logo } from "./Logo";
+import { Logo } from "./components/shared/Logo";
 
 interface MainPageProps {}
 

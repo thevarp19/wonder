@@ -1,8 +1,48 @@
 import { getFormikHelpText } from "@/utils/form.util";
-import { Form, FormItemProps, Input, InputProps } from "antd";
-import { PasswordProps } from "antd/es/input";
+import { cn } from "@/utils/shared.util";
+import { Form, FormItemProps, Input } from "antd";
+import { InputProps, PasswordProps } from "antd/es/input";
 import { FormikProps } from "formik";
 import { FC } from "react";
+
+interface FormikItemProps {
+    formik: FormikProps<any>;
+    name: string;
+    children: React.ReactNode;
+    formItemProps?: FormItemProps;
+}
+
+export const FormikItem: FC<FormikItemProps> = ({
+    formik,
+    name,
+    children,
+    formItemProps,
+}) => {
+    return (
+        <Form.Item
+            validateStatus={getFormikHelpText(formik, name) ? "error" : ""}
+            help={getFormikHelpText(formik, name)}
+            {...formItemProps}
+            className={cn(formItemProps?.className, "w-full")}
+        >
+            {children}
+        </Form.Item>
+    );
+};
+
+// const withFormik =
+//     (InputComponent: any, formik: FormikProps<any>, name: string) =>
+//     (props: any) => {
+//         return (
+//             <InputComponent
+//                 onChange={formik.handleChange}
+//                 onBlur={formik.handleBlur}
+//                 name={name}
+//                 value={formik.values[name]}
+//                 {...props}
+//             />
+//         );
+//     };
 
 interface FormikInputProps {
     formik: FormikProps<any>;
@@ -18,11 +58,7 @@ export const FormikInput: FC<FormikInputProps> = ({
     inputProps,
 }) => {
     return (
-        <Form.Item
-            validateStatus={getFormikHelpText(formik, name) ? "error" : ""}
-            help={getFormikHelpText(formik, name)}
-            {...formItemProps}
-        >
+        <FormikItem formik={formik} name={name} formItemProps={formItemProps}>
             <Input
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -30,7 +66,7 @@ export const FormikInput: FC<FormikInputProps> = ({
                 value={formik.values[name]}
                 {...inputProps}
             />
-        </Form.Item>
+        </FormikItem>
     );
 };
 
@@ -48,11 +84,7 @@ export const FormikPasswordInput: FC<FormikPasswordInputProps> = ({
     inputProps,
 }) => {
     return (
-        <Form.Item
-            validateStatus={getFormikHelpText(formik, name) ? "error" : ""}
-            help={getFormikHelpText(formik, name)}
-            {...formItemProps}
-        >
+        <FormikItem formik={formik} name={name} formItemProps={formItemProps}>
             <Input.Password
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -60,6 +92,6 @@ export const FormikPasswordInput: FC<FormikPasswordInputProps> = ({
                 value={formik.values[name]}
                 {...inputProps}
             />
-        </Form.Item>
+        </FormikItem>
     );
 };

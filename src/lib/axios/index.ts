@@ -1,4 +1,14 @@
 import { baseURL } from "@/config/site";
-import { createAxiosWithBaseUrl } from "./helper";
+import {
+    applyJwtAuth,
+    configureRefreshRetry,
+    createAxiosWithBaseUrl,
+} from "./helper";
 
-export const axios = createAxiosWithBaseUrl(baseURL);
+const axios = createAxiosWithBaseUrl(baseURL);
+const axiosAuthorized = createAxiosWithBaseUrl(baseURL);
+
+applyJwtAuth(axiosAuthorized);
+configureRefreshRetry(axiosAuthorized);
+
+export { axios, axiosAuthorized };

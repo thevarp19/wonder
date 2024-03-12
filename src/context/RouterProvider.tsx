@@ -1,4 +1,4 @@
-import { MainPage } from "@/components/shared/MainPage";
+import { MainPage } from "@/MainPage";
 import { AdminRoutes } from "@/modules/admin/AdminRoutes";
 import { SellerRoutes } from "@/modules/seller/SellerRoutes";
 import { FC } from "react";
