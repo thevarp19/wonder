@@ -1,6 +1,7 @@
 import { Protected } from "@/context/Protected";
 import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { AdminLayout } from "./AdminLayout";
 import { AdminLoginPage } from "./pages";
 
 interface AdminRoutesProps {}
@@ -20,19 +21,19 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                             await new Promise((resolve) =>
                                 setTimeout(resolve, 1000)
                             );
-                            return false;
+                            return true;
                         }}
                         navigate={navigateToAdminLogin}
                     />
                 }
             >
-                <Route
-                    index
-                    path="/"
-                    element={
-                        <div className="w-screen h-screen bg-black">Admin</div>
-                    }
-                />
+                <Route path="/" element={<AdminLayout />}>
+                    <Route
+                        index
+                        path="/"
+                        element={<div className="">Admin</div>}
+                    />
+                </Route>
             </Route>
             <Route path="/login" element={<AdminLoginPage />} />
         </Routes>

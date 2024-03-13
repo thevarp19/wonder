@@ -34,7 +34,7 @@ export const useSellerRegister = () => {
         },
         onSuccess() {
             message.success("Success!");
-            navigate("/seller/register/confirm");
+            navigate("/seller/login");
         },
         onError() {
             message.error("Error!");

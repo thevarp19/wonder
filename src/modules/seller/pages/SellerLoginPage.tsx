@@ -1,4 +1,5 @@
 import { LoginForm } from "@/components/shared/LoginForm";
+import { Logo } from "@/components/shared/Logo";
 import { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -10,6 +11,7 @@ export const SellerLoginPage: FC<SellerLoginPageProps> = ({}) => {
     return (
         <div className="flex flex-col items-center mt-[10vh]">
             <section className="flex flex-col items-center w-full max-w-sm">
+                <Logo />
                 <h1 className="py-5 text-2xl font-semibold">
                     Log in as a seller
                 </h1>

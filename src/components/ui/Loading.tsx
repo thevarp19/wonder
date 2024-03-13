@@ -1,11 +1,19 @@
+import { cn } from "@/utils/shared.util";
 import { Spin } from "antd";
 import { FC } from "react";
 
-interface LoadingProps {}
+interface LoadingProps {
+    className?: string;
+}
 
-export const Loading: FC<LoadingProps> = ({}) => {
+export const Loading: FC<LoadingProps> = ({ className }) => {
     return (
-        <div className="flex items-center justify-center w-full h-full">
+        <div
+            className={cn(
+                "flex items-center justify-center w-full h-full",
+                className
+            )}
+        >
             <Spin size="large" />
         </div>
     );

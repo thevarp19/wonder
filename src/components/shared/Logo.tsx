@@ -4,11 +4,13 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Image } from "../ui/Image";
 
-interface LogoProps {}
+interface LogoProps {
+    link?: string;
+}
 
-export const Logo: FC<LogoProps> = ({}) => {
+export const Logo: FC<LogoProps> = ({ link }) => {
     return (
-        <Link to={"/"}>
+        <Link to={link || "/"}>
             <Image src={logo} alt="logo" className={cn("w-40")} />
         </Link>
     );

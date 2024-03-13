@@ -28,7 +28,7 @@ export const Protected: FC<ProtectedProps> = ({ checkAction, navigate }) => {
     }, []);
 
     if (loading) {
-        return <Loading />;
+        return <Loading className="w-screen h-screen" />;
     }
 
     return <Outlet />;
