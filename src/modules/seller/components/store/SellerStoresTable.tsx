@@ -20,17 +20,17 @@ const columns: TableColumnsType<SellerStoresTableData> = [
     {
         title: "Address",
         dataIndex: "address",
-        render: (value, record) => <StoreAddressCell />,
+        render: () => <StoreAddressCell />,
     },
     {
         title: "Working time",
         dataIndex: "working_time",
-        render: (value, record) => <StoreWorkingTimeCell />,
+        render: () => <StoreWorkingTimeCell />,
     },
     {
         title: "Status",
         dataIndex: "status",
-        render: (value, record) => (
+        render: () => (
             <div className="flex items-center gap-2">
                 <Switch disabled />
                 <span className="text-gray-400">Active</span>

@@ -22,17 +22,17 @@ const columns: TableColumnsType<AdminStoresTableData> = [
     {
         title: "Address",
         dataIndex: "address",
-        render: (value, record) => <StoreAddressCell />,
+        render: () => <StoreAddressCell />,
     },
     {
         title: "Working time",
         dataIndex: "working_time",
-        render: (value, record) => <StoreWorkingTimeCell />,
+        render: () => <StoreWorkingTimeCell />,
     },
     {
         title: "Status",
         dataIndex: "status",
-        render: (value, record) => (
+        render: () => (
             <div className="flex items-center gap-2">
                 <Switch />
                 <span>Active</span>
@@ -41,7 +41,7 @@ const columns: TableColumnsType<AdminStoresTableData> = [
     },
     {
         title: "Edit",
-        render: (value, record) => (
+        render: (_, record) => (
             <Link
                 to={`/admin/settings/edit-store/${record.id}`}
                 className="cursor-pointer"

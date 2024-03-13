@@ -13,7 +13,7 @@ interface StoreFormProps {
 }
 
 export const StoreForm: FC<StoreFormProps> = ({ editProps }) => {
-    const { formik, mutation } = useStoreForm(editProps);
+    const { formik, mutation } = useStoreForm();
     return (
         <Form
             onFinish={formik.submitForm}
