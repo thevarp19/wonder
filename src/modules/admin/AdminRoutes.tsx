@@ -3,6 +3,7 @@ import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { AdminLayout } from "./AdminLayout";
 import { AdminLoginPage } from "./pages";
+import { AdminSettingsPage } from "./pages/AdminSettingsPage";
 
 interface AdminRoutesProps {}
 
@@ -33,6 +34,7 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                         path="/"
                         element={<div className="">Admin</div>}
                     />
+                    <Route path="/settings" element={<AdminSettingsPage />} />
                 </Route>
             </Route>
             <Route path="/login" element={<AdminLoginPage />} />

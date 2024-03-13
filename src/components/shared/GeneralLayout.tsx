@@ -13,6 +13,7 @@ interface GeneralLayoutProps {
     logoLink: string;
     userEmail: string;
     role: "Admin" | "Seller";
+    selectedKeys: string[];
 }
 
 export const GeneralLayout: FC<GeneralLayoutProps> = ({
@@ -20,6 +21,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
     logoLink,
     userEmail,
     role,
+    selectedKeys,
 }) => {
     const [collapsed, setCollapsed] = useState(false);
     const {
@@ -51,9 +53,9 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                 </div>
 
                 <Menu
-                    defaultSelectedKeys={["1"]}
                     mode="inline"
                     items={menuItems}
+                    selectedKeys={selectedKeys}
                     className=" scroll-hidden"
                 />
             </Sider>
