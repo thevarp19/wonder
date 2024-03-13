@@ -14,7 +14,7 @@ const validationSchema = Yup.object().shape({
     password: passwordSchemas("password").self.required(),
 });
 
-export const useCreateStore = () => {
+export const useStoreForm = (editProps?: any) => {
     const { message } = App.useApp();
     const navigate = useNavigate();
     const mutation = useMutation<LoginResponse, void, LoginRequest>({

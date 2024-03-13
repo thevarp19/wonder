@@ -29,7 +29,7 @@ const profileItems: MenuProps["items"] = [
     {
         key: "logout",
         danger: true,
-        label: "Logout",
+        label: <Link to={"/"}>Logout</Link>,
         icon: <LogoutOutlined />,
     },
 ];

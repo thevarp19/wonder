@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { CreateStoreForm } from "../components/store/CreateStoreForm";
+import { StoreForm } from "../components/store/StoreForm";
 
 interface CreateStorePageProps {}
 
 export const CreateStorePage: FC<CreateStorePageProps> = ({}) => {
     return (
         <div className="flex flex-col items-center">
-            <CreateStoreForm />
+            <StoreForm />
         </div>
     );
 };

@@ -3,12 +3,16 @@ import { FormikInput } from "@/components/ui/FormikInput";
 import { cn } from "@/utils/shared.util";
 import { Button, Form } from "antd";
 import { FC } from "react";
-import { useCreateStore } from "../../hooks/useCreateStore";
+import { useStoreForm } from "../../hooks/useStoreForm";
 
-interface CreateStoreFormProps {}
+interface StoreFormProps {
+    editProps?: {
+        initialValues: any;
+    };
+}
 
-export const CreateStoreForm: FC<CreateStoreFormProps> = ({}) => {
-    const { formik, mutation } = useCreateStore();
+export const StoreForm: FC<StoreFormProps> = ({ editProps }) => {
+    const { formik, mutation } = useStoreForm(editProps);
     return (
         <Form
             onFinish={formik.submitForm}
@@ -56,7 +60,7 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = ({}) => {
                 className={cn("w-full")}
                 loading={mutation.isPending}
             >
-                Create
+                {editProps ? "Update" : "Create"}
             </Button>
         </Form>
     );

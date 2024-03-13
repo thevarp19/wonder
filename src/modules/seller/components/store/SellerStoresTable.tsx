@@ -1,20 +1,18 @@
 import { StoreAddressCell } from "@/components/store/StoreAddressCell";
 import { StoreWorkingTimeCell } from "@/components/store/StoreWorkingTimeCell";
-import { EditOutlined } from "@ant-design/icons";
 import { Switch, Table, TableColumnsType } from "antd";
 import { FC } from "react";
-import { Link } from "react-router-dom";
 
-interface AdminStoresTableProps {}
+interface SellerStoresTableProps {}
 
-interface AdminStoresTableData {
+interface SellerStoresTableData {
     id: number;
     address: string;
     working_time: string;
     status: string;
 }
 
-const columns: TableColumnsType<AdminStoresTableData> = [
+const columns: TableColumnsType<SellerStoresTableData> = [
     {
         title: "ID",
         dataIndex: "id",
@@ -34,25 +32,14 @@ const columns: TableColumnsType<AdminStoresTableData> = [
         dataIndex: "status",
         render: (value, record) => (
             <div className="flex items-center gap-2">
-                <Switch />
-                <span>Active</span>
+                <Switch disabled />
+                <span className="text-gray-400">Active</span>
             </div>
-        ),
-    },
-    {
-        title: "Edit",
-        render: (value, record) => (
-            <Link
-                to={`/admin/settings/edit-store/${record.id}`}
-                className="cursor-pointer"
-            >
-                <EditOutlined style={{ fontSize: "24px" }} />
-            </Link>
         ),
     },
 ];
 
-const dataSource: AdminStoresTableData[] = [
+const dataSource: SellerStoresTableData[] = [
     {
         id: 1,
         address: "address",
@@ -61,6 +48,6 @@ const dataSource: AdminStoresTableData[] = [
     },
 ];
 
-export const AdminStoresTable: FC<AdminStoresTableProps> = ({}) => {
+export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
     return <Table columns={columns} dataSource={dataSource} />;
 };
