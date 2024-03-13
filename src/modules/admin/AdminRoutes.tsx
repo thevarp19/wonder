@@ -2,8 +2,7 @@ import { Protected } from "@/context/Protected";
 import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { AdminLayout } from "./AdminLayout";
-import { AdminLoginPage } from "./pages";
-import { AdminSettingsPage } from "./pages/AdminSettingsPage";
+import { AdminLoginPage, AdminSettingsPage, CreateStorePage } from "./pages";
 
 interface AdminRoutesProps {}
 
@@ -35,6 +34,10 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                         element={<div className="">Admin</div>}
                     />
                     <Route path="/settings" element={<AdminSettingsPage />} />
+                    <Route
+                        path="/settings/create-store"
+                        element={<CreateStorePage />}
+                    />
                 </Route>
             </Route>
             <Route path="/login" element={<AdminLoginPage />} />

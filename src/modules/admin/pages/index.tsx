@@ -1,3 +1,5 @@
 import { AdminLoginPage } from "./AdminLoginPage";
+import { AdminSettingsPage } from "./AdminSettingsPage";
+import { CreateStorePage } from "./CreateStorePage";
 
-export { AdminLoginPage };
+export { AdminLoginPage, AdminSettingsPage, CreateStorePage };

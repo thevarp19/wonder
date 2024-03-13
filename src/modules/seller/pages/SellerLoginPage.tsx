@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/shared/LoginForm";
+import { LoginForm } from "@/components/form/LoginForm";
 import { Logo } from "@/components/shared/Logo";
 import { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";

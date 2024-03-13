@@ -2,8 +2,12 @@ import { icon } from "@/assets";
 import { Logo } from "@/components/shared/Logo";
 import { Image } from "@/components/ui/Image";
 import { cn } from "@/utils/shared.util";
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Layout, Menu, MenuProps, theme } from "antd";
+import {
+    LogoutOutlined,
+    ProfileOutlined,
+    UserOutlined,
+} from "@ant-design/icons";
+import { Avatar, Dropdown, Layout, Menu, MenuProps, theme } from "antd";
 import { FC, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 const { Header, Content, Sider } = Layout;
@@ -15,6 +19,20 @@ interface GeneralLayoutProps {
     role: "Admin" | "Seller";
     selectedKeys: string[];
 }
+
+const profileItems: MenuProps["items"] = [
+    {
+        key: "profile",
+        label: "Profile",
+        icon: <ProfileOutlined />,
+    },
+    {
+        key: "logout",
+        danger: true,
+        label: "Logout",
+        icon: <LogoutOutlined />,
+    },
+];
 
 export const GeneralLayout: FC<GeneralLayoutProps> = ({
     menuItems,
@@ -69,11 +87,13 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                             <p>{userEmail}</p>
                             <p>{role}</p>
                         </div>
-                        <Avatar
-                            size={48}
-                            icon={<UserOutlined />}
-                            shape="square"
-                        />
+                        <Dropdown menu={{ items: profileItems }}>
+                            <Avatar
+                                size={48}
+                                icon={<UserOutlined />}
+                                shape="square"
+                            />
+                        </Dropdown>
                     </div>
                 </Header>
                 <Content className="m-4 mb-0 overflow-y-scroll grow">
