@@ -4,6 +4,7 @@ import { cn } from "@/utils/shared.util";
 import { Button, Form } from "antd";
 import { FC } from "react";
 import { useStoreForm } from "../../hooks/useStoreForm";
+import { WorkingTimeInput } from "./WorkingTimeInput";
 
 interface StoreFormProps {
     editProps?: {
@@ -17,7 +18,7 @@ export const StoreForm: FC<StoreFormProps> = ({ editProps }) => {
         <Form
             onFinish={formik.submitForm}
             layout="vertical"
-            className="flex flex-col items-center w-full max-w-sm gap-2 px-10"
+            className="flex flex-col w-full max-w-sm gap-2 px-10"
         >
             <FormikInput
                 name="id"
@@ -52,6 +53,9 @@ export const StoreForm: FC<StoreFormProps> = ({ editProps }) => {
                     size: "large",
                 }}
             />
+            <Form.Item label={"Working time"} className={cn("w-max")}>
+                <WorkingTimeInput />
+            </Form.Item>
 
             <Button
                 htmlType="submit"
