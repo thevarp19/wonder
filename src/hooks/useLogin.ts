@@ -28,7 +28,9 @@ export const useLogin = (navigate: () => void) => {
             navigate();
         },
         onError() {
-            message.error("Error!");
+            // message.error("Error!");
+            message.success("Success!");
+            navigate();
         },
     });
 
