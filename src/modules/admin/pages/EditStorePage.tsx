@@ -8,7 +8,7 @@ export const EditStorePage: FC<EditStorePageProps> = ({}) => {
     const { storeId } = useParams();
     return (
         <div className="flex flex-col items-center">
-            <h1 className="w-full max-w-sm py-4 text-2xl font-semibold">
+            <h1 className="w-full max-w-sm py-4 pb-10 text-2xl font-semibold">
                 Store {storeId}
             </h1>
             <StoreForm editProps={{ initialValues: {} }} />
