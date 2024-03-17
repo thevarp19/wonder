@@ -41,7 +41,7 @@ export const useLogin = (navigate: () => void) => {
         },
         validationSchema: validationSchema,
         validateOnBlur: true,
-        validateOnChange: false,
+        validateOnChange: true,
         onSubmit: handleSubmit,
     });
 

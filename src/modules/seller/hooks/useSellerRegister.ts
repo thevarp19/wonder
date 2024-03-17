@@ -57,7 +57,7 @@ export const useSellerRegister = () => {
         },
         validationSchema: validationSchema,
         validateOnBlur: true,
-        validateOnChange: false,
+        validateOnChange: true,
         onSubmit: handleSubmit,
     });
 

@@ -33,7 +33,7 @@ export const useEmailConfirm = () => {
         },
         validationSchema: validationSchema,
         validateOnBlur: true,
-        validateOnChange: false,
+        validateOnChange: true,
         onSubmit: handleSubmit,
     });
 

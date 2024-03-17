@@ -1,5 +1,9 @@
 import { GeneralLayout } from "@/components/shared/GeneralLayout";
-import { HomeOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+    HomeOutlined,
+    ProductOutlined,
+    SettingOutlined,
+} from "@ant-design/icons";
 import { MenuProps } from "antd";
 import { FC, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -16,6 +20,11 @@ const items: MenuProps["items"] = [
         key: "settings",
         icon: <SettingOutlined />,
     },
+    {
+        label: <Link to={"/seller/products"}>Products</Link>,
+        key: "products",
+        icon: <ProductOutlined />,
+    },
 ];
 
 function pathToKey(key: string) {
@@ -24,6 +33,8 @@ function pathToKey(key: string) {
             return "home";
         case "/seller/settings":
             return "settings";
+        case "/seller/products":
+            return "products";
         default:
             return "home";
     }

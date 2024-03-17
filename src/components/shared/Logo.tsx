@@ -11,7 +11,7 @@ interface LogoProps {
 export const Logo: FC<LogoProps> = ({ link }) => {
     return (
         <Link to={link || "/"}>
-            <Image src={logo} alt="logo" className={cn("w-40")} />
+            <Image src={logo} alt="logo" className={cn("w-40 h-10")} />
         </Link>
     );
 };

@@ -5,6 +5,8 @@ import { SellerLayout } from "./SellerLayout";
 import {
     SellerEmailConfirmPage,
     SellerLoginPage,
+    SellerProductsPage,
+    SellerProductsUploadPage,
     SellerRegisterPage,
     SellerSettingsPage,
 } from "./pages";
@@ -29,10 +31,11 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
             >
                 <Route path="/" element={<SellerLayout />}>
                     <Route index path="/" element={<div>Seller</div>} />
+                    <Route path="/settings" element={<SellerSettingsPage />} />
+                    <Route path="/products" element={<SellerProductsPage />} />
                     <Route
-                        index
-                        path="/settings"
-                        element={<SellerSettingsPage />}
+                        path="/products/upload"
+                        element={<SellerProductsUploadPage />}
                     />
                 </Route>
             </Route>

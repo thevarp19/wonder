@@ -26,7 +26,7 @@ export const SellerSettingsPage: FC<SellerSettingsPageProps> = ({}) => {
         setCurrent(e.key);
     };
     return (
-        <div className="h-full bg-white">
+        <div className="h-full bg-white rounded-t-lg">
             <Menu
                 items={items}
                 mode="horizontal"
