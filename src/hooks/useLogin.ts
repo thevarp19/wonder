@@ -13,7 +13,10 @@ const validationSchema = Yup.object().shape({
     password: passwordSchemas("password").self.required(),
 });
 
-export const useLogin = (navigate: () => void) => {
+export const useLogin = (
+    navigate: () => void,
+    success: (loginData: LoginRequest) => void
+) => {
     const { message } = App.useApp();
 
     const mutation = useMutation<LoginResponse, void, LoginRequest>({
@@ -26,11 +29,10 @@ export const useLogin = (navigate: () => void) => {
             jwtService.saveJwt({ access, refresh });
             message.success("Success!");
             navigate();
+            success(formik.values);
         },
         onError() {
-            // message.error("Error!");
-            message.success("Success!");
-            navigate();
+            message.error("Error!");
         },
     });
 

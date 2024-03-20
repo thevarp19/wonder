@@ -12,10 +12,10 @@ export const MainPage: FC<MainPageProps> = ({}) => {
                 <Logo />
                 <p className="text-xl">Sign in as</p>
                 <div className={cn("flex items-center gap-5")}>
-                    <Button type="primary" size="large" href="/admin/login">
+                    <Button type="primary" size="large" href="/admin">
                         Admin
                     </Button>
-                    <Button type="primary" size="large" href="/seller/login">
+                    <Button type="primary" size="large" href="/seller">
                         Seller
                     </Button>
                 </div>

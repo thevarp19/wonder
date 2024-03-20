@@ -57,5 +57,7 @@ const dataSource: ProductsTableData[] = [
 ];
 
 export const ProductsTable: FC<ProductsTableProps> = ({}) => {
-    return <Table columns={columns} dataSource={dataSource} />;
+    return (
+        <Table columns={columns} dataSource={dataSource} rowKey={"article"} />
+    );
 };

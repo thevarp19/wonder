@@ -49,5 +49,5 @@ const dataSource: SellerStoresTableData[] = [
 ];
 
 export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
-    return <Table columns={columns} dataSource={dataSource} />;
+    return <Table columns={columns} dataSource={dataSource} rowKey={"id"} />;
 };

@@ -62,5 +62,5 @@ const dataSource: AdminStoresTableData[] = [
 ];
 
 export const AdminStoresTable: FC<AdminStoresTableProps> = ({}) => {
-    return <Table columns={columns} dataSource={dataSource} />;
+    return <Table columns={columns} dataSource={dataSource} rowKey={"id"} />;
 };

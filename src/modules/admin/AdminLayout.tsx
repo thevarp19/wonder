@@ -1,5 +1,12 @@
 import { GeneralLayout } from "@/components/shared/GeneralLayout";
-import { HomeOutlined, SettingOutlined } from "@ant-design/icons";
+import { adminLogout } from "@/redux/admin/auth/actions";
+import { useAppDispatch, useAppSelector } from "@/redux/utils";
+import {
+    HomeOutlined,
+    LogoutOutlined,
+    ProfileOutlined,
+    SettingOutlined,
+} from "@ant-design/icons";
 import { MenuProps } from "antd";
 import { FC, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -35,12 +42,37 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
     useEffect(() => {
         setSelectedKeys([pathToKey(pathname)]);
     }, [pathname]);
+    const dispatch = useAppDispatch();
+    const profileItems: MenuProps["items"] = [
+        {
+            key: "profile",
+            label: "Profile",
+            icon: <ProfileOutlined />,
+        },
+        {
+            key: "logout",
+            danger: true,
+            label: (
+                <Link
+                    to={"/admin/login"}
+                    onClick={() => {
+                        dispatch(adminLogout());
+                    }}
+                >
+                    Logout
+                </Link>
+            ),
+            icon: <LogoutOutlined />,
+        },
+    ];
+    const adminAuth = useAppSelector((state) => state.admin.auth);
     return (
         <GeneralLayout
             menuItems={items}
+            profileItems={profileItems}
             logoLink="/admin"
             role="Admin"
-            userEmail="email@gmail.com"
+            userEmail={adminAuth.userData.email || "email@gmail.com"}
             selectedKeys={selectedKeys}
         />
     );

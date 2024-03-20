@@ -30,16 +30,14 @@ export const useSellerRegister = () => {
 
     const mutation = useMutation<void, void, SellerRegisterRequest>({
         async mutationFn(values) {
-            registerSeller(values);
+            await registerSeller(values);
         },
         onSuccess() {
             message.success("Success!");
             navigate("/seller/login");
         },
         onError() {
-            // message.error("Error!");
-            message.success("Success!");
-            navigate("/seller/login");
+            message.error("Error!");
         },
     });
 

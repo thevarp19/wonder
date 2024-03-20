@@ -4,16 +4,20 @@ import { RouterProvider } from "@/context/RouterProvider.tsx";
 import "@/styles/index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { store } from "./redux/store";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <BrowserRouter>
-            <QueryProvider>
-                <AntdProvider>
-                    <RouterProvider />
-                </AntdProvider>
-            </QueryProvider>
+            <Provider store={store}>
+                <QueryProvider>
+                    <AntdProvider>
+                        <RouterProvider />
+                    </AntdProvider>
+                </QueryProvider>
+            </Provider>
         </BrowserRouter>
     </React.StrictMode>
 );

@@ -1,4 +1,5 @@
 import { useLogin } from "@/hooks/useLogin";
+import { LoginRequest } from "@/types/api";
 import { cn } from "@/utils/shared.util";
 import { Button, Form } from "antd";
 import { FC } from "react";
@@ -6,10 +7,11 @@ import { FormikInput, FormikPasswordInput } from "../ui/FormikInput";
 
 interface LoginFormProps {
     navigate: () => void;
+    success: (loginData: LoginRequest) => void;
 }
 
-export const LoginForm: FC<LoginFormProps> = ({ navigate }) => {
-    const { formik, mutation } = useLogin(navigate);
+export const LoginForm: FC<LoginFormProps> = ({ navigate, success }) => {
+    const { formik, mutation } = useLogin(navigate, success);
     return (
         <Form
             onFinish={formik.submitForm}

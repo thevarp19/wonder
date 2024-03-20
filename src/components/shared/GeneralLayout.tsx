@@ -2,11 +2,7 @@ import { icon } from "@/assets";
 import { Logo } from "@/components/shared/Logo";
 import { Image } from "@/components/ui/Image";
 import { cn } from "@/utils/shared.util";
-import {
-    LogoutOutlined,
-    ProfileOutlined,
-    UserOutlined,
-} from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Dropdown, Layout, Menu, MenuProps, theme } from "antd";
 import { FC, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
@@ -14,28 +10,16 @@ const { Header, Content, Sider } = Layout;
 
 interface GeneralLayoutProps {
     menuItems: MenuProps["items"];
+    profileItems: MenuProps["items"];
     logoLink: string;
     userEmail: string;
     role: "Admin" | "Seller";
     selectedKeys: string[];
 }
 
-const profileItems: MenuProps["items"] = [
-    {
-        key: "profile",
-        label: "Profile",
-        icon: <ProfileOutlined />,
-    },
-    {
-        key: "logout",
-        danger: true,
-        label: <Link to={"/"}>Logout</Link>,
-        icon: <LogoutOutlined />,
-    },
-];
-
 export const GeneralLayout: FC<GeneralLayoutProps> = ({
     menuItems,
+    profileItems,
     logoLink,
     userEmail,
     role,
