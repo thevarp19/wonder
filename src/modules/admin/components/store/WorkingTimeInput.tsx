@@ -1,9 +1,12 @@
 import { cn } from "@/utils/shared.util";
 import { Checkbox, TimePicker } from "antd";
 import dayjs from "dayjs";
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { DayOfWeekWorkRequest } from "../../types/api";
 
-interface WorkingTimeInputProps {}
+interface WorkingTimeInputProps {
+    onChange: (values: DayOfWeekWorkRequest[]) => void;
+}
 const days = [
     "Monday",
     "Tuesday",
@@ -13,8 +16,51 @@ const days = [
     "Saturday",
     "Sunday",
 ];
-export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({}) => {
+export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({ onChange }) => {
     const [detailed, setDetailed] = useState(false);
+    const [mainOpenTime, setMainOpenTime] = useState("09:00");
+    const [mainCloseTime, setMainCloseTime] = useState("18:00");
+    const [values, setValues] = useState<DayOfWeekWorkRequest[]>([
+        {
+            numericDayOfWeek: 1,
+            openTime: "09:00",
+            closeTime: "18:00",
+        },
+        {
+            numericDayOfWeek: 2,
+            openTime: "09:00",
+            closeTime: "18:00",
+        },
+        {
+            numericDayOfWeek: 3,
+            openTime: "09:00",
+            closeTime: "18:00",
+        },
+        {
+            numericDayOfWeek: 4,
+            openTime: "09:00",
+            closeTime: "18:00",
+        },
+        {
+            numericDayOfWeek: 5,
+            openTime: "09:00",
+            closeTime: "18:00",
+        },
+        {
+            numericDayOfWeek: 6,
+            openTime: "09:00",
+            closeTime: "18:00",
+        },
+        {
+            numericDayOfWeek: 7,
+            openTime: "09:00",
+            closeTime: "18:00",
+        },
+    ]);
+    useEffect(() => {
+        // console.log(values);
+        onChange(values);
+    }, [values]);
     return (
         <div className={cn("flex flex-col gap-3")}>
             <div
@@ -28,6 +74,15 @@ export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({}) => {
                     needConfirm={false}
                     disabled={detailed}
                     defaultValue={dayjs("09:00", "HH:mm")}
+                    onChange={(_, dateString) => {
+                        setValues((prev) =>
+                            prev.map((value) => ({
+                                ...value,
+                                openTime: `${dateString}`,
+                            }))
+                        );
+                        setMainOpenTime(`${dateString}`);
+                    }}
                 />
                 <span>until</span>
                 <TimePicker
@@ -35,33 +90,59 @@ export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({}) => {
                     needConfirm={false}
                     disabled={detailed}
                     defaultValue={dayjs("18:00", "HH:mm")}
+                    onChange={(_, dateString) => {
+                        setValues((prev) =>
+                            prev.map((value) => ({
+                                ...value,
+                                closeTime: `${dateString}`,
+                            }))
+                        );
+                        setMainCloseTime(`${dateString}`);
+                    }}
                 />
                 <Checkbox
                     value={detailed}
                     onChange={(e) => {
+                        if (!e.target.checked) {
+                            setValues((prev) =>
+                                prev.map((_, idx) => ({
+                                    numericDayOfWeek: idx + 1,
+                                    openTime: mainOpenTime,
+                                    closeTime: mainCloseTime,
+                                }))
+                            );
+                        }
                         setDetailed(e.target.checked);
                     }}
                 >
                     Detailed
                 </Checkbox>
             </div>
-            <div
-                className={cn({
-                    hidden: !detailed,
-                    "flex flex-col gap-2": detailed,
-                })}
-            >
-                {days.map((day) => (
-                    <WorkingTimeUnit day={day} />
+
+            {detailed &&
+                values.map((day, index) => (
+                    <WorkingTimeUnit
+                        key={index}
+                        day={day}
+                        index={index}
+                        values={values}
+                        setValues={setValues}
+                    />
                 ))}
-            </div>
         </div>
     );
 };
 interface WorkingTimeUnitProps {
-    day: string;
+    day: DayOfWeekWorkRequest;
+    values: DayOfWeekWorkRequest[];
+    setValues: Dispatch<SetStateAction<DayOfWeekWorkRequest[]>>;
+    index: number;
 }
-const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({ day }) => {
+const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
+    day,
+    setValues,
+    index,
+}) => {
     const [active, setActive] = useState(true);
     return (
         <div
@@ -75,23 +156,74 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({ day }) => {
                     defaultChecked={active}
                     value={active}
                     onChange={(e) => {
+                        if (!e.target.checked) {
+                            setValues((prev) => {
+                                return prev.map((value, idx) => {
+                                    if (idx === index) {
+                                        return {
+                                            ...value,
+                                            numericDayOfWeek: -1,
+                                        };
+                                    }
+                                    return value;
+                                });
+                            });
+                        } else {
+                            setValues((prev) => {
+                                return prev.map((value, idx) => {
+                                    if (idx === index) {
+                                        return {
+                                            ...value,
+                                            numericDayOfWeek: index + 1,
+                                        };
+                                    }
+                                    return value;
+                                });
+                            });
+                        }
                         setActive(e.target.checked);
                     }}
                 />
-                <span>{day}</span>
+                <span>{days[index]}</span>
             </div>
             <TimePicker
                 format="HH:mm"
-                defaultValue={dayjs("09:00", "HH:mm")}
+                defaultValue={dayjs(day.openTime, "HH:mm")}
                 needConfirm={false}
                 disabled={!active}
+                onChange={(_, dateString) => {
+                    setValues((prev) =>
+                        prev.map((value, idx) => {
+                            if (idx === index) {
+                                return {
+                                    ...value,
+                                    openTime: `${dateString}`,
+                                };
+                            }
+                            return value;
+                        })
+                    );
+                }}
             />
             <span>until</span>
             <TimePicker
                 format="HH:mm"
                 needConfirm={false}
                 disabled={!active}
-                defaultValue={dayjs("18:00", "HH:mm")}
+                defaultValue={dayjs(day.closeTime, "HH:mm")}
+                onChange={(_, dateString) => {
+                    setValues((prev) =>
+                        prev.map((value, idx) => {
+                            if (idx === index) {
+                                return {
+                                    ...value,
+                                    closeTime: `${dateString}`,
+                                };
+                            }
+                            return value;
+                        })
+                    );
+                }}
             />
         </div>
     );

@@ -1,3 +1,5 @@
+import { getCities } from "@/api/shared";
+import { useQuery } from "@tanstack/react-query";
 import { Select, SelectProps } from "antd";
 import { FC } from "react";
 
@@ -26,7 +28,26 @@ export const KazakhstanCities = [
 interface CitiesInputProps extends SelectProps {}
 
 export const CitiesInput: FC<CitiesInputProps> = ({ ...props }) => {
+    const { data: options } = useQuery({
+        queryKey: ["cities"],
+        queryFn: async () => {
+            const { data } = await getCities();
+            return data.map((city) => ({ label: city.name, value: city.id }));
+        },
+    });
+
     return (
-        <Select placeholder={"City"} options={KazakhstanCities} {...props} />
+        <Select
+            placeholder={"City"}
+            options={options}
+            showSearch
+            filterOption={(input, option) =>
+                !!option?.label
+                    ?.toString()
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+            }
+            {...props}
+        />
     );
 };

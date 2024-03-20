@@ -1,30 +1,47 @@
-import { login } from "@/api/auth";
-import jwtService from "@/lib/jwt";
-import { emailSchema, passwordSchemas } from "@/lib/validations/shared";
-import { LoginRequest, LoginResponse } from "@/types/api";
+import {
+    requiredNumberSchema,
+    requiredStringSchema,
+} from "@/lib/validations/shared";
 import { useMutation } from "@tanstack/react-query";
 import { App } from "antd";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 
+import { useEffect } from "react";
 import * as Yup from "yup";
+import { createStore } from "../api/shared";
+import { CreateStoreRequest } from "../types/api";
 
 const validationSchema = Yup.object().shape({
-    email: emailSchema().required(),
-    password: passwordSchemas("password").self.required(),
+    kaspiId: requiredStringSchema(),
+    name: requiredStringSchema(),
+    cityId: requiredNumberSchema(),
+    street: requiredStringSchema(),
+    apartment: requiredStringSchema(),
+    // dayOfWeekWorks: Yup.array().of(
+    //     Yup.object().shape({
+    //         numericDayOfWeek: requiredNumberSchema(),
+    //         openTime: requiredStringSchema(),
+    //         closeTime: requiredStringSchema(),
+    //     })
+    // ),
 });
 
 export const useStoreForm = () => {
     const { message } = App.useApp();
     const navigate = useNavigate();
-    const mutation = useMutation<LoginResponse, void, LoginRequest>({
+    const mutation = useMutation<any, void, CreateStoreRequest>({
         async mutationFn(values) {
-            const { data } = await login(values);
+            const temp = values.dayOfWeekWorks.filter(
+                (item) => item.numericDayOfWeek !== -1
+            );
+            const { data } = await createStore({
+                ...values,
+                dayOfWeekWorks: temp,
+            });
             return data;
         },
-        onSuccess(data) {
-            const { accessToken: access, refreshToken: refresh } = data;
-            jwtService.saveJwt({ access, refresh });
+        onSuccess() {
             message.success("Success!");
             navigate("/admin/settings/");
         },
@@ -33,10 +50,14 @@ export const useStoreForm = () => {
         },
     });
 
-    const formik = useFormik<LoginRequest>({
+    const formik = useFormik<CreateStoreRequest>({
         initialValues: {
-            email: "",
-            password: "",
+            kaspiId: "",
+            name: "",
+            cityId: -1,
+            street: "",
+            apartment: "",
+            dayOfWeekWorks: [],
         },
         validationSchema: validationSchema,
         validateOnBlur: true,
@@ -47,6 +68,10 @@ export const useStoreForm = () => {
     async function handleSubmit() {
         await mutation.mutateAsync(formik.values);
     }
+
+    useEffect(() => {
+        console.log(formik.values);
+    }, [formik.values]);
 
     return { formik, mutation };
 };

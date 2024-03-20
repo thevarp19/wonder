@@ -1,53 +1,53 @@
 import { StoreAddressCell } from "@/components/store/StoreAddressCell";
 import { StoreWorkingTimeCell } from "@/components/store/StoreWorkingTimeCell";
+import { getStores } from "@/modules/admin/api/shared";
+import { GetStoresResponse } from "@/modules/admin/types/api";
+import { useQuery } from "@tanstack/react-query";
 import { Switch, Table, TableColumnsType } from "antd";
 import { FC } from "react";
 
 interface SellerStoresTableProps {}
 
-interface SellerStoresTableData {
-    id: number;
-    address: string;
-    working_time: string;
-    status: string;
-}
-
-const columns: TableColumnsType<SellerStoresTableData> = [
+const columns: TableColumnsType<GetStoresResponse> = [
     {
         title: "ID",
-        dataIndex: "id",
+        dataIndex: "kaspiId",
     },
     {
         title: "Address",
-        dataIndex: "address",
-        render: () => <StoreAddressCell />,
+        render: (_, record) => <StoreAddressCell {...record} />,
     },
     {
         title: "Working time",
-        dataIndex: "working_time",
-        render: () => <StoreWorkingTimeCell />,
+        render: (_, record) => (
+            <StoreWorkingTimeCell dayOfWeeks={record.availableWorkTimes} />
+        ),
     },
     {
         title: "Status",
-        dataIndex: "status",
         render: () => (
             <div className="flex items-center gap-2">
                 <Switch disabled />
-                <span className="text-gray-400">Active</span>
+                <span>Active</span>
             </div>
         ),
     },
 ];
 
-const dataSource: SellerStoresTableData[] = [
-    {
-        id: 1,
-        address: "address",
-        working_time: "working_time",
-        status: "status",
-    },
-];
-
 export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
-    return <Table columns={columns} dataSource={dataSource} rowKey={"id"} />;
+    const { data: stores, isPending } = useQuery<GetStoresResponse[]>({
+        queryKey: ["stores"],
+        queryFn: async () => {
+            const { data } = await getStores();
+            return data;
+        },
+    });
+    return (
+        <Table
+            columns={columns}
+            dataSource={stores}
+            rowKey={"id"}
+            loading={isPending}
+        />
+    );
 };
