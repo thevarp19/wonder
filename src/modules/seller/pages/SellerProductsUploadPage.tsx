@@ -43,7 +43,7 @@ export const SellerProductsUploadPage: FC<
                                         );
                                     }
                                 })
-                                .catch((err) => {
+                                .catch(() => {
                                     message.error("Product upload failed");
                                 })
                                 .finally(() => {
