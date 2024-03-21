@@ -1,30 +1,19 @@
+import { useQuery } from "@tanstack/react-query";
 import { Switch, Table, TableColumnsType } from "antd";
 import { FC } from "react";
+import { getSellerProducts } from "../../api/shared";
+import { SellerProductsResponse } from "../../types/api";
 
 interface ProductsTableProps {}
 
-interface ProductsTableData {
-    article: string;
-    name: string;
-    link: string;
-    isPublished: boolean;
-    priceAlmaty: number;
-    priceAstana: number;
-}
-
-const columns: TableColumnsType<ProductsTableData> = [
+const columns: TableColumnsType<SellerProductsResponse> = [
     {
         title: "Article",
-        dataIndex: "article",
+        dataIndex: "vendorCode",
     },
     {
         title: "Name",
-        dataIndex: "name",
-    },
-    {
-        title: "Link",
-        dataIndex: "link",
-        render: () => <a>Link</a>,
+        render: (_, record) => <a href={record.vendorCode}>{record.name}</a>,
     },
     {
         title: "Published",
@@ -37,27 +26,28 @@ const columns: TableColumnsType<ProductsTableData> = [
     },
     {
         title: "Price in Almaty",
-        dataIndex: "priceAlmaty",
+        render: (_, record) => <span>{record.prices[0].price}</span>,
     },
     {
         title: "Price in Astana",
-        dataIndex: "priceAstana",
-    },
-];
-
-const dataSource: ProductsTableData[] = [
-    {
-        article: "article",
-        name: "name",
-        link: "link",
-        isPublished: true,
-        priceAlmaty: 100,
-        priceAstana: 200,
+        render: (_, record) => <span>{record.prices[1].price}</span>,
     },
 ];
 
 export const ProductsTable: FC<ProductsTableProps> = ({}) => {
+    const { data: products, isPending } = useQuery<SellerProductsResponse[]>({
+        queryKey: ["products"],
+        queryFn: async () => {
+            const { data } = await getSellerProducts();
+            return data;
+        },
+    });
     return (
-        <Table columns={columns} dataSource={dataSource} rowKey={"article"} />
+        <Table
+            columns={columns}
+            loading={isPending}
+            dataSource={products}
+            rowKey={"article"}
+        />
     );
 };

@@ -1,9 +1,14 @@
 import jwtService from "@/lib/jwt";
+import { getRoles, isJwtExpired } from "@/lib/jwt/decode";
 import { myLocalStorage } from "@/lib/storage/browserStorage";
 import * as actionTypes from "./types";
 
 const INITIAL_STATE = {
-    isLoggedIn: !!jwtService.getAccessToken(),
+    isLoggedIn: !!(
+        jwtService.getAccessToken() &&
+        !isJwtExpired() &&
+        getRoles()?.includes("ADMIN")
+    ),
     userData: {
         email: myLocalStorage?.get("userEmail") || "",
     },

@@ -12,3 +12,15 @@ export interface SellerRegisterRequest {
 export interface SellerEmailConfirmRequest {
     code: string;
 }
+
+export interface SellerProductsResponse {
+    id: number;
+    vendorCode: string;
+    keycloakUserId: string;
+    name: string;
+    enabled: boolean;
+    prices: {
+        cityName: string;
+        price: number;
+    }[];
+}

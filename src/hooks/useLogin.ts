@@ -27,9 +27,9 @@ export const useLogin = (
         onSuccess(data) {
             const { accessToken: access, refreshToken: refresh } = data;
             jwtService.saveJwt({ access, refresh });
+            success(formik.values);
             message.success("Success!");
             navigate();
-            success(formik.values);
         },
         onError() {
             message.error("Error!");
