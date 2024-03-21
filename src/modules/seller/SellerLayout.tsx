@@ -1,9 +1,10 @@
 import { GeneralLayout } from "@/components/shared/GeneralLayout";
-import { sellerLogout } from "@/redux/seller/auth/actions";
+import { sellerLogout } from "@/modules/seller/redux/auth/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import {
     HomeOutlined,
     LogoutOutlined,
+    NodeCollapseOutlined,
     ProductOutlined,
     ProfileOutlined,
     SettingOutlined,
@@ -28,6 +29,11 @@ const items: MenuProps["items"] = [
         label: <Link to={"/seller/products"}>Products</Link>,
         key: "products",
         icon: <ProductOutlined />,
+    },
+    {
+        label: <Link to={"/seller/supply"}>Supply</Link>,
+        key: "supply",
+        icon: <NodeCollapseOutlined />,
     },
 ];
 

@@ -1,5 +1,5 @@
 import { GeneralLayout } from "@/components/shared/GeneralLayout";
-import { adminLogout } from "@/redux/admin/auth/actions";
+import { adminLogout } from "@/modules/admin/redux/auth/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import {
     HomeOutlined,

@@ -7,7 +7,7 @@ const INITIAL_STATE = {
     isLoggedIn: !!(
         jwtService.getAccessToken() &&
         !isJwtExpired() &&
-        getRoles()?.includes("ADMIN")
+        getRoles()?.includes("SELLER")
     ),
     userData: {
         email: myLocalStorage?.get("userEmail") || "",

@@ -1,7 +1,7 @@
 import { LoginForm } from "@/components/form/LoginForm";
 import { Logo } from "@/components/shared/Logo";
 import { getRoles } from "@/lib/jwt/decode";
-import { sellerLoginSuccess } from "@/redux/seller/auth/actions";
+import { sellerLoginSuccess } from "@/modules/seller/redux/auth/actions";
 import { useAppDispatch } from "@/redux/utils";
 import { LoginRequest } from "@/types/api";
 import { FC } from "react";

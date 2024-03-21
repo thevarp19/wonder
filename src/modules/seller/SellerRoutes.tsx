@@ -9,6 +9,7 @@ import {
     SellerProductsUploadPage,
     SellerRegisterPage,
     SellerSettingsPage,
+    SellerSupplyPage,
 } from "./pages";
 
 interface SellerRoutesProps {}
@@ -40,6 +41,7 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                         path="/products/upload"
                         element={<SellerProductsUploadPage />}
                     />
+                    <Route path="/supply" element={<SellerSupplyPage />} />
                 </Route>
             </Route>
             <Route path="/login" element={<SellerLoginPage />} />

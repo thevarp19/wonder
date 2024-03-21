@@ -1,6 +1,6 @@
 import { LoginForm } from "@/components/form/LoginForm";
 import { Logo } from "@/components/shared/Logo";
-import { adminLoginSuccess } from "@/redux/admin/auth/actions";
+import { adminLoginSuccess } from "@/modules/admin/redux/auth/actions";
 import { useAppDispatch } from "@/redux/utils";
 import { LoginRequest } from "@/types/api";
 import { FC } from "react";
