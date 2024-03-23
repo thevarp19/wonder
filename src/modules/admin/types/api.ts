@@ -6,6 +6,17 @@ export interface CreateStoreRequest {
     apartment: string;
     dayOfWeekWorks: DayOfWeekWorkRequest[];
 }
+
+export interface UpdateStoreRequest {
+    kaspiId?: string;
+    name?: string;
+    enabled?: boolean;
+    cityId?: number;
+    street?: string;
+    apartment?: string;
+    dayOfWeekWorks?: DayOfWeekWorkRequest[];
+}
+
 export interface GetStoresResponse {
     id: number;
     kaspiId: string;

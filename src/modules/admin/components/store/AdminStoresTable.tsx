@@ -2,11 +2,12 @@ import { StoreAddressCell } from "@/components/store/StoreAddressCell";
 import { StoreWorkingTimeCell } from "@/components/store/StoreWorkingTimeCell";
 import { EditOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
-import { Switch, Table, TableColumnsType } from "antd";
+import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { getStores } from "../../api/shared";
 import { GetStoresResponse } from "../../types/api";
+import { StoreSwitch } from "./StoreSwitch";
 
 interface AdminStoresTableProps {}
 
@@ -27,12 +28,7 @@ const columns: TableColumnsType<GetStoresResponse> = [
     },
     {
         title: "Status",
-        render: () => (
-            <div className="flex items-center gap-2">
-                <Switch />
-                <span>Active</span>
-            </div>
-        ),
+        render: (_, record) => <StoreSwitch record={record} />,
     },
     {
         title: "Edit",
