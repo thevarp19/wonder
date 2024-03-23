@@ -1,17 +1,20 @@
-import { FormikInput, FormikItem } from "@/components/ui/FormikInput";
 import { cn } from "@/utils/shared.util";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Form, Select, Table, TableColumnsType } from "antd";
-import TextArea from "antd/es/input/TextArea";
-import { FC } from "react";
+import {
+    Button,
+    Form,
+    InputNumber,
+    Select,
+    Table,
+    TableColumnsType,
+} from "antd";
+import { FC, useState } from "react";
 import { getSellerProducts } from "../api/shared";
-import { useSupply } from "../hooks/useSupply";
 import { SellerProductsResponse } from "../types/api";
 
 interface SellerSupplyPageProps {}
 
 export const SellerSupplyPage: FC<SellerSupplyPageProps> = ({}) => {
-    const { formik } = useSupply();
     const columns: TableColumnsType<SellerProductsResponse> = [
         {
             title: "Article",
@@ -31,16 +34,14 @@ export const SellerSupplyPage: FC<SellerSupplyPageProps> = ({}) => {
             title: "Quantity",
             render: (_) => (
                 <span>
-                    <FormikInput
-                        formItemProps={{ label: "Quantity" }}
-                        inputProps={{ type: "number" }}
-                        formik={formik}
-                        name="quantity"
-                    />
+                    <Form.Item label="Quantity">
+                        <InputNumber name="quantity" />
+                    </Form.Item>
                 </span>
             ),
         },
     ];
+    const [temp, setTemp] = useState<SellerProductsResponse[]>([]);
     const { data: products } = useQuery<SellerProductsResponse[]>({
         queryKey: ["products"],
         queryFn: async () => {
@@ -58,22 +59,17 @@ export const SellerSupplyPage: FC<SellerSupplyPageProps> = ({}) => {
                             className="w-full"
                             mode="multiple"
                             allowClear
-                            value={formik.values.products.map(
-                                (e) => e.vendorCode
-                            )}
+                            value={temp.map((e) => e.vendorCode)}
                             onSelect={(value) => {
-                                formik.setFieldValue("products", [
-                                    ...formik.values.products,
-                                    products?.find(
-                                        (product) =>
-                                            product.vendorCode === `${value}`
-                                    ),
-                                ]);
+                                const p = products?.find(
+                                    (product) =>
+                                        product.vendorCode === `${value}`
+                                );
+                                p && setTemp((prev) => [...prev, p]);
                             }}
                             onDeselect={(value) => {
-                                formik.setFieldValue(
-                                    "products",
-                                    formik.values.products.filter(
+                                setTemp((prev) =>
+                                    prev.filter(
                                         (product) =>
                                             product.vendorCode !== `${value}`
                                     )
@@ -95,19 +91,9 @@ export const SellerSupplyPage: FC<SellerSupplyPageProps> = ({}) => {
                         pagination={false}
                         columns={columns}
                         className={cn("mb-4")}
-                        dataSource={formik.values.products}
+                        dataSource={temp}
                         rowKey={"vendorCode"}
                     />
-
-                    <FormikItem
-                        name="comment"
-                        formik={formik}
-                        formItemProps={{
-                            label: "Comment",
-                        }}
-                    >
-                        <TextArea />
-                    </FormikItem>
                     <div className={cn("flex justify-end")}>
                         <Button
                             size="large"
@@ -115,7 +101,7 @@ export const SellerSupplyPage: FC<SellerSupplyPageProps> = ({}) => {
                             className="mb-4"
                             href="/seller/products/upload"
                         >
-                            Supply
+                            Save
                         </Button>
                     </div>
                 </Form>

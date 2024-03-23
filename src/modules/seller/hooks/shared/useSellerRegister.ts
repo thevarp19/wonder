@@ -9,8 +9,8 @@ import { App } from "antd";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { registerSeller } from "../api/auth";
-import { SellerRegisterRequest } from "../types/api";
+import { registerSeller } from "../../api/auth";
+import { SellerRegisterRequest } from "../../types/api";
 
 const validationSchema = Yup.object().shape({
     firstName: requiredStringSchema("First name"),

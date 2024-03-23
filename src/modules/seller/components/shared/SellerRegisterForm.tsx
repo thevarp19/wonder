@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Form, Steps } from "antd";
 import { FC, useState } from "react";
-import { useSellerRegister } from "../../hooks/useSellerRegister";
+import { useSellerRegister } from "../../hooks/shared/useSellerRegister";
 
 interface SellerRegisterFormProps {}
 
