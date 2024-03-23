@@ -46,3 +46,10 @@ export interface DayOfWeekWorkResponse {
     openTime: string;
     closeTime: string;
 }
+
+export interface GetBoxesResponse {
+    id: string;
+    name: string;
+    description: string;
+    imageUrls: string[];
+}

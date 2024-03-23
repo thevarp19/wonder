@@ -6,6 +6,7 @@ import { AdminLayout } from "./AdminLayout";
 import {
     AdminLoginPage,
     AdminSettingsPage,
+    CreateBoxPage,
     CreateStorePage,
     EditStorePage,
 } from "./pages";
@@ -45,6 +46,10 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                     <Route
                         path="/settings/edit-store/:storeId"
                         element={<EditStorePage />}
+                    />
+                    <Route
+                        path="/settings/create-box"
+                        element={<CreateBoxPage />}
                     />
                 </Route>
             </Route>

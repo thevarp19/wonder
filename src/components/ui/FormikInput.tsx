@@ -1,6 +1,12 @@
 import { getFormikHelpText } from "@/utils/form.util";
 import { cn } from "@/utils/shared.util";
-import { Form, FormItemProps, Input } from "antd";
+import {
+    Form,
+    FormItemProps,
+    Input,
+    InputNumber,
+    InputNumberProps,
+} from "antd";
 import { InputProps, PasswordProps } from "antd/es/input";
 import { FormikProps } from "formik";
 import { FC } from "react";
@@ -64,6 +70,35 @@ export const FormikInput: FC<FormikInputProps> = ({
                 onBlur={formik.handleBlur}
                 name={name}
                 value={formik.values[name]}
+                {...inputProps}
+            />
+        </FormikItem>
+    );
+};
+
+interface FormikNumberInputProps {
+    formik: FormikProps<any>;
+    name: string;
+    inputProps?: InputNumberProps;
+    formItemProps?: FormItemProps;
+}
+
+export const FormikNumberInput: FC<FormikNumberInputProps> = ({
+    formik,
+    name,
+    formItemProps,
+    inputProps,
+}) => {
+    return (
+        <FormikItem formik={formik} name={name} formItemProps={formItemProps}>
+            <InputNumber
+                onChange={(value) => {
+                    formik.setFieldValue(name, value);
+                }}
+                onBlur={formik.handleBlur}
+                name={name}
+                value={formik.values[name]}
+                type="number"
                 {...inputProps}
             />
         </FormikItem>
