@@ -1,10 +1,10 @@
 import { App, Switch } from "antd";
 import { FC, useState } from "react";
 import { updateStore } from "../../api/shared";
-import { GetStoresResponse } from "../../types/api";
+import { GetStoresWithDetailsResponse } from "../../types/api";
 
 interface StoreSwitchProps {
-    record: GetStoresResponse;
+    record: GetStoresWithDetailsResponse;
 }
 
 export const StoreSwitch: FC<StoreSwitchProps> = ({ record }) => {
@@ -13,7 +13,7 @@ export const StoreSwitch: FC<StoreSwitchProps> = ({ record }) => {
     return (
         <div className="flex items-center gap-2">
             <Switch
-                defaultChecked={record.enabled}
+                checked={record.enabled}
                 disabled={loading}
                 loading={loading}
                 onChange={async (e) => {

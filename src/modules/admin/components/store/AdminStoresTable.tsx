@@ -1,17 +1,17 @@
 import { StoreAddressCell } from "@/components/store/StoreAddressCell";
 import { StoreWorkingTimeCell } from "@/components/store/StoreWorkingTimeCell";
 import { EditOutlined } from "@ant-design/icons";
-import { useQuery } from "@tanstack/react-query";
 import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { getStores } from "../../api/shared";
-import { GetStoresResponse } from "../../types/api";
+import { useGetStoresWithDetails } from "../../hooks/useGetStoresWithDetails";
+import { GetStoresWithDetailsResponse } from "../../types/api";
+import { StoreBoxesModal } from "./StoreBoxesModal";
 import { StoreSwitch } from "./StoreSwitch";
 
 interface AdminStoresTableProps {}
 
-const columns: TableColumnsType<GetStoresResponse> = [
+const columns: TableColumnsType<GetStoresWithDetailsResponse> = [
     {
         title: "ID",
         dataIndex: "kaspiId",
@@ -41,16 +41,19 @@ const columns: TableColumnsType<GetStoresResponse> = [
             </Link>
         ),
     },
+    {
+        title: "Box types",
+        render: (_, record) => (
+            <StoreBoxesModal
+                storeId={`${record.id}`}
+                boxTypes={record.availableBoxTypes}
+            />
+        ),
+    },
 ];
 
 export const AdminStoresTable: FC<AdminStoresTableProps> = ({}) => {
-    const { data: stores, isPending } = useQuery<GetStoresResponse[]>({
-        queryKey: ["stores"],
-        queryFn: async () => {
-            const { data } = await getStores();
-            return data;
-        },
-    });
+    const { data: stores, isPending } = useGetStoresWithDetails();
     return (
         <Table
             columns={columns}

@@ -1,8 +1,9 @@
 import { DeleteOutlined } from "@ant-design/icons";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { App, Button, Popconfirm, Table, TableColumnsType } from "antd";
 import { FC } from "react";
-import { deleteBox, getBoxes } from "../../api/shared";
+import { deleteBox } from "../../api/shared";
+import { useGetBoxes } from "../../hooks/useGetBoxes";
 import { GetBoxesResponse } from "../../types/api";
 
 interface BoxesTableProps {}
@@ -27,13 +28,7 @@ const columns: TableColumnsType<GetBoxesResponse> = [
 ];
 
 export const BoxesTable: FC<BoxesTableProps> = ({}) => {
-    const { data: boxes, isPending } = useQuery<GetBoxesResponse[]>({
-        queryKey: ["boxes"],
-        queryFn: async () => {
-            const { data } = await getBoxes();
-            return data;
-        },
-    });
+    const { data: boxes, isPending } = useGetBoxes();
     return (
         <Table
             columns={columns}
