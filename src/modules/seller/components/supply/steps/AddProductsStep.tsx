@@ -1,3 +1,4 @@
+import { myLocalStorage } from "@/lib/storage/browserStorage";
 import { cn } from "@/utils/shared.util";
 import {
     Button,
@@ -40,7 +41,9 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
             ),
         },
     ];
-    const [temp, setTemp] = useState<SellerProductsResponse[]>([]);
+    const [temp, setTemp] = useState<SellerProductsResponse[]>(
+        myLocalStorage?.get("supply-products") || []
+    );
     const { data: products, isPending } = useGetProducts();
     return (
         <Form layout="vertical">
@@ -88,7 +91,9 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                     size="large"
                     type="primary"
                     className="mb-4"
-                    href="/seller/products/upload"
+                    onClick={() => {
+                        myLocalStorage?.set("supply-products", temp);
+                    }}
                 >
                     Save
                 </Button>
