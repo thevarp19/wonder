@@ -20,15 +20,9 @@ export const StoreSwitch: FC<StoreSwitchProps> = ({ record }) => {
                     try {
                         setLoading(true);
                         await updateStore(`${record.id}`, {
+                            ...record,
                             enabled: e,
-                            dayOfWeekWorks: record.availableWorkTimes.map(
-                                (time) => ({
-                                    numericDayOfWeek: time.dayOfWeek,
-                                    openTime: time.openTime,
-                                    closeTime: time.closeTime,
-                                })
-                            ),
-                        });
+                        } as any);
                         message.success("Store updated successfully");
                     } catch (error) {
                         message.error("Failed to update store");

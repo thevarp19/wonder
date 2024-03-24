@@ -8,13 +8,13 @@ export interface CreateStoreRequest {
 }
 
 export interface UpdateStoreRequest {
-    kaspiId?: string;
-    name?: string;
-    enabled?: boolean;
-    cityId?: number;
-    street?: string;
-    apartment?: string;
-    dayOfWeekWorks?: DayOfWeekWorkRequest[];
+    kaspiId: string;
+    name: string;
+    enabled: boolean;
+    cityId: number;
+    street: string;
+    apartment: string;
+    dayOfWeekWorks: DayOfWeekWorkRequest[];
 }
 
 export interface GetStoresResponse {
