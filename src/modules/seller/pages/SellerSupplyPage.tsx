@@ -1,24 +1,17 @@
+import { useAppDispatch } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
 import { Button, Steps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import {
-    AddProductsStep,
-    ChooseDateStep,
-    ChooseStoreStep,
-    PackProductsStep,
-} from "../components/supply/steps";
+import { AddProductsStep, PackProductsStep } from "../components/supply/steps";
+import { saveProducts } from "../redux/supply/actions";
 
 interface SellerSupplyPageProps {}
-const steps = [
-    <AddProductsStep />,
-    <ChooseDateStep />,
-    <ChooseStoreStep />,
-    <PackProductsStep />,
-];
+const steps = [<AddProductsStep />, <PackProductsStep />];
 export const SellerSupplyPage: FC<SellerSupplyPageProps> = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [step, setStep] = useState(Number(searchParams.get("step")) || 0);
+    const dispatch = useAppDispatch();
     return (
         <div className="min-h-full bg-white rounded-t-lg">
             <div className="p-4">
@@ -32,17 +25,11 @@ export const SellerSupplyPage: FC<SellerSupplyPageProps> = ({}) => {
                             title: "Add products",
                         },
                         {
-                            title: "Choose date",
-                        },
-                        {
-                            title: "Choose store",
-                        },
-                        {
                             title: "Pack products",
                         },
                     ]}
                 />
-                {steps[step]}
+
                 <div className={cn("flex justify-end gap-4")}>
                     {step !== 0 && (
                         <Button
@@ -63,16 +50,19 @@ export const SellerSupplyPage: FC<SellerSupplyPageProps> = ({}) => {
                             className={cn("")}
                             size="large"
                             onClick={() => {
+                                dispatch(saveProducts());
                                 setSearchParams({ step: `${step + 1}` });
                                 setStep((prev) => {
                                     return prev + 1;
                                 });
                             }}
+                            type="primary"
                         >
-                            Next
+                            Save
                         </Button>
                     )}
                 </div>
+                {steps[step]}
             </div>
         </div>
     );

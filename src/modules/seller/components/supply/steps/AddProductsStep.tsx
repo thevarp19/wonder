@@ -1,8 +1,10 @@
-import { myLocalStorage } from "@/lib/storage/browserStorage";
+import { useGetProducts } from "@/modules/seller/hooks/supply/useGetProducts";
+import * as actions from "@/modules/seller/redux/supply/actions";
+import { useSupplyProducts } from "@/modules/seller/redux/supply/selectors";
 import { ProductQuantity } from "@/modules/seller/types/supply";
+import { useAppDispatch } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
 import {
-    App,
     Button,
     Form,
     InputNumber,
@@ -10,19 +12,19 @@ import {
     Table,
     TableColumnsType,
 } from "antd";
-import { FC, useState } from "react";
-import { useGetProducts } from "../../../hooks/supply/useGetProducts";
+import { FC } from "react";
 
 interface AddProductsStepProps {}
 
 export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
-    const [products, setProducts] = useState<ProductQuantity[]>(
-        myLocalStorage?.get("supply-products") || []
-    );
+    const products = useSupplyProducts();
+    const dispatch = useAppDispatch();
+    const { data: productOptions, isPending } = useGetProducts();
+
     const columns: TableColumnsType<ProductQuantity> = [
         {
             title: "Article",
-            render: (_, record) => <span>{record.product.vendorCode}</span>,
+            render: (_, record) => <span>{record.product.id}</span>,
         },
         {
             title: "Name",
@@ -45,17 +47,13 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                             name="quantity"
                             value={record.quantity}
                             onChange={(v) => {
-                                setProducts((prev) =>
-                                    prev.map((p) => ({
-                                        ...p,
-                                        quantity:
-                                            p.product.id ===
-                                                record.product.id &&
-                                            typeof v === "number"
-                                                ? v
-                                                : p.quantity,
-                                    }))
-                                );
+                                if (typeof v === "number")
+                                    dispatch(
+                                        actions.updateProductQuantity(
+                                            record.product.id,
+                                            v
+                                        )
+                                    );
                             }}
                         />
                     </Form.Item>
@@ -68,13 +66,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                 <Button
                     danger
                     onClick={() => {
-                        setProducts((prev) =>
-                            prev.filter(
-                                (product) =>
-                                    product.product.vendorCode !==
-                                    `${record.product.vendorCode}`
-                            )
-                        );
+                        dispatch(actions.removeProduct(record.product.id));
                     }}
                 >
                     Delete
@@ -83,9 +75,6 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
         },
     ];
 
-    const { message } = App.useApp();
-
-    const { data: productOptions, isPending } = useGetProducts();
     return (
         <Form layout="vertical">
             <Form.Item label="Products" className="w-full">
@@ -94,28 +83,19 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                     mode="multiple"
                     allowClear
                     loading={isPending}
-                    value={products.map((e) => e.product.vendorCode)}
+                    value={products.map((e) => e.product.id)}
                     onSelect={(value) => {
                         const p = productOptions?.find(
-                            (product) => product.vendorCode === `${value}`
+                            (product) => product.id === value
                         );
-                        p &&
-                            setProducts((prev) => [
-                                ...prev,
-                                { quantity: 1, product: p },
-                            ]);
+                        p && dispatch(actions.addProduct(p));
                     }}
                     onDeselect={(value) => {
-                        setProducts((prev) =>
-                            prev.filter(
-                                (product) =>
-                                    product.product.vendorCode !== `${value}`
-                            )
-                        );
+                        dispatch(actions.removeProduct(Number(value)));
                     }}
                     options={productOptions?.map((product) => ({
                         label: product.name,
-                        value: product.vendorCode,
+                        value: product.id,
                     }))}
                     filterOption={(input, option) =>
                         !!option?.label
@@ -130,21 +110,8 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                 columns={columns}
                 className={cn("mb-4")}
                 dataSource={products}
-                rowKey={(record) => record.product.vendorCode}
+                rowKey={(record) => record.product.id}
             />
-            <div className={cn("flex justify-end")}>
-                <Button
-                    size="large"
-                    type="primary"
-                    className="mb-4"
-                    onClick={() => {
-                        myLocalStorage?.set("supply-products", products);
-                        message.success("Products saved successfully");
-                    }}
-                >
-                    Save
-                </Button>
-            </div>
         </Form>
     );
 };

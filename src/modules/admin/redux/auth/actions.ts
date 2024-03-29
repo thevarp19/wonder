@@ -5,7 +5,7 @@ import { LOGIN_SUCCESS, LoginSuccessAction, LogoutAction } from "./types";
 
 export const adminLoginSuccess = (email: string): LoginSuccessAction => {
     myLocalStorage?.set("userEmail", email);
-    if (!getRoles()?.includes("SELLER")) {
+    if (!getRoles()?.includes("SUPER_ADMIN")) {
         throw new Error("Invalid role");
     }
     return {
