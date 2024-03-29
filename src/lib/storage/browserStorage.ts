@@ -7,13 +7,13 @@ class BrowserStorage {
         this.storage = storage;
     }
 
-    get(key: string) {
+    get<V = any>(key: string) {
         return tryWithErrorLog(() => {
             const stringValue = this.storage.getItem(key);
             if (!stringValue) {
                 throw new Error(`No value for key "${key}"`);
             }
-            const value = JSON.parse(stringValue);
+            const value = JSON.parse(stringValue) as V;
             return value || null;
         });
     }

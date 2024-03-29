@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { adminRootReducer } from "../modules/admin/redux/reducers";
-import { sellerRootReducer } from "../modules/seller/redux/reducers";
+import { adminRootReducer } from "../roles/admin/redux/reducers";
+import { sellerRootReducer } from "../roles/seller/redux/reducers";
 
 export const rootReducer = combineReducers({
     admin: adminRootReducer,

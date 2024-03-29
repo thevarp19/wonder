@@ -1,6 +1,6 @@
 import { MainPage } from "@/MainPage";
-import { AdminRoutes } from "@/modules/admin/AdminRoutes";
-import { SellerRoutes } from "@/modules/seller/SellerRoutes";
+import { AdminRoutes } from "@/roles/admin/AdminRoutes";
+import { SellerRoutes } from "@/roles/seller/SellerRoutes";
 import { FC } from "react";
 import { Route, Routes } from "react-router-dom";
 

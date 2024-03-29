@@ -1,4 +1,4 @@
-import { DayOfWeekWorkResponse } from "@/modules/admin/types/api";
+import { DayOfWeekWorkResponse } from "@/roles/admin/types/api";
 import { FC } from "react";
 
 interface StoreWorkingTimeCellProps {
