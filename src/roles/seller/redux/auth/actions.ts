@@ -1,5 +1,6 @@
 import jwtService from "@/lib/jwt";
 import { getRoles } from "@/lib/jwt/decode";
+import { LoginResponse } from "@/modules/auth/types";
 import {
     LOGIN_SUCCESS,
     LOGOUT,
@@ -7,7 +8,11 @@ import {
     LogoutAction,
 } from "./types";
 
-export const sellerLoginSuccess = (): LoginSuccessAction => {
+export const sellerLoginSuccess = (data: LoginResponse): LoginSuccessAction => {
+    jwtService.saveJwt({
+        access: data.accessToken,
+        refresh: data.refreshToken,
+    });
     if (!getRoles()?.includes("SELLER")) {
         throw new Error("Invalid role");
     }

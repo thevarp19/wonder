@@ -118,7 +118,6 @@ const DeleteBoxCell: FC<{ boxId: string; storeId: string }> = ({
                     });
                     message.success("Box deleted successfully");
                 } catch (error) {
-                    console.log(error);
                     message.error("Failed to delete box");
                 }
             }}

@@ -17,7 +17,6 @@ export const DeleteBoxCell: FC<{ id: number }> = ({ id }) => {
                     queryClient.invalidateQueries({ queryKey: ["boxes"] });
                     message.success("Box deleted successfully");
                 } catch (error) {
-                    console.log(error);
                     message.error("Failed to delete box");
                 }
             }}

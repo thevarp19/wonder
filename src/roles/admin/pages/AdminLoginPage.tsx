@@ -1,5 +1,6 @@
 import { Logo } from "@/components/shared/Logo";
 import { LoginForm } from "@/modules/auth/components/LoginForm";
+import { LoginResponse } from "@/modules/auth/types";
 import { useAppDispatch } from "@/redux/utils";
 import { adminLoginSuccess } from "@/roles/admin/redux/auth/actions";
 import { FC } from "react";
@@ -12,8 +13,8 @@ export const AdminLoginPage: FC<AdminLoginPageProps> = ({}) => {
     const navigateToHome = () => navigate("/admin");
     const dispatch = useAppDispatch();
 
-    const success = () => {
-        dispatch(adminLoginSuccess());
+    const success = (data: LoginResponse) => {
+        dispatch(adminLoginSuccess(data));
         navigateToHome();
     };
     return (

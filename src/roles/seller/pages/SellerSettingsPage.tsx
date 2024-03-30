@@ -22,7 +22,6 @@ export const SellerSettingsPage: FC<SellerSettingsPageProps> = ({}) => {
     const [current, setCurrent] = useState("stores");
 
     const onClick: MenuProps["onClick"] = (e) => {
-        console.log("click ", e);
         setCurrent(e.key);
     };
     return (

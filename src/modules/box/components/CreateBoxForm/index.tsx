@@ -68,7 +68,6 @@ export const CreateBoxForm: FC<CreateBoxFormProps> = ({}) => {
                     return false;
                 }}
                 onRemove={(file) => {
-                    console.log(file);
                     formik.setFieldValue(
                         "files",
                         // @ts-ignore

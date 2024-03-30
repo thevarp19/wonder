@@ -11,9 +11,7 @@ export const ChooseDateStep: FC<ChooseDateStepProps> = ({}) => {
         myLocalStorage?.get("supply-date") || ""
     );
     const { message } = App.useApp();
-    useEffect(() => {
-        console.log(date, dayjs(myLocalStorage?.get("supply-date")));
-    }, [date]);
+    useEffect(() => {}, [date]);
     return (
         <div>
             <h1 className="text-2xl font-semibold">Please choose the date</h1>

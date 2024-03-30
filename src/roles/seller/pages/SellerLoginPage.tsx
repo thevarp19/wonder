@@ -1,5 +1,6 @@
 import { Logo } from "@/components/shared/Logo";
 import { LoginForm } from "@/modules/auth/components/LoginForm";
+import { LoginResponse } from "@/modules/auth/types";
 import { useAppDispatch } from "@/redux/utils";
 import { sellerLoginSuccess } from "@/roles/seller/redux/auth/actions";
 
@@ -12,8 +13,8 @@ export const SellerLoginPage: FC<SellerLoginPageProps> = ({}) => {
     const navigate = useNavigate();
     const navigateToHome = () => navigate("/seller");
     const dispatch = useAppDispatch();
-    const success = () => {
-        dispatch(sellerLoginSuccess());
+    const success = (data: LoginResponse) => {
+        dispatch(sellerLoginSuccess(data));
         navigateToHome();
     };
     return (
