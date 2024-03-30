@@ -1,5 +1,5 @@
+import { CreateBoxForm } from "@/modules/box/components/CreateBoxForm";
 import { FC } from "react";
-import { CreateBoxForm } from "../components/boxes/CreateBoxForm";
 
 interface CreateBoxPageProps {}
 

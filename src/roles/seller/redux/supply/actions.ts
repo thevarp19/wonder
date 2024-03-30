@@ -1,14 +1,10 @@
-import {
-    GetBoxesResponse,
-    GetStoresWithDetailsResponse,
-} from "@/roles/admin/types/api";
-import { SellerProductsResponse } from "../../types/api";
+import { GetBoxResponse } from "@/modules/box/types";
+import { GetProductResponse } from "@/modules/product/types";
+import { GetStoreResponse } from "@/modules/store/types";
 import { ProductQuantity, SupplyPack } from "../../types/supply";
 import * as types from "./types";
 
-export const addProduct = (
-    product: SellerProductsResponse
-): types.AddProducts => {
+export const addProduct = (product: GetProductResponse): types.AddProducts => {
     return {
         type: types.ADD_PRODUCTS,
         payload: [{ product, quantity: 0 }],
@@ -16,7 +12,7 @@ export const addProduct = (
 };
 
 export const setProducts = (
-    products: SellerProductsResponse[]
+    products: GetProductResponse[]
 ): types.SetProducts => {
     return {
         type: types.SET_PRODUCTS,
@@ -52,8 +48,8 @@ export const saveProducts = (): types.SaveProducts => {
 
 export const addPack = (
     products: ProductQuantity[],
-    store: GetStoresWithDetailsResponse,
-    box: GetBoxesResponse
+    store: GetStoreResponse,
+    box: GetBoxResponse
 ): types.AddPack => {
     return {
         type: types.ADD_PACK,

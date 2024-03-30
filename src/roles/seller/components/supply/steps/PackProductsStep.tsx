@@ -1,6 +1,6 @@
+import { useGetBoxes } from "@/modules/box/queries";
+import { useGetStores } from "@/modules/store/queries";
 import { useAppDispatch } from "@/redux/utils";
-import { useGetBoxes } from "@/roles/admin/hooks/useGetBoxes";
-import { useGetStoresWithDetails } from "@/roles/admin/hooks/useGetStoresWithDetails";
 import { useSupplyPacks } from "@/roles/seller/redux/supply/selectors";
 import { SupplyPack } from "@/roles/seller/types/supply";
 import { DeleteOutlined } from "@ant-design/icons";
@@ -37,7 +37,7 @@ export const PackProductsStep: FC<PackProductsStepProps> = ({}) => {
 };
 
 const StoreSelect = () => {
-    const { data: stores, isPending } = useGetStoresWithDetails();
+    const { data: stores } = useGetStores();
     return (
         <Select
             placeholder={"Choose a store"}
@@ -47,14 +47,14 @@ const StoreSelect = () => {
                 value: store.id,
             }))}
             value={undefined}
-            onChange={(v) => {}}
+            onChange={() => {}}
             loading={false}
         />
     );
 };
 
 const BoxSelect = () => {
-    const { data: boxes, isPending } = useGetBoxes();
+    const { data: boxes } = useGetBoxes();
     return (
         <Select
             placeholder={"Choose a box"}
@@ -64,7 +64,7 @@ const BoxSelect = () => {
                 value: box.id,
             }))}
             value={undefined}
-            onChange={(v) => {}}
+            onChange={() => {}}
             loading={false}
         />
     );

@@ -1,9 +1,8 @@
-import { LoginForm } from "@/components/form/LoginForm";
 import { Logo } from "@/components/shared/Logo";
-import { getRoles } from "@/lib/jwt/decode";
+import { LoginForm } from "@/modules/auth/components/LoginForm";
 import { useAppDispatch } from "@/redux/utils";
 import { sellerLoginSuccess } from "@/roles/seller/redux/auth/actions";
-import { LoginRequest } from "@/types/api";
+
 import { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,9 +12,9 @@ export const SellerLoginPage: FC<SellerLoginPageProps> = ({}) => {
     const navigate = useNavigate();
     const navigateToHome = () => navigate("/seller");
     const dispatch = useAppDispatch();
-    const success = (loginData: LoginRequest) => {
-        console.log(getRoles());
-        dispatch(sellerLoginSuccess(loginData.email));
+    const success = () => {
+        dispatch(sellerLoginSuccess());
+        navigateToHome();
     };
     return (
         <div className="flex flex-col items-center mt-[10vh]">
@@ -24,7 +23,7 @@ export const SellerLoginPage: FC<SellerLoginPageProps> = ({}) => {
                 <h1 className="py-5 text-2xl font-semibold">
                     Log in as a seller
                 </h1>
-                <LoginForm navigate={navigateToHome} success={success} />
+                <LoginForm success={success} />
                 <Link
                     to="/seller/register"
                     className="w-full mt-5 text-blue-500"

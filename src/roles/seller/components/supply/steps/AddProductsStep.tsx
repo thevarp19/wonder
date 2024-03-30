@@ -1,5 +1,5 @@
+import { useGetProducts } from "@/modules/product/queries";
 import { useAppDispatch } from "@/redux/utils";
-import { useGetProducts } from "@/roles/seller/hooks/supply/useGetProducts";
 import * as actions from "@/roles/seller/redux/supply/actions";
 import { useSupplyProducts } from "@/roles/seller/redux/supply/selectors";
 import { ProductQuantity } from "@/roles/seller/types/supply";

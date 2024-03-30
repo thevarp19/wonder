@@ -1,6 +1,6 @@
 import { myLocalStorage } from "@/lib/storage/browserStorage";
-import { useGetBoxes } from "@/roles/admin/hooks/useGetBoxes";
-import { useGetStoresWithDetails } from "@/roles/admin/hooks/useGetStoresWithDetails";
+import { useGetBoxes } from "@/modules/box/queries";
+import { useGetStores } from "@/modules/store/queries";
 import { cn } from "@/utils/shared.util";
 import { App, Button, Select } from "antd";
 import { FC, useState } from "react";
@@ -8,7 +8,7 @@ import { FC, useState } from "react";
 interface ChooseStoreStepProps {}
 
 export const ChooseStoreStep: FC<ChooseStoreStepProps> = ({}) => {
-    const { data: stores, isPending } = useGetStoresWithDetails();
+    const { data: stores, isPending } = useGetStores();
     const { data: boxes, isPending: isBoxesPending } = useGetBoxes();
     const [storeId, setStoreId] = useState<string | undefined>(
         myLocalStorage?.get("supply-store") || undefined

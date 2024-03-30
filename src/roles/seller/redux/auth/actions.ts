@@ -1,6 +1,5 @@
 import jwtService from "@/lib/jwt";
 import { getRoles } from "@/lib/jwt/decode";
-import { myLocalStorage } from "@/lib/storage/browserStorage";
 import {
     LOGIN_SUCCESS,
     LOGOUT,
@@ -8,16 +7,12 @@ import {
     LogoutAction,
 } from "./types";
 
-export const sellerLoginSuccess = (email: string): LoginSuccessAction => {
-    myLocalStorage?.set("userEmail", email);
+export const sellerLoginSuccess = (): LoginSuccessAction => {
     if (!getRoles()?.includes("SELLER")) {
         throw new Error("Invalid role");
     }
     return {
         type: LOGIN_SUCCESS,
-        payload: {
-            userData: { email },
-        },
     };
 };
 

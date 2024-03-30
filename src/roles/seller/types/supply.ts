@@ -1,13 +1,13 @@
-import { GetBoxesResponse } from "@/roles/admin/types/api";
-import { SellerProductsResponse } from "./api";
+import { GetBoxResponse } from "@/modules/box/types";
+import { GetProductResponse } from "@/modules/product/types";
 
 export interface ProductQuantity {
     quantity: number;
-    product: SellerProductsResponse;
+    product: GetProductResponse;
 }
 
 export interface SupplyPack {
     products: ProductQuantity[];
-    box: GetBoxesResponse;
+    box: GetBoxResponse;
     id: string;
 }

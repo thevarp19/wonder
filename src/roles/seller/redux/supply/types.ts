@@ -1,7 +1,5 @@
-import {
-    GetBoxesResponse,
-    GetStoresWithDetailsResponse,
-} from "@/roles/admin/types/api";
+import { GetBoxResponse } from "@/modules/box/types";
+import { GetStoreResponse } from "@/modules/store/types";
 import { ProductQuantity, SupplyPack } from "../../types/supply";
 
 export const ADD_PRODUCTS = "SUPPLY_ADD_PRODUCTS";
@@ -46,8 +44,8 @@ export interface AddPack {
     type: typeof ADD_PACK;
     payload: {
         products: ProductQuantity[];
-        store: GetStoresWithDetailsResponse;
-        box: GetBoxesResponse;
+        store: GetStoreResponse;
+        box: GetBoxResponse;
         data: string;
     };
 }

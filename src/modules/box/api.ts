@@ -9,6 +9,6 @@ export function getBoxes() {
     return axiosAuthorized.get<GetBoxResponse[]>(`/api/box-types`);
 }
 
-export function deleteBox(id: string) {
+export function deleteBox(id: number) {
     return axiosAuthorized.delete(`/api/box-types/${id}`);
 }

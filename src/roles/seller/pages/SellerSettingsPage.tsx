@@ -1,7 +1,7 @@
+import { SellerStoresTable } from "@/modules/store/components/StoresTable/SellerStoresTable";
 import { DesktopOutlined, ShopOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import { FC, useState } from "react";
-import { SellerStoresTable } from "../components/store/SellerStoresTable";
 
 const items: MenuProps["items"] = [
     {

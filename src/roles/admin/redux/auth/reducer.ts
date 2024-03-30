@@ -22,7 +22,6 @@ export const adminAuthReducer = (
         case actionTypes.LOGIN_SUCCESS:
             return {
                 ...state,
-                userData: action.payload.userData,
                 isLoggedIn: true,
             };
         case actionTypes.LOGOUT:

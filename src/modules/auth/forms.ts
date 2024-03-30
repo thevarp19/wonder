@@ -4,8 +4,8 @@ import {
     passwordSchemas,
     requiredStringSchema,
 } from "@/lib/validations/shared";
-import { LoginRequest, LoginResponse } from "@/types/api";
 import { useFormik } from "formik";
+import { LoginRequest, LoginResponse } from "./types";
 
 import * as Yup from "yup";
 import { loginMutation, sellerRegisterMutation } from "./mutations";

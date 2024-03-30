@@ -1,9 +1,9 @@
+import { BoxesTable } from "@/modules/box/components/BoxesTable";
+import { StoresTable } from "@/modules/store/components/StoresTable";
 import { BoxPlotOutlined, ShopOutlined } from "@ant-design/icons";
 import { Button, Menu, MenuProps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { BoxesTable } from "../components/boxes/BoxesTable";
-import { AdminStoresTable } from "../components/store/AdminStoresTable";
 
 const items: MenuProps["items"] = [
     {
@@ -51,7 +51,7 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
                     >
                         Create a new store
                     </Button>
-                    <AdminStoresTable />
+                    <StoresTable />
                 </div>
             )}
             {current === "boxes" && (

@@ -4,7 +4,7 @@ import {
     requiredStringSchema,
 } from "@/lib/validations/shared";
 import { useFormik } from "formik";
-
+import { useEffect } from "react";
 import * as Yup from "yup";
 import {
     bindBoxToStoreMutation,
@@ -59,28 +59,45 @@ const updateStoreSchema = Yup.object().shape({
 
 export const useUpdateStore = (
     storeId: string,
-    initialValues: GetStoreResponse
+    initialValues: GetStoreResponse | undefined
 ) => {
     const mutation = updateStoreMutation(storeId);
 
     const formik = useFormik<UpdateStoreRequest>({
         initialValues: {
-            kaspiId: initialValues.kaspiId,
-            cityId: initialValues.city.id,
-            street: initialValues.street,
-            apartment: initialValues.address,
-            enabled: initialValues.enabled,
-            dayOfWeekWorks: initialValues.availableWorkTimes.map((item) => ({
-                numericDayOfWeek: item.dayOfWeek,
-                openTime: item.openTime,
-                closeTime: item.closeTime,
-            })),
+            kaspiId: "",
+            cityId: -1,
+            street: "",
+            apartment: "",
+            enabled: false,
+            dayOfWeekWorks: [],
         },
         validationSchema: updateStoreSchema,
         validateOnBlur: true,
         validateOnChange: true,
         onSubmit: handleSubmit,
     });
+
+    useEffect(() => {
+        if (initialValues) {
+            formik.resetForm({
+                values: {
+                    kaspiId: initialValues.kaspiId,
+                    cityId: initialValues.city.id,
+                    street: initialValues.street,
+                    apartment: initialValues.address,
+                    enabled: initialValues.enabled,
+                    dayOfWeekWorks: initialValues.availableWorkTimes.map(
+                        (item) => ({
+                            numericDayOfWeek: item.dayOfWeek,
+                            openTime: item.openTime,
+                            closeTime: item.closeTime,
+                        })
+                    ),
+                },
+            });
+        }
+    }, [initialValues]);
 
     async function handleSubmit() {
         await mutation.mutateAsync(formik.values);

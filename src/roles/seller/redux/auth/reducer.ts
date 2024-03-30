@@ -22,7 +22,6 @@ export const sellerAuthReducer = (
         case LOGIN_SUCCESS:
             return {
                 ...state,
-                userData: action.payload.userData,
                 isLoggedIn: true,
             };
         case LOGOUT:

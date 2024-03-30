@@ -1,6 +1,6 @@
+import { ProductsTable } from "@/modules/product/components/ProductsTable";
 import { Button } from "antd";
 import { FC } from "react";
-import { ProductsTable } from "../components/products/ProductsTable";
 
 interface SellerProductsPageProps {}
 

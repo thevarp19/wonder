@@ -1,7 +1,7 @@
 import { Logo } from "@/components/shared/Logo";
+import { SellerRegisterForm } from "@/modules/auth/components/SellerRegisterForm";
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { SellerRegisterForm } from "../components/shared/SellerRegisterForm";
 
 interface SellerRegisterPageProps {}
 

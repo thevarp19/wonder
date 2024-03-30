@@ -37,7 +37,7 @@ export const createBoxMutation = () => {
     });
 };
 
-export const deleteBoxMutation = (id: string) => {
+export const deleteBoxMutation = (id: number) => {
     const { message } = App.useApp();
     const navigate = useNavigate();
     return useMutation({

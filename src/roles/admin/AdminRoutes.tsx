@@ -8,7 +8,7 @@ import {
     AdminSettingsPage,
     CreateBoxPage,
     CreateStorePage,
-    EditStorePage,
+    UpdateStorePage,
 } from "./pages";
 
 interface AdminRoutesProps {}
@@ -44,8 +44,8 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                         element={<CreateStorePage />}
                     />
                     <Route
-                        path="/settings/edit-store/:storeId"
-                        element={<EditStorePage />}
+                        path="/settings/update-store/:storeId"
+                        element={<UpdateStorePage />}
                     />
                     <Route
                         path="/settings/create-box"
