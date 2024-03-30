@@ -1,9 +1,9 @@
-import { GetStoresResponse } from "@/roles/admin/types/api";
 import { useQuery } from "@tanstack/react-query";
 import { getStoreById, getStores } from "./api";
+import { GetStoreResponse } from "./types";
 
 export const useGetStores = () => {
-    return useQuery<GetStoresResponse[]>({
+    return useQuery<GetStoreResponse[]>({
         queryKey: ["stores"],
         queryFn: async () => {
             const { data } = await getStores();
@@ -13,7 +13,7 @@ export const useGetStores = () => {
 };
 
 export const useGetStore = (id: string) => {
-    return useQuery<GetStoresResponse>({
+    return useQuery<GetStoreResponse>({
         queryKey: [`store`, id],
         queryFn: async () => {
             const { data } = await getStoreById(id);

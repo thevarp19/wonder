@@ -26,7 +26,7 @@ export interface GetStoreResponse {
     kaspiId: string;
     address: string;
     street: string;
-    city: string;
+    city: { id: number; name: string };
     availableWorkTimes: WorkDayOfWeekResponse[];
     availableBoxTypes: GetBoxResponse[];
     enabled: boolean;

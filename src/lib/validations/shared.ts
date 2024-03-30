@@ -6,6 +6,9 @@ export const requiredStringSchema = (fieldName: string = "This field") =>
 export const requiredNumberSchema = (fieldName: string = "This field") =>
     Yup.number().required(`${fieldName} is required!`);
 
+export const requiredBooleanSchema = (fieldName: string = "This field") =>
+    Yup.boolean().required(`${fieldName} is required!`);
+
 export const emailSchema = () => Yup.string().email("Invalid email address!");
 
 const KzPhoneNumberRegex = /^\+\d \d{3} \d{3} \d{2} \d{2}$/;

@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { App } from "antd";
 import { useNavigate } from "react-router-dom";
-import { createBox } from "./api";
+import { createBox, deleteBox } from "./api";
 
-export const useCreateBox = () => {
+export const createBoxMutation = () => {
     const { message } = App.useApp();
     const navigate = useNavigate();
     return useMutation<
@@ -26,6 +26,23 @@ export const useCreateBox = () => {
                 formData.append("images", file);
             });
             await createBox(formData);
+        },
+        onSuccess() {
+            message.success("Success!");
+            navigate("/admin/settings/?menu_x=boxes");
+        },
+        onError() {
+            message.error("Error!");
+        },
+    });
+};
+
+export const deleteBoxMutation = (id: string) => {
+    const { message } = App.useApp();
+    const navigate = useNavigate();
+    return useMutation({
+        async mutationFn() {
+            await deleteBox(id);
         },
         onSuccess() {
             message.success("Success!");

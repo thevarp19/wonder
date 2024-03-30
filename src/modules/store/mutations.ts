@@ -59,12 +59,12 @@ export const updateStoreMutation = (id: string) => {
     });
 };
 
-export const bindBoxToStoreMutation = (storeId: string, boxId: string) => {
+export const bindBoxToStoreMutation = () => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
-    return useMutation({
-        async mutationFn() {
-            await bindBoxToStore(storeId, boxId);
+    return useMutation<void, void, { storeId: string; boxId: string }>({
+        async mutationFn(values) {
+            await bindBoxToStore(values.storeId, values.boxId);
             queryClient.invalidateQueries({
                 queryKey: ["stores"],
             });
@@ -78,12 +78,12 @@ export const bindBoxToStoreMutation = (storeId: string, boxId: string) => {
     });
 };
 
-export const removeBoxFromStoreMutation = (storeId: string, boxId: string) => {
+export const removeBoxFromStoreMutation = () => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
-    return useMutation({
-        async mutationFn() {
-            await removeBoxFromStore(storeId, boxId);
+    return useMutation<void, void, { storeId: string; boxId: string }>({
+        async mutationFn(values) {
+            await removeBoxFromStore(values.storeId, values.boxId);
             queryClient.invalidateQueries({
                 queryKey: ["stores"],
             });

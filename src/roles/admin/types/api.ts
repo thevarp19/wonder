@@ -40,11 +40,35 @@ export interface GetStoresResponse {
     userId: number;
 }
 
+export interface GetStoresWithDetailsResponse {
+    id: number;
+    kaspiId: string;
+    address: string;
+    street: string;
+    city: string;
+    availableWorkTimes: {
+        id: number;
+        dayOfWeek: number;
+        openTime: string;
+        closeTime: string;
+    }[];
+    availableBoxTypes: AvailableBoxTypes[];
+    enabled: boolean;
+    userId: number;
+}
+
 export interface AvailableBoxTypes {
     id: number;
     name: string;
     description: string;
     imageUrls: string[];
+}
+
+export interface DayOfWeekWorkResponse {
+    id: number;
+    dayOfWeek: number;
+    openTime: string;
+    closeTime: string;
 }
 
 export interface GetBoxesResponse {
