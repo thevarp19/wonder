@@ -1,3 +1,4 @@
+import { ProductsUploadFromFile } from "@/modules/product/components/ProductsUploadFromFile";
 import { useGetProducts } from "@/modules/product/queries";
 import { useAppDispatch } from "@/redux/utils";
 import * as actions from "@/roles/seller/redux/supply/actions";
@@ -8,11 +9,12 @@ import {
     Button,
     Form,
     InputNumber,
+    Modal,
     Select,
     Table,
     TableColumnsType,
 } from "antd";
-import { FC } from "react";
+import { FC, useState } from "react";
 
 interface AddProductsStepProps {}
 
@@ -75,9 +77,30 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
         },
     ];
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     return (
         <Form layout="vertical">
-            <Form.Item label="Products" className="w-full">
+            <h1 className="text-2xl font-semibold">Please add products</h1>
+            <div className="my-4">
+                <Button type="primary" onClick={() => setIsModalOpen(true)}>
+                    Upload from file
+                </Button>
+                <Modal
+                    open={isModalOpen}
+                    onCancel={() => setIsModalOpen(false)}
+                    okButtonProps={{ style: { display: "none" } }}
+                    cancelButtonProps={{ style: { display: "none" } }}
+                >
+                    <ProductsUploadFromFile
+                        setProducts={(products) => {
+                            dispatch(actions.setProducts(products));
+                            setIsModalOpen(false);
+                        }}
+                    />
+                </Modal>
+            </div>
+            <Form.Item className="w-full">
                 <Select
                     className="w-full"
                     mode="multiple"

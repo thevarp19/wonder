@@ -47,6 +47,8 @@ function pathToKey(key: string) {
             return "products";
         case "/seller/supply":
             return "supply";
+        case "/seller/supply/create":
+            return "supply";
         default:
             return "home";
     }

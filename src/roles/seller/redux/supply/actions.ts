@@ -81,3 +81,23 @@ export const savePack = (): types.SavePack => {
         type: types.SAVE_PACK,
     };
 };
+
+export const saveDateAndStore = (): types.SaveDateAndStore => {
+    return {
+        type: types.SAVE_DATE_AND_STORE,
+    };
+};
+
+export const setStore = (store: GetStoreResponse): types.SetStore => {
+    return {
+        type: types.SET_STORE,
+        payload: store,
+    };
+};
+
+export const setDate = (date: string): types.SetDate => {
+    return {
+        type: types.SET_DATE,
+        payload: date,
+    };
+};

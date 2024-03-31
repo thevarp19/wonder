@@ -13,6 +13,10 @@ export const REMOVE_PACK = "SUPPLY_REMOVE_PACK";
 export const UPDATE_PACK = "SUPPLY_UPDATE_PACK";
 export const SAVE_PACK = "SUPPLY_SAVE_PACK";
 
+export const SET_STORE = "SUPPLY_SET_STORE";
+export const SET_DATE = "SUPPLY_SET_DATE";
+export const SAVE_DATE_AND_STORE = "SUPPLY_SAVE_DATE_AND_STORE";
+
 export interface SetProducts {
     type: typeof SET_PRODUCTS;
     payload: ProductQuantity[];
@@ -64,6 +68,20 @@ export interface SavePack {
     type: typeof SAVE_PACK;
 }
 
+export interface SetStore {
+    type: typeof SET_STORE;
+    payload: GetStoreResponse;
+}
+
+export interface SetDate {
+    type: typeof SET_DATE;
+    payload: string;
+}
+
+export interface SaveDateAndStore {
+    type: typeof SAVE_DATE_AND_STORE;
+}
+
 export type SupplyActions =
     | AddProducts
     | UpdateProductQuantity
@@ -73,4 +91,7 @@ export type SupplyActions =
     | RemovePack
     | UpdatePack
     | SaveProducts
-    | SavePack;
+    | SavePack
+    | SetStore
+    | SetDate
+    | SaveDateAndStore;

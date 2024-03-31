@@ -1,15 +1,20 @@
 import { myLocalStorage } from "@/lib/storage/browserStorage";
+import { GetStoreResponse } from "@/modules/store/types";
 import { ProductQuantity, SupplyPack } from "../../types/supply";
 import * as types from "./types";
 
 interface SupplyState {
     products: ProductQuantity[];
     packs: SupplyPack[];
+    store: GetStoreResponse | null;
+    date: string | null;
 }
 
 const INITIAL_STATE: SupplyState = {
     products: myLocalStorage?.get("supply-products") || [],
     packs: myLocalStorage?.get("supply-packs") || [],
+    store: myLocalStorage?.get("supply-store") || null,
+    date: myLocalStorage?.get("supply-date") || null,
 };
 
 export const sellerSupplyReducer = (
@@ -66,6 +71,14 @@ export const sellerSupplyReducer = (
         case types.SAVE_PACK:
             myLocalStorage?.set("supply-packs", state.packs);
             return state;
+        case types.SAVE_DATE_AND_STORE:
+            myLocalStorage?.set("supply-store", state.store);
+            myLocalStorage?.set("supply-date", state.date);
+            return state;
+        case types.SET_STORE:
+            return { ...state, store: action.payload };
+        case types.SET_DATE:
+            return { ...state, date: action.payload };
         default:
             return state;
     }

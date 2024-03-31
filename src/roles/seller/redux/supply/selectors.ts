@@ -7,3 +7,7 @@ export const useSupplyProducts = () => {
 export const useSupplyPacks = () => {
     return useAppSelector((state) => state.seller.supply.packs);
 };
+
+export const useSupply = () => {
+    return useAppSelector((state) => state.seller.supply);
+};
