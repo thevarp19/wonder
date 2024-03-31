@@ -58,7 +58,6 @@ export const updateStoreMutation = (id: number) => {
             });
         },
         onError(error) {
-            console.error(error);
             message.error(`${error?.response?.data.message}`);
         },
     });

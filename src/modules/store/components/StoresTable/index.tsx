@@ -57,7 +57,7 @@ export const StoresTable: FC<StoresTableProps> = ({}) => {
     return (
         <Table
             columns={columns}
-            dataSource={stores}
+            dataSource={stores?.sort((a, b) => a.id - b.id)}
             rowKey={"id"}
             loading={isPending}
         />

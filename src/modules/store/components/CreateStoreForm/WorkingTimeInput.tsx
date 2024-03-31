@@ -7,6 +7,7 @@ import { WorkDayOfWeekRequest } from "../../types";
 interface WorkingTimeInputProps {
     onChange: (values: WorkDayOfWeekRequest[]) => void;
 }
+
 const days = [
     "Monday",
     "Tuesday",
@@ -16,6 +17,7 @@ const days = [
     "Saturday",
     "Sunday",
 ];
+
 export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({ onChange }) => {
     const [detailed, setDetailed] = useState(false);
     const [mainOpenTime, setMainOpenTime] = useState("09:00");
@@ -102,7 +104,7 @@ export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({ onChange }) => {
                     }}
                 />
                 <Checkbox
-                    value={detailed}
+                    checked={detailed}
                     onChange={(e) => {
                         if (!e.target.checked) {
                             setValues((prev) =>
@@ -155,7 +157,7 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
             <div className={cn("flex items-center gap-2 w-28")}>
                 <Checkbox
                     defaultChecked={active}
-                    value={active}
+                    checked={active}
                     onChange={(e) => {
                         if (!e.target.checked) {
                             setValues((prev) => {

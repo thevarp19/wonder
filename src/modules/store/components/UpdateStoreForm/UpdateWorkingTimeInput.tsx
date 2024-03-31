@@ -2,35 +2,69 @@ import { cn } from "@/utils/shared.util";
 import { Checkbox, TimePicker } from "antd";
 import dayjs from "dayjs";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { WorkDayOfWeekRequest, WorkDayOfWeekResponse } from "../../types";
-
 interface UpdateWorkingTimeInputProps {
     onChange: (values: WorkDayOfWeekRequest[]) => void;
     initialValues?: WorkDayOfWeekResponse[];
 }
+
 const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
+    { name: "Monday", index: 1 },
+    { name: "Tuesday", index: 2 },
+    { name: "Wednesday", index: 3 },
+    { name: "Thursday", index: 4 },
+    { name: "Friday", index: 5 },
+    { name: "Saturday", index: 6 },
+    { name: "Sunday", index: 7 },
 ];
+
+const mapResponseToRequest = (initialValues?: WorkDayOfWeekResponse[]) => {
+    return days.map((day) => {
+        const res = {
+            name: day.name,
+            index: day.index,
+            numericDayOfWeek: -1,
+            openTime: "09:00",
+            closeTime: "18:00",
+        };
+
+        const initialValue = initialValues?.find(
+            (value) => value.dayOfWeek === day.index
+        );
+
+        if (initialValue) {
+            res.numericDayOfWeek = initialValue.dayOfWeek;
+            res.openTime = initialValue.openTime;
+            res.closeTime = initialValue.closeTime;
+        }
+
+        return res;
+    });
+};
+
+interface WorkingTimeFormValue {
+    name: string;
+    index: number;
+    numericDayOfWeek: number;
+    openTime: string;
+    closeTime: string;
+}
+
 export const UpdateWorkingTimeInput: FC<UpdateWorkingTimeInputProps> = ({
     onChange,
     initialValues,
 }) => {
-    const [detailed, setDetailed] = useState(false);
+    const [detailed, setDetailed] = useState(true);
     const [mainOpenTime, setMainOpenTime] = useState("09:00");
     const [mainCloseTime, setMainCloseTime] = useState("18:00");
-    const [values, setValues] = useState<WorkDayOfWeekRequest[] | undefined>(
-        initialValues?.map((value) => ({
-            numericDayOfWeek: value.dayOfWeek,
-            openTime: value.openTime,
-            closeTime: value.closeTime,
-        }))
+    const [values, setValues] = useState<WorkingTimeFormValue[]>(
+        mapResponseToRequest(initialValues)
     );
+
+    useEffect(() => {
+        setValues(mapResponseToRequest(initialValues));
+    }, [initialValues]);
 
     useEffect(() => {
         if (values) onChange(values);
@@ -80,8 +114,9 @@ export const UpdateWorkingTimeInput: FC<UpdateWorkingTimeInputProps> = ({
                     onChange={(e) => {
                         if (!e.target.checked) {
                             setValues((prev) =>
-                                prev?.map((_, idx) => ({
-                                    numericDayOfWeek: idx + 1,
+                                prev?.map((value) => ({
+                                    ...value,
+                                    numericDayOfWeek: value.index,
                                     openTime: mainOpenTime,
                                     closeTime: mainCloseTime,
                                 }))
@@ -95,30 +130,30 @@ export const UpdateWorkingTimeInput: FC<UpdateWorkingTimeInputProps> = ({
             </div>
 
             {detailed &&
-                values?.map((day, index) => (
+                values.map((day) => (
                     <WorkingTimeUnit
-                        key={index}
-                        day={day}
-                        index={index}
-                        values={values}
+                        key={uuidv4()}
+                        {...day}
                         setValues={setValues}
                     />
                 ))}
         </div>
     );
 };
-interface WorkingTimeUnitProps {
-    day: WorkDayOfWeekRequest;
-    values: WorkDayOfWeekRequest[];
-    setValues: Dispatch<SetStateAction<WorkDayOfWeekRequest[] | undefined>>;
-    index: number;
+
+interface WorkingTimeUnitProps extends WorkingTimeFormValue {
+    setValues: Dispatch<SetStateAction<WorkingTimeFormValue[]>>;
 }
+
 const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
-    day,
+    name,
+    openTime,
+    closeTime,
+    numericDayOfWeek,
     setValues,
     index,
 }) => {
-    const [active, setActive] = useState(true);
+    const [active, setActive] = useState(numericDayOfWeek !== -1);
     return (
         <div
             className={cn(
@@ -133,8 +168,8 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                     onChange={(e) => {
                         if (!e.target.checked) {
                             setValues((prev) => {
-                                return prev?.map((value, idx) => {
-                                    if (idx === index) {
+                                return prev.map((value) => {
+                                    if (value.index === index) {
                                         return {
                                             ...value,
                                             numericDayOfWeek: -1,
@@ -145,11 +180,11 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                             });
                         } else {
                             setValues((prev) => {
-                                return prev?.map((value, idx) => {
-                                    if (idx === index) {
+                                return prev.map((value) => {
+                                    if (value.index === index) {
                                         return {
                                             ...value,
-                                            numericDayOfWeek: index + 1,
+                                            numericDayOfWeek: index,
                                         };
                                     }
                                     return value;
@@ -159,17 +194,17 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                         setActive(e.target.checked);
                     }}
                 />
-                <span>{days[index]}</span>
+                <span>{name}</span>
             </div>
             <TimePicker
                 format="HH:mm"
-                defaultValue={dayjs(day.openTime, "HH:mm")}
+                defaultValue={dayjs(openTime, "HH:mm")}
                 needConfirm={false}
                 disabled={!active}
                 onChange={(_, dateString) => {
                     setValues((prev) =>
-                        prev?.map((value, idx) => {
-                            if (idx === index) {
+                        prev.map((value) => {
+                            if (value.index === index) {
                                 return {
                                     ...value,
                                     openTime: `${dateString}`,
@@ -185,11 +220,11 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                 format="HH:mm"
                 needConfirm={false}
                 disabled={!active}
-                defaultValue={dayjs(day.closeTime, "HH:mm")}
+                defaultValue={dayjs(closeTime, "HH:mm")}
                 onChange={(_, dateString) => {
                     setValues((prev) =>
-                        prev?.map((value, idx) => {
-                            if (idx === index) {
+                        prev.map((value) => {
+                            if (value.index === index) {
                                 return {
                                     ...value,
                                     closeTime: `${dateString}`,
