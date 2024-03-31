@@ -34,7 +34,7 @@ const columns: TableColumnsType<GetStoreResponse> = [
         title: "Edit",
         render: (_, record) => (
             <Link
-                to={`/admin/settings/edit-store/${record.id}`}
+                to={`/admin/settings/update-store/${record.id}`}
                 className="cursor-pointer"
             >
                 <EditOutlined style={{ fontSize: "24px" }} />

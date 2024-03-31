@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { App } from "antd";
+import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import {
     bindBoxToStore,
@@ -13,7 +14,7 @@ export const createStoreMutation = () => {
     const { message } = App.useApp();
     const navigate = useNavigate();
 
-    return useMutation<void, void, CreateStoreRequest>({
+    return useMutation<void, AxiosError<any>, CreateStoreRequest>({
         async mutationFn(values) {
             const temp = values.dayOfWeekWorks.filter(
                 (item) => item.numericDayOfWeek !== -1
@@ -28,17 +29,17 @@ export const createStoreMutation = () => {
             message.success("Success!");
             navigate("/admin/settings/");
         },
-        onError() {
-            message.error("Error!");
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
         },
     });
 };
 
-export const updateStoreMutation = (id: string) => {
+export const updateStoreMutation = (id: number) => {
     const { message } = App.useApp();
     const navigate = useNavigate();
-
-    return useMutation<void, void, UpdateStoreRequest>({
+    const queryClient = useQueryClient();
+    return useMutation<void, AxiosError<any>, UpdateStoreRequest>({
         async mutationFn(values) {
             const temp = values.dayOfWeekWorks.filter(
                 (item) => item.numericDayOfWeek !== -1
@@ -52,9 +53,13 @@ export const updateStoreMutation = (id: string) => {
         onSuccess() {
             message.success("Success!");
             navigate("/admin/settings/");
+            queryClient.invalidateQueries({
+                queryKey: ["stores"],
+            });
         },
-        onError() {
-            message.error("Error!");
+        onError(error) {
+            console.error(error);
+            message.error(`${error?.response?.data.message}`);
         },
     });
 };
@@ -62,7 +67,11 @@ export const updateStoreMutation = (id: string) => {
 export const bindBoxToStoreMutation = () => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
-    return useMutation<void, void, { storeId: string; boxId: string }>({
+    return useMutation<
+        void,
+        AxiosError<any>,
+        { storeId: string; boxId: string }
+    >({
         async mutationFn(values) {
             await bindBoxToStore(values.storeId, values.boxId);
             queryClient.invalidateQueries({
@@ -72,8 +81,8 @@ export const bindBoxToStoreMutation = () => {
         onSuccess() {
             message.success("Success!");
         },
-        onError() {
-            message.error("Error!");
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
         },
     });
 };
@@ -81,7 +90,11 @@ export const bindBoxToStoreMutation = () => {
 export const removeBoxFromStoreMutation = () => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
-    return useMutation<void, void, { storeId: string; boxId: string }>({
+    return useMutation<
+        void,
+        AxiosError<any>,
+        { storeId: string; boxId: string }
+    >({
         async mutationFn(values) {
             await removeBoxFromStore(values.storeId, values.boxId);
             queryClient.invalidateQueries({
@@ -91,8 +104,8 @@ export const removeBoxFromStoreMutation = () => {
         onSuccess() {
             message.success("Success!");
         },
-        onError() {
-            message.error("Error!");
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
         },
     });
 };

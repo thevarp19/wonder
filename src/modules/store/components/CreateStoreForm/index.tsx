@@ -26,16 +26,6 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                     size: "large",
                 }}
             />
-            <FormikInput
-                name="name"
-                formik={formik}
-                formItemProps={{
-                    label: "Name",
-                }}
-                inputProps={{
-                    size: "large",
-                }}
-            />
             <Form.Item label="City" className="w-full">
                 <CitiesInput
                     className=""

@@ -1,46 +1,7 @@
 import axios, { Axios } from "axios";
 import jwtService from "../jwt";
 
-const refreshJwtUrl = `/api/login/refresh/`;
-const unauthorizedStatus = 401;
-
-export const createAxiosWithBaseUrl = (baseURL: string) => {
-    const axiosApi = axios.create({
-        baseURL: baseURL,
-    });
-    return axiosApi;
-};
-
-export const applyJwtAuth = (axiosApi: Axios) => {
-    axiosApi.interceptors.request.use(
-        (config) => {
-            return setAuthHeader(config);
-        },
-        (error) => {
-            return Promise.reject(error);
-        }
-    );
-};
-
-export const configureRefreshRetry = (axiosApi: Axios) => {
-    axiosApi.interceptors.response.use(
-        (response) => {
-            return response;
-        },
-        async (error) => {
-            const originalRequest = error.config;
-            if (isAxiosUnauthorized(error) && !originalRequest._retry) {
-                originalRequest._retry = true;
-                return await refreshJwt(axiosApi, originalRequest);
-            }
-            if (isAxiosUnauthorized(error)) {
-                jwtService.removeJwt();
-            }
-
-            return Promise.reject(error);
-        }
-    );
-};
+const refreshJwtUrl = "/refresh";
 
 const setAuthHeader = (config: any) => {
     const access = jwtService.getAccessToken();
@@ -51,24 +12,56 @@ const setAuthHeader = (config: any) => {
 };
 
 const isAxiosUnauthorized = (error: any) => {
-    return error?.response?.status === unauthorizedStatus;
+    return error?.response?.status === 401;
 };
 
-const refreshJwt = async (axiosApi: any, originalRequest: Axios) => {
+const refreshJwt = (axiosApi: any) => {
+    const options = {
+        refreshToken: jwtService.getRefreshToken() || "refresh",
+    };
+    return axiosApi.post(refreshJwtUrl, options, { _retry: true });
+};
+
+const refreshAndRetry = async (axiosApi: any, originalRequest: Axios) => {
     try {
-        const refreshResponse = await makeRefreshJwtRequest(axiosApi);
-        const newAccessToken = refreshResponse.data.access;
-        jwtService.setAccessToken(newAccessToken);
+        const refreshResponse = await refreshJwt(axiosApi);
+        const newAccessToken = refreshResponse.data.data.accessToken;
+        const newRefreshToken = refreshResponse.data.data.refreshToken;
+        jwtService.saveJwt({
+            access: newAccessToken,
+            refresh: newRefreshToken,
+        });
         setAuthHeader(originalRequest);
         return axiosApi(originalRequest);
     } catch (refreshError) {
-        return Promise.reject(refreshError);
+        window.location.href = "/auth";
     }
 };
 
-const makeRefreshJwtRequest = (axiosApi: any) => {
-    const options = {
-        refresh: jwtService.getRefreshToken() || "refresh",
-    };
-    return axiosApi.post(refreshJwtUrl, options, { _retry: true });
+export const createAxiosWithBaseUrl = (baseURL: string) => {
+    return axios.create({
+        baseURL: baseURL,
+    });
+};
+
+export const applyJwtAuth = (axiosApi: Axios) => {
+    axiosApi.interceptors.request.use((config) => {
+        return setAuthHeader(config);
+    });
+};
+
+export const configureRefreshRetry = (axiosApi: Axios) => {
+    axiosApi.interceptors.response.use(undefined, async (error) => {
+        const originalRequest = error.config;
+        if (isAxiosUnauthorized(error) && !originalRequest._retry) {
+            originalRequest._retry = true;
+            return await refreshAndRetry(axiosApi, originalRequest);
+        }
+
+        if (isAxiosUnauthorized(error)) {
+            jwtService.removeJwt();
+        }
+
+        return Promise.reject(error);
+    });
 };

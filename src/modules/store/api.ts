@@ -17,7 +17,7 @@ export function getStores() {
     return axiosAuthorized.get<GetStoreResponse[]>(`/api/stores/details`);
 }
 
-export function updateStore(id: string, values: UpdateStoreRequest) {
+export function updateStore(id: number, values: UpdateStoreRequest) {
     return axiosAuthorized.put(`/api/stores/${id}`, values);
 }
 

@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { App } from "antd";
+import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { login, sellerRegister } from "./api";
 import {
@@ -11,7 +12,7 @@ import {
 
 export const loginMutation = (success: (data: LoginResponse) => void) => {
     const { message } = App.useApp();
-    return useMutation<LoginResponse, void, LoginRequest>({
+    return useMutation<LoginResponse, AxiosError<any>, LoginRequest>({
         async mutationFn(values) {
             const { data } = await login(values);
             return data;
@@ -20,8 +21,8 @@ export const loginMutation = (success: (data: LoginResponse) => void) => {
             success(data);
             message.success("Success!");
         },
-        onError() {
-            message.error("Error!");
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
         },
     });
 };
@@ -29,7 +30,11 @@ export const loginMutation = (success: (data: LoginResponse) => void) => {
 export const sellerRegisterMutation = () => {
     const { message } = App.useApp();
     const navigate = useNavigate();
-    return useMutation<SellerRegisterResponse, void, SellerRegisterRequest>({
+    return useMutation<
+        SellerRegisterResponse,
+        AxiosError<any>,
+        SellerRegisterRequest
+    >({
         async mutationFn(values) {
             const { data } = await sellerRegister(values);
             return data;
@@ -38,8 +43,8 @@ export const sellerRegisterMutation = () => {
             message.success("Success!");
             navigate("/seller/login");
         },
-        onError() {
-            message.error("Error!");
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
         },
     });
 };

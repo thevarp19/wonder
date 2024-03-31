@@ -1,24 +1,16 @@
 import { DeleteOutlined } from "@ant-design/icons";
-import { useQueryClient } from "@tanstack/react-query";
-import { App, Button, Popconfirm } from "antd";
+import { Button, Popconfirm } from "antd";
 import { FC } from "react";
-import { deleteBox } from "../../api";
+import { deleteBoxMutation } from "../../mutations";
 
 export const DeleteBoxCell: FC<{ id: number }> = ({ id }) => {
-    const queryClient = useQueryClient();
-    const { message } = App.useApp();
+    const { mutateAsync } = deleteBoxMutation(id);
     return (
         <Popconfirm
-            title="Delete the task"
-            description="Are you sure to delete this task?"
+            title="Delete the box"
+            description="Are you sure to delete this box?"
             onConfirm={async () => {
-                try {
-                    await deleteBox(id);
-                    queryClient.invalidateQueries({ queryKey: ["boxes"] });
-                    message.success("Box deleted successfully");
-                } catch (error) {
-                    message.error("Failed to delete box");
-                }
+                await mutateAsync();
             }}
         >
             <Button danger icon={<DeleteOutlined />}>

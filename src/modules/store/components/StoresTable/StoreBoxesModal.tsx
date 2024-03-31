@@ -1,9 +1,7 @@
 import { useGetBoxes } from "@/modules/box/queries";
 import { GetBoxResponse } from "@/modules/box/types";
 import { DeleteOutlined } from "@ant-design/icons";
-import { useQueryClient } from "@tanstack/react-query";
 import {
-    App,
     Button,
     Modal,
     Popconfirm,
@@ -12,8 +10,8 @@ import {
     TableColumnsType,
 } from "antd";
 import { FC, useState } from "react";
-import { removeBoxFromStore } from "../../api";
 import { useBindBoxToStore } from "../../forms";
+import { removeBoxFromStoreMutation } from "../../mutations";
 
 interface StoreBoxesModalProps {
     boxTypes: GetBoxResponse[];
@@ -73,10 +71,16 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                         onChange={(value) => {
                             formik.setFieldValue("boxId", value);
                         }}
-                        options={boxes?.map((box) => ({
-                            label: box.name,
-                            value: box.id,
-                        }))}
+                        options={boxes
+                            ?.filter((box) => {
+                                return !boxTypes.find(
+                                    (type) => type.id === box.id
+                                );
+                            })
+                            .map((box) => ({
+                                label: box.name,
+                                value: box.id,
+                            }))}
                     />
                     <Button
                         loading={mutation.isPending}
@@ -89,7 +93,7 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                 </div>
                 <Table
                     className="mt-4"
-                    rowKey={"id"}
+                    rowKey={(record) => `${record.id}`}
                     dataSource={boxTypes}
                     loading={isPending}
                     columns={columns}
@@ -104,22 +108,13 @@ const DeleteBoxCell: FC<{ boxId: string; storeId: string }> = ({
     boxId,
     storeId,
 }) => {
-    const queryClient = useQueryClient();
-    const { message } = App.useApp();
+    const { mutateAsync } = removeBoxFromStoreMutation();
     return (
         <Popconfirm
             title="Delete the box from store"
             description="Are you sure to delete this box?"
             onConfirm={async () => {
-                try {
-                    await removeBoxFromStore(storeId, boxId);
-                    queryClient.invalidateQueries({
-                        queryKey: ["stores-with-details"],
-                    });
-                    message.success("Box deleted successfully");
-                } catch (error) {
-                    message.error("Failed to delete box");
-                }
+                await mutateAsync({ storeId, boxId });
             }}
         >
             <Button danger icon={<DeleteOutlined />}>

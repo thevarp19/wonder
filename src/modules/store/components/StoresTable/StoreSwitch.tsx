@@ -1,34 +1,25 @@
-import { App, Switch } from "antd";
-import { FC, useState } from "react";
-import { updateStore } from "../../api";
+import { Switch } from "antd";
+import { FC } from "react";
+import { updateStoreMutation } from "../../mutations";
 import { GetStoreResponse } from "../../types";
+import { mapGetStoreToUpdate } from "../../utils";
 
 interface StoreSwitchProps {
     record: GetStoreResponse;
 }
 
 export const StoreSwitch: FC<StoreSwitchProps> = ({ record }) => {
-    const { message } = App.useApp();
-    const [loading, setLoading] = useState(false);
+    const { isPending, mutateAsync } = updateStoreMutation(record.id);
     return (
         <div className="flex items-center gap-2">
             <Switch
                 checked={record.enabled}
-                disabled={loading}
-                loading={loading}
-                onChange={async (e) => {
-                    try {
-                        setLoading(true);
-                        await updateStore(`${record.id}`, {
-                            ...record,
-                            enabled: e,
-                        } as any);
-                        message.success("Store updated successfully");
-                    } catch (error) {
-                        message.error("Failed to update store");
-                    } finally {
-                        setLoading(false);
-                    }
+                disabled={isPending}
+                loading={isPending}
+                onChange={async (checked) => {
+                    await mutateAsync(
+                        mapGetStoreToUpdate({ ...record, enabled: checked })
+                    );
                 }}
             />
             <span>{record.enabled ? "Active" : "Not active"}</span>

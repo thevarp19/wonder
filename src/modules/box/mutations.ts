@@ -1,5 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { App } from "antd";
+import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { createBox, deleteBox } from "./api";
 
@@ -8,7 +9,7 @@ export const createBoxMutation = () => {
     const navigate = useNavigate();
     return useMutation<
         void,
-        void,
+        AxiosError<any>,
         {
             name: string;
             height: number;
@@ -31,8 +32,8 @@ export const createBoxMutation = () => {
             message.success("Success!");
             navigate("/admin/settings/?menu_x=boxes");
         },
-        onError() {
-            message.error("Error!");
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
         },
     });
 };
@@ -40,16 +41,20 @@ export const createBoxMutation = () => {
 export const deleteBoxMutation = (id: number) => {
     const { message } = App.useApp();
     const navigate = useNavigate();
-    return useMutation({
+    const queryClient = useQueryClient();
+    return useMutation<void, AxiosError<any>>({
         async mutationFn() {
             await deleteBox(id);
         },
         onSuccess() {
             message.success("Success!");
             navigate("/admin/settings/?menu_x=boxes");
+            queryClient.invalidateQueries({
+                queryKey: ["boxes"],
+            });
         },
-        onError() {
-            message.error("Error!");
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
         },
     });
 };

@@ -4,7 +4,7 @@ import { CitiesInput } from "@/modules/store/components/shared/CitiesInput";
 import { useUpdateStore } from "@/modules/store/forms";
 import { useGetStore } from "@/modules/store/queries";
 import { cn } from "@/utils/shared.util";
-import { Button, Form } from "antd";
+import { Button, Form, Switch } from "antd";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 interface UpdateStoreFormProps {}
@@ -12,7 +12,7 @@ interface UpdateStoreFormProps {}
 export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
     const { storeId } = useParams();
     const { data: storeDetails } = useGetStore(`${storeId}`);
-    const { formik, mutation } = useUpdateStore(`${storeId}`, storeDetails);
+    const { formik, mutation } = useUpdateStore(Number(storeId), storeDetails);
     return (
         <Form
             onFinish={formik.submitForm}
@@ -29,24 +29,28 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                     size: "large",
                 }}
             />
-            <FormikInput
-                name="name"
-                formik={formik}
-                formItemProps={{
-                    label: "Name",
-                }}
-                inputProps={{
-                    size: "large",
-                }}
-            />
             <Form.Item label="City" className="w-full">
                 <CitiesInput
                     className=""
                     size="large"
+                    value={formik.values.cityId}
                     onSelect={(_, option) => {
                         formik.setFieldValue("cityId", option.value);
                     }}
                 />
+            </Form.Item>
+            <Form.Item label={"Enabled"}>
+                <div className="flex items-center gap-2">
+                    <Switch
+                        checked={formik.values.enabled}
+                        onChange={async (checked) => {
+                            formik.setFieldValue("enabled", checked);
+                        }}
+                    />
+                    <span className="text-base">
+                        {formik.values.enabled ? "Active" : "Not active"}
+                    </span>
+                </div>
             </Form.Item>
             <FormikInput
                 name="street"

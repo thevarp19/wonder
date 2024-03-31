@@ -76,7 +76,7 @@ export const UpdateWorkingTimeInput: FC<UpdateWorkingTimeInputProps> = ({
                     }}
                 />
                 <Checkbox
-                    value={detailed}
+                    checked={detailed}
                     onChange={(e) => {
                         if (!e.target.checked) {
                             setValues((prev) =>
@@ -129,7 +129,7 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
             <div className={cn("flex items-center gap-2 w-28")}>
                 <Checkbox
                     defaultChecked={active}
-                    value={active}
+                    checked={active}
                     onChange={(e) => {
                         if (!e.target.checked) {
                             setValues((prev) => {

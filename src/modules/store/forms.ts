@@ -17,6 +17,7 @@ import {
     GetStoreResponse,
     UpdateStoreRequest,
 } from "./types";
+import { mapGetStoreToUpdate } from "./utils";
 
 const createStoreSchema = Yup.object().shape({
     kaspiId: requiredStringSchema(),
@@ -58,7 +59,7 @@ const updateStoreSchema = Yup.object().shape({
 });
 
 export const useUpdateStore = (
-    storeId: string,
+    storeId: number,
     initialValues: GetStoreResponse | undefined
 ) => {
     const mutation = updateStoreMutation(storeId);
@@ -81,20 +82,7 @@ export const useUpdateStore = (
     useEffect(() => {
         if (initialValues) {
             formik.resetForm({
-                values: {
-                    kaspiId: initialValues.kaspiId,
-                    cityId: initialValues.city.id,
-                    street: initialValues.street,
-                    apartment: initialValues.address,
-                    enabled: initialValues.enabled,
-                    dayOfWeekWorks: initialValues.availableWorkTimes.map(
-                        (item) => ({
-                            numericDayOfWeek: item.dayOfWeek,
-                            openTime: item.openTime,
-                            closeTime: item.closeTime,
-                        })
-                    ),
-                },
+                values: mapGetStoreToUpdate(initialValues),
             });
         }
     }, [initialValues]);
@@ -125,6 +113,7 @@ export const useBindBoxToStore = (storeId: string) => {
 
     async function handleSubmit() {
         await mutation.mutateAsync({ storeId, boxId: formik.values.boxId });
+        formik.resetForm();
     }
 
     return { formik, mutation };
