@@ -1,6 +1,6 @@
 import { useAppDispatch } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
-import { Button, Steps } from "antd";
+import { App, Button, Steps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
@@ -9,6 +9,7 @@ import {
     PackProductsStep,
 } from "../components/supply/steps";
 import { saveDateAndStore, saveProducts } from "../redux/supply/actions";
+import { useSupply } from "../redux/supply/selectors";
 
 interface SellerSupplyCreatePageProps {}
 const steps = [
@@ -20,6 +21,28 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [step, setStep] = useState(Number(searchParams.get("step")) || 0);
     const dispatch = useAppDispatch();
+    const supply = useSupply();
+    const { message } = App.useApp();
+    function nextStep() {
+        if (step === 0) {
+            if (supply.products.length === 0) {
+                message.error("Please add products");
+                return;
+            }
+            dispatch(saveProducts());
+        } else if (step === 1) {
+            if (!supply.store || !supply.date) {
+                message.error("Please choose store and date");
+                return;
+            }
+            dispatch(saveDateAndStore());
+        }
+
+        setSearchParams({ step: `${step + 1}` });
+        setStep((prev) => {
+            return prev + 1;
+        });
+    }
     return (
         <div className="min-h-full bg-white rounded-t-lg">
             <div className="p-4">
@@ -60,14 +83,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                         <Button
                             className={cn("")}
                             size="large"
-                            onClick={() => {
-                                dispatch(saveProducts());
-                                dispatch(saveDateAndStore());
-                                setSearchParams({ step: `${step + 1}` });
-                                setStep((prev) => {
-                                    return prev + 1;
-                                });
-                            }}
+                            onClick={nextStep}
                             type="primary"
                         >
                             Save

@@ -1,5 +1,6 @@
 import jwtService from "@/lib/jwt";
 import { getRoles } from "@/lib/jwt/decode";
+import { myLocalStorage } from "@/lib/storage/browserStorage";
 import { LoginResponse } from "@/modules/auth/types";
 import {
     LOGIN_SUCCESS,
@@ -23,5 +24,9 @@ export const sellerLoginSuccess = (data: LoginResponse): LoginSuccessAction => {
 
 export const sellerLogout = (): LogoutAction => {
     jwtService.removeJwt();
+    myLocalStorage?.remove("supply-products");
+    myLocalStorage?.remove("supply-packs");
+    myLocalStorage?.remove("supply-store");
+    myLocalStorage?.remove("supply-date");
     return { type: LOGOUT };
 };
