@@ -17,9 +17,9 @@ const columns: TableColumnsType<GetProductResponse> = [
     {
         title: "Published",
         dataIndex: "isPublished",
-        render: () => (
+        render: (_, record) => (
             <div className="flex items-center gap-2">
-                <Switch />
+                <Switch checked={record.enabled} />
             </div>
         ),
     },

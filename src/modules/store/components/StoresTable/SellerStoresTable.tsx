@@ -24,9 +24,9 @@ const columns: TableColumnsType<GetStoreResponse> = [
     },
     {
         title: "Status",
-        render: () => (
+        render: (_, record) => (
             <div className="flex items-center gap-2">
-                <Switch disabled />
+                <Switch disabled checked={record.enabled} />
                 <span>Active</span>
             </div>
         ),
@@ -38,7 +38,7 @@ export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
     return (
         <Table
             columns={columns}
-            dataSource={stores}
+            dataSource={stores?.sort((a, b) => a.id - b.id)}
             rowKey={"id"}
             loading={isPending}
         />
