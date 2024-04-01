@@ -11,7 +11,7 @@ interface UpdateStoreFormProps {}
 
 export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
     const { storeId } = useParams();
-    const { data: storeDetails } = useGetStore(`${storeId}`);
+    const { data: storeDetails } = useGetStore(Number(storeId));
     const { formik, mutation } = useUpdateStore(Number(storeId), storeDetails);
     return (
         <Form

@@ -1,9 +1,11 @@
 import { useAppDispatch } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
 import { PrinterOutlined } from "@ant-design/icons";
-import { App, Button, Steps } from "antd";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import { App, Button, Modal, Steps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { SupplyPDF } from "../components/SupplyPDF";
 import {
     AddProductsStep,
     ChooseDateAndStoreStep,
@@ -56,6 +58,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
             return prev + 1;
         });
     }
+    const [isModalOpen, setIsModalOpen] = useState(false);
     return (
         <div className="min-h-full bg-white rounded-t-lg">
             <div className="p-4">
@@ -112,12 +115,43 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             size="large"
                             onClick={() => {
                                 message.success("Supply created");
+                                setIsModalOpen(true);
                             }}
                             type="primary"
                         >
                             Print
                         </Button>
                     )}
+                    <Modal
+                        open={isModalOpen}
+                        onCancel={() => {
+                            setIsModalOpen(false);
+                        }}
+                        footer={(_, { CancelBtn }) => (
+                            <div className="flex items-center justify-end gap-4">
+                                <CancelBtn />
+                                <PDFDownloadLink
+                                    document={<SupplyPDF />}
+                                    fileName="somename.pdf"
+                                >
+                                    {({ loading }) =>
+                                        loading
+                                            ? "Loading document..."
+                                            : "Download now!"
+                                    }
+                                </PDFDownloadLink>
+                            </div>
+                        )}
+                        title="Print"
+                    >
+                        <PDFViewer
+                            showToolbar={true}
+                            width={"100%"}
+                            height={"100%"}
+                        >
+                            <SupplyPDF />
+                        </PDFViewer>
+                    </Modal>
                 </div>
             </div>
         </div>
