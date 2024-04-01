@@ -95,13 +95,13 @@ const PackProductItem: FC<{
                         value: e.product.id,
                     })
                 )}
-                value={value}
-                onChange={(value) => {
+                value={value.product.id}
+                onChange={(newValue: number) => {
                     const removedProducts = pack.products.filter(
                         (product) => product.product.id !== value.product.id
                     );
                     const newProduct = products.find(
-                        (product) => product.product.id === value.product.id
+                        (product) => product.product.id === newValue
                     );
                     if (newProduct) {
                         dispatch(
