@@ -1,5 +1,6 @@
 import { useAppDispatch } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
+import { PrinterOutlined } from "@ant-design/icons";
 import { App, Button, Steps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -7,6 +8,7 @@ import {
     AddProductsStep,
     ChooseDateAndStoreStep,
     PackProductsStep,
+    PrintStep,
 } from "../components/supply/steps";
 import {
     saveDateAndStore,
@@ -20,6 +22,7 @@ const steps = [
     <AddProductsStep />,
     <ChooseDateAndStoreStep />,
     <PackProductsStep />,
+    <PrintStep />,
 ];
 export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -40,6 +43,12 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                 return;
             }
             dispatch(saveDateAndStore());
+        } else if (step === 2) {
+            if (supply.packs.length === 0) {
+                message.error("Please create packs");
+                return;
+            }
+            dispatch(savePacks());
         }
 
         setSearchParams({ step: `${step + 1}` });
@@ -64,6 +73,10 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                         },
                         {
                             title: "Pack products",
+                        },
+                        {
+                            title: "Print",
+                            icon: <PrinterOutlined />,
                         },
                     ]}
                 />
@@ -98,12 +111,11 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             className={cn("")}
                             size="large"
                             onClick={() => {
-                                dispatch(savePacks());
                                 message.success("Supply created");
                             }}
                             type="primary"
                         >
-                            Finish
+                            Print
                         </Button>
                     )}
                 </div>

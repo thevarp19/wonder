@@ -12,7 +12,7 @@ export const useGetStores = () => {
     });
 };
 
-export const useGetStore = (id: string) => {
+export const useGetStore = (id: number) => {
     return useQuery<GetStoreResponse>({
         queryKey: [`store`, id],
         queryFn: async () => {

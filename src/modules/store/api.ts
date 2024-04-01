@@ -9,7 +9,7 @@ export function createStore(values: CreateStoreRequest) {
     return axiosAuthorized.post(`/api/stores`, values);
 }
 
-export function getStoreById(id: string) {
+export function getStoreById(id: number) {
     return axiosAuthorized.get<GetStoreResponse>(`/api/stores/details/${id}`);
 }
 
