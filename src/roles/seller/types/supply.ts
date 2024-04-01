@@ -6,8 +6,14 @@ export interface ProductQuantity {
     product: GetProductResponse;
 }
 
+export interface PackProduct {
+    id: string;
+    product: GetProductResponse;
+    quantity: number;
+}
+
 export interface SupplyPack {
-    products: ProductQuantity[];
+    products: PackProduct[];
     box: GetBoxResponse;
     id: string;
 }

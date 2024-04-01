@@ -10,11 +10,14 @@ import { Button, Card, InputNumber, Popconfirm, Select } from "antd";
 import { FC } from "react";
 import { v4 as uuid } from "uuid";
 import * as actions from "../../../redux/supply/actions";
+
 interface PackProductsStepProps {}
+
 export const PackProductsStep: FC<PackProductsStepProps> = ({}) => {
     const packs = useSupplyPacks();
     const dispatch = useAppDispatch();
     const { data: boxes } = useGetBoxes();
+
     return (
         <div>
             <h1 className="mb-4 text-2xl font-semibold">Packing</h1>
@@ -82,10 +85,11 @@ const findNextProductOption = (
 
 const PackProductItem: FC<{
     pack: SupplyPack;
-    value: ProductQuantity;
-}> = ({ pack, value }) => {
+    id: string;
+}> = ({ pack, id }) => {
     const products = useSupplyProducts();
     const dispatch = useAppDispatch();
+    const value = pack.products.find((p) => p.id == id)!;
     return (
         <div className="flex gap-4">
             <Select
@@ -97,9 +101,6 @@ const PackProductItem: FC<{
                 )}
                 value={value.product.id}
                 onChange={(newValue: number) => {
-                    const removedProducts = pack.products.filter(
-                        (product) => product.product.id !== value.product.id
-                    );
                     const newProduct = products.find(
                         (product) => product.product.id === newValue
                     );
@@ -107,13 +108,15 @@ const PackProductItem: FC<{
                         dispatch(
                             actions.updatePack({
                                 ...pack,
-                                products: [
-                                    ...removedProducts,
-                                    {
-                                        product: newProduct.product,
-                                        quantity: 0,
-                                    },
-                                ],
+                                products: pack.products.map((p) =>
+                                    p.id !== id
+                                        ? p
+                                        : {
+                                              id,
+                                              product: newProduct.product,
+                                              quantity: 0,
+                                          }
+                                ),
                             })
                         );
                     }
@@ -127,7 +130,28 @@ const PackProductItem: FC<{
                 }
                 className="w-96"
             />
-            <InputNumber value={value.quantity} />
+            <span>{value.product.name}</span>
+            <InputNumber
+                value={value.quantity}
+                onChange={(newValue) => {
+                    if (newValue) {
+                        dispatch(
+                            actions.updatePack({
+                                ...pack,
+                                products: pack.products.map((p) =>
+                                    p.id !== id
+                                        ? p
+                                        : {
+                                              id,
+                                              product: p.product,
+                                              quantity: newValue,
+                                          }
+                                ),
+                            })
+                        );
+                    }
+                }}
+            />
             <DeleteOutlined
                 style={{ fontSize: "20px", cursor: "pointer" }}
                 onClick={() => {
@@ -135,8 +159,7 @@ const PackProductItem: FC<{
                         actions.updatePack({
                             ...pack,
                             products: pack.products.filter(
-                                (product) =>
-                                    product.product.id !== value.product.id
+                                (product) => product.id !== id
                             ),
                         })
                     );
@@ -171,7 +194,11 @@ const PackItem: FC<{ pack: SupplyPack }> = ({ pack }) => {
         >
             <div className="flex flex-col gap-4">
                 {pack.products.map((product) => (
-                    <PackProductItem key={uuid()} pack={pack} value={product} />
+                    <PackProductItem
+                        key={product.id}
+                        id={product.id}
+                        pack={pack}
+                    />
                 ))}
             </div>
             <div className="flex gap-4 mt-4">
@@ -187,6 +214,7 @@ const PackItem: FC<{ pack: SupplyPack }> = ({ pack }) => {
                                         {
                                             product: product.product,
                                             quantity: 0,
+                                            id: uuid(),
                                         },
                                     ],
                                 })
