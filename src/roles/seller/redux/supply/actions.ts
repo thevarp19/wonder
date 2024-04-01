@@ -46,9 +46,19 @@ export const saveProducts = (): types.SaveProducts => {
     };
 };
 
-export const addPack = (box: GetBoxResponse): types.AddPack => {
+export const addPack = (pack: SupplyPack, index: number): types.AddPack => {
     return {
         type: types.ADD_PACK,
+        payload: {
+            pack,
+            index,
+        },
+    };
+};
+
+export const createPack = (box: GetBoxResponse): types.CreatePack => {
+    return {
+        type: types.CREATE_PACK,
         payload: {
             box,
         },

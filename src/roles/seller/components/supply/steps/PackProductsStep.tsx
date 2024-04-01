@@ -5,7 +5,7 @@ import {
     useSupplyProducts,
 } from "@/roles/seller/redux/supply/selectors";
 import { ProductQuantity, SupplyPack } from "@/roles/seller/types/supply";
-import { DeleteOutlined } from "@ant-design/icons";
+import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Card, InputNumber, Popconfirm, Select } from "antd";
 import { FC } from "react";
 import { v4 as uuid } from "uuid";
@@ -16,14 +16,13 @@ interface PackProductsStepProps {}
 export const PackProductsStep: FC<PackProductsStepProps> = ({}) => {
     const packs = useSupplyPacks();
     const dispatch = useAppDispatch();
-    const { data: boxes } = useGetBoxes();
 
     return (
         <div>
             <h1 className="mb-4 text-2xl font-semibold">Packing</h1>
             <div className="flex flex-col gap-4">
                 {packs.map((pack, index) => (
-                    <PackItem key={index} pack={pack} />
+                    <PackItem key={pack.id} pack={pack} index={index} />
                 ))}
             </div>
             <Button
@@ -31,7 +30,7 @@ export const PackProductsStep: FC<PackProductsStepProps> = ({}) => {
                 size="large"
                 className="mt-4"
                 onClick={() => {
-                    dispatch(actions.addPack(boxes?.[0]!));
+                    dispatch(actions.createPack(findNextBoxOption(packs)));
                 }}
             >
                 Add a new pack
@@ -81,6 +80,10 @@ const findNextProductOption = (
                 (product) => product.product.id === option.product.id
             )
     );
+};
+
+const findNextBoxOption = (packs: SupplyPack[]) => {
+    return packs?.map((p) => p.box)[packs.length - 1];
 };
 
 const PackProductItem: FC<{
@@ -169,7 +172,7 @@ const PackProductItem: FC<{
     );
 };
 
-const PackItem: FC<{ pack: SupplyPack }> = ({ pack }) => {
+const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
     const dispatch = useAppDispatch();
     const products = useSupplyProducts();
     return (
@@ -189,6 +192,19 @@ const PackItem: FC<{ pack: SupplyPack }> = ({ pack }) => {
                             Delete
                         </Button>
                     </Popconfirm>
+                    <Button
+                        icon={<CopyOutlined />}
+                        onClick={() => {
+                            dispatch(
+                                actions.addPack(
+                                    { ...pack, id: uuid() },
+                                    index + 1
+                                )
+                            );
+                        }}
+                    >
+                        Copy
+                    </Button>
                 </div>
             }
         >

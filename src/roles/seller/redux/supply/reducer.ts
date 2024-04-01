@@ -47,6 +47,16 @@ export const sellerSupplyReducer = (
         case types.SET_PRODUCTS:
             return { ...state, products: action.payload };
         case types.ADD_PACK:
+            const newPacks = [
+                ...state.packs.slice(0, action.payload.index),
+                action.payload.pack,
+                ...state.packs.slice(action.payload.index),
+            ];
+            return {
+                ...state,
+                packs: newPacks,
+            };
+        case types.CREATE_PACK:
             return {
                 ...state,
                 packs: [
