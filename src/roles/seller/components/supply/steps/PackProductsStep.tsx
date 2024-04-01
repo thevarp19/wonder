@@ -4,13 +4,13 @@ import {
     useSupplyPacks,
     useSupplyProducts,
 } from "@/roles/seller/redux/supply/selectors";
-import { SupplyPack } from "@/roles/seller/types/supply";
+import { ProductQuantity, SupplyPack } from "@/roles/seller/types/supply";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Card, InputNumber, Popconfirm, Select } from "antd";
 import { FC } from "react";
+import { v4 as uuid } from "uuid";
 import * as actions from "../../../redux/supply/actions";
 interface PackProductsStepProps {}
-
 export const PackProductsStep: FC<PackProductsStepProps> = ({}) => {
     const packs = useSupplyPacks();
     const dispatch = useAppDispatch();
@@ -56,25 +56,99 @@ const BoxSelect: FC<{ pack: SupplyPack }> = ({ pack }) => {
     );
 };
 
-const PackProductItem: FC<{ pack: SupplyPack }> = ({ pack }) => {
+const getAvailableProductOptions = (
+    pack: SupplyPack,
+    products: ProductQuantity[]
+) => {
+    return products.filter(
+        (product) =>
+            !pack.products.find(
+                (packProduct) => packProduct.product.id === product.product.id
+            )
+    );
+};
+
+const findNextProductOption = (
+    pack: SupplyPack,
+    productOptions: ProductQuantity[]
+) => {
+    return productOptions.find(
+        (option) =>
+            !pack.products.find(
+                (product) => product.product.id === option.product.id
+            )
+    );
+};
+
+const PackProductItem: FC<{
+    pack: SupplyPack;
+    value: ProductQuantity;
+}> = ({ pack, value }) => {
     const products = useSupplyProducts();
+    const dispatch = useAppDispatch();
     return (
         <div className="flex gap-4">
             <Select
-                options={products.map((e) => ({
-                    label: `${e.product.name} - ${e.quantity} шт.`,
-                    value: e.product.id,
-                }))}
+                options={getAvailableProductOptions(pack, products).map(
+                    (e) => ({
+                        label: `${e.product.name} - ${e.quantity} шт.`,
+                        value: e.product.id,
+                    })
+                )}
+                value={value}
+                onChange={(value) => {
+                    const removedProducts = pack.products.filter(
+                        (product) => product.product.id !== value.product.id
+                    );
+                    const newProduct = products.find(
+                        (product) => product.product.id === value.product.id
+                    );
+                    if (newProduct) {
+                        dispatch(
+                            actions.updatePack({
+                                ...pack,
+                                products: [
+                                    ...removedProducts,
+                                    {
+                                        product: newProduct.product,
+                                        quantity: 0,
+                                    },
+                                ],
+                            })
+                        );
+                    }
+                }}
+                showSearch
+                filterOption={(input, option) =>
+                    !!option?.label
+                        ?.toString()
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                }
                 className="w-96"
             />
-            <InputNumber defaultValue={0} />
-            <DeleteOutlined style={{ fontSize: "20px", cursor: "pointer" }} />
+            <InputNumber value={value.quantity} />
+            <DeleteOutlined
+                style={{ fontSize: "20px", cursor: "pointer" }}
+                onClick={() => {
+                    dispatch(
+                        actions.updatePack({
+                            ...pack,
+                            products: pack.products.filter(
+                                (product) =>
+                                    product.product.id !== value.product.id
+                            ),
+                        })
+                    );
+                }}
+            />
         </div>
     );
 };
 
 const PackItem: FC<{ pack: SupplyPack }> = ({ pack }) => {
     const dispatch = useAppDispatch();
+    const products = useSupplyProducts();
     return (
         <Card
             title={
@@ -95,12 +169,33 @@ const PackItem: FC<{ pack: SupplyPack }> = ({ pack }) => {
                 </div>
             }
         >
-            <div className="flex gap-4">
-                <PackProductItem pack={pack} />
+            <div className="flex flex-col gap-4">
+                {pack.products.map((product) => (
+                    <PackProductItem key={uuid()} pack={pack} value={product} />
+                ))}
             </div>
             <div className="flex gap-4 mt-4">
-                <Button>Add product</Button>
-                <Button type="primary">Save changes</Button>
+                <Button
+                    onClick={() => {
+                        const product = findNextProductOption(pack, products);
+                        if (product) {
+                            dispatch(
+                                actions.updatePack({
+                                    ...pack,
+                                    products: [
+                                        ...pack.products,
+                                        {
+                                            product: product.product,
+                                            quantity: 0,
+                                        },
+                                    ],
+                                })
+                            );
+                        }
+                    }}
+                >
+                    Add product
+                </Button>
             </div>
         </Card>
     );
