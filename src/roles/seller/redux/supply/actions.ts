@@ -1,7 +1,7 @@
 import { GetBoxResponse } from "@/modules/box/types";
 import { GetProductResponse } from "@/modules/product/types";
 import { GetStoreResponse } from "@/modules/store/types";
-import { ProductQuantity, SupplyPack } from "../../types/supply";
+import { SupplyPack } from "../../types/supply";
 import * as types from "./types";
 
 export const addProduct = (product: GetProductResponse): types.AddProducts => {
@@ -46,18 +46,11 @@ export const saveProducts = (): types.SaveProducts => {
     };
 };
 
-export const addPack = (
-    products: ProductQuantity[],
-    store: GetStoreResponse,
-    box: GetBoxResponse
-): types.AddPack => {
+export const addPack = (box: GetBoxResponse): types.AddPack => {
     return {
         type: types.ADD_PACK,
         payload: {
-            products,
-            store,
             box,
-            data: "",
         },
     };
 };
@@ -76,9 +69,9 @@ export const updatePack = (pack: SupplyPack): types.UpdatePack => {
     };
 };
 
-export const savePack = (): types.SavePack => {
+export const savePacks = (): types.SavePacks => {
     return {
-        type: types.SAVE_PACK,
+        type: types.SAVE_PACKS,
     };
 };
 

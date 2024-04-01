@@ -8,7 +8,11 @@ import {
     ChooseDateAndStoreStep,
     PackProductsStep,
 } from "../components/supply/steps";
-import { saveDateAndStore, saveProducts } from "../redux/supply/actions";
+import {
+    saveDateAndStore,
+    savePacks,
+    saveProducts,
+} from "../redux/supply/actions";
 import { useSupply } from "../redux/supply/selectors";
 
 interface SellerSupplyCreatePageProps {}
@@ -87,6 +91,19 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             type="primary"
                         >
                             Save
+                        </Button>
+                    )}
+                    {step === steps.length - 1 && (
+                        <Button
+                            className={cn("")}
+                            size="large"
+                            onClick={() => {
+                                dispatch(savePacks());
+                                message.success("Supply created");
+                            }}
+                            type="primary"
+                        >
+                            Finish
                         </Button>
                     )}
                 </div>

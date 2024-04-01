@@ -11,7 +11,7 @@ export const SAVE_PRODUCTS = "SUPPLY_SAVE_PRODUCTS";
 export const ADD_PACK = "SUPPLY_ADD_PACK";
 export const REMOVE_PACK = "SUPPLY_REMOVE_PACK";
 export const UPDATE_PACK = "SUPPLY_UPDATE_PACK";
-export const SAVE_PACK = "SUPPLY_SAVE_PACK";
+export const SAVE_PACKS = "SUPPLY_SAVE_PACKS";
 
 export const SET_STORE = "SUPPLY_SET_STORE";
 export const SET_DATE = "SUPPLY_SET_DATE";
@@ -47,10 +47,7 @@ export interface SaveProducts {
 export interface AddPack {
     type: typeof ADD_PACK;
     payload: {
-        products: ProductQuantity[];
-        store: GetStoreResponse;
         box: GetBoxResponse;
-        data: string;
     };
 }
 
@@ -64,8 +61,8 @@ export interface UpdatePack {
     payload: SupplyPack;
 }
 
-export interface SavePack {
-    type: typeof SAVE_PACK;
+export interface SavePacks {
+    type: typeof SAVE_PACKS;
 }
 
 export interface SetStore {
@@ -91,7 +88,7 @@ export type SupplyActions =
     | RemovePack
     | UpdatePack
     | SaveProducts
-    | SavePack
+    | SavePacks
     | SetStore
     | SetDate
     | SaveDateAndStore;

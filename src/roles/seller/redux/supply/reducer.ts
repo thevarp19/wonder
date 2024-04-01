@@ -1,5 +1,6 @@
 import { myLocalStorage } from "@/lib/storage/browserStorage";
 import { GetStoreResponse } from "@/modules/store/types";
+import { v4 as uuidv4 } from "uuid";
 import { ProductQuantity, SupplyPack } from "../../types/supply";
 import * as types from "./types";
 
@@ -50,7 +51,7 @@ export const sellerSupplyReducer = (
                 ...state,
                 packs: [
                     ...state.packs,
-                    { ...action.payload, id: `${state.packs.length}` },
+                    { ...action.payload, products: [], id: uuidv4() },
                 ],
             };
         case types.REMOVE_PACK:
@@ -68,7 +69,7 @@ export const sellerSupplyReducer = (
         case types.SAVE_PRODUCTS:
             myLocalStorage?.set("supply-products", state.products);
             return state;
-        case types.SAVE_PACK:
+        case types.SAVE_PACKS:
             myLocalStorage?.set("supply-packs", state.packs);
             return state;
         case types.SAVE_DATE_AND_STORE:
