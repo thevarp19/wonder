@@ -86,19 +86,43 @@ const findNextBoxOption = (packs: SupplyPack[]) => {
     return packs?.map((p) => p.box)[packs.length - 1];
 };
 
+const getAvailableProductQuantity = (
+    packs: SupplyPack[],
+    packId: string,
+    products: ProductQuantity[],
+    productId: number
+) => {
+    const productRoot = products.find((p) => p.product.id === productId);
+    if (!productRoot) return 0;
+    let usedProductsCount = 0;
+    packs.forEach((pack) => {
+        if (pack.id != packId) {
+            const tempProduct = pack.products.find(
+                (p) => p.product.id === productId
+            );
+            if (tempProduct) {
+                usedProductsCount += tempProduct.quantity;
+            }
+        }
+    });
+    console.log(productRoot.quantity, usedProductsCount);
+    return productRoot.quantity - usedProductsCount;
+};
+
 const PackProductItem: FC<{
     pack: SupplyPack;
     id: string;
 }> = ({ pack, id }) => {
     const products = useSupplyProducts();
+    const packs = useSupplyPacks();
     const dispatch = useAppDispatch();
     const value = pack.products.find((p) => p.id == id)!;
     return (
-        <div className="flex gap-4">
+        <div className="flex items-center gap-4">
             <Select
                 options={getAvailableProductOptions(pack, products).map(
                     (e) => ({
-                        label: `${e.product.name} - ${e.quantity} шт.`,
+                        label: `${e.product.name} - max: ${e.quantity} шт.`,
                         value: e.product.id,
                     })
                 )}
@@ -133,7 +157,14 @@ const PackProductItem: FC<{
                 }
                 className="w-96"
             />
-            <span>{value.product.name}</span>
+            <span>
+                {value.product.name} - max:{" "}
+                {
+                    products.find((p) => p.product.id == value.product.id)
+                        ?.quantity
+                }{" "}
+                шт.
+            </span>
             <InputNumber
                 value={value.quantity}
                 onChange={(newValue) => {
@@ -147,7 +178,15 @@ const PackProductItem: FC<{
                                         : {
                                               id,
                                               product: p.product,
-                                              quantity: newValue,
+                                              quantity: Math.min(
+                                                  newValue,
+                                                  getAvailableProductQuantity(
+                                                      packs,
+                                                      pack.id,
+                                                      products,
+                                                      value.product.id
+                                                  )
+                                              ),
                                           }
                                 ),
                             })
@@ -175,6 +214,7 @@ const PackProductItem: FC<{
 const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
     const dispatch = useAppDispatch();
     const products = useSupplyProducts();
+    const packs = useSupplyPacks();
     return (
         <Card
             title={
@@ -197,7 +237,22 @@ const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
                         onClick={() => {
                             dispatch(
                                 actions.addPack(
-                                    { ...pack, id: uuid() },
+                                    {
+                                        ...pack,
+                                        id: uuid(),
+                                        products: pack.products.map((p) => ({
+                                            ...p,
+                                            quantity: Math.min(
+                                                getAvailableProductQuantity(
+                                                    packs,
+                                                    "",
+                                                    products,
+                                                    p.product.id
+                                                ),
+                                                p.quantity
+                                            ),
+                                        })),
+                                    },
                                     index + 1
                                 )
                             );
