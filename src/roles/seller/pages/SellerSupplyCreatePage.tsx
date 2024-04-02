@@ -131,7 +131,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             <div className="flex items-center justify-end gap-4">
                                 <CancelBtn />
                                 <PDFDownloadLink
-                                    document={<SupplyPDF />}
+                                    document={<SupplyPDF supply={supply} />}
                                     fileName="somename.pdf"
                                 >
                                     {({ loading }) =>
@@ -149,7 +149,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             width={"100%"}
                             height={"100%"}
                         >
-                            <SupplyPDF />
+                            <SupplyPDF supply={supply} />
                         </PDFViewer>
                     </Modal>
                 </div>

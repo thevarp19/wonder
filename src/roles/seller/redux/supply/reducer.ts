@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ProductQuantity, SupplyPack } from "../../types/supply";
 import * as types from "./types";
 
-interface SupplyState {
+export interface SupplyState {
     products: ProductQuantity[];
     packs: SupplyPack[];
     store: GetStoreResponse | null;
