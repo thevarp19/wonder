@@ -1,3 +1,4 @@
+import { useGetStore } from "@/modules/store/queries";
 import { useAppDispatch } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
 import { PrinterOutlined } from "@ant-design/icons";
@@ -58,6 +59,8 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
             return prev + 1;
         });
     }
+    // @ts-ignore
+    const { data: store } = useGetStore(supply?.store || -1);
     const [isModalOpen, setIsModalOpen] = useState(false);
     return (
         <div className="min-h-full bg-white rounded-t-lg">
@@ -131,7 +134,12 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             <div className="flex items-center justify-end gap-4">
                                 <CancelBtn />
                                 <PDFDownloadLink
-                                    document={<SupplyPDF supply={supply} />}
+                                    document={
+                                        <SupplyPDF
+                                            supply={supply}
+                                            store={store}
+                                        />
+                                    }
                                     fileName="somename.pdf"
                                 >
                                     {({ loading }) =>
@@ -149,7 +157,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             width={"100%"}
                             height={"100%"}
                         >
-                            <SupplyPDF supply={supply} />
+                            <SupplyPDF supply={supply} store={store} />
                         </PDFViewer>
                     </Modal>
                 </div>
