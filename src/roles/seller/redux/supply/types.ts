@@ -13,6 +13,7 @@ export const ADD_PACK = "SUPPLY_ADD_PACK";
 export const REMOVE_PACK = "SUPPLY_REMOVE_PACK";
 export const UPDATE_PACK = "SUPPLY_UPDATE_PACK";
 export const SAVE_PACKS = "SUPPLY_SAVE_PACKS";
+export const SET_PACKS = "SUPPLY_SET_PACKS";
 
 export const SET_STORE = "SUPPLY_SET_STORE";
 export const SET_DATE = "SUPPLY_SET_DATE";
@@ -69,6 +70,11 @@ export interface UpdatePack {
 
 export interface SavePacks {
     type: typeof SAVE_PACKS;
+}
+
+export interface SetPacks {
+    type: typeof SET_PACKS;
+    payload: SupplyPack[];
 }
 
 export interface SetStore {

@@ -261,13 +261,20 @@ const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
             }
         >
             <div className="flex flex-col gap-4">
-                {pack.products.map((product) => (
-                    <PackProductItem
-                        key={product.id}
-                        id={product.id}
-                        pack={pack}
-                    />
-                ))}
+                {pack.products
+                    .filter(
+                        (product) =>
+                            products.find(
+                                (p) => p.product.id == product.product.id
+                            )?.quantity !== undefined
+                    )
+                    .map((product) => (
+                        <PackProductItem
+                            key={product.id}
+                            id={product.id}
+                            pack={pack}
+                        />
+                    ))}
             </div>
             <div className="flex gap-4 mt-4">
                 <Button

@@ -1,3 +1,4 @@
+import { DeleteButton } from "@/components/ui/DeleteButton";
 import { ProductsUploadFromFile } from "@/modules/product/components/ProductsUploadFromFile";
 import { useGetProducts } from "@/modules/product/queries";
 import { useAppDispatch } from "@/redux/utils";
@@ -65,14 +66,11 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
         {
             title: "Delete",
             render: (_, record) => (
-                <Button
-                    danger
-                    onClick={() => {
+                <DeleteButton
+                    onConfirm={() => {
                         dispatch(actions.removeProduct(record.product.id));
                     }}
-                >
-                    Delete
-                </Button>
+                />
             ),
         },
     ];

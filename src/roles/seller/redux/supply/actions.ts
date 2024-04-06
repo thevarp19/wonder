@@ -79,6 +79,22 @@ export const updatePack = (pack: SupplyPack): types.UpdatePack => {
     };
 };
 
+export const setPacks = (packs: SupplyPack[]): types.SetPacks => {
+    return {
+        type: types.SET_PACKS,
+        payload: packs,
+    };
+};
+
+// export const upgradePacks = (upgrade: (packs: SupplyPack[]) => SupplyPack[]) => {
+//     return (dispatch, getState) => {
+//         const currentState = getState();
+//         const currentPacks = currentState.packs;
+//         const modifiedPacks = upgrade(currentPacks);
+//         dispatch(setPacks(modifiedPacks));
+//     };
+// };
+
 export const savePacks = (): types.SavePacks => {
     return {
         type: types.SAVE_PACKS,

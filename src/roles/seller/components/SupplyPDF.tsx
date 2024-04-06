@@ -39,6 +39,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         fontSize: 8,
     },
+    pack: {
+        width: "30%",
+        fontSize: 10,
+        padding: 10,
+        border: 1,
+    },
 });
 
 const ProductBlock = ({
@@ -60,7 +66,7 @@ const ProductBlock = ({
     );
 };
 
-const PackBlock = ({ pack }: { pack: SupplyPack }) => {
+const ProductsBlock = ({ pack }: { pack: SupplyPack }) => {
     return (
         <>
             {pack.products.map((product) => (
@@ -71,6 +77,26 @@ const PackBlock = ({ pack }: { pack: SupplyPack }) => {
                 />
             ))}
         </>
+    );
+};
+
+const PackBlock = ({ pack }: { pack: SupplyPack }) => {
+    return (
+        <View style={styles.pack}>
+            <Text>Box id: {Date.now()}</Text>
+            <Text>Box type: 100x200x300</Text>
+            <Text> </Text>
+            <Text>Products:</Text>
+            <View>
+                {pack.products.map((product, index) => (
+                    <Text key={`${product.id}-${pack.id}`}>
+                        {index + 1}
+                        {" - "}
+                        Phone, {product.quantity} pcs
+                    </Text>
+                ))}
+            </View>
+        </View>
     );
 };
 
@@ -85,11 +111,44 @@ export const SupplyPDF = ({
             <Page size="A4">
                 <View style={styles.header}>
                     <Text>Date: {supply.date}</Text>
+                    <Text>Store: Almaty, Street, 2</Text>
                 </View>
                 <View style={styles.root}>
                     <View style={styles.grid}>
                         {supply.packs.map((pack) => (
                             <PackBlock key={pack.id} pack={pack} />
+                        ))}
+                    </View>
+                </View>
+            </Page>
+            <Page size="A4">
+                <View style={styles.header}>
+                    <Text>Boxes</Text>
+                </View>
+                <View style={styles.root}>
+                    <View style={styles.grid}>
+                        {supply.packs.map((pack) => (
+                            <View style={styles.product} key={pack.id}>
+                                <Image
+                                    style={styles.barcode}
+                                    src={generateBarcodeBase64(`${Date.now()}`)}
+                                />
+                                <Text>Wonder</Text>
+                                <Text>Almaty</Text>
+                                <Text>937491829384</Text>
+                            </View>
+                        ))}
+                    </View>
+                </View>
+            </Page>
+            <Page size="A4">
+                <View style={styles.header}>
+                    <Text>Products</Text>
+                </View>
+                <View style={styles.root}>
+                    <View style={styles.grid}>
+                        {supply.packs.map((pack) => (
+                            <ProductsBlock key={pack.id} pack={pack} />
                         ))}
                     </View>
                 </View>
