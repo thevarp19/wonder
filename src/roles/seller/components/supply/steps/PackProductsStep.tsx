@@ -126,8 +126,13 @@ const PackProductItem: FC<{
                         value: e.product.id,
                     })
                 )}
-                value={value.product.id}
+                // @ts-ignore
+                value={`${value.product.name} - max: ${
+                    products.find((p) => p.product.id == value.product.id)
+                        ?.quantity
+                } шт.`}
                 onChange={(newValue: number) => {
+                    console.log(newValue);
                     const newProduct = products.find(
                         (product) => product.product.id === newValue
                     );
@@ -157,14 +162,6 @@ const PackProductItem: FC<{
                 }
                 className="w-96"
             />
-            <span>
-                {value.product.name} - max:{" "}
-                {
-                    products.find((p) => p.product.id == value.product.id)
-                        ?.quantity
-                }{" "}
-                шт.
-            </span>
             <InputNumber
                 value={value.quantity}
                 onChange={(newValue) => {
@@ -219,7 +216,7 @@ const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
         <Card
             title={
                 <div className="flex gap-4">
-                    <h2>{pack.id}</h2>
+                    {/* <h2>{pack.id}</h2> */}
                     <BoxSelect pack={pack} />
                     <Popconfirm
                         title="Delete the pack"

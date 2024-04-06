@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
 
 const ProductBlock = ({
     product,
-    pack,
 }: {
     product: GetProductResponse;
     pack: SupplyPack;
@@ -77,7 +76,6 @@ const PackBlock = ({ pack }: { pack: SupplyPack }) => {
 
 export const SupplyPDF = ({
     supply,
-    store,
 }: {
     supply: SupplyState;
     store?: GetStoreResponse;

@@ -2,9 +2,10 @@ import { useGetStores } from "@/modules/store/queries";
 import { useSupply } from "@/roles/seller/redux/supply/selectors";
 import { App, DatePicker, Select } from "antd";
 import dayjs, { Dayjs } from "dayjs";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 
 import { GetStoreResponse } from "@/modules/store/types";
+import { getStoreFullAddress } from "@/modules/store/utils";
 import { useAppDispatch } from "@/redux/utils";
 import * as actions from "@/roles/seller/redux/supply/actions";
 
@@ -25,7 +26,7 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
         dispatch(actions.setStore(store));
     }
     const { data: stores, isPending } = useGetStores();
-    useEffect(() => {}, [date]);
+
     return (
         <div>
             <h1 className="text-2xl font-semibold">
@@ -45,12 +46,19 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
                     placeholder={"Choose a store"}
                     className="w-80"
                     options={stores?.map((store) => ({
-                        label: store.kaspiId,
+                        label: getStoreFullAddress(store),
                         value: store.id,
                     }))}
                     value={store}
                     onChange={onStoreChange}
                     loading={isPending}
+                    showSearch
+                    filterOption={(input, option) =>
+                        !!option?.label
+                            ?.toString()
+                            .toLowerCase()
+                            .includes(input.toLowerCase())
+                    }
                 />
             </div>
         </div>
