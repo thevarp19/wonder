@@ -140,7 +140,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                                             store={store}
                                         />
                                     }
-                                    fileName="somename.pdf"
+                                    fileName={`Supply-${Date.now()}.pdf`}
                                 >
                                     {({ loading }) =>
                                         loading

@@ -38,6 +38,8 @@ const styles = StyleSheet.create({
         gap: 3,
         alignItems: "center",
         fontSize: 8,
+        padding: 10,
+        border: 1,
     },
     pack: {
         width: "30%",
@@ -61,7 +63,7 @@ const ProductBlock = ({
             />
             <Text>Wonder</Text>
             <Text>101933090_801930</Text>
-            <Text>937491829384</Text>
+            <Text>{Date.now()}</Text>
         </View>
     );
 };
@@ -83,8 +85,9 @@ const ProductsBlock = ({ pack }: { pack: SupplyPack }) => {
 const PackBlock = ({ pack }: { pack: SupplyPack }) => {
     return (
         <View style={styles.pack}>
-            <Text>Box id: {Date.now()}</Text>
-            <Text>Box type: 100x200x300</Text>
+            <Text>Box barcode: {Date.now()}</Text>
+            <Text>Box type: Monopolet</Text>
+            <Text>Box size: 100x200x300</Text>
             <Text> </Text>
             <Text>Products:</Text>
             <View>
@@ -92,7 +95,7 @@ const PackBlock = ({ pack }: { pack: SupplyPack }) => {
                     <Text key={`${product.id}-${pack.id}`}>
                         {index + 1}
                         {" - "}
-                        Phone, {product.quantity} pcs
+                        Phone, {product.quantity} items
                     </Text>
                 ))}
             </View>
@@ -110,8 +113,16 @@ export const SupplyPDF = ({
         <Document>
             <Page size="A4">
                 <View style={styles.header}>
+                    <Text>
+                        Creation date:{" "}
+                        {new Date()
+                            .toLocaleDateString("ru-RU")
+                            .replace(".", "-")
+                            .replace(".", "-")}
+                    </Text>
                     <Text>Date: {supply.date}</Text>
                     <Text>Store: Almaty, Street, 2</Text>
+                    <Text>Supply id: {Date.now()}</Text>
                 </View>
                 <View style={styles.root}>
                     <View style={styles.grid}>
