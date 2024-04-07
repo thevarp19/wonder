@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     barcode: {
-        width: 120,
+        width: 100,
     },
     product: {
         flexDirection: "column",
