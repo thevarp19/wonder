@@ -2,6 +2,7 @@ import { GetProductResponse } from "@/modules/product/types";
 import { GetStoreResponse } from "@/modules/store/types";
 import {
     Document,
+    Font,
     Image,
     Page,
     StyleSheet,
@@ -11,6 +12,11 @@ import {
 import JsBarcode from "jsbarcode";
 import { SupplyState } from "../redux/supply/reducer";
 import { SupplyPack } from "../types/supply";
+
+Font.register({
+    family: "Roboto",
+    src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf",
+});
 
 const styles = StyleSheet.create({
     grid: {
@@ -46,6 +52,9 @@ const styles = StyleSheet.create({
         fontSize: 10,
         padding: 10,
         border: 1,
+    },
+    anchor: {
+        fontFamily: "Roboto",
     },
 });
 
@@ -111,7 +120,12 @@ export const SupplyPDF = ({
 }) => {
     return (
         <Document>
-            <Page size="A4">
+            <Page
+                size="A4"
+                orientation={"portrait"}
+                wrap={true}
+                style={styles.anchor}
+            >
                 <View style={styles.header}>
                     <Text>
                         Creation date:{" "}
@@ -121,7 +135,7 @@ export const SupplyPDF = ({
                             .replace(".", "-")}
                     </Text>
                     <Text>Date: {supply.date}</Text>
-                    <Text>Store: Almaty, Street, 2</Text>
+                    <Text>Store: Алматы, Street, 2</Text>
                     <Text>Supply id: {Date.now()}</Text>
                 </View>
                 <View style={styles.root}>
