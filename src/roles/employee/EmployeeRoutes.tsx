@@ -3,7 +3,11 @@ import { useAppSelector } from "@/redux/utils";
 import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { EmployeeLayout } from "./EmployeeLayout";
-import { EmployeeLoginPage, EmployeeSuppliesPage } from "./pages";
+import {
+    EmployeeLoginPage,
+    EmployeeSuppliesPage,
+    SupplyDetailsPage,
+} from "./pages";
 
 interface EmployeeRoutesProps {}
 
@@ -37,6 +41,10 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                     <Route
                         path="/supplies"
                         element={<EmployeeSuppliesPage />}
+                    />
+                    <Route
+                        path="/supplies/:supplyId"
+                        element={<SupplyDetailsPage />}
                     />
                 </Route>
             </Route>

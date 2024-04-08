@@ -1,5 +1,6 @@
 import { WeeklyCalendar } from "@purjayadi/antd-weekly-calendar";
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { GetSuppliesByDate } from "../../types";
 
 interface SupplyEvent {
@@ -24,7 +25,7 @@ function mapDatesToEvents(dates: GetSuppliesByDate[]): SupplyEvent[] {
         date.supplies.forEach((supply) => {
             result.push({
                 startTime: new Date(year, month, day, hour++),
-                endTime: new Date(year, month, day, hour++),
+                endTime: new Date(year, month, day, hour),
                 // @ts-ignore
                 title: (
                     <span
@@ -35,9 +36,14 @@ function mapDatesToEvents(dates: GetSuppliesByDate[]): SupplyEvent[] {
                             whiteSpace: "nowrap",
                         }}
                     >
-                        <span>{Date.now()}</span>
+                        <Link
+                            className="!underline"
+                            to={`/employee/supplies/${supply.supplyId}`}
+                        >
+                            {Date.now()}
+                        </Link>
                         <span>{supply.sellerName}</span>
-                        <span>{supply.supplyState}</span>
+                        <span className="uppercase">{supply.supplyState}</span>
                     </span>
                 ),
                 location: "Store",

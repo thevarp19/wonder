@@ -1,4 +1,5 @@
 import { EmployeeLoginPage } from "./EmployeeLoginPage";
 import { EmployeeSuppliesPage } from "./EmployeeSuppliesPage";
+import { SupplyDetailsPage } from "./SupplyDetailsPage";
 
-export { EmployeeLoginPage, EmployeeSuppliesPage };
+export { EmployeeLoginPage, EmployeeSuppliesPage, SupplyDetailsPage };
