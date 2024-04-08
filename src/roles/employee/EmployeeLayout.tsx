@@ -1,11 +1,9 @@
 import { GeneralLayout } from "@/components/shared/GeneralLayout";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
-import { sellerLogout } from "@/roles/seller/redux/auth/actions";
+import { employeeLogout } from "@/roles/employee/redux/auth/actions";
 import {
     HomeOutlined,
     LogoutOutlined,
-    NodeCollapseOutlined,
-    ProductOutlined,
     ProfileOutlined,
     SettingOutlined,
 } from "@ant-design/icons";
@@ -13,48 +11,32 @@ import { MenuProps } from "antd";
 import { FC, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-interface SellerLayoutProps {}
+interface EmployeeLayoutProps {}
 const items: MenuProps["items"] = [
     {
-        label: <Link to={"/seller"}>Home</Link>,
+        label: <Link to={"/employee"}>Home</Link>,
         key: "home",
         icon: <HomeOutlined />,
     },
     {
-        label: <Link to={"/seller/settings"}>Settings</Link>,
-        key: "settings",
+        label: <Link to={"/employee/supplies"}>Supplies</Link>,
+        key: "supplies",
         icon: <SettingOutlined />,
-    },
-    {
-        label: <Link to={"/seller/products"}>Products</Link>,
-        key: "products",
-        icon: <ProductOutlined />,
-    },
-    {
-        label: <Link to={"/seller/supply"}>Supply</Link>,
-        key: "supply",
-        icon: <NodeCollapseOutlined />,
     },
 ];
 
 function pathToKey(key: string) {
     switch (key) {
-        case "/seller":
+        case "/employee":
             return "home";
-        case "/seller/settings":
-            return "settings";
-        case "/seller/products":
-            return "products";
-        case "/seller/supply":
-            return "supply";
-        case "/seller/supply/create":
-            return "supply";
+        case "/employee/supplies":
+            return "supplies";
         default:
             return "home";
     }
 }
 
-export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
+export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
     const { pathname } = useLocation();
     const [selectedKeys, setSelectedKeys] = useState([pathToKey(pathname)]);
     useEffect(() => {
@@ -72,9 +54,9 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             danger: true,
             label: (
                 <Link
-                    to={"/"}
+                    to={"/employee/login"}
                     onClick={() => {
-                        dispatch(sellerLogout());
+                        dispatch(employeeLogout());
                     }}
                 >
                     Logout
@@ -84,15 +66,15 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
         },
     ];
 
-    const sellerAuth = useAppSelector((state) => state.seller.auth);
+    const employeeAuth = useAppSelector((state) => state.employee.auth);
 
     return (
         <GeneralLayout
             menuItems={items}
             profileItems={profileItems}
-            logoLink="/seller"
-            role="Seller"
-            userEmail={sellerAuth.userData?.email || "email@gmail.com"}
+            logoLink="/employee"
+            role="Employee"
+            userEmail={employeeAuth.userData?.email || "email@gmail.com"}
             selectedKeys={selectedKeys}
         />
     );

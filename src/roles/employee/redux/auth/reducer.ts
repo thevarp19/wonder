@@ -1,28 +1,24 @@
 import jwtService from "@/lib/jwt";
-import { getRoles, getUserData, isJwtExpired } from "@/lib/jwt/decode";
-import { LOGIN_SUCCESS, LOGOUT, SellerAuthActions } from "./types";
+import { getUserData, isJwtExpired } from "@/lib/jwt/decode";
+import * as actionTypes from "./types";
 
 const INITIAL_STATE = {
-    isLoggedIn: !!(
-        jwtService.getAccessToken() &&
-        !isJwtExpired() &&
-        getRoles()?.includes("SELLER")
-    ),
+    isLoggedIn: !!(jwtService.getAccessToken() && !isJwtExpired()),
     userData: getUserData(),
 };
 
-export const sellerAuthReducer = (
+export const employeeAuthReducer = (
     state = INITIAL_STATE,
-    action: SellerAuthActions
+    action: actionTypes.EmployeeAuthActions
 ): typeof INITIAL_STATE => {
     switch (action.type) {
-        case LOGIN_SUCCESS:
+        case actionTypes.LOGIN_SUCCESS:
             return {
                 ...state,
                 userData: getUserData(),
                 isLoggedIn: true,
             };
-        case LOGOUT:
+        case actionTypes.LOGOUT:
             return {
                 ...state,
                 userData: null,

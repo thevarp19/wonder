@@ -1,5 +1,6 @@
 import { MainPage } from "@/MainPage";
 import { AdminRoutes } from "@/roles/admin/AdminRoutes";
+import { EmployeeRoutes } from "@/roles/employee/EmployeeRoutes";
 import { SellerRoutes } from "@/roles/seller/SellerRoutes";
 import { FC } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -12,6 +13,7 @@ export const RouterProvider: FC<RouterProviderProps> = ({}) => {
             <Route path="/" element={<MainPage />} />
             <Route path="/admin/*" element={<AdminRoutes />} />
             <Route path="/seller/*" element={<SellerRoutes />} />
+            <Route path="/employee/*" element={<EmployeeRoutes />} />
         </Routes>
     );
 };

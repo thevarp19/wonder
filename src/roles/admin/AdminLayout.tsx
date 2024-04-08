@@ -65,14 +65,16 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
             icon: <LogoutOutlined />,
         },
     ];
+
     const adminAuth = useAppSelector((state) => state.admin.auth);
+
     return (
         <GeneralLayout
             menuItems={items}
             profileItems={profileItems}
             logoLink="/admin"
             role="Admin"
-            userEmail={adminAuth.userData.email || "email@gmail.com"}
+            userEmail={adminAuth.userData?.email || "email@gmail.com"}
             selectedKeys={selectedKeys}
         />
     );

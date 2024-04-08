@@ -1,6 +1,5 @@
 import jwtService from "@/lib/jwt";
-import { getRoles, isJwtExpired } from "@/lib/jwt/decode";
-import { myLocalStorage } from "@/lib/storage/browserStorage";
+import { getRoles, getUserData, isJwtExpired } from "@/lib/jwt/decode";
 import * as actionTypes from "./types";
 
 const INITIAL_STATE = {
@@ -9,9 +8,7 @@ const INITIAL_STATE = {
         !isJwtExpired() &&
         getRoles()?.includes("SUPER_ADMIN")
     ),
-    userData: {
-        email: myLocalStorage?.get("userEmail") || "",
-    },
+    userData: getUserData(),
 };
 
 export const adminAuthReducer = (
@@ -22,11 +19,13 @@ export const adminAuthReducer = (
         case actionTypes.LOGIN_SUCCESS:
             return {
                 ...state,
+                userData: getUserData(),
                 isLoggedIn: true,
             };
         case actionTypes.LOGOUT:
             return {
                 ...state,
+                userData: null,
                 isLoggedIn: false,
             };
         default:

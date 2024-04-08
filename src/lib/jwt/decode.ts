@@ -33,6 +33,21 @@ interface DecodedJwt {
     family_name: string;
     email: string;
 }
+
+interface DecodedRefreshJwt {
+    exp: number;
+    iat: number;
+    jti: string;
+    iss: string;
+    aud: string;
+    sub: string;
+    typ: string;
+    azp: string;
+    session_state: string;
+    scope: string;
+    sid: string;
+}
+
 const decode = () => {
     try {
         const token = jwtService.getAccessToken();
@@ -43,19 +58,42 @@ const decode = () => {
     }
 };
 
+const decodeRefresh = () => {
+    try {
+        const token = jwtService.getAccessToken();
+        const decodedJwt = jwtDecode<DecodedRefreshJwt>(token);
+        return decodedJwt;
+    } catch (error) {
+        return null;
+    }
+};
+
 export const getRoles = () => {
     const decodedJwt = decode();
-    if (decodedJwt) {
-        return decodedJwt.resource_access.wonder.roles;
+    if (!decodedJwt) {
+        return null;
     }
-    return null;
+    return decodedJwt.resource_access.wonder.roles;
+};
+
+export const getUserData = () => {
+    const decodedJwt = decode();
+    if (!decodedJwt) {
+        return null;
+    }
+
+    return {
+        email: decodedJwt.email,
+        name: decodedJwt.name,
+        userId: decodedJwt.user_id,
+    };
 };
 
 export const isJwtExpired = () => {
-    const decodedJwt = decode();
-    if (decodedJwt) {
-        const currentTime = Date.now() / 1000;
-        return decodedJwt.exp < currentTime;
+    const decodedJwt = decodeRefresh();
+    if (!decodedJwt) {
+        return true;
     }
-    return true;
+    const currentTime = Date.now() / 1000;
+    return decodedJwt.exp < currentTime;
 };

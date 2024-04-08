@@ -18,6 +18,9 @@ export const MainPage: FC<MainPageProps> = ({}) => {
                     <Button type="primary" size="large" href="/seller">
                         Seller
                     </Button>
+                    <Button type="primary" size="large" href="/employee">
+                        Employee
+                    </Button>
                 </div>
             </section>
         </div>
