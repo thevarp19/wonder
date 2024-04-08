@@ -1,5 +1,4 @@
 import { WeeklyCalendar } from "@purjayadi/antd-weekly-calendar";
-import { Dayjs } from "dayjs";
 import { FC } from "react";
 import { GetSuppliesByDate } from "../../types";
 
@@ -7,6 +6,8 @@ interface SupplyEvent {
     startTime: Date;
     endTime: Date;
     title: string;
+    location: string;
+    allDay?: boolean;
     backgroundColor: string;
     eventId: string;
 }
@@ -23,10 +24,24 @@ function mapDatesToEvents(dates: GetSuppliesByDate[]): SupplyEvent[] {
         date.supplies.forEach((supply) => {
             result.push({
                 startTime: new Date(year, month, day, hour++),
-                endTime: new Date(year, month, day, hour),
-                title: supply.sellerName,
-                backgroundColor:
-                    supply.supplyState === "Sold" ? "red" : "green",
+                endTime: new Date(year, month, day, hour++),
+                // @ts-ignore
+                title: (
+                    <span
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            fontSize: "12px",
+                            whiteSpace: "nowrap",
+                        }}
+                    >
+                        <span>{Date.now()}</span>
+                        <span>{supply.sellerName}</span>
+                        <span>{supply.supplyState}</span>
+                    </span>
+                ),
+                location: "Store",
+                backgroundColor: "black",
                 eventId: supply.supplyId.toString(),
             });
         });
@@ -39,13 +54,12 @@ const events = mapDatesToEvents(getList());
 interface SuppliesCalendarProps {}
 
 export const SuppliesCalendar: FC<SuppliesCalendarProps> = ({}) => {
-    return <WeeklyCalendar events={events} weekends />;
+    return (
+        <div className="week-calendar">
+            <WeeklyCalendar events={events} weekends />
+        </div>
+    );
 };
-
-function getListData(value: Dayjs) {
-    const list = getList();
-    return list.find((item) => item.date === value.format("YYYY-MM-DD"));
-}
 
 function getList() {
     return [

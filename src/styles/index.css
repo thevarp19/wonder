@@ -11,3 +11,9 @@
     width: 0px;
     height: 0px;
 }
+
+.week-calendar table tr td:first-child,
+.week-calendar table tr th:first-child {
+    background-color: #fafafa;
+    color: #fafafa;
+}
