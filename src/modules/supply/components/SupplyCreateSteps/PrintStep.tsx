@@ -16,6 +16,18 @@ export const PrintStep: FC<PrintStepProps> = ({}) => {
     const supply = useSupply();
     // @ts-ignore
     const { data: store } = useGetStore(supply?.store || -1);
+    const handledPacks = packs
+        .filter(
+            (pack) =>
+                pack.products.reduce(
+                    (acum, current) => acum + current.quantity,
+                    0
+                ) > 0
+        )
+        .map((pack) => ({
+            ...pack,
+            products: pack.products.filter((product) => product.quantity > 0),
+        }));
     return (
         <div className="mb-4">
             <h1 className="mb-4 text-2xl font-semibold">Print</h1>
@@ -24,17 +36,9 @@ export const PrintStep: FC<PrintStepProps> = ({}) => {
             </h2>
             <h2 className="mb-4 text-xl font-medium">Date: {supply.date}</h2>
             <div className="grid grid-cols-2 gap-4">
-                {packs
-                    .filter(
-                        (pack) =>
-                            pack.products.reduce(
-                                (acum, current) => acum + current.quantity,
-                                0
-                            ) > 0
-                    )
-                    .map((pack, index) => (
-                        <PackItem key={pack.id} pack={pack} index={index} />
-                    ))}
+                {handledPacks.map((pack, index) => (
+                    <PackItem key={pack.id} pack={pack} index={index} />
+                ))}
             </div>
         </div>
     );
@@ -60,14 +64,12 @@ const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
                 <div>
                     <h3>Products:</h3>
                     <ol>
-                        {pack.products
-                            .filter((product) => product.quantity > 0)
-                            .map((product, index) => (
-                                <li key={product.id} className="flex">
-                                    {index + 1} - {product.product.name},{" "}
-                                    {product.quantity} шт.
-                                </li>
-                            ))}
+                        {pack.products.map((product, index) => (
+                            <li key={product.id} className="flex">
+                                {index + 1} - {product.product.name},{" "}
+                                {product.quantity} шт.
+                            </li>
+                        ))}
                     </ol>
                 </div>
             </div>
