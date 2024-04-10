@@ -1,6 +1,7 @@
-import { useGetBoxes } from "@/modules/box/queries";
+import { useGetStore } from "@/modules/store/queries";
 import { useAppDispatch } from "@/redux/utils";
 import {
+    useSupply,
     useSupplyPacks,
     useSupplyProducts,
 } from "@/roles/seller/redux/supply/selectors";
@@ -9,7 +10,7 @@ import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Card, InputNumber, Popconfirm, Select } from "antd";
 import { FC } from "react";
 import { v4 as uuid } from "uuid";
-import * as actions from "../../../redux/supply/actions";
+import * as actions from "../../../../roles/seller/redux/supply/actions";
 
 interface PackProductsStepProps {}
 
@@ -40,13 +41,15 @@ export const PackProductsStep: FC<PackProductsStepProps> = ({}) => {
 };
 
 const BoxSelect: FC<{ pack: SupplyPack }> = ({ pack }) => {
-    const { data: boxes } = useGetBoxes();
+    const storeId = Number(`${useSupply().store}`);
+    const { data: store, isPending } = useGetStore(storeId);
     const dispatch = useAppDispatch();
     return (
         <Select
+            loading={isPending}
             placeholder={"Choose a box"}
             className="w-80"
-            options={boxes?.map((box) => ({
+            options={store?.availableBoxTypes?.map((box) => ({
                 label: box.description,
                 value: box.id,
             }))}

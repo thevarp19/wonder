@@ -6,13 +6,13 @@ import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { App, Button, Modal, Steps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { SupplyPDF } from "../components/SupplyPDF";
 import {
     AddProductsStep,
     ChooseDateAndStoreStep,
     PackProductsStep,
     PrintStep,
-} from "../components/supply/steps";
+} from "../../../modules/supply/components/SupplyCreateSteps";
+import { SupplyPDF } from "../../../modules/supply/components/SupplyPDF";
 import {
     saveDateAndStore,
     savePacks,

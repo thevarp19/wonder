@@ -10,8 +10,8 @@ import {
     View,
 } from "@react-pdf/renderer";
 import JsBarcode from "jsbarcode";
-import { SupplyState } from "../redux/supply/reducer";
-import { SupplyPack } from "../types/supply";
+import { SupplyState } from "../../../../roles/seller/redux/supply/reducer";
+import { SupplyPack } from "../../../../roles/seller/types/supply";
 
 Font.register({
     family: "Roboto",

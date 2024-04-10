@@ -16,3 +16,13 @@ export interface GetSuppliesByDate {
         supplyState: string;
     }[];
 }
+
+export interface CreateSupplyRequest {
+    storeId: number;
+    selectedTime: string;
+    selectedBoxes: {
+        selectedBoxId: number;
+        productId: number;
+        quantity: number;
+    }[];
+}
