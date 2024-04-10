@@ -1,9 +1,12 @@
+import { GetBoxResponse } from "@/modules/box/types";
 import { useGetStore } from "@/modules/store/queries";
+import { SupplyPDFModal } from "@/modules/supply/components/SupplyPDF/SupplyPDFModal";
+import { createSupplyMutation } from "@/modules/supply/mutations";
+import { CreateSupplyRequest } from "@/modules/supply/types";
 import { useAppDispatch } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
 import { PrinterOutlined } from "@ant-design/icons";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import { App, Button, Modal, Steps } from "antd";
+import { App, Button, Steps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
@@ -12,13 +15,15 @@ import {
     PackProductsStep,
     PrintStep,
 } from "../../../modules/supply/components/SupplyCreateSteps";
-import { SupplyPDF } from "../../../modules/supply/components/SupplyPDF";
 import {
     saveDateAndStore,
     savePacks,
     saveProducts,
+    setSupplyId,
 } from "../redux/supply/actions";
-import { useSupply } from "../redux/supply/selectors";
+import { SupplyState } from "../redux/supply/reducer";
+import { useSupply, useSupplyPacks } from "../redux/supply/selectors";
+import { PackProduct } from "../types/supply";
 
 interface SellerSupplyCreatePageProps {}
 const steps = [
@@ -27,11 +32,58 @@ const steps = [
     <PackProductsStep />,
     <PrintStep />,
 ];
+
+function mapCreateSupplyRequest(
+    supply: SupplyState,
+    packs: {
+        products: PackProduct[];
+        box: GetBoxResponse;
+        id: string;
+    }[]
+): CreateSupplyRequest {
+    const selectedBoxes: {
+        selectedBoxId: number;
+        productId: number;
+        quantity: number;
+    }[] = [];
+    packs.forEach((pack) => {
+        pack.products.forEach((product) => {
+            selectedBoxes.push({
+                selectedBoxId: Number(pack.box),
+                productId: product.product.id,
+                quantity: product.quantity,
+            });
+        });
+    });
+    var parts: any = supply?.date?.split("-");
+
+    var date = new Date(parts[2], parts[1] - 1, parts[0]);
+
+    return {
+        storeId: Number(supply.store),
+        selectedTime: date.toISOString(),
+        selectedBoxes,
+    };
+}
+
 export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [step, setStep] = useState(Number(searchParams.get("step")) || 0);
     const dispatch = useAppDispatch();
     const supply = useSupply();
+    const packs = useSupplyPacks();
+    const handledPacks = packs
+        .filter(
+            (pack) =>
+                pack.products.reduce(
+                    (acum, current) => acum + current.quantity,
+                    0
+                ) > 0
+        )
+        .map((pack) => ({
+            ...pack,
+            products: pack.products.filter((product) => product.quantity > 0),
+        }));
     const { message } = App.useApp();
     function nextStep() {
         if (step === 0) {
@@ -62,6 +114,10 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     // @ts-ignore
     const { data: store } = useGetStore(supply?.store || -1);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { mutateAsync, isPending } = createSupplyMutation((id) => {
+        dispatch(setSupplyId(id));
+    });
+
     return (
         <div className="min-h-full bg-white rounded-t-lg">
             <div className="p-4">
@@ -112,12 +168,31 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             Save
                         </Button>
                     )}
-                    {step === steps.length - 1 && (
+                    {step === steps.length - 1 &&
+                        supply.supplyServerId == null && (
+                            <Button
+                                className={cn("")}
+                                size="large"
+                                loading={isPending}
+                                onClick={() => {
+                                    mutateAsync(
+                                        mapCreateSupplyRequest(
+                                            supply,
+                                            handledPacks
+                                        )
+                                    );
+                                }}
+                                type="primary"
+                            >
+                                Create
+                            </Button>
+                        )}
+                    {step === steps.length - 1 && supply.supplyServerId && (
                         <Button
                             className={cn("")}
                             size="large"
+                            loading={isPending}
                             onClick={() => {
-                                message.success("Supply created");
                                 setIsModalOpen(true);
                             }}
                             type="primary"
@@ -125,41 +200,13 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             Print
                         </Button>
                     )}
-                    <Modal
-                        open={isModalOpen}
-                        onCancel={() => {
-                            setIsModalOpen(false);
-                        }}
-                        footer={(_, { CancelBtn }) => (
-                            <div className="flex items-center justify-end gap-4">
-                                <CancelBtn />
-                                <PDFDownloadLink
-                                    document={
-                                        <SupplyPDF
-                                            supply={supply}
-                                            store={store}
-                                        />
-                                    }
-                                    fileName={`Supply-${Date.now()}.pdf`}
-                                >
-                                    {({ loading }) =>
-                                        loading
-                                            ? "Loading document..."
-                                            : "Download now!"
-                                    }
-                                </PDFDownloadLink>
-                            </div>
-                        )}
-                        title="Print"
-                    >
-                        <PDFViewer
-                            showToolbar={true}
-                            width={"100%"}
-                            height={"100%"}
-                        >
-                            <SupplyPDF supply={supply} store={store} />
-                        </PDFViewer>
-                    </Modal>
+                    {isModalOpen && store && supply.supplyServerId && (
+                        <SupplyPDFModal
+                            store={store}
+                            setIsModalOpen={setIsModalOpen}
+                            isModalOpen={isModalOpen}
+                        />
+                    )}
                 </div>
             </div>
         </div>

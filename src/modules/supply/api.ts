@@ -8,9 +8,9 @@ export function getSuppliesByDate(startDate: string, endDate: string) {
 }
 
 export function getSupplyById(id: number) {
-    return axiosAuthorized.get<GetSupplyById>(`/api/supplies/detail/${id}`);
+    return axiosAuthorized.get<GetSupplyById[]>(`/api/supplies/detail/${id}`);
 }
 
 export function createSupply(data: CreateSupplyRequest) {
-    return axiosAuthorized.post<{ id: string }>(`/api/supplies`, data);
+    return axiosAuthorized.post<{ id: number }>(`/api/supplies`, data);
 }

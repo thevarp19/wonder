@@ -13,7 +13,7 @@ export const useGetSuppliesByDate = (startDate: string, endDate: string) => {
 };
 
 export const useGetSupply = (id: number) => {
-    return useQuery<GetSupplyById>({
+    return useQuery<GetSupplyById[]>({
         queryKey: [`store`, id],
         queryFn: async () => {
             const { data } = await getSupplyById(id);

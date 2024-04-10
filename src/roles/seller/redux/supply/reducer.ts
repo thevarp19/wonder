@@ -9,6 +9,7 @@ export interface SupplyState {
     packs: SupplyPack[];
     store: GetStoreResponse | null;
     date: string | null;
+    supplyServerId: number | null;
 }
 
 const INITIAL_STATE: SupplyState = {
@@ -16,6 +17,7 @@ const INITIAL_STATE: SupplyState = {
     packs: myLocalStorage?.get("supply-packs") || [],
     store: myLocalStorage?.get("supply-store") || null,
     date: myLocalStorage?.get("supply-date") || null,
+    supplyServerId: myLocalStorage?.get("supply-server-id") || null,
 };
 
 export const sellerSupplyReducer = (
@@ -23,6 +25,21 @@ export const sellerSupplyReducer = (
     action: types.SupplyActions
 ): SupplyState => {
     switch (action.type) {
+        case types.RESET:
+            myLocalStorage?.remove("supply-products");
+            myLocalStorage?.remove("supply-packs");
+            myLocalStorage?.remove("supply-store");
+            myLocalStorage?.remove("supply-date");
+            return {
+                products: [],
+                packs: [],
+                store: null,
+                date: null,
+                supplyServerId: null,
+            };
+        case types.SET_SUPPLY_ID:
+            myLocalStorage?.set("supply-server-id", action.payload);
+            return { ...state, supplyServerId: action.payload };
         case types.ADD_PRODUCTS:
             return {
                 ...state,

@@ -18,5 +18,5 @@ export function mapGetStoreToUpdate(
 }
 
 export function getStoreFullAddress(store: GetStoreResponse): string {
-    return `${store.city.name}, ${store.street}, ${store.address}`;
+    return `г. ${store.city.name}, ${store.street}, ${store.address}`;
 }

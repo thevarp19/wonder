@@ -120,3 +120,16 @@ export const setDate = (date: string): types.SetDate => {
         payload: date,
     };
 };
+
+export const reset = (): types.Reset => {
+    return {
+        type: types.RESET,
+    };
+};
+
+export const setSupplyId = (id: number): types.SetSupplyId => {
+    return {
+        type: types.SET_SUPPLY_ID,
+        payload: id,
+    };
+};

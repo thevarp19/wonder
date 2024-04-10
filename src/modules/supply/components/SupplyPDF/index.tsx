@@ -1,5 +1,6 @@
-import { GetProductResponse } from "@/modules/product/types";
 import { GetStoreResponse } from "@/modules/store/types";
+import { getStoreFullAddress } from "@/modules/store/utils";
+import { SupplyState } from "@/roles/seller/redux/supply/reducer";
 import {
     Document,
     Font,
@@ -10,8 +11,8 @@ import {
     View,
 } from "@react-pdf/renderer";
 import JsBarcode from "jsbarcode";
-import { SupplyState } from "../../../../roles/seller/redux/supply/reducer";
 import { SupplyPack } from "../../../../roles/seller/types/supply";
+import { GetSupplyById } from "../../types";
 
 Font.register({
     family: "Roboto",
@@ -58,36 +59,17 @@ const styles = StyleSheet.create({
     },
 });
 
-const ProductBlock = ({
-    product,
-}: {
-    product: GetProductResponse;
-    pack: SupplyPack;
-}) => {
+const ProductBlock = ({ pack }: { pack: GetSupplyById }) => {
     return (
         <View style={styles.product}>
             <Image
                 style={styles.barcode}
-                src={generateBarcodeBase64(product.vendorCode)}
+                src={generateBarcodeBase64(pack.article)}
             />
-            <Text>Wonder</Text>
-            <Text>101933090_801930</Text>
-            <Text>{Date.now()}</Text>
+            <Text>{pack.storeAddress}</Text>
+            <Text>{pack.vendorCode}</Text>
+            <Text>{pack.boxBarCode}</Text>
         </View>
-    );
-};
-
-const ProductsBlock = ({ pack }: { pack: SupplyPack }) => {
-    return (
-        <>
-            {pack.products.map((product) => (
-                <ProductBlock
-                    key={`${product.id}-${pack.id}`}
-                    product={product.product}
-                    pack={pack}
-                />
-            ))}
-        </>
     );
 };
 
@@ -95,8 +77,8 @@ const PackBlock = ({ pack }: { pack: SupplyPack }) => {
     return (
         <View style={styles.pack}>
             <Text>Box barcode: {Date.now()}</Text>
-            <Text>Box type: Monopolet</Text>
-            <Text>Box size: 100x200x300</Text>
+            <Text>Box type: {pack.box.name}</Text>
+            <Text>Box size: {pack.box.description}</Text>
             <Text> </Text>
             <Text>Products:</Text>
             <View>
@@ -112,11 +94,39 @@ const PackBlock = ({ pack }: { pack: SupplyPack }) => {
     );
 };
 
+function padNumberToThirteenDigits(num: number) {
+    let numStr = num.toString();
+    while (numStr.length < 13) {
+        numStr = "0" + numStr;
+    }
+    return numStr;
+}
+
+function groupByBox(packs: GetSupplyById[]) {
+    const grouped: { [key: string]: GetSupplyById[] } = {};
+    packs.forEach((pack) => {
+        if (grouped[pack.boxBarCode]) {
+            grouped[pack.boxBarCode].push(pack);
+        } else {
+            grouped[pack.boxBarCode] = [pack];
+        }
+    });
+
+    return grouped;
+}
+
 export const SupplyPDF = ({
+    date,
+    store,
+    packs,
+    supplyId,
     supply,
 }: {
+    supplyId: number;
+    date: string;
+    store: GetStoreResponse;
+    packs: GetSupplyById[];
     supply: SupplyState;
-    store?: GetStoreResponse;
 }) => {
     return (
         <Document>
@@ -128,15 +138,17 @@ export const SupplyPDF = ({
             >
                 <View style={styles.header}>
                     <Text>
-                        Creation date:{" "}
+                        Дата составления:{" "}
                         {new Date()
                             .toLocaleDateString("ru-RU")
                             .replace(".", "-")
                             .replace(".", "-")}
                     </Text>
-                    <Text>Date: {supply.date}</Text>
-                    <Text>Store: Алматы, Street, 2</Text>
-                    <Text>Supply id: {Date.now()}</Text>
+                    <Text>Дата доставки: {date}</Text>
+                    <Text>Адрес склада: {getStoreFullAddress(store)}</Text>
+                    <Text>
+                        Номер поставки: {padNumberToThirteenDigits(supplyId)}
+                    </Text>
                 </View>
                 <View style={styles.root}>
                     <View style={styles.grid}>
@@ -152,15 +164,19 @@ export const SupplyPDF = ({
                 </View>
                 <View style={styles.root}>
                     <View style={styles.grid}>
-                        {supply.packs.map((pack) => (
-                            <View style={styles.product} key={pack.id}>
+                        {Object.values(groupByBox(packs)).map((packs) => (
+                            <View style={styles.product} key={packs[0].article}>
                                 <Image
                                     style={styles.barcode}
-                                    src={generateBarcodeBase64(`${Date.now()}`)}
+                                    src={generateBarcodeBase64(
+                                        `${packs[0].boxBarCode}`
+                                    )}
                                 />
-                                <Text>Wonder</Text>
-                                <Text>Almaty</Text>
-                                <Text>937491829384</Text>
+                                <Text>{packs[0].article}</Text>
+                                <Text>{packs[0].storeAddress}</Text>
+                                <Text>
+                                    {padNumberToThirteenDigits(supplyId)}
+                                </Text>
                             </View>
                         ))}
                     </View>
@@ -172,8 +188,8 @@ export const SupplyPDF = ({
                 </View>
                 <View style={styles.root}>
                     <View style={styles.grid}>
-                        {supply.packs.map((pack) => (
-                            <ProductsBlock key={pack.id} pack={pack} />
+                        {packs.map((pack, index) => (
+                            <ProductBlock key={index} pack={pack} />
                         ))}
                     </View>
                 </View>

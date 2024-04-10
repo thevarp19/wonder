@@ -19,6 +19,9 @@ export const SET_STORE = "SUPPLY_SET_STORE";
 export const SET_DATE = "SUPPLY_SET_DATE";
 export const SAVE_DATE_AND_STORE = "SUPPLY_SAVE_DATE_AND_STORE";
 
+export const RESET = "SUPPLY_RESET";
+export const SET_SUPPLY_ID = "SUPPLY_SET_SUPPLY_ID";
+
 export interface SetProducts {
     type: typeof SET_PRODUCTS;
     payload: ProductQuantity[];
@@ -91,6 +94,15 @@ export interface SaveDateAndStore {
     type: typeof SAVE_DATE_AND_STORE;
 }
 
+export interface Reset {
+    type: typeof RESET;
+}
+
+export interface SetSupplyId {
+    type: typeof SET_SUPPLY_ID;
+    payload: number;
+}
+
 export type SupplyActions =
     | AddProducts
     | UpdateProductQuantity
@@ -104,4 +116,6 @@ export type SupplyActions =
     | SavePacks
     | SetStore
     | SetDate
-    | SaveDateAndStore;
+    | SaveDateAndStore
+    | Reset
+    | SetSupplyId;
