@@ -112,6 +112,21 @@ const getAvailableProductQuantity = (
     return productRoot.quantity - usedProductsCount;
 };
 
+function getProductQuantityLabel(
+    value: ProductQuantity,
+    packs: SupplyPack[],
+    products: ProductQuantity[]
+) {
+    return `${value.product.name.substring(0, 15)}${
+        value.product.name.length > 15 ? "..." : ""
+    } - max: ${getAvailableProductQuantity(
+        packs,
+        "-1",
+        products,
+        value.product.id
+    )} шт.`;
+}
+
 const PackProductItem: FC<{
     pack: SupplyPack;
     id: string;
@@ -125,15 +140,12 @@ const PackProductItem: FC<{
             <Select
                 options={getAvailableProductOptions(pack, products).map(
                     (e) => ({
-                        label: `${e.product.name} - max: ${e.quantity} шт.`,
+                        label: getProductQuantityLabel(e, packs, products),
                         value: e.product.id,
                     })
                 )}
                 // @ts-ignore
-                value={`${value.product.name} - max: ${
-                    products.find((p) => p.product.id == value.product.id)
-                        ?.quantity
-                } шт.`}
+                value={getProductQuantityLabel(value, packs, products)}
                 onChange={(newValue: number) => {
                     console.log(newValue);
                     const newProduct = products.find(
@@ -168,7 +180,7 @@ const PackProductItem: FC<{
             <InputNumber
                 value={value.quantity}
                 onChange={(newValue) => {
-                    if (newValue) {
+                    if (typeof newValue === "number") {
                         dispatch(
                             actions.updatePack({
                                 ...pack,
