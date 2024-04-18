@@ -1,5 +1,5 @@
 import { EditOutlined } from "@ant-design/icons";
-import { Table, TableColumnsType } from "antd";
+import { Button, Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useGetStores } from "../../queries";
@@ -29,6 +29,17 @@ const columns: TableColumnsType<GetStoreResponse> = [
     {
         title: "Status",
         render: (_, record) => <StoreSwitch record={record} />,
+    },
+    {
+        title: "Cells",
+        render: (_, record) => (
+            <Link
+                to={`/admin/settings/cells/${record.id}`}
+                className="cursor-pointer"
+            >
+                <Button>Cells</Button>
+            </Link>
+        ),
     },
     {
         title: "Edit",
