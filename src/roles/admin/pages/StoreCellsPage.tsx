@@ -29,6 +29,7 @@ const CreateCellModal = ({ storeId }: { storeId: number }) => {
     return (
         <>
             <Modal
+                title="Create Cell"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
                 okButtonProps={{ style: { display: "none" } }}
