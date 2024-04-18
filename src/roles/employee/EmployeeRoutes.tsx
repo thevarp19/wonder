@@ -6,6 +6,7 @@ import { EmployeeLayout } from "./EmployeeLayout";
 import {
     EmployeeLoginPage,
     EmployeeSuppliesPage,
+    ScanPage,
     SupplyDetailsPage,
 } from "./pages";
 
@@ -46,6 +47,7 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                         path="/supplies/:supplyId"
                         element={<SupplyDetailsPage />}
                     />
+                    <Route path="/scan" element={<ScanPage />} />
                 </Route>
             </Route>
             <Route path="/login" element={<EmployeeLoginPage />} />
