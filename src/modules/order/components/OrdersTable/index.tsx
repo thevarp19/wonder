@@ -21,7 +21,9 @@ const columns: TableColumnsType<GetOrdersByDate> = [
                 <div>
                     {new Date(record.creationDate).toLocaleDateString("ru-RU")}{" "}
                 </div>
-                {new Date(record.creationDate).toLocaleTimeString("ru-RU")}
+                {new Date(record.creationDate)
+                    .toLocaleTimeString("ru-RU")
+                    .substring(0, 5)}
             </div>
         ),
     },
@@ -38,9 +40,9 @@ const columns: TableColumnsType<GetOrdersByDate> = [
                         "ru-RU"
                     )}{" "}
                 </div>
-                {new Date(record.plannedDeliveryDate).toLocaleTimeString(
-                    "ru-RU"
-                )}
+                {new Date(record.plannedDeliveryDate)
+                    .toLocaleTimeString("ru-RU")
+                    .substring(0, 5)}
             </div>
         ),
     },
@@ -55,7 +57,10 @@ const columns: TableColumnsType<GetOrdersByDate> = [
 ];
 
 export const OrdersTable: FC<OrdersTableProps> = ({}) => {
-    const { data: orders, isPending } = useGetOrdersByDate("", "");
+    const { data: orders, isPending } = useGetOrdersByDate(
+        "2000-12-02",
+        "2040-12-02"
+    );
     return (
         <Table
             columns={columns}

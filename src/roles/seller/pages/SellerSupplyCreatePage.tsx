@@ -1,3 +1,5 @@
+import { myLocalStorage } from "@/lib/storage/browserStorage";
+import { useGetBoxes } from "@/modules/box/queries";
 import { GetBoxResponse } from "@/modules/box/types";
 import { useGetStore } from "@/modules/store/queries";
 import { SupplyPDFModal } from "@/modules/supply/components/SupplyPDF/SupplyPDFModal";
@@ -7,7 +9,7 @@ import { useAppDispatch } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
 import { PrinterOutlined } from "@ant-design/icons";
 import { App, Button, Steps } from "antd";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
     AddProductsStep,
@@ -43,17 +45,19 @@ function mapCreateSupplyRequest(
 ): CreateSupplyRequest {
     const selectedBoxes: {
         selectedBoxId: number;
-        productId: number;
-        quantity: number;
+        productQuantities: { productId: number; quantity: number }[];
     }[] = [];
+
     packs.forEach((pack) => {
+        const selectedBoxId = Number(pack.box);
+        const productQuantities: { productId: number; quantity: number }[] = [];
         pack.products.forEach((product) => {
-            selectedBoxes.push({
-                selectedBoxId: Number(pack.box),
-                productId: product.product.id,
+            productQuantities.push({
+                productId: Number(product.product.id),
                 quantity: product.quantity,
             });
         });
+        selectedBoxes.push({ selectedBoxId, productQuantities });
     });
     var parts: any = supply?.date?.split("-");
 
@@ -72,6 +76,10 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     const dispatch = useAppDispatch();
     const supply = useSupply();
     const packs = useSupplyPacks();
+    const { data: boxes, isSuccess } = useGetBoxes();
+    useEffect(() => {
+        myLocalStorage?.set("boxes", boxes);
+    }, [boxes]);
     const handledPacks = packs
         .filter(
             (pack) =>
@@ -200,13 +208,16 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             Print
                         </Button>
                     )}
-                    {isModalOpen && store && supply.supplyServerId && (
-                        <SupplyPDFModal
-                            store={store}
-                            setIsModalOpen={setIsModalOpen}
-                            isModalOpen={isModalOpen}
-                        />
-                    )}
+                    {isModalOpen &&
+                        isSuccess &&
+                        store &&
+                        supply.supplyServerId && (
+                            <SupplyPDFModal
+                                store={store}
+                                setIsModalOpen={setIsModalOpen}
+                                isModalOpen={isModalOpen}
+                            />
+                        )}
                 </div>
             </div>
         </div>

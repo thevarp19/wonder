@@ -18,7 +18,7 @@ export interface GetOrdersByDate {
     deliveryCostForSeller: number;
     isKaspiDelivery: boolean;
     deliveryMode: string;
-    waybill: string;
+    waybill: string | null;
     courierTransmissionDate: number;
     courierTransmissionPlanningDate: number;
     waybillNumber: string;

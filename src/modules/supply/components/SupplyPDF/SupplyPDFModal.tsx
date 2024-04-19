@@ -1,4 +1,5 @@
 import { Loading } from "@/components/ui/Loading";
+import { myLocalStorage } from "@/lib/storage/browserStorage";
 import { GetStoreResponse } from "@/modules/store/types";
 import { useSupply } from "@/roles/seller/redux/supply/selectors";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
@@ -22,6 +23,8 @@ export const SupplyPDFModal: FC<SupplyPDFModalProps> = ({
     const { data, isSuccess, isPending } = useGetSupply(
         Number(supply.supplyServerId)
     );
+    const boxes = myLocalStorage?.get("boxes");
+
     return (
         <Modal
             open={isModalOpen}
@@ -40,6 +43,7 @@ export const SupplyPDFModal: FC<SupplyPDFModalProps> = ({
                                     packs={data}
                                     supplyId={supply.supplyServerId}
                                     supply={supply}
+                                    boxes={boxes}
                                 />
                             }
                             fileName={`Supply-${Date.now()}.pdf`}
@@ -64,6 +68,7 @@ export const SupplyPDFModal: FC<SupplyPDFModalProps> = ({
                         store={store}
                         packs={data}
                         supply={supply}
+                        boxes={boxes}
                     />
                 </PDFViewer>
             )}

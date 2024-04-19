@@ -7,7 +7,9 @@ export const useGetOrdersByDate = (startDate: string, endDate: string) => {
         queryKey: ["orders", startDate, endDate],
         queryFn: async () => {
             const { data } = await getOrdersByDate(startDate, endDate);
-            return data;
+            return data
+                .filter((order) => order.waybill !== null)
+                .sort((a, b) => b.creationDate - a.creationDate);
         },
     });
 };

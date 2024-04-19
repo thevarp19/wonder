@@ -25,29 +25,29 @@ const columns: TableColumnsType<GetSupplyById> = [
         dataIndex: "boxTypeName",
     },
     {
-        title: "Store address",
-        dataIndex: "storeAddress",
+        title: "Shop name",
+        dataIndex: "shopName",
     },
 ];
 
-function generateMockData(numberOfEntries: number) {
-    const mockDataArray = [];
+// function generateMockData(numberOfEntries: number) {
+//     const mockDataArray = [];
 
-    for (let i = 0; i < numberOfEntries; i++) {
-        const data = {
-            article: `Article${i}`,
-            name: `Name${i}`,
-            vendorCode: `Vendor${i}`,
-            boxBarCode: `Barcode${i}`,
-            boxTypeName: `Type${i}`,
-            storeAddress: `Address${i}`,
-        };
+//     for (let i = 0; i < numberOfEntries; i++) {
+//         const data = {
+//             article: `Article${i}`,
+//             name: `Name${i}`,
+//             vendorCode: `Vendor${i}`,
+//             boxBarCode: `Barcode${i}`,
+//             boxTypeName: `Type${i}`,
+//             storeAddress: `Address${i}`,
+//         };
 
-        mockDataArray.push(data);
-    }
+//         mockDataArray.push(data);
+//     }
 
-    return mockDataArray;
-}
+//     return mockDataArray;
+// }
 
 interface SupplyDetailsTableProps {
     supplyId: number;
@@ -60,7 +60,7 @@ export const SupplyDetailsTable: FC<SupplyDetailsTableProps> = ({
     return (
         <Table
             columns={columns}
-            dataSource={generateMockData(5)}
+            dataSource={[]}
             rowKey={"id"}
             loading={!isPending}
         />

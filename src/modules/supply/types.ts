@@ -5,6 +5,7 @@ export interface GetSupplyById {
     boxBarCode: string;
     boxTypeName: string;
     storeAddress: string;
+    shopName: string;
 }
 
 export interface GetSuppliesByDate {
@@ -22,7 +23,9 @@ export interface CreateSupplyRequest {
     selectedTime: string;
     selectedBoxes: {
         selectedBoxId: number;
-        productId: number;
-        quantity: number;
+        productQuantities: {
+            productId: number;
+            quantity: number;
+        }[];
     }[];
 }

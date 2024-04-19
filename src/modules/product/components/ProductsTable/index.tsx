@@ -31,6 +31,10 @@ const columns: TableColumnsType<GetProductResponse> = [
         title: "Price in Astana",
         render: (_, record) => <span>{record.prices[1].price}</span>,
     },
+    {
+        title: "Price in Shymkent",
+        render: (_, record) => <span>{record.prices[2]?.price}</span>,
+    },
 ];
 
 export const ProductsTable: FC<ProductsTableProps> = ({}) => {

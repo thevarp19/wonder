@@ -1,3 +1,4 @@
+import { GetBoxResponse } from "@/modules/box/types";
 import { GetStoreResponse } from "@/modules/store/types";
 import { getStoreFullAddress } from "@/modules/store/utils";
 import { SupplyState } from "@/roles/seller/redux/supply/reducer";
@@ -66,19 +67,27 @@ const ProductBlock = ({ pack }: { pack: GetSupplyById }) => {
                 style={styles.barcode}
                 src={generateBarcodeBase64(pack.article)}
             />
-            <Text>{pack.storeAddress}</Text>
+            <Text>{pack.shopName}</Text>
             <Text>{pack.vendorCode}</Text>
             <Text>{pack.boxBarCode}</Text>
         </View>
     );
 };
 
-const PackBlock = ({ pack }: { pack: SupplyPack }) => {
+const PackBlock = ({
+    pack,
+    boxes,
+}: {
+    pack: SupplyPack;
+    boxes: GetBoxResponse[] | undefined;
+}) => {
+    // @ts-ignore
+    const box = boxes?.find((b) => b.id === pack.box);
     return (
         <View style={styles.pack}>
             <Text>Box barcode: {Date.now()}</Text>
-            <Text>Box type: {pack.box.name}</Text>
-            <Text>Box size: {pack.box.description}</Text>
+            <Text>Box type: {box?.name}</Text>
+            <Text>Box size: {box?.description}</Text>
             <Text> </Text>
             <Text>Products:</Text>
             <View>
@@ -121,12 +130,14 @@ export const SupplyPDF = ({
     packs,
     supplyId,
     supply,
+    boxes,
 }: {
     supplyId: number;
     date: string;
     store: GetStoreResponse;
     packs: GetSupplyById[];
     supply: SupplyState;
+    boxes: GetBoxResponse[] | undefined;
 }) => {
     return (
         <Document>
@@ -153,7 +164,11 @@ export const SupplyPDF = ({
                 <View style={styles.root}>
                     <View style={styles.grid}>
                         {supply.packs.map((pack) => (
-                            <PackBlock key={pack.id} pack={pack} />
+                            <PackBlock
+                                key={pack.id}
+                                pack={pack}
+                                boxes={boxes}
+                            />
                         ))}
                     </View>
                 </View>
@@ -173,7 +188,7 @@ export const SupplyPDF = ({
                                     )}
                                 />
                                 <Text>{packs[0].article}</Text>
-                                <Text>{packs[0].storeAddress}</Text>
+                                <Text>{packs[0].shopName}</Text>
                                 <Text>
                                     {padNumberToThirteenDigits(supplyId)}
                                 </Text>

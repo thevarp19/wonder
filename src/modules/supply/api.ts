@@ -3,7 +3,7 @@ import { CreateSupplyRequest, GetSuppliesByDate, GetSupplyById } from "./types";
 
 export function getSuppliesByDate(startDate: string, endDate: string) {
     return axiosAuthorized.get<GetSuppliesByDate[]>(
-        `/api/supplies?start-date=${startDate}&end-date=${endDate}`
+        `/api/supplies/employee?start-date=${startDate}&end-date=${endDate}`
     );
 }
 
