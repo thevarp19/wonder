@@ -1,4 +1,5 @@
 import { Protected } from "@/context/Protected";
+import { ScanLayout } from "@/modules/scan/components/ScanLayout.tsx";
 import { useAppSelector } from "@/redux/utils";
 import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -47,7 +48,9 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                         path="/supplies/:supplyId"
                         element={<SupplyDetailsPage />}
                     />
-                    <Route path="/scan" element={<ScanPage />} />
+                </Route>
+                <Route path="/scan" element={<ScanLayout />}>
+                    <Route index element={<ScanPage />} />
                 </Route>
             </Route>
             <Route path="/login" element={<EmployeeLoginPage />} />
