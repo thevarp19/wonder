@@ -7,8 +7,50 @@ interface OrdersTableProps {}
 
 const columns: TableColumnsType<GetOrdersByDate> = [
     {
-        title: "ID",
-        dataIndex: "id",
+        title: "Order number",
+        dataIndex: "code",
+    },
+    {
+        title: "Shop",
+        dataIndex: "sellerName",
+    },
+    {
+        title: "Time",
+        render: (_, record) => (
+            <div>
+                <div>
+                    {new Date(record.creationDate).toLocaleDateString("ru-RU")}{" "}
+                </div>
+                {new Date(record.creationDate).toLocaleTimeString("ru-RU")}
+            </div>
+        ),
+    },
+    {
+        title: "Delivery type",
+        dataIndex: "deliveryMode",
+    },
+    {
+        title: "Send time",
+        render: (_, record) => (
+            <div>
+                <div>
+                    {new Date(record.plannedDeliveryDate).toLocaleDateString(
+                        "ru-RU"
+                    )}{" "}
+                </div>
+                {new Date(record.plannedDeliveryDate).toLocaleTimeString(
+                    "ru-RU"
+                )}
+            </div>
+        ),
+    },
+    {
+        title: "Status",
+        dataIndex: "state",
+    },
+    {
+        title: "Price",
+        render: (_, record) => <div>{record.totalPrice} KZT</div>,
     },
 ];
 

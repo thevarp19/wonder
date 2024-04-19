@@ -8,11 +8,20 @@ export interface GetOrderById {
 }
 
 export interface GetOrdersByDate {
-    date: string;
-    orders: {
-        orderId: number;
-        sellerName: string;
-        sellerId: number;
-        orderState: string;
-    }[];
+    id: number;
+    kaspiId: string;
+    code: string;
+    totalPrice: number;
+    paymentMode: string;
+    plannedDeliveryDate: number;
+    creationDate: number;
+    deliveryCostForSeller: number;
+    isKaspiDelivery: boolean;
+    deliveryMode: string;
+    waybill: string;
+    courierTransmissionDate: number;
+    courierTransmissionPlanningDate: number;
+    waybillNumber: string;
+    deliveryCost: number;
+    sellerName: string;
 }

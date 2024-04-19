@@ -3,7 +3,7 @@ import { GetOrderById, GetOrdersByDate } from "./types";
 
 export function getOrdersByDate(startDate: string, endDate: string) {
     return axiosAuthorized.get<GetOrdersByDate[]>(
-        `/api/orders?start-date=${startDate}&end-date=${endDate}`
+        `/api/orders/admin?start-date=${startDate}&end-date=${endDate}`
     );
 }
 

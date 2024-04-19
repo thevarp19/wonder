@@ -9,14 +9,14 @@ interface OrderDetailsTableProps {
 
 const columns: TableColumnsType<GetOrderById> = [
     {
-        title: "ID",
-        dataIndex: "id",
+        title: "Order number",
+        dataIndex: "code",
     },
 ];
 
 export const OrderDetailsTable: FC<OrderDetailsTableProps> = ({ orderId }) => {
     const { data, isPending } = useGetOrder(orderId);
-    console.log(data);
+
     return (
         <Table
             columns={columns}
