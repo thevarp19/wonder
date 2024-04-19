@@ -36,10 +36,50 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                 />
             </Form.Item>
             <FormikInput
-                name="street"
+                name="streetName"
                 formik={formik}
                 formItemProps={{
-                    label: "Street",
+                    label: "Street name",
+                }}
+                inputProps={{
+                    size: "large",
+                }}
+            />
+            <FormikInput
+                name="streetNumber"
+                formik={formik}
+                formItemProps={{
+                    label: "Street number",
+                }}
+                inputProps={{
+                    size: "large",
+                }}
+            />
+            <FormikInput
+                name="town"
+                formik={formik}
+                formItemProps={{
+                    label: "Town",
+                }}
+                inputProps={{
+                    size: "large",
+                }}
+            />
+            <FormikInput
+                name="district"
+                formik={formik}
+                formItemProps={{
+                    label: "District",
+                }}
+                inputProps={{
+                    size: "large",
+                }}
+            />
+            <FormikInput
+                name="building"
+                formik={formik}
+                formItemProps={{
+                    label: "Building",
                 }}
                 inputProps={{
                     size: "large",

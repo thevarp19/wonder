@@ -16,8 +16,14 @@ export interface WorkDayOfWeekResponse {
 export interface CreateStoreRequest {
     kaspiId: string;
     cityId: number;
-    street: string;
+    streetName: string;
+    streetNumber: string;
+    town: string;
+    district: string;
+    building: string;
     apartment: string;
+    latitude: number;
+    longitude: number;
     dayOfWeekWorks: WorkDayOfWeekRequest[];
 }
 
@@ -37,7 +43,13 @@ export interface UpdateStoreRequest {
     kaspiId: string;
     enabled: boolean;
     cityId: number;
-    street: string;
+    streetName: string;
+    streetNumber: string;
+    town: string;
+    district: string;
+    building: string;
+    latitude: number;
+    longitude: number;
     apartment: string;
     dayOfWeekWorks: WorkDayOfWeekRequest[];
 }

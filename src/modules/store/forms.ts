@@ -22,7 +22,7 @@ import { mapGetStoreToUpdate } from "./utils";
 const createStoreSchema = Yup.object().shape({
     kaspiId: requiredStringSchema(),
     cityId: requiredNumberSchema(),
-    street: requiredStringSchema(),
+    streetName: requiredStringSchema(),
     apartment: requiredStringSchema(),
 });
 
@@ -33,7 +33,13 @@ export const useCreateStore = () => {
         initialValues: {
             kaspiId: "",
             cityId: -1,
-            street: "",
+            streetName: "",
+            streetNumber: "",
+            town: "",
+            district: "",
+            building: "",
+            latitude: 0,
+            longitude: 0,
             apartment: "",
             dayOfWeekWorks: [],
         },
@@ -53,7 +59,7 @@ export const useCreateStore = () => {
 const updateStoreSchema = Yup.object().shape({
     kaspiId: requiredStringSchema(),
     cityId: requiredNumberSchema(),
-    street: requiredStringSchema(),
+    streetName: requiredStringSchema(),
     apartment: requiredStringSchema(),
     enabled: requiredBooleanSchema(),
 });
@@ -68,7 +74,13 @@ export const useUpdateStore = (
         initialValues: {
             kaspiId: "",
             cityId: -1,
-            street: "",
+            streetName: "",
+            streetNumber: "",
+            town: "",
+            district: "",
+            building: "",
+            latitude: 0,
+            longitude: 0,
             apartment: "",
             enabled: false,
             dayOfWeekWorks: [],

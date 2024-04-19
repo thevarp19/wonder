@@ -6,14 +6,6 @@ interface StoreAddressCellProps {
     street: string;
 }
 
-export const StoreAddressCell: FC<StoreAddressCellProps> = ({
-    address,
-    street,
-    city,
-}) => {
-    return (
-        <div>
-            г. {city.name}, {street}, {address}
-        </div>
-    );
+export const StoreAddressCell: FC<StoreAddressCellProps> = ({ address }) => {
+    return <div>{address}</div>;
 };

@@ -6,7 +6,13 @@ export function mapGetStoreToUpdate(
     return {
         kaspiId: response.kaspiId,
         cityId: response.city.id,
-        street: response.street,
+        streetName: response.street,
+        streetNumber: response.street,
+        town: response.city.name,
+        district: response.city.name,
+        building: response.city.name,
+        latitude: 0,
+        longitude: 0,
         apartment: response.address,
         enabled: response.enabled,
         dayOfWeekWorks: response.availableWorkTimes.map((item) => ({
@@ -18,5 +24,5 @@ export function mapGetStoreToUpdate(
 }
 
 export function getStoreFullAddress(store: GetStoreResponse): string {
-    return `г. ${store.city.name}, ${store.street}, ${store.address}`;
+    return `${store.address}`;
 }
