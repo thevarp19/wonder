@@ -2,6 +2,7 @@ import { GeneralLayout } from "@/components/shared/GeneralLayout";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import { adminLogout } from "@/roles/admin/redux/auth/actions";
 import {
+    CarOutlined,
     HomeOutlined,
     LogoutOutlined,
     ProfileOutlined,
@@ -19,6 +20,11 @@ const items: MenuProps["items"] = [
         icon: <HomeOutlined />,
     },
     {
+        label: <Link to={"/admin/orders"}>Orders</Link>,
+        key: "orders",
+        icon: <CarOutlined />,
+    },
+    {
         label: <Link to={"/admin/settings"}>Settings</Link>,
         key: "settings",
         icon: <SettingOutlined />,
@@ -31,6 +37,8 @@ function pathToKey(key: string) {
             return "home";
         case "/admin/settings":
             return "settings";
+        case "/admin/orders":
+            return "orders";
         default:
             return "home";
     }

@@ -10,7 +10,7 @@ export const StoreWorkingTimeCell: FC<StoreWorkingTimeCellProps> = ({
 }) => {
     return (
         <div>
-            {dayOfWeeks[0].openTime}-{dayOfWeeks[0].closeTime}
+            {dayOfWeeks[0]?.openTime}-{dayOfWeeks[0]?.closeTime}
         </div>
     );
 };

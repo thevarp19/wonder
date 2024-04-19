@@ -20,7 +20,12 @@ export const ProductsUploadFromFile: FC<ProductsUploadFromFileProps> = ({
     return (
         <div className="p-4">
             <h1 className="pb-4 text-2xl font-semibold">Upload products</h1>
-            <a className="">Download an example file</a>
+            <a
+                className=""
+                href="https://storage.googleapis.com/wonder-bucket/%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D1%84%D0%B0%D0%B8%CC%86%D0%BB%D0%B0%20%D0%B8%D0%BC%D0%BF%D0%BE%D1%80%D1%82%D0%B0%20%232%20(1).xlsx"
+            >
+                Download an example file
+            </a>
             <div className="relative max-w-sm mt-4">
                 {isPending && (
                     <div className="absolute top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-white">

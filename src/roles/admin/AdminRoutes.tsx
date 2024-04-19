@@ -5,6 +5,8 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { AdminLayout } from "./AdminLayout";
 import {
     AdminLoginPage,
+    AdminOrderPage,
+    AdminOrdersPage,
     AdminSettingsPage,
     CreateBoxPage,
     CreateStorePage,
@@ -55,6 +57,11 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                     <Route
                         path="/settings/cells/:storeId"
                         element={<StoreCellsPage />}
+                    />
+                    <Route path="/orders" element={<AdminOrdersPage />} />
+                    <Route
+                        path="/orders/:orderId"
+                        element={<AdminOrderPage />}
                     />
                 </Route>
             </Route>
