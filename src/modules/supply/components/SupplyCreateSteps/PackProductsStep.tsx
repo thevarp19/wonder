@@ -108,7 +108,6 @@ const getAvailableProductQuantity = (
             }
         }
     });
-    console.log(productRoot.quantity, usedProductsCount);
     return productRoot.quantity - usedProductsCount;
 };
 

@@ -105,6 +105,13 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                 message.error("Please choose store and date");
                 return;
             }
+            const parts = supply.date.split("-");
+            const formattedDate = `${parts?.[2]}-${parts?.[1]}-${parts?.[0]}`;
+            console.log(new Date(formattedDate), new Date());
+            if (new Date(formattedDate) <= new Date()) {
+                message.error("Please choose store and date");
+                return;
+            }
             dispatch(saveDateAndStore());
         } else if (step === 2) {
             if (supply.packs.length === 0) {
