@@ -1,14 +1,21 @@
 export interface GetCellResponse {
     id: number;
-    storeId: number;
     row: number;
-    column: number;
-    number: number;
+    col: number;
+    cell: number;
+    comment?: string;
+    width?: number;
+    height?: number;
+    depth?: number;
 }
 
 export interface CreateCellRequest {
     storeId: number;
     row: number;
-    column: number;
-    number: number;
+    col: number;
+    cell: number;
+    comment?: string;
+    width?: number;
+    height?: number;
+    depth?: number;
 }

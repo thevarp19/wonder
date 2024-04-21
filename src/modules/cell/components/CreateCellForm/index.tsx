@@ -6,10 +6,14 @@ import { useCreateCell } from "../../forms";
 
 interface CreateCellFormProps {
     storeId: number;
+    onSuccess?: () => void;
 }
 
-export const CreateCellForm: FC<CreateCellFormProps> = ({ storeId }) => {
-    const { formik, mutation } = useCreateCell(storeId);
+export const CreateCellForm: FC<CreateCellFormProps> = ({
+    storeId,
+    onSuccess,
+}) => {
+    const { formik, mutation } = useCreateCell(storeId, onSuccess);
     return (
         <Form
             onFinish={formik.submitForm}
@@ -28,7 +32,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({ storeId }) => {
                 }}
             />
             <FormikNumberInput
-                name="column"
+                name="col"
                 formik={formik}
                 formItemProps={{
                     label: "Column",
@@ -39,7 +43,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({ storeId }) => {
                 }}
             />
             <FormikNumberInput
-                name="number"
+                name="cell"
                 formik={formik}
                 formItemProps={{
                     label: "Number",

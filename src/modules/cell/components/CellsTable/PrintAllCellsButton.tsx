@@ -4,54 +4,58 @@ import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "antd";
 import { FC, useState } from "react";
 import { GetCellResponse } from "../../types";
-import { CellBlockPDF } from "../CellsPDF/CellBlock";
+import { CellPDF } from "../CellsPDF";
 
-interface PrintCellButtonProps {
+interface PrintAllCellsButtonProps {
     store: GetStoreResponse | undefined;
-    cell: GetCellResponse;
+    cells: GetCellResponse[] | undefined;
 }
 
-export const PrintCellButton: FC<PrintCellButtonProps> = ({ store, cell }) => {
+export const PrintAllCellsButton: FC<PrintAllCellsButtonProps> = ({
+    store,
+    cells,
+}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    if (!store) {
+    if (!store || !cells) {
         return (
             <Button icon={<PrinterOutlined />} loading disabled>
-                Print
+                Print all cells
             </Button>
         );
     }
     return (
         <>
-            <CellPDFModal
+            <CellsPDFModal
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
                 store={store}
-                cell={cell}
+                cells={cells}
             />
             <Button
-                icon={<PrinterOutlined />}
                 onClick={() => {
                     setIsModalOpen(true);
                 }}
+                icon={<PrinterOutlined />}
             >
-                Print
+                {" "}
+                Print all cells
             </Button>
         </>
     );
 };
 
-interface CellPDFModalProps {
+interface CellsPDFModalProps {
     isModalOpen?: boolean;
     setIsModalOpen: (value: boolean) => void;
     store: GetStoreResponse;
-    cell: GetCellResponse;
+    cells: GetCellResponse[];
 }
 
-export const CellPDFModal: FC<CellPDFModalProps> = ({
+export const CellsPDFModal: FC<CellsPDFModalProps> = ({
     isModalOpen,
     setIsModalOpen,
     store,
-    cell,
+    cells,
 }) => {
     return (
         <Modal
@@ -63,8 +67,8 @@ export const CellPDFModal: FC<CellPDFModalProps> = ({
                 <div className="flex items-center justify-end gap-4">
                     <CancelBtn />
                     <PDFDownloadLink
-                        document={<CellBlockPDF cell={cell} store={store} />}
-                        fileName={`Cell-${cell.id}.pdf`}
+                        document={<CellPDF cells={cells} store={store} />}
+                        fileName={`Cell-${store.id}.pdf`}
                     >
                         {({ loading }) =>
                             loading ? "Loading document..." : "Download now!"
@@ -75,7 +79,7 @@ export const CellPDFModal: FC<CellPDFModalProps> = ({
             title="Print"
         >
             <PDFViewer showToolbar={true} width={"100%"} height={"100%"}>
-                <CellBlockPDF cell={cell} store={store} />
+                <CellPDF cells={cells} store={store} />
             </PDFViewer>
         </Modal>
     );

@@ -1,20 +1,23 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { App } from "antd";
 import { AxiosError } from "axios";
-import { useNavigate } from "react-router-dom";
 import { createCell, deleteCell } from "./api";
 import { CreateCellRequest } from "./types";
 
-export const createCellMutation = () => {
+export const createCellMutation = (id: number, onSuccess?: () => void) => {
     const { message } = App.useApp();
-    const navigate = useNavigate();
+    const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>, CreateCellRequest>({
         async mutationFn(values) {
             await createCell(values);
         },
         onSuccess() {
             message.success("Success!");
-            navigate("/admin/settings/?menu_x=cells");
+
+            queryClient.invalidateQueries({
+                queryKey: [`cells-${id}`],
+            });
+            if (onSuccess) onSuccess();
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);
@@ -24,7 +27,6 @@ export const createCellMutation = () => {
 
 export const deleteCellMutation = (id: number) => {
     const { message } = App.useApp();
-    const navigate = useNavigate();
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>>({
         async mutationFn() {
@@ -32,9 +34,9 @@ export const deleteCellMutation = (id: number) => {
         },
         onSuccess() {
             message.success("Success!");
-            navigate("/admin/settings/?menu_x=cells");
+
             queryClient.invalidateQueries({
-                queryKey: ["cells"],
+                queryKey: [`cells-${id}`],
             });
         },
         onError(error) {

@@ -40,3 +40,11 @@ export const tryWithErrorLog = <T>(action: () => T): T | null => {
         return null;
     }
 };
+
+export function padNumbers(num: number, length: number) {
+    let numStr = num.toString();
+    while (numStr.length < length) {
+        numStr = "0" + numStr;
+    }
+    return numStr;
+}

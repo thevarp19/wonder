@@ -1,18 +1,25 @@
+import { GetStoreResponse } from "@/modules/store/types";
 import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
-import { useGetCells } from "../../queries";
 import { GetCellResponse } from "../../types";
 import { DeleteCellCell } from "./DeleteCell";
 import { PrintCellButton } from "./PrintCellButton";
 
 interface CellsTableProps {
-    storeId: number;
+    cells: GetCellResponse[] | undefined;
+    isPending?: boolean;
+    store: GetStoreResponse | undefined;
+    isStorePending?: boolean;
 }
 
-const columns: TableColumnsType<GetCellResponse> = [
+interface CellsTableColumn extends GetCellResponse {
+    store: GetStoreResponse | undefined;
+}
+
+const columns: TableColumnsType<CellsTableColumn> = [
     {
         title: "Cell number",
-        dataIndex: "number",
+        dataIndex: "cell",
     },
     {
         title: "Row",
@@ -20,11 +27,13 @@ const columns: TableColumnsType<GetCellResponse> = [
     },
     {
         title: "Column",
-        dataIndex: "column",
+        dataIndex: "col",
     },
     {
         title: "Print",
-        render: () => <PrintCellButton />,
+        render: (_, record) => (
+            <PrintCellButton store={record.store} cell={{ ...record }} />
+        ),
     },
     {
         title: "Delete",
@@ -32,14 +41,18 @@ const columns: TableColumnsType<GetCellResponse> = [
     },
 ];
 
-export const CellsTable: FC<CellsTableProps> = ({ storeId }) => {
-    const { data: cells, isPending } = useGetCells(storeId);
+export const CellsTable: FC<CellsTableProps> = ({
+    store,
+    isPending,
+    isStorePending,
+    cells,
+}) => {
     return (
         <Table
             columns={columns}
-            dataSource={cells}
+            dataSource={cells?.map((cell) => ({ ...cell, store }))}
             rowKey={"id"}
-            loading={isPending}
+            loading={isPending || isStorePending}
         />
     );
 };

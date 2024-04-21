@@ -5,19 +5,19 @@ import { createCellMutation } from "./mutations";
 
 const createCellSchema = Yup.object().shape({
     row: requiredNumberSchema(),
-    column: requiredNumberSchema(),
-    number: requiredNumberSchema(),
+    col: requiredNumberSchema(),
+    cell: requiredNumberSchema(),
 });
 
-export const useCreateCell = (storeId: number) => {
-    const mutation = createCellMutation();
+export const useCreateCell = (storeId: number, onSuccess?: () => void) => {
+    const mutation = createCellMutation(storeId, onSuccess);
 
     const formik = useFormik({
         initialValues: {
             storeId,
             row: 0,
-            column: 0,
-            number: 0,
+            col: 0,
+            cell: 0,
         },
         validationSchema: createCellSchema,
         validateOnChange: true,

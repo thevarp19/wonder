@@ -213,7 +213,7 @@ export const SupplyPDF = ({
     );
 };
 
-function generateBarcodeBase64(text: string, options = {}) {
+export function generateBarcodeBase64(text: string, options = {}) {
     const canvas = document.createElement("canvas");
 
     JsBarcode(canvas, text, {
