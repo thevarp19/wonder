@@ -25,6 +25,28 @@ export const createCellMutation = (id: number, onSuccess?: () => void) => {
     });
 };
 
+export const updateCellMutation = (id: number, onSuccess?: () => void) => {
+    const { message } = App.useApp();
+    const queryClient = useQueryClient();
+    return useMutation<void, AxiosError<any>, CreateCellRequest>({
+        async mutationFn(values) {
+            values;
+            // await createCell(values);
+        },
+        onSuccess() {
+            message.success("Success!");
+
+            queryClient.invalidateQueries({
+                queryKey: [`cells-${id}`],
+            });
+            if (onSuccess) onSuccess();
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
+        },
+    });
+};
+
 export const deleteCellMutation = (id: number) => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();

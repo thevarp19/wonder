@@ -2,18 +2,25 @@ import { FormikInput, FormikNumberInput } from "@/components/ui/FormikInput";
 import { cn } from "@/utils/shared.util";
 import { Button, Form } from "antd";
 import { FC } from "react";
-import { useCreateCell } from "../../forms";
+import { useUpdateCell } from "../../forms";
+import { GetCellResponse } from "../../types";
 
-interface CreateCellFormProps {
+interface UpdateCellFormProps {
     storeId: number;
+    initialValues: GetCellResponse;
     onSuccess?: () => void;
 }
 
-export const CreateCellForm: FC<CreateCellFormProps> = ({
+export const UpdateCellForm: FC<UpdateCellFormProps> = ({
     storeId,
+    initialValues,
     onSuccess,
 }) => {
-    const { formik, mutation } = useCreateCell(storeId, onSuccess);
+    const { formik, mutation } = useUpdateCell(
+        storeId,
+        initialValues,
+        onSuccess
+    );
     return (
         <Form
             onFinish={formik.submitForm}
@@ -112,7 +119,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                 className={cn("w-full mt-6")}
                 loading={mutation.isPending}
             >
-                {"Create"}
+                {"Update"}
             </Button>
         </Form>
     );

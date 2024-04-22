@@ -7,3 +7,10 @@ export function getCellCode(cell: GetCellResponse, storeNumber: string) {
         cellNum = padNumbers(cell.cell, 3);
     return `${storeNumber}${row}${col}${cellNum}`;
 }
+
+export function mapCreateCellToUpdate(cell: GetCellResponse, storeId: number) {
+    return {
+        ...cell,
+        storeId,
+    };
+}

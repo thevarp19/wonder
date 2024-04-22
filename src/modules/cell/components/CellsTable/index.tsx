@@ -2,6 +2,7 @@ import { GetStoreResponse } from "@/modules/store/types";
 import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { GetCellResponse } from "../../types";
+import { UpdateCellButton } from "../UpdateCellForm/UpdateCellButton";
 import { DeleteCellCell } from "./DeleteCell";
 import { PrintCellButton } from "./PrintCellButton";
 
@@ -33,6 +34,35 @@ const columns: TableColumnsType<CellsTableColumn> = [
         title: "Print",
         render: (_, record) => (
             <PrintCellButton store={record.store} cell={{ ...record }} />
+        ),
+    },
+    {
+        title: "Comment",
+        dataIndex: "comment",
+        render: (_, record) => record.comment || "-",
+    },
+    {
+        title: "Size",
+        render: (_, record) =>
+            record.width && record.height && record.depth ? (
+                <div>
+                    {record.width}x{record.height}x{record.depth}
+                </div>
+            ) : record.width && record.height ? (
+                <div>
+                    {record.width}x{record.height}
+                </div>
+            ) : (
+                "-"
+            ),
+    },
+    {
+        title: "Edit",
+        render: (_, record) => (
+            <UpdateCellButton
+                storeId={record.store?.id}
+                initialValues={{ ...record }}
+            />
         ),
     },
     {
