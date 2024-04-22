@@ -2,6 +2,7 @@ import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { useGetOrdersByDate } from "../../queries";
 import { GetOrdersByDate } from "../../types";
+import { deliveryTypeMap } from "../../utils";
 
 interface OrdersTableProps {}
 
@@ -30,6 +31,7 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     {
         title: "Delivery type",
         dataIndex: "deliveryMode",
+        render: (_, record) => deliveryTypeMap(record.deliveryMode),
     },
     {
         title: "Send time",
@@ -49,10 +51,15 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     {
         title: "Status",
         dataIndex: "state",
+        render: (_, record) => deliveryTypeMap(record.state),
     },
     {
         title: "Price",
         render: (_, record) => <div>{record.totalPrice} KZT</div>,
+    },
+    {
+        title: "Trade price",
+        render: (_, record) => <div>{record.tradePrice} KZT</div>,
     },
 ];
 
