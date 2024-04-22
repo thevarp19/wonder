@@ -1,4 +1,5 @@
 import { SellerLoginPage } from "./SellerLoginPage";
+import { SellerOrdersPage } from "./SellerOrdersPage";
 import { SellerProductsPage } from "./SellerProductsPage";
 import { SellerProductsUploadPage } from "./SellerProductsUploadPage";
 import { SellerRegisterPage } from "./SellerRegisterPage";
@@ -8,6 +9,7 @@ import { SellerSupplyPage } from "./SellerSupplyPage";
 
 export {
     SellerLoginPage,
+    SellerOrdersPage,
     SellerProductsPage,
     SellerProductsUploadPage,
     SellerRegisterPage,

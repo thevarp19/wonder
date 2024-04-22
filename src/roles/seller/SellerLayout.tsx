@@ -2,6 +2,7 @@ import { GeneralLayout } from "@/components/shared/GeneralLayout";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import { sellerLogout } from "@/roles/seller/redux/auth/actions";
 import {
+    CarOutlined,
     HomeOutlined,
     LogoutOutlined,
     NodeCollapseOutlined,
@@ -24,6 +25,11 @@ const items: MenuProps["items"] = [
         label: <Link to={"/seller/settings"}>Settings</Link>,
         key: "settings",
         icon: <SettingOutlined />,
+    },
+    {
+        label: <Link to={"/seller/orders"}>Orders</Link>,
+        key: "orders",
+        icon: <CarOutlined />,
     },
     {
         label: <Link to={"/seller/products"}>Products</Link>,
@@ -49,6 +55,8 @@ function pathToKey(key: string) {
             return "supply";
         case "/seller/supply/create":
             return "supply";
+        case "/seller/orders":
+            return "orders";
         default:
             return "home";
     }
