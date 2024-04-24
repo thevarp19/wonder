@@ -10,3 +10,7 @@ export function getOrdersByDate(startDate: string, endDate: string) {
 export function getOrderById(id: number) {
     return axiosAuthorized.get<GetOrderById[]>(`/api/orders/detail/${id}`);
 }
+
+export function getOrder(id: number) {
+    return axiosAuthorized.get<GetOrdersByDate>(`/api/orders/${id}`);
+}

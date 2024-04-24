@@ -9,8 +9,24 @@ interface OrderDetailsTableProps {
 
 const columns: TableColumnsType<GetOrderById> = [
     {
-        title: "Order number",
-        dataIndex: "code",
+        title: "Store address",
+        dataIndex: "storeAddress",
+    },
+    {
+        title: "Article",
+        dataIndex: "article",
+    },
+    {
+        title: "Vendor code",
+        dataIndex: "vendorCode",
+    },
+    {
+        title: "Box",
+        dataIndex: "boxTypeName",
+    },
+    {
+        title: "Box barcode",
+        dataIndex: "boxBarCode",
     },
 ];
 

@@ -1,5 +1,6 @@
 import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { useGetOrdersByDate } from "../../queries";
 import { GetOrdersByDate } from "../../types";
 import { deliveryTypeMap } from "../../utils";
@@ -9,7 +10,9 @@ interface OrdersTableProps {}
 const columns: TableColumnsType<GetOrdersByDate> = [
     {
         title: "Order number",
-        dataIndex: "code",
+        render: (_, record) => (
+            <Link to={`/admin/orders/${record.code}`}>{record.code}</Link>
+        ),
     },
     {
         title: "Shop",
@@ -72,7 +75,7 @@ export const OrdersTable: FC<OrdersTableProps> = ({}) => {
         <Table
             columns={columns}
             dataSource={orders}
-            rowKey={"id"}
+            rowKey={"code"}
             loading={isPending}
         />
     );

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getOrderById, getOrdersByDate } from "./api";
+import { getOrder, getOrderById, getOrdersByDate } from "./api";
 import { GetOrderById, GetOrdersByDate } from "./types";
 
 export const useGetOrdersByDate = (startDate: string, endDate: string) => {
@@ -19,6 +19,16 @@ export const useGetOrder = (id: number) => {
         queryKey: [`store`, id],
         queryFn: async () => {
             const { data } = await getOrderById(id);
+            return data;
+        },
+    });
+};
+
+export const useGetOrderData = (id: number) => {
+    return useQuery<GetOrdersByDate>({
+        queryKey: [`store`, id],
+        queryFn: async () => {
+            const { data } = await getOrder(id);
             return data;
         },
     });
