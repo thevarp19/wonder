@@ -9,24 +9,32 @@ interface OrderDetailsTableProps {
 
 const columns: TableColumnsType<GetOrderById> = [
     {
-        title: "Store address",
-        dataIndex: "storeAddress",
+        title: "Product name",
+        dataIndex: "productName",
     },
     {
         title: "Article",
-        dataIndex: "article",
+        dataIndex: "productArticle",
     },
     {
         title: "Vendor code",
-        dataIndex: "vendorCode",
+        dataIndex: "productVendorCode",
     },
     {
-        title: "Box",
-        dataIndex: "boxTypeName",
+        title: "Cell number",
+        dataIndex: "cellCode",
     },
     {
-        title: "Box barcode",
-        dataIndex: "boxBarCode",
+        title: "Trade price",
+        dataIndex: "productTradePrice",
+    },
+    {
+        title: "Sell price",
+        dataIndex: "productSellPrice",
+    },
+    {
+        title: "Income",
+        dataIndex: "income",
     },
 ];
 
@@ -37,7 +45,7 @@ export const OrderDetailsTable: FC<OrderDetailsTableProps> = ({ orderId }) => {
         <Table
             columns={columns}
             dataSource={data}
-            rowKey={"id"}
+            rowKey={"productVendorCode"}
             loading={isPending}
         />
     );

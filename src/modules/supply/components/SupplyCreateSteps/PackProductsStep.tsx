@@ -50,7 +50,7 @@ const BoxSelect: FC<{ pack: SupplyPack }> = ({ pack }) => {
             placeholder={"Choose a box"}
             className="w-80"
             options={store?.availableBoxTypes?.map((box) => ({
-                label: box.name,
+                label: `${box.name} ${box.description}`,
                 value: box.id,
             }))}
             value={pack.box}

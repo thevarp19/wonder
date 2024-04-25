@@ -2,6 +2,7 @@ import { GeneralLayout } from "@/components/shared/GeneralLayout";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import { employeeLogout } from "@/roles/employee/redux/auth/actions";
 import {
+    CarOutlined,
     HomeOutlined,
     LogoutOutlined,
     ProfileOutlined,
@@ -25,6 +26,11 @@ const items: MenuProps["items"] = [
         icon: <SettingOutlined />,
     },
     {
+        label: <Link to={"/employee/orders"}>Orders</Link>,
+        key: "orders",
+        icon: <CarOutlined />,
+    },
+    {
         label: <Link to={"/employee/scan"}>Scan</Link>,
         key: "scan",
         icon: <ScanOutlined />,
@@ -39,6 +45,8 @@ function pathToKey(key: string) {
             return "supplies";
         case "/employee/scan":
             return "scan";
+        case "/employee/orders":
+            return "orders";
         default:
             return "home";
     }
