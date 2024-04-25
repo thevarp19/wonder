@@ -5,6 +5,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { SellerLayout } from "./SellerLayout";
 import {
     SellerLoginPage,
+    SellerOrderPage,
     SellerOrdersPage,
     SellerProductsPage,
     SellerProductsUploadPage,
@@ -49,6 +50,10 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                         element={<SellerSupplyCreatePage />}
                     />
                     <Route path="/orders" element={<SellerOrdersPage />} />
+                    <Route
+                        path="/orders/:orderId"
+                        element={<SellerOrderPage />}
+                    />
                 </Route>
             </Route>
             <Route path="/login" element={<SellerLoginPage />} />

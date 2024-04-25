@@ -1,5 +1,6 @@
 import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { useGetOrdersByDate } from "../../queries";
 import { GetOrdersByDate } from "../../types";
 import { deliveryTypeMap } from "../../utils";
@@ -7,7 +8,9 @@ import { deliveryTypeMap } from "../../utils";
 const columns: TableColumnsType<GetOrdersByDate> = [
     {
         title: "Order number",
-        dataIndex: "code",
+        render: (_, record) => (
+            <Link to={`/seller/orders/${record.code}`}>{record.code}</Link>
+        ),
     },
     {
         title: "Time",
