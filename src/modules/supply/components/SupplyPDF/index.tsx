@@ -95,7 +95,7 @@ const PackBlock = ({
                     <Text key={`${product.id}-${pack.id}`}>
                         {index + 1}
                         {" - "}
-                        Phone, {product.quantity} items
+                        {product.product.name}, {product.quantity} items
                     </Text>
                 ))}
             </View>
