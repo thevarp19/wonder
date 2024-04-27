@@ -1,19 +1,19 @@
 export interface ScanState {
-    boxId: number | null;
+    boxBarcode: number | null;
     cells: {
-        id: number;
+        barcode: number;
         products: number[];
     }[];
-    currentCellId: number | null;
+    currentCellBarcode: number | null;
 }
 
-export const SET_BOX_ID = "SCAN_SET_BOX_ID";
+export const SET_BOX_BARCODE = "SCAN_SET_BOX_BARCODE";
 export const CREATE_SCANNING_CELL = "SCAN_CREATE_SCANNING_CELL";
-export const ADD_PRODUCT_TO_CELL = "SCAN_ADD_PRODUCT_TO_CELL";
-export const SET_CURRENT_CELL_ID = "SCAN_SET_CURRENT_CELL_ID";
+export const ADD_PRODUCTS_TO_CELL = "SCAN_ADD_PRODUCTS_TO_CELL";
+export const SET_CURRENT_CELL_BARCODE = "SCAN_SET_CURRENT_CELL_BARCODE";
 
-export interface SetBoxId {
-    type: typeof SET_BOX_ID;
+export interface SetBoxBarCode {
+    type: typeof SET_BOX_BARCODE;
     payload: number;
 }
 
@@ -22,21 +22,21 @@ export interface CreateScanningCell {
     payload: number;
 }
 
-export interface AddProductToCell {
-    type: typeof ADD_PRODUCT_TO_CELL;
+export interface AddProductsToCell {
+    type: typeof ADD_PRODUCTS_TO_CELL;
     payload: {
-        cellId: number;
-        productId: number;
+        cellBarcode: number;
+        productBarcode: number[];
     };
 }
 
-export interface SetCurrentCellId {
-    type: typeof SET_CURRENT_CELL_ID;
+export interface SetCurrentCellBarCode {
+    type: typeof SET_CURRENT_CELL_BARCODE;
     payload: number;
 }
 
 export type ScanActions =
-    | SetBoxId
+    | SetBoxBarCode
     | CreateScanningCell
-    | AddProductToCell
-    | SetCurrentCellId;
+    | AddProductsToCell
+    | SetCurrentCellBarCode;

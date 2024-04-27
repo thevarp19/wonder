@@ -1,21 +1,24 @@
 import * as types from "./types";
 
-export const setBoxId = (boxId: number) => ({
-    type: types.SET_BOX_ID,
-    payload: boxId,
+export const setBoxBarcode = (boxBarcode: number) => ({
+    type: types.SET_BOX_BARCODE,
+    payload: boxBarcode,
 });
 
-export const createScanningCell = (cellId: number) => ({
+export const createScanningCell = (cellBarcode: number) => ({
     type: types.CREATE_SCANNING_CELL,
-    payload: cellId,
+    payload: cellBarcode,
 });
 
-export const addProductToCell = (cellId: number, productId: number) => ({
-    type: types.ADD_PRODUCT_TO_CELL,
-    payload: { cellId, productId },
+export const addProductsToCell = (
+    cellBarcode: number,
+    productBarcode: number
+) => ({
+    type: types.ADD_PRODUCTS_TO_CELL,
+    payload: { cellBarcode, productBarcode },
 });
 
-export const setCurrentCellId = (cellId: number) => ({
-    type: types.SET_CURRENT_CELL_ID,
-    payload: cellId,
+export const setCurrentCellBarcode = (cellBarcode: number) => ({
+    type: types.SET_CURRENT_CELL_BARCODE,
+    payload: cellBarcode,
 });

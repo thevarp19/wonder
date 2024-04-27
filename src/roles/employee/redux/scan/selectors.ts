@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/redux/utils";
 
-export const useBoxId = () => {
-    return useAppSelector((state) => state.employee.scan.boxId);
+export const useBoxBarcode = () => {
+    return useAppSelector((state) => state.employee.scan.boxBarcode);
 };
 
 export const useCells = () => {
@@ -11,9 +11,9 @@ export const useCells = () => {
 
 export const useCurrentCell = () => {
     const cells = useCells();
-    const currentCellId = useAppSelector(
-        (state) => state.employee.scan.currentCellId
+    const currentCellBarcode = useAppSelector(
+        (state) => state.employee.scan.currentCellBarcode
     );
 
-    return cells.find((cell) => cell.id === currentCellId) || null;
+    return cells.find((cell) => cell.barcode === currentCellBarcode) || null;
 };
