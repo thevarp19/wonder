@@ -27,17 +27,25 @@ export const SubmitStep: FC<SubmitStepProps> = ({}) => {
 
     return (
         <div>
+            <h1>Scanned products</h1>
+            <ul>
+                {productBarcodeList.map((barcode) => (
+                    <li key={barcode}>{barcode}</li>
+                ))}
+            </ul>
             <h1>Cells</h1>
-            {cells.map((cell) => (
-                <ProductsInCell key={cell.barcode} cell={cell} />
-            ))}
+            <div className="flex flex-wrap gap-4">
+                {cells.map((cell) => (
+                    <ProductsInCell key={cell.barcode} cell={cell} />
+                ))}
+            </div>
         </div>
     );
 };
 
 function ProductsInCell({ cell }: { cell: ScanCell }) {
     return (
-        <div>
+        <div className="w-full max-w-sm p-4 border border-black">
             <p>Cell barcode: {cell.barcode}</p>
             <p>Products:</p>
             <ul>
