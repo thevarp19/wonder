@@ -1,9 +1,11 @@
+export interface ScanCell {
+    barcode: number;
+    products: number[];
+}
+
 export interface ScanState {
     boxBarcode: number | null;
-    cells: {
-        barcode: number;
-        products: number[];
-    }[];
+    cells: ScanCell[];
     currentCellBarcode: number | null;
 }
 

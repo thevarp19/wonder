@@ -19,7 +19,7 @@ export const ScanProductsStep: FC<ScanProductsStepProps> = ({}) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if (!cellBarcode && cellBarcodeInUrl) {
+        if (cellBarcodeInUrl) {
             dispatch(actions.createScanningCell(cellBarcodeInUrl));
         }
     }, [cellBarcodeInUrl]);

@@ -7,5 +7,5 @@ export function useScannerResults() {
 
 export function useScannerMultipleResults() {
     const [searchParams] = useSearchParams();
-    return searchParams.getAll("results");
+    return searchParams.getAll("result");
 }
