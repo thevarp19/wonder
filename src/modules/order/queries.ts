@@ -3,15 +3,42 @@ import {
     getOrder,
     getOrderById,
     getOrderDetailEmployee,
+    getOrdersAdmin,
     getOrdersByDate,
     getOrdersEmployee,
 } from "./api";
 import {
     GetOrderById,
     GetOrderDetailEmployee,
+    GetOrdersAdmin,
     GetOrdersByDate,
     GetOrdersEmployee,
 } from "./types";
+
+export const useGetOrdersAdmin = (
+    startDate: string,
+    endDate: string,
+    page: number = 0,
+    size: number = 10
+) => {
+    return useQuery<GetOrdersAdmin>({
+        queryKey: [`orders-admin-${startDate}-${endDate}-${page}-${size}`],
+        queryFn: async () => {
+            const { data } = await getOrdersAdmin(
+                startDate,
+                endDate,
+                page,
+                size
+            );
+            return {
+                ...data,
+                content: data.content
+                    .filter((order) => order.waybill !== null)
+                    .sort((a, b) => b.creationDate - a.creationDate),
+            };
+        },
+    });
+};
 
 export const useGetOrdersByDate = (startDate: string, endDate: string) => {
     return useQuery<GetOrdersByDate[]>({

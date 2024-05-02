@@ -2,9 +2,21 @@ import { axiosAuthorized } from "@/lib/axios";
 import {
     GetOrderById,
     GetOrderDetailEmployee,
+    GetOrdersAdmin,
     GetOrdersByDate,
     GetOrdersEmployee,
 } from "./types";
+
+export function getOrdersAdmin(
+    startDate: string,
+    endDate: string,
+    page: number = 0,
+    size: number = 10
+) {
+    return axiosAuthorized.get<GetOrdersAdmin>(
+        `/api/orders/admin?start-date=${startDate}&end-date=${endDate}&page=${page}&size=${size}`
+    );
+}
 
 export function getOrdersByDate(startDate: string, endDate: string) {
     return axiosAuthorized.get<GetOrdersByDate[]>(

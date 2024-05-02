@@ -8,6 +8,15 @@ export interface GetOrderById {
     income: number;
 }
 
+export interface GetOrdersAdmin {
+    content: GetOrdersByDate[];
+    page: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    last: boolean;
+}
+
 export interface GetOrdersByDate {
     id: number;
     kaspiId: string;
