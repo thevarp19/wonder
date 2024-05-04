@@ -6,6 +6,7 @@ import {
     getOrdersAdmin,
     getOrdersByDate,
     getOrdersEmployee,
+    getOrdersSeller,
 } from "./api";
 import {
     GetOrderById,
@@ -13,6 +14,7 @@ import {
     GetOrdersAdmin,
     GetOrdersByDate,
     GetOrdersEmployee,
+    GetOrdersSeller,
 } from "./types";
 
 export const useGetOrdersAdmin = (
@@ -48,6 +50,26 @@ export const useGetOrdersByDate = (startDate: string, endDate: string) => {
             return data
                 .filter((order) => order.waybill !== null)
                 .sort((a, b) => b.creationDate - a.creationDate);
+        },
+    });
+};
+
+export const useGetOrdersSeller = (
+    startDate: string,
+    endDate: string,
+    page: number = 0,
+    size: number = 10
+) => {
+    return useQuery<GetOrdersSeller>({
+        queryKey: ["seller-orders", startDate, endDate, page, size],
+        queryFn: async () => {
+            const { data } = await getOrdersSeller(startDate, endDate);
+            return {
+                ...data,
+                content: data.content
+                    .filter((order) => order.waybill !== null)
+                    .sort((a, b) => b.creationDate - a.creationDate),
+            };
         },
     });
 };

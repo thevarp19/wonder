@@ -13,6 +13,9 @@ export interface GetOrderById {
 export interface GetOrdersAdmin
     extends BasePaginationResponse<GetOrdersByDate> {}
 
+export interface GetOrdersSeller
+    extends BasePaginationResponse<GetOrdersByDate> {}
+
 export interface GetOrdersByDate {
     id: number;
     kaspiId: string;

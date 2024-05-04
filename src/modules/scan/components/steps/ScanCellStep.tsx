@@ -16,7 +16,7 @@ function groupBoxProducts(
     const result: { product: SupplyBoxProduct; count: number }[] = [];
     products.forEach((product) => {
         const existingProduct = result.find(
-            (item) => item.product.article === product.article
+            (item) => item.product.vendorCode === product.vendorCode
         );
         if (existingProduct) {
             existingProduct.count++;
@@ -35,9 +35,9 @@ export const ScanCellStep: FC<ScanCellStepProps> = ({}) => {
         : boxBarcodeInUrlParsed;
     const boxBarcode = useBoxBarcode();
     const dispatch = useAppDispatch();
-    const { data, isPending, isError } = useGetSupplyBox(boxBarcode as number);
+    const { data, isError } = useGetSupplyBox(boxBarcode as number);
     useEffect(() => {
-        if (!boxBarcode && boxBarcodeInUrl) {
+        if (boxBarcodeInUrl) {
             dispatch(actions.setBoxBarcode(boxBarcodeInUrl));
         }
     }, [boxBarcodeInUrl]);
@@ -51,7 +51,7 @@ export const ScanCellStep: FC<ScanCellStepProps> = ({}) => {
         <div>
             <p>Box barcode: {boxBarcode}</p>
             {data && (
-                <div>
+                <div className="p-4 border-2 border-black w-max">
                     <p>Box products:</p>
                     <ul>
                         {groupBoxProducts(data.products).map((product) => (

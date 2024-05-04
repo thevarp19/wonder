@@ -5,6 +5,7 @@ import {
     GetOrdersAdmin,
     GetOrdersByDate,
     GetOrdersEmployee,
+    GetOrdersSeller,
 } from "./types";
 
 export function getOrdersAdmin(
@@ -21,6 +22,17 @@ export function getOrdersAdmin(
 export function getOrdersByDate(startDate: string, endDate: string) {
     return axiosAuthorized.get<GetOrdersByDate[]>(
         `/api/orders/admin?start-date=${startDate}&end-date=${endDate}`
+    );
+}
+
+export function getOrdersSeller(
+    startDate: string,
+    endDate: string,
+    page: number = 0,
+    size: number = 10
+) {
+    return axiosAuthorized.get<GetOrdersSeller>(
+        `/api/orders/seller?start-date=${startDate}&end-date=${endDate}&page=${page}&size=${size}`
     );
 }
 

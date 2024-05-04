@@ -1,7 +1,7 @@
 import { Table, TableColumnsType } from "antd";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
-import { useGetOrdersByDate } from "../../queries";
+import { useGetOrdersSeller } from "../../queries";
 import { GetOrdersByDate } from "../../types";
 import { deliveryTypeMap } from "../../utils";
 
@@ -63,16 +63,27 @@ const columns: TableColumnsType<GetOrdersByDate> = [
 interface SellerOrdersTableProps {}
 
 export const SellerOrdersTable: FC<SellerOrdersTableProps> = ({}) => {
-    const { data: orders, isPending } = useGetOrdersByDate(
+    const [page, setPage] = useState(0);
+    const { data: orders, isPending } = useGetOrdersSeller(
         "2000-12-02",
-        "2040-12-02"
+        "2040-12-02",
+        page
     );
     return (
         <Table
             columns={columns}
-            dataSource={orders}
+            dataSource={orders?.content}
             rowKey={"id"}
             loading={isPending}
+            pagination={{
+                pageSize: 10,
+                total: orders?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
+                },
+                current: page + 1,
+            }}
         />
     );
 };

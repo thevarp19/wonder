@@ -14,3 +14,9 @@ export function getCells(storeId: number) {
 export function deleteCell(id: number) {
     return axiosAuthorized.delete(`/api/cells/${id}`);
 }
+
+export function addProductToCell(cellId: number, products: number[]) {
+    return axiosAuthorized.delete(
+        `/api/cells/add-product-to-cell?cell-id=${cellId}&product=${products}`
+    );
+}
