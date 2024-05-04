@@ -106,7 +106,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                     loading={isPending}
                     value={products.map((e) => e.product.id)}
                     onSelect={(value) => {
-                        const p = productOptions?.find(
+                        const p = productOptions?.content.find(
                             (product) => product.id === value
                         );
                         p && dispatch(actions.addProduct(p));
@@ -114,7 +114,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                     onDeselect={(value) => {
                         dispatch(actions.removeProduct(Number(value)));
                     }}
-                    options={productOptions?.map((product) => ({
+                    options={productOptions?.content.map((product) => ({
                         label: product.name,
                         value: product.id,
                     }))}

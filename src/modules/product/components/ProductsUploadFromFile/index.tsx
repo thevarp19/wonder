@@ -2,10 +2,10 @@ import { InboxOutlined } from "@ant-design/icons";
 import { Spin, Upload } from "antd";
 import { FC, useEffect } from "react";
 import { createProductsFromFileMutation } from "../../mutations";
-import { GetProductResponse } from "../../types";
+import { GetProductContent } from "../../types";
 
 interface ProductsUploadFromFileProps {
-    setProducts?: (products: GetProductResponse[]) => void;
+    setProducts?: (products: GetProductContent[]) => void;
 }
 
 export const ProductsUploadFromFile: FC<ProductsUploadFromFileProps> = ({

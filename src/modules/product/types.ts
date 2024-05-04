@@ -8,6 +8,33 @@ export interface ProductPrice {
 export interface GetProductResponse
     extends BasePaginationResponse<GetProductContent> {}
 
+export interface GetProductPricesResponse
+    extends BasePaginationResponse<GetProductPricesContent> {}
+
+export interface GetProductPricesContent {
+    cities: ProductPriceCity[];
+    products: ProductPrice[];
+}
+
+export interface ProductPriceCity {
+    id: number;
+    name: string;
+    code: string;
+    enabled: true;
+}
+
+export interface ProductPrice {
+    id: number;
+    vendorCode: string;
+    name: string;
+    count: number;
+    prices: {
+        cityId: number;
+        cityName: string;
+        price: number;
+    }[];
+}
+
 export interface GetProductContent {
     id: number;
     vendorCode: string;

@@ -1,10 +1,10 @@
 import { GetBoxResponse } from "@/modules/box/types";
-import { GetProductResponse } from "@/modules/product/types";
+import { GetProductContent } from "@/modules/product/types";
 import { GetStoreResponse } from "@/modules/store/types";
 import { SupplyPack } from "../../types/supply";
 import * as types from "./types";
 
-export const addProduct = (product: GetProductResponse): types.AddProducts => {
+export const addProduct = (product: GetProductContent): types.AddProducts => {
     return {
         type: types.ADD_PRODUCTS,
         payload: [{ product, quantity: 0 }],
@@ -12,7 +12,7 @@ export const addProduct = (product: GetProductResponse): types.AddProducts => {
 };
 
 export const setProducts = (
-    products: GetProductResponse[]
+    products: GetProductContent[]
 ): types.SetProducts => {
     return {
         type: types.SET_PRODUCTS,

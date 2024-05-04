@@ -1,11 +1,11 @@
 import { Button, Checkbox, Modal, Table, TableColumnsType } from "antd";
 import { Dispatch, FC, SetStateAction, useState } from "react";
-import { useGetProducts } from "../../queries";
-import { GetProductResponse } from "../../types";
+import { useGetProductsPrices } from "../../queries";
+import { ProductPrice, ProductPriceCity } from "../../types";
 
 interface ProductPriceTableProps {}
 
-const columns: TableColumnsType<GetProductResponse> = [
+const columns: TableColumnsType<ProductPrice> = [
     {
         title: "Article",
         dataIndex: "vendorCode",
@@ -20,62 +20,37 @@ const columns: TableColumnsType<GetProductResponse> = [
     },
     {
         title: "Count",
-        render: () => <div className="">0</div>,
+        render: (_, record) => <div className="">{record.count}</div>,
         width: 100,
         fixed: "left",
-    },
-    {
-        title: "Almaty",
-        render: (_, record) => <span>{record.prices[0].price}</span>,
-        width: 120,
-    },
-    {
-        title: "Astana",
-        width: 120,
-        render: (_, record) => <span>{record.prices[1].price}</span>,
-    },
-];
-
-const mockStores = [
-    {
-        name: "Shymkent",
-    },
-    {
-        name: "Karaganda",
-    },
-    {
-        name: "Aktobe",
-    },
-    {
-        name: "Atyrau",
-    },
-    {
-        name: "Kostanay",
-    },
-    {
-        name: "Kokshetau",
-    },
-    {
-        name: "Kyzylorda",
     },
 ];
 
 function StoreCheckboxes({
     setChecked,
+    stores,
 }: {
     setChecked: Dispatch<SetStateAction<string[]>>;
+    stores: ProductPriceCity[];
 }) {
     return (
         <div className="flex flex-col gap-4">
-            {mockStores.map((store) => (
-                <div key={store.name}>
+            {stores.map((store) => (
+                <div key={store.name.toLowerCase()}>
                     <Checkbox
                         onChange={(e) => {
                             if (e.target.checked) {
-                                setChecked((prev) => [...prev, store.name]);
+                                setChecked((prev) => [
+                                    ...prev,
+                                    store.name.toLowerCase(),
+                                ]);
                             } else {
                                 setChecked((prev) =>
-                                    prev.filter((name) => name !== store.name)
+                                    prev.filter(
+                                        (name) =>
+                                            name.toLowerCase() !==
+                                            store.name.toLowerCase()
+                                    )
                                 );
                             }
                         }}
@@ -88,16 +63,32 @@ function StoreCheckboxes({
     );
 }
 
+function findProductPriceInCity(
+    storeName: string,
+    record: ProductPrice
+): number {
+    let result = 0;
+    record.prices.forEach((price) => {
+        if (price.cityName.toLowerCase() === storeName.toLowerCase()) {
+            result = price.price;
+        }
+    });
+    return result;
+}
+
 export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
-    const { data: products, isPending } = useGetProducts();
+    const [page, setPage] = useState(0);
+    const { data: products, isPending } = useGetProductsPrices(page);
     const [activeStores, setActiveStores] = useState<string[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const newColumns = [
         ...columns,
         ...activeStores.map((store) => ({
-            title: `${store}`,
+            title: `${store.toLocaleUpperCase()}`,
             width: 120,
-            render: () => <span>{0}</span>,
+            render: (_: any, record: ProductPrice) => (
+                <span>{findProductPriceInCity(store, record)}</span>
+            ),
         })),
     ];
     return (
@@ -112,7 +103,10 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                     setIsModalOpen(false);
                 }}
             >
-                <StoreCheckboxes setChecked={setActiveStores} />
+                <StoreCheckboxes
+                    setChecked={setActiveStores}
+                    stores={products?.content[0].cities || []}
+                />
             </Modal>
             <div className="flex justify-end px-4 mb-4">
                 <Button
@@ -127,9 +121,18 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
             <Table
                 columns={newColumns}
                 loading={isPending}
-                dataSource={products}
+                dataSource={products?.content[0].products}
                 rowKey={"article"}
                 scroll={{ x: 1200 }}
+                pagination={{
+                    pageSize: 10,
+                    total: products?.totalElements,
+                    showSizeChanger: false,
+                    onChange(page) {
+                        setPage(page - 1);
+                    },
+                    current: page + 1,
+                }}
             />
         </div>
     );

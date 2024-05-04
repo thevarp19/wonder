@@ -1,14 +1,14 @@
 import { GetBoxResponse } from "@/modules/box/types";
-import { GetProductResponse } from "@/modules/product/types";
+import { GetProductContent } from "@/modules/product/types";
 
 export interface ProductQuantity {
     quantity: number;
-    product: GetProductResponse;
+    product: GetProductContent;
 }
 
 export interface PackProduct {
     id: string;
-    product: GetProductResponse;
+    product: GetProductContent;
     quantity: number;
 }
 
