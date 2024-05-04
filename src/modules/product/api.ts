@@ -8,6 +8,8 @@ export function createProductsFromFile(formData: FormData) {
     );
 }
 
-export function getProducts() {
-    return axiosAuthorized.get<GetProductResponse[]>("/api/products");
+export function getProducts(page: number = 0, size: number = 10) {
+    return axiosAuthorized.get<GetProductResponse>(
+        `/api/products?page=${page}&size=${size}`
+    );
 }

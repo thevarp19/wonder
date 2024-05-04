@@ -22,7 +22,7 @@ export const useGetOrdersAdmin = (
     size: number = 10
 ) => {
     return useQuery<GetOrdersAdmin>({
-        queryKey: [`orders-admin-${startDate}-${endDate}-${page}-${size}`],
+        queryKey: [`orders-admin`, startDate, endDate, page, size],
         queryFn: async () => {
             const { data } = await getOrdersAdmin(
                 startDate,

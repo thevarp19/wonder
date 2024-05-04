@@ -1,3 +1,5 @@
+import { BasePaginationResponse } from "@/types";
+
 export interface GetOrderById {
     productArticle: string;
     productName: string;
@@ -8,14 +10,8 @@ export interface GetOrderById {
     income: number;
 }
 
-export interface GetOrdersAdmin {
-    content: GetOrdersByDate[];
-    page: number;
-    size: number;
-    totalElements: number;
-    totalPages: number;
-    last: boolean;
-}
+export interface GetOrdersAdmin
+    extends BasePaginationResponse<GetOrdersByDate> {}
 
 export interface GetOrdersByDate {
     id: number;

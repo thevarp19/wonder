@@ -1,11 +1,11 @@
 import { Switch, Table, TableColumnsType } from "antd";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useGetProducts } from "../../queries";
-import { GetProductResponse } from "../../types";
+import { GetProductContent } from "../../types";
 
 interface ProductsTableProps {}
 
-const columns: TableColumnsType<GetProductResponse> = [
+const columns: TableColumnsType<GetProductContent> = [
     {
         title: "Article",
         dataIndex: "vendorCode",
@@ -38,13 +38,23 @@ const columns: TableColumnsType<GetProductResponse> = [
 ];
 
 export const ProductsTable: FC<ProductsTableProps> = ({}) => {
-    const { data: products, isPending } = useGetProducts();
+    const [page, setPage] = useState(0);
+    const { data: products, isPending } = useGetProducts(page);
     return (
         <Table
             columns={columns}
             loading={isPending}
-            dataSource={products}
+            dataSource={products?.content}
             rowKey={"article"}
+            pagination={{
+                pageSize: 10,
+                total: products?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
+                },
+                current: page + 1,
+            }}
         />
     );
 };
