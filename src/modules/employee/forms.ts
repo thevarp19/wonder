@@ -16,7 +16,7 @@ const createEmployeeSchema = Yup.object().shape({
     email: emailSchema().required(),
     password: passwordSchemas().self.required(),
     repeatPassword: passwordSchemas().repeat.required(),
-    phoneNumber: KzPhoneNumberSchema(),
+    phoneNumber: KzPhoneNumberSchema().required(),
 });
 
 export const useCreateEmployee = (storeId: number, onSuccess?: () => void) => {
@@ -30,7 +30,7 @@ export const useCreateEmployee = (storeId: number, onSuccess?: () => void) => {
             password: "",
             repeatPassword: "",
             phoneNumber: "",
-            storeId: 0,
+            storeId,
         },
         validationSchema: createEmployeeSchema,
         validateOnChange: true,
@@ -45,11 +45,12 @@ export const useCreateEmployee = (storeId: number, onSuccess?: () => void) => {
 };
 
 export const useUpdateEmployee = (
+    id: number,
     storeId: number,
     initialValues: GetEmployee,
     onSuccess?: () => void
 ) => {
-    const mutation = updateEmployeeMutation(storeId, onSuccess);
+    const mutation = updateEmployeeMutation(id, storeId, onSuccess);
 
     const formik = useFormik({
         initialValues: {
@@ -57,7 +58,7 @@ export const useUpdateEmployee = (
             lastName: "",
             email: "",
             phoneNumber: "",
-            storeId: 0,
+            storeId: storeId,
         },
         validationSchema: createEmployeeSchema,
         validateOnChange: true,

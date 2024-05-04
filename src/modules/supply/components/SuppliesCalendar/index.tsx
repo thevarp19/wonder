@@ -1,3 +1,4 @@
+import { padNumbers } from "@/utils/shared.util";
 import { WeeklyCalendar } from "@purjayadi/antd-weekly-calendar";
 import { FC } from "react";
 import { Link } from "react-router-dom";
@@ -41,7 +42,7 @@ function mapDatesToEvents(dates: GetSuppliesByDate[]): SupplyEvent[] {
                             className="!underline"
                             to={`/employee/supplies/${supply.supplyId}`}
                         >
-                            {Date.now()}
+                            {padNumbers(supply.supplyId, 8)}
                         </Link>
                         <span>{supply.sellerName}</span>
                         <span className="uppercase">{supply.supplyState}</span>

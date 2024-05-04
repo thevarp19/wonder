@@ -18,10 +18,7 @@ export function getEmployeeById(userId: number) {
 }
 
 export function createEmployee(data: CreateEmployeeRequest) {
-    return axiosAuthorized.post<CreateEmployeeResponse>(
-        `/api/employees/`,
-        data
-    );
+    return axiosAuthorized.post<CreateEmployeeResponse>(`api/employees`, data);
 }
 
 export function deleteEmployee(userId: number) {

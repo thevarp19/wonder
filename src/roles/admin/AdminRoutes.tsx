@@ -11,6 +11,7 @@ import {
     CreateBoxPage,
     CreateStorePage,
     StoreCellsPage,
+    StoreEmployeesPage,
     UpdateStorePage,
 } from "./pages";
 
@@ -57,6 +58,10 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                     <Route
                         path="/settings/cells/:storeId"
                         element={<StoreCellsPage />}
+                    />
+                    <Route
+                        path="/settings/employees/:storeId"
+                        element={<StoreEmployeesPage />}
                     />
                     <Route path="/orders" element={<AdminOrdersPage />} />
                     <Route

@@ -4,7 +4,10 @@ import { AxiosError } from "axios";
 import { createEmployee, deleteEmployee, updateEmployee } from "./api";
 import { CreateEmployeeRequest, UpdateEmployeeRequest } from "./types";
 
-export const createEmployeeMutation = (id: number, onSuccess?: () => void) => {
+export const createEmployeeMutation = (
+    storeId: number,
+    onSuccess?: () => void
+) => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>, CreateEmployeeRequest>({
@@ -15,7 +18,7 @@ export const createEmployeeMutation = (id: number, onSuccess?: () => void) => {
             message.success("Success!");
 
             queryClient.invalidateQueries({
-                queryKey: [`employees`, `employee-${id}`],
+                queryKey: [`employees`, storeId],
             });
             if (onSuccess) onSuccess();
         },
@@ -25,7 +28,11 @@ export const createEmployeeMutation = (id: number, onSuccess?: () => void) => {
     });
 };
 
-export const updateEmployeeMutation = (id: number, onSuccess?: () => void) => {
+export const updateEmployeeMutation = (
+    id: number,
+    storeId: number,
+    onSuccess?: () => void
+) => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>, UpdateEmployeeRequest>({
@@ -35,7 +42,10 @@ export const updateEmployeeMutation = (id: number, onSuccess?: () => void) => {
         onSuccess() {
             message.success("Success!");
             queryClient.invalidateQueries({
-                queryKey: [`employees`, `employee-${id}`],
+                queryKey: [`employees`, storeId],
+            });
+            queryClient.invalidateQueries({
+                queryKey: [`employee`, id],
             });
             if (onSuccess) onSuccess();
         },
@@ -45,7 +55,7 @@ export const updateEmployeeMutation = (id: number, onSuccess?: () => void) => {
     });
 };
 
-export const deleteEmployeeMutation = (id: number) => {
+export const deleteEmployeeMutation = (id: number, storeId: number) => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>>({
@@ -56,7 +66,7 @@ export const deleteEmployeeMutation = (id: number) => {
             message.success("Success!");
 
             queryClient.invalidateQueries({
-                queryKey: [`employees`],
+                queryKey: [`employees`, storeId],
             });
         },
         onError(error) {

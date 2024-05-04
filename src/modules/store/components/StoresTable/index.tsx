@@ -1,4 +1,4 @@
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, TeamOutlined } from "@ant-design/icons";
 import { Button, Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
@@ -49,6 +49,17 @@ const columns: TableColumnsType<GetStoreResponse> = [
                 className="cursor-pointer"
             >
                 <EditOutlined style={{ fontSize: "24px" }} />
+            </Link>
+        ),
+    },
+    {
+        title: "Employees",
+        render: (_, record) => (
+            <Link
+                to={`/admin/settings/employees/${record.id}`}
+                className="cursor-pointer"
+            >
+                <TeamOutlined style={{ fontSize: "24px" }} />
             </Link>
         ),
     },
