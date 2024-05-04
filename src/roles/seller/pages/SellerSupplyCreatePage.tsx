@@ -59,13 +59,11 @@ function mapCreateSupplyRequest(
         });
         selectedBoxes.push({ selectedBoxId, productQuantities });
     });
-    var parts: any = supply?.date?.split("-");
-
-    var date = new Date(parts[2], parts[1] - 1, parts[0]);
+    const parts: any = supply?.date?.split("-");
 
     return {
         storeId: Number(supply.store),
-        selectedTime: date.toISOString(),
+        selectedTime: `${parts?.[2]}-${parts?.[1]}-${parts?.[0]}T12:00:00.932Z`,
         selectedBoxes,
     };
 }
