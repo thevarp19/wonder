@@ -2,7 +2,7 @@ import { SupplyEmployeeProductsTable } from "@/modules/supply/components/SupplyE
 import { useGetSupply, useGetSupplyProducts } from "@/modules/supply/queries";
 import { Button } from "antd";
 import { FC } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 interface SupplyDetailsPageProps {}
 
@@ -17,9 +17,11 @@ export const SupplyDetailsPage: FC<SupplyDetailsPageProps> = ({}) => {
                     <span>Id: {supplyId}</span>
                     <span>Store: {data?.storeAddress}</span>
                 </div>
-                <Button type="primary" size="large">
-                    Start scanning
-                </Button>
+                <Link to={`/employee/scan`}>
+                    <Button type="primary" size="large">
+                        Start scanning
+                    </Button>
+                </Link>
             </div>
             <SupplyEmployeeProductsTable data={data} isPending={isPending} />
         </div>

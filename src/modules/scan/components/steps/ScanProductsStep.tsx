@@ -25,7 +25,7 @@ export const ScanProductsStep: FC<ScanProductsStepProps> = ({}) => {
     }, [cellBarcodeInUrl]);
     return (
         <div>
-            <p>Cell barcode: {cellBarcode}</p>
+            <p>Current cell barcode: {cellBarcode}</p>
             <Button
                 size="large"
                 type="primary"

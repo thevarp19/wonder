@@ -23,6 +23,10 @@ const columns: TableColumnsType<SupplyEmployeeProduct> = [
         title: "Box type name",
         dataIndex: "typeOfBoxName",
     },
+    {
+        title: "Status",
+        dataIndex: "productStateInStore",
+    },
 ];
 
 interface SupplyEmployeeProductsTableProps {
