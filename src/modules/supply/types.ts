@@ -8,6 +8,22 @@ export interface GetSupplyById {
     shopName: string;
 }
 
+export interface GetSupplyProducts {
+    products: SupplyEmployeeProduct[];
+    supplyId: number;
+    storeId: number;
+    storeAddress: string;
+}
+
+export interface SupplyEmployeeProduct {
+    article: string;
+    name: string;
+    vendorCode: string;
+    vendorCodeOfBox: string;
+    typeOfBoxName: string;
+    productStateInStore: string;
+}
+
 export interface GetSuppliesByDate {
     date: string;
     supplies: {

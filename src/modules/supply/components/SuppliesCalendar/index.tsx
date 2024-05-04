@@ -60,7 +60,7 @@ function mapDatesToEvents(dates: GetSuppliesByDate[]): SupplyEvent[] {
 interface SuppliesCalendarProps {}
 
 export const SuppliesCalendar: FC<SuppliesCalendarProps> = ({}) => {
-    const { data } = useGetSuppliesByDate("2024-04-01", "2024-04-30");
+    const { data } = useGetSuppliesByDate("2023-04-01", "2025-04-30");
     const events = mapDatesToEvents(data || []);
     return (
         <div className="week-calendar">

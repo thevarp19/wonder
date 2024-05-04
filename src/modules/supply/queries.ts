@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSuppliesByDate, getSupplyById } from "./api";
-import { GetSuppliesByDate, GetSupplyById } from "./types";
+import { getSuppliesByDate, getSupplyById, getSupplyProducts } from "./api";
+import { GetSuppliesByDate, GetSupplyById, GetSupplyProducts } from "./types";
 
 export const useGetSuppliesByDate = (startDate: string, endDate: string) => {
     return useQuery<GetSuppliesByDate[]>({
@@ -17,6 +17,16 @@ export const useGetSupply = (id: number) => {
         queryKey: [`supplies-${id}`],
         queryFn: async () => {
             const { data } = await getSupplyById(id);
+            return data;
+        },
+    });
+};
+
+export const useGetSupplyProducts = (id: number) => {
+    return useQuery<GetSupplyProducts>({
+        queryKey: [`supply-products`, id],
+        queryFn: async () => {
+            const { data } = await getSupplyProducts(id);
             return data;
         },
     });

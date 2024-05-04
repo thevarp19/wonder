@@ -25,11 +25,11 @@ export interface UpdateEmployeeRequest {
 }
 
 export interface CreateEmployeeResponse {
-    email: "string";
-    password: "string";
+    email: string;
+    password: string;
 }
 
 export interface UpdateEmployeePassword {
-    oldPassword: "string";
-    newPassword: "string";
+    oldPassword: string;
+    newPassword: string;
 }

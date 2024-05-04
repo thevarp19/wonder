@@ -9,7 +9,7 @@ import {
 
 export function getEmployees(storeId: number) {
     return axiosAuthorized.get<GetEmployee[]>(
-        `/api/employees?storeId=${storeId}`
+        `/api/employees?store-id=${storeId}`
     );
 }
 
@@ -29,12 +29,12 @@ export function updateEmployee(userId: number, data: UpdateEmployeeRequest) {
     return axiosAuthorized.put(`/api/employees/${userId}`, data);
 }
 
-export function updateEmployeePassword(
+export function changeEmployeePassword(
     userId: number,
     data: UpdateEmployeePassword
 ) {
     return axiosAuthorized.patch(
-        `/api/employees/update-password${userId}`,
+        `/api/employees/update-password/${userId}`,
         data
     );
 }

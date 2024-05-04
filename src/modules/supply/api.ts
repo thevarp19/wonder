@@ -1,5 +1,10 @@
 import { axiosAuthorized } from "@/lib/axios";
-import { CreateSupplyRequest, GetSuppliesByDate, GetSupplyById } from "./types";
+import {
+    CreateSupplyRequest,
+    GetSuppliesByDate,
+    GetSupplyById,
+    GetSupplyProducts,
+} from "./types";
 
 export function getSuppliesByDate(startDate: string, endDate: string) {
     return axiosAuthorized.get<GetSuppliesByDate[]>(
@@ -9,6 +14,12 @@ export function getSuppliesByDate(startDate: string, endDate: string) {
 
 export function getSupplyById(id: number) {
     return axiosAuthorized.get<GetSupplyById[]>(`/api/supplies/detail/${id}`);
+}
+
+export function getSupplyProducts(id: number) {
+    return axiosAuthorized.get<GetSupplyProducts>(
+        `/api/supplies/employee/products?supply-id=${id}`
+    );
 }
 
 export function createSupply(data: CreateSupplyRequest) {
