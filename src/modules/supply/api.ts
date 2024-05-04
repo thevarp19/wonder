@@ -2,6 +2,7 @@ import { axiosAuthorized } from "@/lib/axios";
 import {
     CreateSupplyRequest,
     GetSuppliesByDate,
+    GetSupplyBox,
     GetSupplyById,
     GetSupplyProducts,
 } from "./types";
@@ -19,6 +20,12 @@ export function getSupplyById(id: number) {
 export function getSupplyProducts(id: number) {
     return axiosAuthorized.get<GetSupplyProducts>(
         `/api/supplies/employee/products?supply-id=${id}`
+    );
+}
+
+export function getSupplyBox(boxBarCode: number) {
+    return axiosAuthorized.get<GetSupplyBox>(
+        `/api/supplies/get-by-box/${boxBarCode}`
     );
 }
 

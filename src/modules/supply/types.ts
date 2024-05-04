@@ -45,3 +45,19 @@ export interface CreateSupplyRequest {
         }[];
     }[];
 }
+
+export interface GetSupplyBox {
+    products: SupplyBoxProduct[];
+    supplyId: 0;
+    storeId: 0;
+    storeAddress: "string";
+}
+
+export interface SupplyBoxProduct {
+    article: string;
+    name: string;
+    vendorCode: string;
+    vendorCodeOfBox: string;
+    typeOfBoxName: string;
+    productStateInStore: string;
+}
