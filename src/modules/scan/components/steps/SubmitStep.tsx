@@ -10,7 +10,7 @@ import {
 import { ScanCell } from "@/roles/employee/redux/scan/types";
 import { Button } from "antd";
 import { FC, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useScannerMultipleResults } from "../../hooks";
 
 interface SubmitStepProps {}
@@ -36,6 +36,7 @@ export const SubmitStep: FC<SubmitStepProps> = ({}) => {
     const cells = useCells();
     const boxBarcode = useBoxBarcode();
     const dispatch = useAppDispatch();
+    const [_, setSearchParams] = useSearchParams();
 
     const { data } = useGetSupplyBox(boxBarcode as number);
 
@@ -75,11 +76,17 @@ export const SubmitStep: FC<SubmitStepProps> = ({}) => {
                             </ul>
                         </div>
                     </div>
-                    <Link to={`/employee/scan`} className="mt-10">
-                        <Button type="primary" size="large">
+                    <a href={`/employee/scan?step=1`} className="mt-10">
+                        <Button
+                            type="primary"
+                            size="large"
+                            onClick={() => {
+                                setSearchParams({ step: "0" });
+                            }}
+                        >
                             Start scanning
                         </Button>
-                    </Link>
+                    </a>
                 </div>
             )}
         </div>

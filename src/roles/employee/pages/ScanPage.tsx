@@ -1,11 +1,13 @@
+import { addProductToCell } from "@/modules/cell/api";
 import { ScanBoxStep } from "@/modules/scan/components/steps/ScanBoxStep";
 import { ScanCellStep } from "@/modules/scan/components/steps/ScanCellStep";
 import { ScanProductsStep } from "@/modules/scan/components/steps/ScanProductsStep";
 import { SubmitStep } from "@/modules/scan/components/steps/SubmitStep";
 import { cn } from "@/utils/shared.util";
-import { Button, Steps } from "antd";
+import { App, Button, Steps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useCells } from "../redux/scan/selectors";
 
 interface ScanPageProps {}
 
@@ -19,7 +21,21 @@ const steps = [
 export const ScanPage: FC<ScanPageProps> = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [step, setStep] = useState(Number(searchParams.get("step")) || 0);
-
+    const { message } = App.useApp();
+    const cells = useCells();
+    const onSubmit = () => {
+        cells.forEach((cell) => {
+            cell.products.forEach((product) => {
+                addProductToCell(cell.barcode, product)
+                    .then(() => {
+                        message.success("Product added to cell");
+                    })
+                    .catch(() => {
+                        message.error("Failed to add product to cell");
+                    });
+            });
+        });
+    };
     function nextStep() {
         setSearchParams({ step: `${step + 1}` });
         setStep((prev) => {
@@ -76,7 +92,7 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
                     {step === steps.length - 1 && (
                         <Button
                             className={cn("")}
-                            onClick={() => {}}
+                            onClick={onSubmit}
                             type="primary"
                         >
                             Submit

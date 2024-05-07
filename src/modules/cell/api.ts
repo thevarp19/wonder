@@ -19,8 +19,8 @@ export function deleteCell(id: number) {
     return axiosAuthorized.delete(`/api/cells/${id}`);
 }
 
-export function addProductToCell(cellId: number, products: number[]) {
-    return axiosAuthorized.delete(
-        `/api/cells/add-product-to-cell?cell-id=${cellId}&product=${products}`
+export function addProductToCell(cellId: number, productArticle: number) {
+    return axiosAuthorized.post(
+        `/api/cells/add-product-to-cell?cell-id=${cellId}&product-article=${productArticle}`
     );
 }

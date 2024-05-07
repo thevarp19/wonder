@@ -15,6 +15,7 @@ interface CellsTableProps {
 
 interface CellsTableColumn extends GetCellResponse {
     store: GetStoreResponse | undefined;
+    count: number;
 }
 
 const columns: TableColumnsType<CellsTableColumn> = [
@@ -47,6 +48,8 @@ const columns: TableColumnsType<CellsTableColumn> = [
             record.width && record.height && record.depth ? (
                 <div>
                     {record.width}x{record.height}x{record.depth}
+                    <br />
+                    {record.count} ячеек
                 </div>
             ) : record.width && record.height ? (
                 <div>
@@ -79,12 +82,32 @@ export const CellsTable: FC<CellsTableProps> = ({
     isStorePending,
     cells,
 }) => {
+    const groupedCells = groupCellsBySize(cells || []);
     return (
         <Table
             columns={columns}
-            dataSource={cells?.map((cell) => ({ ...cell, store }))}
+            dataSource={cells?.map((cell) => ({
+                ...cell,
+                store,
+                count:
+                    groupedCells[`${cell.width}x${cell.height}x${cell.depth}`]
+                        ?.length || 0,
+            }))}
             rowKey={"id"}
             loading={isPending || isStorePending}
         />
     );
 };
+
+function groupCellsBySize(cells: GetCellResponse[]) {
+    const groupedCells: Record<string, GetCellResponse[]> = {};
+    cells.forEach((cell) => {
+        const key = `${cell.width}x${cell.height}x${cell.depth}`;
+        if (groupedCells[key]) {
+            groupedCells[key].push(cell);
+        } else {
+            groupedCells[key] = [cell];
+        }
+    });
+    return groupedCells;
+}
