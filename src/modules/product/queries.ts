@@ -5,12 +5,18 @@ import { GetProductPricesResponse, GetProductResponse } from "./types";
 export const useGetProducts = (
     page: number = 0,
     size: number = 10,
-    searchValue: string = ""
+    searchValue: string = "",
+    isPublished: boolean | null = null
 ) => {
     return useQuery<GetProductResponse>({
-        queryKey: [`products`, page, size, searchValue],
+        queryKey: [`products`, page, size, searchValue, isPublished],
         queryFn: async () => {
-            const { data } = await getProducts(page, size, searchValue);
+            const { data } = await getProducts(
+                page,
+                size,
+                searchValue,
+                isPublished
+            );
             return data;
         },
     });

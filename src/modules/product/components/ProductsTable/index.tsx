@@ -1,5 +1,5 @@
-import { Switch, Table, TableColumnsType } from "antd";
-import { FC, useState } from "react";
+import { Checkbox, Switch, Table, TableColumnsType } from "antd";
+import { FC, useEffect, useState } from "react";
 import { changeProductsVisibilityMutation } from "../../mutations";
 import { useGetProducts } from "../../queries";
 import { GetProductContent } from "../../types";
@@ -21,17 +21,6 @@ const columns: TableColumnsType<GetProductContent> = [
         title: "Published",
         dataIndex: "isPublished",
         render: (_, record) => <ProductEnableSwitch record={record} />,
-        filters: [
-            {
-                text: "Published",
-                value: true,
-            },
-            {
-                text: "Unpublished",
-                value: false,
-            },
-        ],
-        onFilter: (value, record) => record.enabled === value,
     },
     {
         title: "Price in Almaty",
@@ -49,27 +38,72 @@ const columns: TableColumnsType<GetProductContent> = [
 
 export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
     const [page, setPage] = useState(0);
+    const [isPublished, setIsPublished] = useState<boolean | null>(null);
+    const [checked, setChecked] = useState<("published" | "unpublished")[]>([]);
+    useEffect(() => {
+        if (checked.includes("published") && checked.includes("unpublished")) {
+            setIsPublished(null);
+        } else if (checked.includes("published")) {
+            setIsPublished(true);
+        } else if (checked.includes("unpublished")) {
+            setIsPublished(false);
+        } else {
+            setIsPublished(null);
+        }
+    }, [checked]);
     const { data: products, isPending } = useGetProducts(
         page,
         undefined,
-        searchValue
+        searchValue,
+        isPublished
     );
+
     return (
-        <Table
-            columns={columns}
-            loading={isPending}
-            dataSource={products?.content}
-            rowKey={"article"}
-            pagination={{
-                pageSize: 10,
-                total: products?.totalElements,
-                showSizeChanger: false,
-                onChange(page) {
-                    setPage(page - 1);
-                },
-                current: page + 1,
-            }}
-        />
+        <div>
+            <div className="flex my-4">
+                <Checkbox
+                    onChange={(e) => {
+                        if (e.target.checked) {
+                            setChecked((prev) => [...prev, "published"]);
+                        } else {
+                            setChecked((prev) =>
+                                prev.filter((item) => item !== "published")
+                            );
+                        }
+                    }}
+                >
+                    Published
+                </Checkbox>
+                <Checkbox
+                    onChange={(e) => {
+                        if (e.target.checked) {
+                            setChecked((prev) => [...prev, "unpublished"]);
+                        } else {
+                            setChecked((prev) =>
+                                prev.filter((item) => item !== "unpublished")
+                            );
+                        }
+                    }}
+                >
+                    Unpublished
+                </Checkbox>
+            </div>
+            <Table
+                columns={columns}
+                loading={isPending}
+                dataSource={products?.content}
+                rowKey={"article"}
+                pagination={{
+                    pageSize: 10,
+                    total: products?.totalElements,
+                    showSizeChanger: false,
+                    onChange(page) {
+                        setPage(page - 1);
+                    },
+                    current: page + 1,
+                }}
+            />
+        </div>
     );
 };
 

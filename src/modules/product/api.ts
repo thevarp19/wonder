@@ -12,11 +12,14 @@ export function createProductsFromFile(formData: FormData) {
 export function getProducts(
     page: number = 0,
     size: number = 10,
-    searchValue: string = ""
+    searchValue: string = "",
+    isPublished: boolean | null = null
 ) {
-    return axiosAuthorized.get<GetProductResponse>(
-        `/api/products?page=${page}&size=${size}&search=${searchValue}`
-    );
+    let url = `/api/products?page=${page}&size=${size}&searchValue=${searchValue}&sortBy=id`;
+    if (isPublished !== null) {
+        url += `&isPublished=${isPublished}`;
+    }
+    return axiosAuthorized.get<GetProductResponse>(url);
 }
 
 export function getProductsPrices(page: number = 0, size: number = 10) {
