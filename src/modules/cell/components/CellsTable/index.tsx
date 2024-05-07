@@ -67,7 +67,9 @@ const columns: TableColumnsType<CellsTableColumn> = [
     },
     {
         title: "Delete",
-        render: (_, record) => <DeleteCellCell id={record.id} />,
+        render: (_, record) => (
+            <DeleteCellCell id={record.id} storeId={record.store?.id || -1} />
+        ),
     },
 ];
 

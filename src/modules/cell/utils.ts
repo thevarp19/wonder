@@ -8,9 +8,8 @@ export function getCellCode(cell: GetCellResponse, storeNumber: string) {
     return `${storeNumber}${row}${col}${cellNum}`;
 }
 
-export function mapCreateCellToUpdate(cell: GetCellResponse, storeId: number) {
+export function mapCreateCellToUpdate(cell: GetCellResponse) {
     return {
         ...cell,
-        storeId,
     };
 }

@@ -30,8 +30,13 @@ export interface CreateStoreRequest {
 export interface GetStoreResponse {
     id: number;
     kaspiId: string;
-    address: string;
-    street: string;
+    streetName: "string";
+    streetNumber: "string";
+    town: "string";
+    district: "string";
+    building: "string";
+    apartment: "string";
+    address: "string";
     city: { id: number; name: string };
     availableWorkTimes: WorkDayOfWeekResponse[];
     availableBoxTypes: GetBoxResponse[];

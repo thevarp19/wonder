@@ -1,8 +1,13 @@
 import { ProductPriceTable } from "@/modules/product/components/ProductPriceTable";
 import { ProductsTable } from "@/modules/product/components/ProductsTable";
-import { MoneyCollectOutlined, ShopOutlined } from "@ant-design/icons";
-import { Button, Menu, MenuProps } from "antd";
-import { FC, useState } from "react";
+import { useDebounce } from "@/utils/shared.util";
+import {
+    MoneyCollectOutlined,
+    SearchOutlined,
+    ShopOutlined,
+} from "@ant-design/icons";
+import { Button, Input, Menu, MenuProps } from "antd";
+import { FC, useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 interface SellerProductsPageProps {}
@@ -26,11 +31,12 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
     const [current, setCurrent] = useState(
         searchParams.get("current") || "products"
     );
-    const onClick: MenuProps["onClick"] = (e) => {
+    const onClick: MenuProps["onClick"] = useCallback((e: any) => {
         setCurrent(e.key);
         setSearchParams({ current: e.key });
-    };
-
+    }, []);
+    const [searchValue, setSearchValue] = useState("");
+    const debouncedSearchValue = useDebounce(searchValue, 500);
     return (
         <div className="h-full bg-white rounded-t-lg">
             <Menu
@@ -50,7 +56,11 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                     >
                         Upload products
                     </Button>
-                    <ProductsTable />
+                    <ProductsSearch
+                        searchValue={searchValue}
+                        setSearchValue={setSearchValue}
+                    />
+                    <ProductsTable searchValue={debouncedSearchValue} />
                 </div>
             )}
             {current === "prices" && (
@@ -62,3 +72,24 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
         </div>
     );
 };
+
+function ProductsSearch({
+    searchValue,
+    setSearchValue,
+}: {
+    searchValue: string;
+    setSearchValue: (value: string) => void;
+}) {
+    return (
+        <div className="my-2">
+            <Input
+                prefix={<SearchOutlined />}
+                placeholder="Search"
+                value={searchValue}
+                onChange={(e) => {
+                    setSearchValue(e.target.value);
+                }}
+            />
+        </div>
+    );
+}

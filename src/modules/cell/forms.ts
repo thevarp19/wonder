@@ -35,14 +35,14 @@ export const useCreateCell = (storeId: number, onSuccess?: () => void) => {
 };
 
 export const useUpdateCell = (
+    id: number,
     storeId: number,
     initialValues: GetCellResponse,
     onSuccess?: () => void
 ) => {
-    const mutation = updateCellMutation(storeId, onSuccess);
+    const mutation = updateCellMutation(id, storeId, onSuccess);
 
     const formik = useFormik<{
-        storeId: number;
         row: number;
         col: number;
         cell: number;
@@ -52,7 +52,6 @@ export const useUpdateCell = (
         comment?: string;
     }>({
         initialValues: {
-            storeId,
             row: 0,
             col: 0,
             cell: 0,
@@ -69,7 +68,7 @@ export const useUpdateCell = (
     useEffect(() => {
         if (initialValues) {
             formik.resetForm({
-                values: mapCreateCellToUpdate(initialValues, storeId),
+                values: mapCreateCellToUpdate(initialValues),
             });
         }
     }, [initialValues]);

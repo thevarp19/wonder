@@ -6,24 +6,26 @@ import { useUpdateCell } from "../../forms";
 import { GetCellResponse } from "../../types";
 
 interface UpdateCellFormProps {
+    id: number;
     storeId: number;
     initialValues: GetCellResponse;
     onSuccess?: () => void;
 }
 
 export const UpdateCellForm: FC<UpdateCellFormProps> = ({
+    id,
     storeId,
     initialValues,
     onSuccess,
 }) => {
     const { formik, mutation } = useUpdateCell(
+        id,
         storeId,
         initialValues,
         onSuccess
     );
     return (
         <Form
-            onFinish={formik.submitForm}
             layout="vertical"
             className="flex flex-col w-full max-w-lg gap-2 px-10"
         >
@@ -113,13 +115,15 @@ export const UpdateCellForm: FC<UpdateCellFormProps> = ({
             />
 
             <Button
-                htmlType="submit"
                 type="primary"
                 size={"large"}
                 className={cn("w-full mt-6")}
                 loading={mutation.isPending}
+                onClick={() => {
+                    formik.submitForm();
+                }}
             >
-                {"Update"}
+                {"Update cell"}
             </Button>
         </Form>
     );

@@ -36,6 +36,7 @@ export const UpdateCellButton: FC<UpdateCellButtonProps> = ({
                 destroyOnClose
             >
                 <UpdateCellForm
+                    id={initialValues.id}
                     storeId={storeId}
                     initialValues={initialValues}
                     onSuccess={() => {

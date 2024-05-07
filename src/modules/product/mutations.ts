@@ -1,7 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { App } from "antd";
 import { AxiosError } from "axios";
-import { createProductsFromFile } from "./api";
+import { changeProductVisibility, createProductsFromFile } from "./api";
 import { GetProductContent } from "./types";
 
 export const createProductsFromFileMutation = () => {
@@ -14,6 +14,29 @@ export const createProductsFromFileMutation = () => {
         },
         onSuccess() {
             message.success("Success!");
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
+        },
+    });
+};
+
+export const changeProductsVisibilityMutation = () => {
+    const { message } = App.useApp();
+    const queryClient = useQueryClient();
+    return useMutation<
+        void,
+        AxiosError<any>,
+        { id: number; isPublished: boolean }
+    >({
+        async mutationFn(values) {
+            await changeProductVisibility(values.id, values.isPublished);
+        },
+        onSuccess() {
+            message.success("Success!");
+            queryClient.invalidateQueries({
+                queryKey: ["products"],
+            });
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);

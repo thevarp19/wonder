@@ -4,7 +4,7 @@ import { GetCellResponse } from "./types";
 
 export const useGetCells = (storeId: number) => {
     return useQuery<GetCellResponse[]>({
-        queryKey: [`cells-${storeId}`],
+        queryKey: [`cells`, storeId],
         queryFn: async () => {
             const { data } = await getCells(storeId);
             return data;

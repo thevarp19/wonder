@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { App } from "antd";
 import { AxiosError } from "axios";
-import { createCell, deleteCell } from "./api";
-import { CreateCellRequest } from "./types";
+import { createCell, deleteCell, updateCell } from "./api";
+import { CreateCellRequest, UpdateCellRequest } from "./types";
 
-export const createCellMutation = (id: number, onSuccess?: () => void) => {
+export const createCellMutation = (storeId: number, onSuccess?: () => void) => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>, CreateCellRequest>({
@@ -15,7 +15,7 @@ export const createCellMutation = (id: number, onSuccess?: () => void) => {
             message.success("Success!");
 
             queryClient.invalidateQueries({
-                queryKey: [`cells-${id}`],
+                queryKey: [`cells`, storeId],
             });
             if (onSuccess) onSuccess();
         },
@@ -25,19 +25,22 @@ export const createCellMutation = (id: number, onSuccess?: () => void) => {
     });
 };
 
-export const updateCellMutation = (id: number, onSuccess?: () => void) => {
+export const updateCellMutation = (
+    id: number,
+    storeId: number,
+    onSuccess?: () => void
+) => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
-    return useMutation<void, AxiosError<any>, CreateCellRequest>({
+    return useMutation<void, AxiosError<any>, UpdateCellRequest>({
         async mutationFn(values) {
-            values;
-            // await createCell(values);
+            await updateCell(id, values);
         },
         onSuccess() {
             message.success("Success!");
 
             queryClient.invalidateQueries({
-                queryKey: [`cells-${id}`],
+                queryKey: [`cells`, storeId],
             });
             if (onSuccess) onSuccess();
         },
@@ -47,7 +50,7 @@ export const updateCellMutation = (id: number, onSuccess?: () => void) => {
     });
 };
 
-export const deleteCellMutation = (id: number) => {
+export const deleteCellMutation = (id: number, storeId: number) => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>>({
@@ -58,7 +61,7 @@ export const deleteCellMutation = (id: number) => {
             message.success("Success!");
 
             queryClient.invalidateQueries({
-                queryKey: [`cells-${id}`],
+                queryKey: [`cells`, storeId],
             });
         },
         onError(error) {

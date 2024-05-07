@@ -3,8 +3,11 @@ import { Button, Popconfirm } from "antd";
 import { FC } from "react";
 import { deleteCellMutation } from "../../mutations";
 
-export const DeleteCellCell: FC<{ id: number }> = ({ id }) => {
-    const { mutateAsync } = deleteCellMutation(id);
+export const DeleteCellCell: FC<{ id: number; storeId: number }> = ({
+    id,
+    storeId,
+}) => {
+    const { mutateAsync } = deleteCellMutation(id, storeId);
     return (
         <Popconfirm
             title="Delete the cell"

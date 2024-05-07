@@ -2,11 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import { getProducts, getProductsPrices } from "./api";
 import { GetProductPricesResponse, GetProductResponse } from "./types";
 
-export const useGetProducts = (page: number = 0, size: number = 10) => {
+export const useGetProducts = (
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = ""
+) => {
     return useQuery<GetProductResponse>({
-        queryKey: [`products`, page, size],
+        queryKey: [`products`, page, size, searchValue],
         queryFn: async () => {
-            const { data } = await getProducts(page, size);
+            const { data } = await getProducts(page, size, searchValue);
             return data;
         },
     });

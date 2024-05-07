@@ -1,5 +1,5 @@
 import { axiosAuthorized } from "@/lib/axios";
-import { CreateCellRequest, GetCellResponse } from "./types";
+import { CreateCellRequest, GetCellResponse, UpdateCellRequest } from "./types";
 
 export function createCell(data: CreateCellRequest) {
     return axiosAuthorized.post(`/api/cells`, data);
@@ -9,6 +9,10 @@ export function getCells(storeId: number) {
     return axiosAuthorized.get<GetCellResponse[]>(
         `/api/cells?store-id=${storeId}`
     );
+}
+
+export function updateCell(id: number, values: UpdateCellRequest) {
+    return axiosAuthorized.put(`/api/cells/${id}`, values);
 }
 
 export function deleteCell(id: number) {

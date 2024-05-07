@@ -19,3 +19,13 @@ export interface CreateCellRequest {
     height?: number;
     depth?: number;
 }
+
+export interface UpdateCellRequest {
+    row: number;
+    col: number;
+    cell: number;
+    comment?: string;
+    width?: number;
+    height?: number;
+    depth?: number;
+}
