@@ -1,6 +1,16 @@
-import { Button, Checkbox, Modal, Table, TableColumnsType } from "antd";
+import { EditOutlined } from "@ant-design/icons";
+import {
+    Button,
+    Checkbox,
+    Form,
+    InputNumber,
+    Modal,
+    Table,
+    TableColumnsType,
+} from "antd";
 import clsx from "clsx";
 import { Dispatch, FC, SetStateAction, useState } from "react";
+import { changeProductPriceMutation } from "../../mutations";
 import { useGetProductsPrices } from "../../queries";
 import { ProductPrice, ProductPriceCity } from "../../types";
 
@@ -75,31 +85,99 @@ function findProductPriceAndCountInCity(
     let result = {
         price: 0,
         count: 0,
+        storeId: 0,
     };
     record.prices.forEach((price) => {
         if (price.cityName.toLowerCase() === storeName.toLowerCase()) {
             result.price = price.price;
             result.count = record.count;
+            result.storeId = price.cityId;
         }
     });
     return result;
 }
 
+interface UpdatePriceModalProps {
+    productCode: string;
+    cityId: number;
+    defaultPrice?: number;
+}
+
+export const UpdatePriceModal: FC<UpdatePriceModalProps> = ({
+    productCode,
+    cityId,
+    defaultPrice,
+}) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [form] = Form.useForm();
+    const { mutateAsync, isPending } = changeProductPriceMutation(productCode);
+    return (
+        <>
+            <Modal
+                title="Update Cell"
+                open={isModalOpen}
+                onOk={() => {
+                    form.submit();
+                }}
+                okButtonProps={{ loading: isPending }}
+                onCancel={() => setIsModalOpen(false)}
+                destroyOnClose
+            >
+                <Form
+                    layout="vertical"
+                    form={form}
+                    onFinish={async (values) => {
+                        await mutateAsync({ cityId, price: values.price });
+                        setIsModalOpen(false);
+                    }}
+                >
+                    <Form.Item
+                        label="Price"
+                        name="price"
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please input the price!",
+                                min: 0,
+                                type: "number",
+                            },
+                        ]}
+                    >
+                        <InputNumber
+                            name="price"
+                            type="number"
+                            defaultValue={defaultPrice}
+                            style={{ width: "100%" }}
+                        />
+                    </Form.Item>
+                </Form>
+            </Modal>
+            <EditOutlined
+                className="cursor-pointer"
+                onClick={() => setIsModalOpen(true)}
+            />
+        </>
+    );
+};
+
 export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
     const [page, setPage] = useState(0);
     const { data: products, isPending } = useGetProductsPrices(page);
-    const [activeStores, setActiveStores] = useState<string[]>([]);
+    const [activeStores, setActiveStores] = useState<string[]>(["алматы"]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const uniqueStores = [];
+    for (const store of new Set(activeStores)) {
+        uniqueStores.push(store);
+    }
     const newColumns = [
         ...columns,
-        ...activeStores.map((store) => ({
+        ...uniqueStores.map((store) => ({
             title: `${store.toLocaleUpperCase()}`,
             width: 120,
             render: (_: any, record: ProductPrice) => {
-                const { price, count } = findProductPriceAndCountInCity(
-                    store,
-                    record
-                );
+                const { price, count, storeId } =
+                    findProductPriceAndCountInCity(store, record);
                 return (
                     <div className="relative w-full h-full ">
                         <div
@@ -108,8 +186,13 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                                 `bg-[${getColorFromCount(count)}]`
                             )}
                         ></div>
-                        <div className="relative font-semibold">
+                        <div className="relative flex items-center gap-2 font-semibold">
                             {price} KZT
+                            <UpdatePriceModal
+                                cityId={storeId}
+                                productCode={record.vendorCode}
+                                defaultPrice={price}
+                            />
                         </div>
                     </div>
                 );
@@ -147,7 +230,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                 columns={newColumns}
                 loading={isPending}
                 dataSource={products?.content[0].products}
-                rowKey={(r) => r.id}
+                rowKey={(r) => r.vendorCode}
                 scroll={{ x: 1200 }}
                 pagination={{
                     pageSize: 10,

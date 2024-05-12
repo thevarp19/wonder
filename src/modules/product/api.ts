@@ -1,5 +1,6 @@
 import { axiosAuthorized } from "@/lib/axios";
 import {
+    ChangeProductPriceRequest,
     GetProductContent,
     GetProductPricesResponse,
     GetProductResponse,
@@ -32,4 +33,11 @@ export function changeProductVisibility(id: number, isVisible: boolean) {
     return axiosAuthorized.patch<void>(
         `/api/products/publish?productId=${id}&isPublished=${isVisible}`
     );
+}
+
+export function changeProductPrice(
+    vendorCode: string,
+    value: ChangeProductPriceRequest
+) {
+    return axiosAuthorized.patch<void>(`/api/products/${vendorCode}`, value);
 }

@@ -23,6 +23,11 @@ export interface ProductPriceCity {
     enabled: true;
 }
 
+export interface ChangeProductPriceRequest {
+    cityId: number;
+    price: number;
+}
+
 export interface ProductPrice {
     id: number;
     vendorCode: string;
