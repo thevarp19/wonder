@@ -1,4 +1,5 @@
 import { Button, Checkbox, Modal, Table, TableColumnsType } from "antd";
+import clsx from "clsx";
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import { useGetProductsPrices } from "../../queries";
 import { ProductPrice, ProductPriceCity } from "../../types";
@@ -14,7 +15,11 @@ const columns: TableColumnsType<ProductPrice> = [
     },
     {
         title: "Name",
-        render: (_, record) => <a href={record.vendorCode}>{record.name}</a>,
+        render: (_, record) => (
+            <a href={record.vendorCode} className="text-nowrap">
+                {record.name}
+            </a>
+        ),
         fixed: "left",
         width: 250,
     },
@@ -63,14 +68,18 @@ function StoreCheckboxes({
     );
 }
 
-function findProductPriceInCity(
+function findProductPriceAndCountInCity(
     storeName: string,
     record: ProductPrice
-): number {
-    let result = 0;
+) {
+    let result = {
+        price: 0,
+        count: 0,
+    };
     record.prices.forEach((price) => {
         if (price.cityName.toLowerCase() === storeName.toLowerCase()) {
-            result = price.price;
+            result.price = price.price;
+            result.count = record.count;
         }
     });
     return result;
@@ -86,9 +95,25 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
         ...activeStores.map((store) => ({
             title: `${store.toLocaleUpperCase()}`,
             width: 120,
-            render: (_: any, record: ProductPrice) => (
-                <span>{findProductPriceInCity(store, record)}</span>
-            ),
+            render: (_: any, record: ProductPrice) => {
+                const { price, count } = findProductPriceAndCountInCity(
+                    store,
+                    record
+                );
+                return (
+                    <div className="relative w-full h-full ">
+                        <div
+                            className={clsx(
+                                "absolute -top-[16px] -left-[16px] h-[55px] w-full",
+                                `bg-[${getColorFromCount(count)}]`
+                            )}
+                        ></div>
+                        <div className="relative font-semibold">
+                            {price} KZT
+                        </div>
+                    </div>
+                );
+            },
         })),
     ];
     return (
@@ -122,7 +147,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                 columns={newColumns}
                 loading={isPending}
                 dataSource={products?.content[0].products}
-                rowKey={"article"}
+                rowKey={(r) => r.id}
                 scroll={{ x: 1200 }}
                 pagination={{
                     pageSize: 10,
@@ -137,3 +162,24 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
         </div>
     );
 };
+
+function getColorFromCount(count: number) {
+    // Ensure count is within the bounds
+    count = Math.min(Math.max(count, 0), 1000);
+
+    // Calculate the interpolation factor (0 at count = 0 and 1 at count = 1000)
+    const factor = count / 1000;
+
+    // Yellow to Purple transition
+    // Start values (Yellow): 255, 255, 0
+    // End values (Purple): 128, 0, 128
+
+    // Interpolate red component
+    const red = Math.round(255 - 127 * factor); // 255 to 128
+    // Interpolate green component
+    const green = Math.round(255 - 255 * factor); // 255 to 0
+    // Interpolate blue component
+    const blue = Math.round(0 + 128 * factor); // 0 to 128
+
+    return `rgb(${red},${green},${blue})`;
+}
