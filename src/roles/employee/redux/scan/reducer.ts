@@ -6,6 +6,7 @@ const INITIAL_STATE: actionTypes.ScanState = {
     cells: myLocalStorage?.get("scan-cells") || [],
     currentCellBarcode:
         myLocalStorage?.get("scan-current-cell-barcode") || null,
+    supplyId: myLocalStorage?.get("scan-supply-id") || null,
 };
 
 export const scanReducer = (
@@ -18,6 +19,12 @@ export const scanReducer = (
             newState = {
                 ...state,
                 boxBarcode: action.payload,
+            };
+            break;
+        case actionTypes.SET_SUPPLY_ID:
+            newState = {
+                ...state,
+                supplyId: action.payload,
             };
             break;
         case actionTypes.CREATE_SCANNING_CELL:
@@ -71,4 +78,5 @@ function saveState(state: actionTypes.ScanState) {
     myLocalStorage?.set("scan-box-barcode", state.boxBarcode);
     myLocalStorage?.set("scan-cells", state.cells);
     myLocalStorage?.set("scan-current-cell-barcode", state.currentCellBarcode);
+    myLocalStorage?.set("scan-supply-id", state.supplyId);
 }

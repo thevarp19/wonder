@@ -5,6 +5,11 @@ export const setBoxBarcode = (boxBarcode: number): types.SetBoxBarCode => ({
     payload: boxBarcode,
 });
 
+export const setSupplyId = (SupplyId: number): types.SetSupplyId => ({
+    type: types.SET_SUPPLY_ID,
+    payload: SupplyId,
+});
+
 export const createScanningCell = (
     cellBarcode: number
 ): types.CreateScanningCell => ({

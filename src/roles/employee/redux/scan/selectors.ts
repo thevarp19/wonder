@@ -4,6 +4,10 @@ export const useBoxBarcode = () => {
     return useAppSelector((state) => state.employee.scan.boxBarcode);
 };
 
+export const useSupplyId = () => {
+    return useAppSelector((state) => state.employee.scan.supplyId);
+};
+
 export const useCells = () => {
     const cells = useAppSelector((state) => state.employee.scan.cells);
     return cells;

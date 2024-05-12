@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { App } from "antd";
 import { AxiosError } from "axios";
-import { createSupply } from "./api";
-import { CreateSupplyRequest } from "./types";
+import { acceptSupplyProducts, createSupply } from "./api";
+import { AcceptSupplyProductRequest, CreateSupplyRequest } from "./types";
 
 export const createSupplyMutation = (
     onSuccess?: (supplyId: number) => void
@@ -18,6 +18,25 @@ export const createSupplyMutation = (
             message.success("Success!");
             if (onSuccess) {
                 onSuccess(data.id);
+            }
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
+        },
+    });
+};
+
+export const acceptSupplyMutation = (onSuccess?: () => void) => {
+    const { message } = App.useApp();
+
+    return useMutation<void, AxiosError<any>, AcceptSupplyProductRequest>({
+        async mutationFn(values) {
+            await acceptSupplyProducts(values);
+        },
+        onSuccess() {
+            message.success("Success!");
+            if (onSuccess) {
+                onSuccess();
             }
         },
         onError(error) {

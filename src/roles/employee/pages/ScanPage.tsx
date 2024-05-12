@@ -1,13 +1,14 @@
-import { addProductToCell } from "@/modules/cell/api";
 import { ScanBoxStep } from "@/modules/scan/components/steps/ScanBoxStep";
 import { ScanCellStep } from "@/modules/scan/components/steps/ScanCellStep";
 import { ScanProductsStep } from "@/modules/scan/components/steps/ScanProductsStep";
 import { SubmitStep } from "@/modules/scan/components/steps/SubmitStep";
+import { acceptSupplyMutation } from "@/modules/supply/mutations";
+import { AcceptSupplyProductRequest } from "@/modules/supply/types";
+import { useAppSelector } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
 import { App, Button, Steps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useCells } from "../redux/scan/selectors";
 
 interface ScanPageProps {}
 
@@ -22,19 +23,26 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [step, setStep] = useState(Number(searchParams.get("step")) || 0);
     const { message } = App.useApp();
-    const cells = useCells();
+    const supplyState = useAppSelector((state) => state.employee.scan);
+    const { isPending, mutateAsync } = acceptSupplyMutation();
     const onSubmit = () => {
-        cells.forEach((cell) => {
-            cell.products.forEach((product) => {
-                addProductToCell(cell.barcode, product)
-                    .then(() => {
-                        message.success("Product added to cell");
-                    })
-                    .catch(() => {
-                        message.error("Failed to add product to cell");
-                    });
-            });
+        if (!supplyState.supplyId) {
+            message.error("SupplyId is not defined");
+            return;
+        }
+        const values: AcceptSupplyProductRequest = {
+            supplyId: supplyState.supplyId,
+            productCells: [],
+        };
+        supplyState.cells.forEach((cell) => {
+            const tempValue = {
+                cellCode: `${cell.barcode}`,
+                productArticles: cell.products.map((product) => `${product}`),
+            };
+
+            values.productCells.push(tempValue);
         });
+        mutateAsync(values);
     };
     function nextStep() {
         setSearchParams({ step: `${step + 1}` });
@@ -94,6 +102,7 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
                             className={cn("")}
                             onClick={onSubmit}
                             type="primary"
+                            loading={isPending}
                         >
                             Submit
                         </Button>

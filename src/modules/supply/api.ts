@@ -1,5 +1,6 @@
 import { axiosAuthorized } from "@/lib/axios";
 import {
+    AcceptSupplyProductRequest,
     CreateSupplyRequest,
     GetSuppliesByDate,
     GetSupplyBox,
@@ -31,4 +32,8 @@ export function getSupplyBox(boxBarCode: number) {
 
 export function createSupply(data: CreateSupplyRequest) {
     return axiosAuthorized.post<{ id: number }>(`/api/supplies`, data);
+}
+
+export function acceptSupplyProducts(values: AcceptSupplyProductRequest) {
+    return axiosAuthorized.post(`/api/supplies/employee/scan`, values);
 }

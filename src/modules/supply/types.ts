@@ -61,3 +61,11 @@ export interface SupplyBoxProduct {
     typeOfBoxName: string;
     productStateInStore: string;
 }
+
+export interface AcceptSupplyProductRequest {
+    supplyId: number;
+    productCells: {
+        cellCode: string;
+        productArticles: string[];
+    }[];
+}
