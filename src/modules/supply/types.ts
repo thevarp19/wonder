@@ -62,6 +62,19 @@ export interface SupplyBoxProduct {
     productStateInStore: string;
 }
 
+export interface GetSellerSupply {
+    id: number;
+    supplyCreatedTime: string;
+    supplyAcceptTime: string;
+    supplyState: SupplyState;
+}
+export type SupplyState =
+    | "START"
+    | "ACCEPTED"
+    | "IN_PROGRESS"
+    | "IN_DELIVERY"
+    | "REJECTED";
+
 export interface AcceptSupplyProductRequest {
     supplyId: number;
     productCells: {

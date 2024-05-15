@@ -1,11 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import {
+    getSellerSupplies,
     getSuppliesByDate,
     getSupplyBox,
     getSupplyById,
     getSupplyProducts,
 } from "./api";
-import { GetSuppliesByDate, GetSupplyById, GetSupplyProducts } from "./types";
+import {
+    GetSellerSupply,
+    GetSuppliesByDate,
+    GetSupplyById,
+    GetSupplyProducts,
+} from "./types";
 
 export const useGetSuppliesByDate = (startDate: string, endDate: string) => {
     return useQuery<GetSuppliesByDate[]>({
@@ -43,6 +49,16 @@ export const useGetSupplyBox = (boxBarCode: number) => {
         retry: 1,
         queryFn: async () => {
             const { data } = await getSupplyBox(boxBarCode);
+            return data;
+        },
+    });
+};
+
+export const useGetSellerSupplies = () => {
+    return useQuery<GetSellerSupply[]>({
+        queryKey: [`seller-supplies`],
+        queryFn: async () => {
+            const { data } = await getSellerSupplies();
             return data;
         },
     });

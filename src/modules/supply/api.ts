@@ -2,6 +2,7 @@ import { axiosAuthorized } from "@/lib/axios";
 import {
     AcceptSupplyProductRequest,
     CreateSupplyRequest,
+    GetSellerSupply,
     GetSuppliesByDate,
     GetSupplyBox,
     GetSupplyById,
@@ -27,6 +28,15 @@ export function getSupplyProducts(id: number) {
 export function getSupplyBox(boxBarCode: number) {
     return axiosAuthorized.get<GetSupplyBox>(
         `/api/supplies/get-by-box/${boxBarCode}`
+    );
+}
+
+export function getSellerSupplies(
+    startDate: string = "2000-01-01",
+    endDate: string = "2100-01-01"
+) {
+    return axiosAuthorized.get<GetSellerSupply[]>(
+        `/api/supplies/seller?start-date=${startDate}&end-date=${endDate}`
     );
 }
 
