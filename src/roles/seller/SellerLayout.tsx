@@ -9,6 +9,7 @@ import {
     ProductOutlined,
     ProfileOutlined,
     SettingOutlined,
+    UserOutlined,
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import { FC, useEffect, useState } from "react";
@@ -25,6 +26,11 @@ const items: MenuProps["items"] = [
         label: <Link to={"/seller/settings"}>Settings</Link>,
         key: "settings",
         icon: <SettingOutlined />,
+    },
+    {
+        label: <Link to={"/seller/profile"}>Profile</Link>,
+        key: "profile",
+        icon: <UserOutlined />,
     },
     {
         label: <Link to={"/seller/orders"}>Orders</Link>,
@@ -51,6 +57,8 @@ function pathToKey(key: string) {
             return "settings";
         case "/seller/products":
             return "products";
+        case "/seller/profile":
+            return "profile";
         case "/seller/supply":
             return "supply";
         case "/seller/supply/create":

@@ -22,11 +22,21 @@ export const useGetProducts = (
     });
 };
 
-export const useGetProductsPrices = (page: number = 0, size: number = 10) => {
+export const useGetProductsPrices = (
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    isPublished: boolean | null = null
+) => {
     return useQuery<GetProductPricesResponse>({
         queryKey: [`products-prices`, page, size],
         queryFn: async () => {
-            const { data } = await getProductsPrices(page, size);
+            const { data } = await getProductsPrices(
+                page,
+                size,
+                searchValue,
+                isPublished
+            );
             return data;
         },
     });

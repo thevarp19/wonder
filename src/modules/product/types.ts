@@ -28,7 +28,7 @@ export interface ChangeProductPriceRequest {
     price: number;
 }
 
-export interface ProductPrice {
+export interface ProductPrice2 {
     id: number;
     vendorCode: string;
     name: string;

@@ -51,7 +51,7 @@ export const changeProductsVisibilityMutation = () => {
 export const changeProductPriceMutation = (vendorCode: string) => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
-    return useMutation<void, AxiosError<any>, ChangeProductPriceRequest>({
+    return useMutation<void, AxiosError<any>, ChangeProductPriceRequest[]>({
         async mutationFn(values) {
             await changeProductPrice(vendorCode, values);
         },

@@ -1,8 +1,9 @@
-import { Checkbox, Switch, Table, TableColumnsType } from "antd";
-import { FC, useEffect, useState } from "react";
+import { Switch, Table, TableColumnsType } from "antd";
+import { FC, useState } from "react";
 import { changeProductsVisibilityMutation } from "../../mutations";
 import { useGetProducts } from "../../queries";
 import { GetProductContent } from "../../types";
+import { ProductPublishedFilter } from "../ProductsFilter/ProductPublishedFilter";
 
 interface ProductsTableProps {
     searchValue?: string;
@@ -20,7 +21,7 @@ const columns: TableColumnsType<GetProductContent> = [
     {
         title: "Published",
         dataIndex: "isPublished",
-        render: (_, record) => <ProductEnableSwitch record={record} />,
+        render: (_, record) => <ProductEnableSwitch {...record} />,
     },
     {
         title: "Price in Almaty",
@@ -39,18 +40,6 @@ const columns: TableColumnsType<GetProductContent> = [
 export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
     const [page, setPage] = useState(0);
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
-    const [checked, setChecked] = useState<("published" | "unpublished")[]>([]);
-    useEffect(() => {
-        if (checked.includes("published") && checked.includes("unpublished")) {
-            setIsPublished(null);
-        } else if (checked.includes("published")) {
-            setIsPublished(true);
-        } else if (checked.includes("unpublished")) {
-            setIsPublished(false);
-        } else {
-            setIsPublished(null);
-        }
-    }, [checked]);
     const { data: products, isPending } = useGetProducts(
         page,
         undefined,
@@ -60,34 +49,10 @@ export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
 
     return (
         <div>
-            <div className="flex my-4">
-                <Checkbox
-                    onChange={(e) => {
-                        if (e.target.checked) {
-                            setChecked((prev) => [...prev, "published"]);
-                        } else {
-                            setChecked((prev) =>
-                                prev.filter((item) => item !== "published")
-                            );
-                        }
-                    }}
-                >
-                    Published
-                </Checkbox>
-                <Checkbox
-                    onChange={(e) => {
-                        if (e.target.checked) {
-                            setChecked((prev) => [...prev, "unpublished"]);
-                        } else {
-                            setChecked((prev) =>
-                                prev.filter((item) => item !== "unpublished")
-                            );
-                        }
-                    }}
-                >
-                    Unpublished
-                </Checkbox>
-            </div>
+            <ProductPublishedFilter
+                setIsPublished={setIsPublished}
+                isPublished={isPublished}
+            />
             <Table
                 columns={columns}
                 loading={isPending}
@@ -107,15 +72,21 @@ export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
     );
 };
 
-function ProductEnableSwitch({ record }: { record: GetProductContent }) {
+export function ProductEnableSwitch({
+    id,
+    enabled,
+}: {
+    id: number;
+    enabled: boolean;
+}) {
     const { isPending, mutateAsync } = changeProductsVisibilityMutation();
     return (
         <div className="flex items-center gap-2">
             <Switch
-                checked={record.enabled}
+                checked={enabled}
                 loading={isPending}
                 onChange={async (checked) => {
-                    mutateAsync({ id: record.id, isPublished: checked });
+                    mutateAsync({ id: id, isPublished: checked });
                 }}
             />
         </div>

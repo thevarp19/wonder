@@ -23,10 +23,17 @@ export function getProducts(
     return axiosAuthorized.get<GetProductResponse>(url);
 }
 
-export function getProductsPrices(page: number = 0, size: number = 10) {
-    return axiosAuthorized.get<GetProductPricesResponse>(
-        `/api/products/prices?page=${page}&size=${size}`
-    );
+export function getProductsPrices(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    isPublished: boolean | null = null
+) {
+    let url = `/api/products?page=${page}&size=${size}&searchValue=${searchValue}&sortBy=id`;
+    if (isPublished !== null) {
+        url += `&isPublished=${isPublished}`;
+    }
+    return axiosAuthorized.get<GetProductPricesResponse>(url);
 }
 
 export function changeProductVisibility(id: number, isVisible: boolean) {
@@ -37,7 +44,7 @@ export function changeProductVisibility(id: number, isVisible: boolean) {
 
 export function changeProductPrice(
     vendorCode: string,
-    value: ChangeProductPriceRequest
+    value: ChangeProductPriceRequest[]
 ) {
     return axiosAuthorized.patch<void>(`/api/products/${vendorCode}`, value);
 }

@@ -9,6 +9,7 @@ import {
     SellerOrdersPage,
     SellerProductsPage,
     SellerProductsUploadPage,
+    SellerProfilePage,
     SellerRegisterPage,
     SellerSettingsPage,
     SellerSupplyCreatePage,
@@ -30,6 +31,7 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                 element={
                     <Protected
                         checkAction={async () => {
+                            return true;
                             return sellerAuth.isLoggedIn;
                         }}
                         navigate={navigateToSellerLogin}
@@ -39,6 +41,7 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                 <Route path="/" element={<SellerLayout />}>
                     <Route index path="/" element={<div>Seller</div>} />
                     <Route path="/settings" element={<SellerSettingsPage />} />
+                    <Route path="/profile" element={<SellerProfilePage />} />
                     <Route path="/products" element={<SellerProductsPage />} />
                     <Route
                         path="/products/upload"

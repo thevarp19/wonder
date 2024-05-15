@@ -1,12 +1,9 @@
 import { ProductPriceTable } from "@/modules/product/components/ProductPriceTable";
+import { ProductsSearch } from "@/modules/product/components/ProductSearch";
 import { ProductsTable } from "@/modules/product/components/ProductsTable";
 import { useDebounce } from "@/utils/shared.util";
-import {
-    MoneyCollectOutlined,
-    SearchOutlined,
-    ShopOutlined,
-} from "@ant-design/icons";
-import { Button, Input, Menu, MenuProps } from "antd";
+import { MoneyCollectOutlined, ShopOutlined } from "@ant-design/icons";
+import { Button, Menu, MenuProps } from "antd";
 import { FC, useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -72,24 +69,3 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
         </div>
     );
 };
-
-function ProductsSearch({
-    searchValue,
-    setSearchValue,
-}: {
-    searchValue: string;
-    setSearchValue: (value: string) => void;
-}) {
-    return (
-        <div className="my-2">
-            <Input
-                prefix={<SearchOutlined />}
-                placeholder="Search"
-                value={searchValue}
-                onChange={(e) => {
-                    setSearchValue(e.target.value);
-                }}
-            />
-        </div>
-    );
-}
