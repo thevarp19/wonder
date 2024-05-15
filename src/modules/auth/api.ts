@@ -11,5 +11,8 @@ export function login(values: LoginRequest) {
 }
 
 export function sellerRegister(values: SellerRegisterRequest) {
-    return axios.post<SellerRegisterResponse>("/api/auth/registration", values);
+    return axios.post<SellerRegisterResponse>(
+        "/api/sellers/registration",
+        values
+    );
 }

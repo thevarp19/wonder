@@ -1,4 +1,4 @@
-import { SellerProfileEdit } from "@/modules/auth/components/SellerProfileEditForm";
+import { SellerProfileEdit } from "@/modules/seller/SellerProfileEditForm";
 import { Button, Popconfirm } from "antd";
 import { FC } from "react";
 

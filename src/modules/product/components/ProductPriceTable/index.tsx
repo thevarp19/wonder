@@ -249,7 +249,7 @@ export const UpdatePriceModal: FC<UpdatePriceModalProps> = ({
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [form] = Form.useForm();
-    const { mutateAsync, isPending } = changeProductPriceMutation(productCode);
+    const { isPending } = changeProductPriceMutation(productCode);
     return (
         <>
             <Modal
@@ -265,7 +265,7 @@ export const UpdatePriceModal: FC<UpdatePriceModalProps> = ({
                 <Form
                     layout="vertical"
                     form={form}
-                    onFinish={async (values) => {
+                    onFinish={async () => {
                         // await mutateAsync({ cityId, price: values.price });
                         setIsModalOpen(false);
                     }}
@@ -312,7 +312,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
     const [searchValue, setSearchValue] = useState("");
     const [isEditable, setIsEditable] = useState(false);
     const debouncedSearchValue = useDebounce(searchValue, 500);
-    const { data: products, isPending } = useGetProductsPrices(
+    const { data: products } = useGetProductsPrices(
         page,
         undefined,
         debouncedSearchValue
@@ -325,9 +325,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
         ...columns,
         {
             title: "Main price city",
-            render: (_: any, record: ProductPrice2) => (
-                <MainPriceCitySelect isEditable={isEditable} />
-            ),
+            render: (_: any) => <MainPriceCitySelect isEditable={isEditable} />,
             width: 150,
             fixed: "left",
         },
@@ -390,6 +388,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                 </Button>
             </div>
             <Table
+                // @ts-ignore
                 columns={newColumns}
                 dataSource={productsMock}
                 rowKey={(r) => r.vendorCode}
