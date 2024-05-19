@@ -1,3 +1,4 @@
+import { padNumbers } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Table, TableColumnsType, Tag } from "antd";
 import { FC } from "react";
@@ -102,10 +103,11 @@ const columns: TableColumnsType<GetSellerSupply> = [
     {
         title: "Supply ID",
         dataIndex: "id",
+        render: (id) => padNumbers(id, 8),
     },
     {
         title: "Address",
-        dataIndex: "address",
+        dataIndex: "formattedAddress",
     },
     {
         title: "Send date",
