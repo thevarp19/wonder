@@ -4,6 +4,7 @@ import { GetStoreResponse } from "@/modules/store/types";
 import { useAppDispatch } from "@/redux/utils";
 import { reset } from "@/roles/seller/redux/supply/actions";
 import { useSupply } from "@/roles/seller/redux/supply/selectors";
+import { padNumbers } from "@/utils/shared.util";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Modal } from "antd";
 import { FC } from "react";
@@ -51,7 +52,10 @@ export const SupplyPDFModal: FC<SupplyPDFModalProps> = ({
                                     boxes={boxes}
                                 />
                             }
-                            fileName={`Supply-${Date.now()}.pdf`}
+                            fileName={`Supply-${padNumbers(
+                                supply.supplyServerId,
+                                8
+                            )}.pdf`}
                             onClick={() => {
                                 setTimeout(() => {
                                     dispatch(reset());

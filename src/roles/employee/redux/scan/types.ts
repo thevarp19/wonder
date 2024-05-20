@@ -1,12 +1,12 @@
 export interface ScanCell {
-    barcode: number;
+    barcode: string;
     products: number[];
 }
 
 export interface ScanState {
     boxBarcode: number | null;
     cells: ScanCell[];
-    currentCellBarcode: number | null;
+    currentCellBarcode: string | null;
     supplyId: number | null;
 }
 
@@ -28,20 +28,20 @@ export interface SetBoxBarCode {
 
 export interface CreateScanningCell {
     type: typeof CREATE_SCANNING_CELL;
-    payload: number;
+    payload: string;
 }
 
 export interface AddProductsToCell {
     type: typeof ADD_PRODUCTS_TO_CELL;
     payload: {
-        cellBarcode: number;
+        cellBarcode: string;
         productBarcode: number[];
     };
 }
 
 export interface SetCurrentCellBarCode {
     type: typeof SET_CURRENT_CELL_BARCODE;
-    payload: number;
+    payload: string;
 }
 
 export type ScanActions =

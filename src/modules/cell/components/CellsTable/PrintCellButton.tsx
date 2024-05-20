@@ -4,6 +4,7 @@ import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "antd";
 import { FC, useState } from "react";
 import { GetCellResponse } from "../../types";
+import { getCellCode } from "../../utils";
 import { CellBlockPDF } from "../CellsPDF/CellBlock";
 
 interface PrintCellButtonProps {
@@ -64,7 +65,10 @@ export const CellPDFModal: FC<CellPDFModalProps> = ({
                     <CancelBtn />
                     <PDFDownloadLink
                         document={<CellBlockPDF cell={cell} store={store} />}
-                        fileName={`Cell-${cell.id}.pdf`}
+                        fileName={`Cell-${getCellCode(
+                            cell,
+                            store.kaspiId
+                        )}.pdf`}
                     >
                         {({ loading }) =>
                             loading ? "Loading document..." : "Download now!"

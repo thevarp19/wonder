@@ -11,14 +11,14 @@ export const setSupplyId = (SupplyId: number): types.SetSupplyId => ({
 });
 
 export const createScanningCell = (
-    cellBarcode: number
+    cellBarcode: string
 ): types.CreateScanningCell => ({
     type: types.CREATE_SCANNING_CELL,
     payload: cellBarcode,
 });
 
 export const addProductsToCell = (
-    cellBarcode: number,
+    cellBarcode: string,
     productBarcode: number[]
 ): types.AddProductsToCell => ({
     type: types.ADD_PRODUCTS_TO_CELL,
@@ -26,7 +26,7 @@ export const addProductsToCell = (
 });
 
 export const setCurrentCellBarcode = (
-    cellBarcode: number
+    cellBarcode: string
 ): types.SetCurrentCellBarCode => ({
     type: types.SET_CURRENT_CELL_BARCODE,
     payload: cellBarcode,

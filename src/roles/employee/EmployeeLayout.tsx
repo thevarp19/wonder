@@ -6,7 +6,6 @@ import {
     HomeOutlined,
     LogoutOutlined,
     ProfileOutlined,
-    ScanOutlined,
     SettingOutlined,
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
@@ -30,11 +29,11 @@ const items: MenuProps["items"] = [
         key: "orders",
         icon: <CarOutlined />,
     },
-    {
-        label: <Link to={"/employee/scan"}>Scan</Link>,
-        key: "scan",
-        icon: <ScanOutlined />,
-    },
+    // {
+    //     label: <Link to={"/employee/scan"}>Scan</Link>,
+    //     key: "scan",
+    //     icon: <ScanOutlined />,
+    // },
 ];
 
 function pathToKey(key: string) {

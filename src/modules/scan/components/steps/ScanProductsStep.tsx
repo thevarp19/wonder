@@ -9,11 +9,7 @@ import { toScanProducts } from "../../utils";
 interface ScanProductsStepProps {}
 
 export const ScanProductsStep: FC<ScanProductsStepProps> = ({}) => {
-    const cellBarcodeInUrlRaw = useScannerResults();
-    const cellBarcodeInUrlParsed = Number(cellBarcodeInUrlRaw);
-    const cellBarcodeInUrl = isNaN(cellBarcodeInUrlParsed)
-        ? null
-        : cellBarcodeInUrlParsed;
+    const cellBarcodeInUrl = useScannerResults();
 
     const cellBarcode = useCurrentCell()?.barcode;
     const dispatch = useAppDispatch();
