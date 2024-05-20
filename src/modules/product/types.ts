@@ -35,19 +35,14 @@ export interface ProductPriceCity {
 }
 
 export interface ChangeProductPriceRequest {
-    cityId: number;
-    price: number;
-}
-
-export interface ProductPrice2 {
-    id: number;
-    vendorCode: string;
-    name: string;
-    count: number;
-    prices: {
-        cityId: number;
-        cityName: string;
+    priceList: {
         price: number;
+        cityId: number;
+        productId: number;
+    }[];
+    mainPriceList: {
+        productId: number;
+        mainCityId: number;
     }[];
 }
 

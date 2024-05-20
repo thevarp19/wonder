@@ -1,5 +1,6 @@
 import { formatPrice } from "@/utils/shared.util";
 import { useReducer } from "react";
+import { ChangeProductPriceRequest } from "./types";
 
 export interface ProductCityPriceChangeState {
     productId: number;
@@ -30,6 +31,19 @@ const initialState: ProductPriceChangeState = {
 type ProductPriceChangeAction =
     | { type: "ADD_CITY_PRICE_CHANGE"; payload: ProductCityPriceChangeState }
     | { type: "ADD_MAIN_PRICE_CHANGE"; payload: ProductMainPriceChangeState };
+
+export function getPriceChangeRequest(
+    state: ProductPriceChangeState
+): ChangeProductPriceRequest {
+    return {
+        priceList: state.cityPrices.map((cityPrice) => ({
+            price: cityPrice.newPrice,
+            cityId: cityPrice.cityId,
+            productId: cityPrice.productId,
+        })),
+        mainPriceList: [],
+    };
+}
 
 export function getPriceChanges(state: ProductPriceChangeState): string[] {
     const productCityPriceMap = new Map<

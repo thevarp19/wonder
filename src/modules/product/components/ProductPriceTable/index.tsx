@@ -1,10 +1,8 @@
 import { myLocalStorage } from "@/lib/storage/browserStorage";
 import { useDebounce } from "@/utils/shared.util";
-import { EditOutlined } from "@ant-design/icons";
 import {
     Button,
     Checkbox,
-    Form,
     InputNumber,
     Modal,
     Select,
@@ -16,6 +14,7 @@ import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import {
     ProductCityPriceChangeState,
     ProductPriceChangeState,
+    getPriceChangeRequest,
     getPriceChanges,
     useProductPricesChange,
 } from "../../forms";
@@ -150,75 +149,6 @@ function findProductPriceAndCountInCity(
     return result;
 }
 
-interface UpdatePriceModalProps {
-    productCode: string;
-    prices: {
-        cityId: number;
-        cityName: string;
-        price: number;
-    }[];
-}
-
-export const UpdatePriceModal: FC<UpdatePriceModalProps> = ({
-    productCode,
-    prices,
-}) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [form] = Form.useForm();
-    const { isPending } = changeProductPriceMutation(productCode);
-    return (
-        <>
-            <Modal
-                title="Update Cell"
-                open={isModalOpen}
-                onOk={() => {
-                    form.submit();
-                }}
-                okButtonProps={{ loading: isPending }}
-                onCancel={() => setIsModalOpen(false)}
-                destroyOnClose
-            >
-                <Form
-                    layout="vertical"
-                    form={form}
-                    onFinish={async () => {
-                        // await mutateAsync({ cityId, price: values.price });
-                        setIsModalOpen(false);
-                    }}
-                >
-                    {prices.map((price) => (
-                        <Form.Item
-                            label={`Price in ${price.cityName}`}
-                            name="price"
-                            required
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please input the price!",
-                                    min: 0,
-                                    type: "number",
-                                },
-                            ]}
-                        >
-                            <InputNumber
-                                name="price"
-                                type="number"
-                                defaultValue={price.price}
-                                style={{ width: "100%" }}
-                            />
-                        </Form.Item>
-                    ))}
-                </Form>
-            </Modal>
-            <Button
-                className="cursor-pointer"
-                onClick={() => setIsModalOpen(true)}
-                icon={<EditOutlined />}
-            ></Button>
-        </>
-    );
-};
-
 export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
     const [page, setPage] = useState(0);
 
@@ -291,6 +221,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                 ),
             })),
     ];
+    const { mutateAsync } = changeProductPriceMutation();
 
     return (
         <div>
@@ -343,7 +274,12 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                         {isEditable ? (
                             <SavePriceEditButton
                                 state={state}
-                                onClick={() => setIsEditable(false)}
+                                onClick={async () => {
+                                    await mutateAsync(
+                                        getPriceChangeRequest(state)
+                                    );
+                                    setIsEditable(false);
+                                }}
                             />
                         ) : (
                             <Button onClick={() => setIsEditable(true)}>
@@ -369,7 +305,7 @@ function SavePriceEditButton({
     onClick,
     state,
 }: {
-    onClick: () => void;
+    onClick: () => Promise<void>;
     state: ProductPriceChangeState;
 }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -379,8 +315,8 @@ function SavePriceEditButton({
                 open={isModalOpen}
                 width={800}
                 title="Do you want to save changes?"
-                onOk={() => {
-                    onClick();
+                onOk={async () => {
+                    await onClick();
                     setIsModalOpen(false);
                 }}
                 onCancel={() => {

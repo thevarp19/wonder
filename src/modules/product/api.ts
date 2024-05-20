@@ -42,9 +42,6 @@ export function changeProductVisibility(id: number, isVisible: boolean) {
     );
 }
 
-export function changeProductPrice(
-    vendorCode: string,
-    value: ChangeProductPriceRequest[]
-) {
-    return axiosAuthorized.patch<void>(`/api/products/${vendorCode}`, value);
+export function changeProductPrice(value: ChangeProductPriceRequest) {
+    return axiosAuthorized.patch<void>(`/api/products/price`, value);
 }

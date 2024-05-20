@@ -51,17 +51,20 @@ export const changeProductsVisibilityMutation = () => {
     });
 };
 
-export const changeProductPriceMutation = (vendorCode: string) => {
+export const changeProductPriceMutation = () => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
-    return useMutation<void, AxiosError<any>, ChangeProductPriceRequest[]>({
+    return useMutation<void, AxiosError<any>, ChangeProductPriceRequest>({
         async mutationFn(values) {
-            await changeProductPrice(vendorCode, values);
+            await changeProductPrice(values);
         },
         onSuccess() {
             message.success("Success!");
             queryClient.invalidateQueries({
                 queryKey: ["products"],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["products-prices"],
             });
         },
         onError(error) {
