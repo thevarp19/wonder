@@ -1,8 +1,19 @@
 import { BasePaginationResponse } from "@/types";
 
 export interface ProductPrice {
+    cityId: number;
     cityName: string;
     price: number;
+    count: number;
+}
+
+export interface ProductWithPrices {
+    id: number;
+    count: number;
+    name: string;
+    published: boolean;
+    vendorCode: string;
+    prices: ProductPrice[];
 }
 
 export interface GetProductResponse
@@ -13,7 +24,7 @@ export interface GetProductPricesResponse
 
 export interface GetProductPricesContent {
     cities: ProductPriceCity[];
-    products: ProductPrice[];
+    products: ProductWithPrices[];
 }
 
 export interface ProductPriceCity {

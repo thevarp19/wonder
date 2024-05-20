@@ -1,3 +1,4 @@
+import { myLocalStorage } from "@/lib/storage/browserStorage";
 import { useDebounce } from "@/utils/shared.util";
 import { EditOutlined } from "@ant-design/icons";
 import {
@@ -11,108 +12,23 @@ import {
     TableColumnsType,
 } from "antd";
 import clsx from "clsx";
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import {
+    ProductCityPriceChangeState,
+    ProductPriceChangeState,
+    getPriceChanges,
+    useProductPricesChange,
+} from "../../forms";
 import { changeProductPriceMutation } from "../../mutations";
 import { useGetProductsPrices } from "../../queries";
-import { ProductPrice2, ProductPriceCity } from "../../types";
+import { ProductPriceCity, ProductWithPrices } from "../../types";
 import { ProductsSearch } from "../ProductSearch";
 import { ProductPublishedFilter } from "../ProductsFilter/ProductPublishedFilter";
 import { ProductEnableSwitch } from "../ProductsTable";
 
 interface ProductPriceTableProps {}
 
-const productsMock: ProductPrice2[] = [
-    {
-        id: 1,
-        vendorCode: "V1001",
-        name: "Product A",
-        count: 150,
-        prices: [
-            { cityId: 101, cityName: "Алматы", price: 99.99 },
-            { cityId: 102, cityName: "Астана", price: 89.99 },
-        ],
-    },
-    {
-        id: 2,
-        vendorCode: "V1002",
-        name: "Product B",
-        count: 200,
-        prices: [
-            { cityId: 101, cityName: "Алматы", price: 199.99 },
-            { cityId: 103, cityName: "Шымкент", price: 209.99 },
-        ],
-    },
-    {
-        id: 3,
-        vendorCode: "V1003",
-        name: "Product C",
-        count: 50,
-        prices: [{ cityId: 104, cityName: "Алматы", price: 129.99 }],
-    },
-    {
-        id: 4,
-        vendorCode: "V1004",
-        name: "Product D",
-        count: 100,
-        prices: [{ cityId: 102, cityName: "Астана", price: 189.99 }],
-    },
-    {
-        id: 5,
-        vendorCode: "V1005",
-        name: "Product E",
-        count: 75,
-        prices: [
-            { cityId: 105, cityName: "Астана", price: 159.99 },
-            { cityId: 101, cityName: "Алматы", price: 149.99 },
-        ],
-    },
-    // {
-    //     id: 6,
-    //     vendorCode: "V1006",
-    //     name: "Product F",
-    //     count: 60,
-    //     prices: [{ cityId: 106, cityName: "Шымкент", price: 119.99 }],
-    // },
-    // {
-    //     id: 7,
-    //     vendorCode: "V1007",
-    //     name: "Product G",
-    //     count: 85,
-    //     prices: [
-    //         { cityId: 107, cityName: "Шымкент", price: 99.99 },
-    //         { cityId: 102, cityName: "Астана", price: 109.99 },
-    //     ],
-    // },
-    // {
-    //     id: 8,
-    //     vendorCode: "V1008",
-    //     name: "Product H",
-    //     count: 90,
-    //     prices: [{ cityId: 108, cityName: "Алматы", price: 139.99 }],
-    // },
-    // {
-    //     id: 9,
-    //     vendorCode: "V1009",
-    //     name: "Product I",
-    //     count: 120,
-    //     prices: [
-    //         { cityId: 101, cityName: "Алматы", price: 169.99 },
-    //         { cityId: 109, cityName: "Астана", price: 179.99 },
-    //     ],
-    // },
-    // {
-    //     id: 10,
-    //     vendorCode: "V1010",
-    //     name: "Product J",
-    //     count: 200,
-    //     prices: [
-    //         { cityId: 110, cityName: "Алматы", price: 189.99 },
-    //         { cityId: 103, cityName: "Шымкент", price: 199.99 },
-    //     ],
-    // },
-];
-
-const columns: TableColumnsType<ProductPrice2> = [
+const columns: TableColumnsType<ProductWithPrices> = [
     {
         title: "Article",
         dataIndex: "vendorCode",
@@ -122,7 +38,7 @@ const columns: TableColumnsType<ProductPrice2> = [
     {
         title: "Name",
         render: (_, record) => (
-            <a href={record.vendorCode} className="text-nowrap">
+            <a href={record.vendorCode} className="">
                 {record.name}
             </a>
         ),
@@ -133,10 +49,7 @@ const columns: TableColumnsType<ProductPrice2> = [
         title: "Published",
         dataIndex: "isPublished",
         render: (_, record) => (
-            <ProductEnableSwitch
-                enabled={record.count % 2 != 1}
-                id={record.id}
-            />
+            <ProductEnableSwitch enabled={record.published} id={record.id} />
         ),
         width: 100,
     },
@@ -148,40 +61,37 @@ const columns: TableColumnsType<ProductPrice2> = [
     },
 ];
 
-function MainPriceCitySelect({ isEditable }: { isEditable: boolean }) {
-    const [value, setValue] = useState("none");
+function MainPriceCitySelect({
+    isEditable,
+    setValue,
+    cities,
+}: {
+    isEditable: boolean;
+    cities: ProductPriceCity[] | undefined;
+    setValue: (value: string, label: string) => void;
+}) {
     return (
         <Select
             disabled={!isEditable}
             style={{ width: 150 }}
-            value={value}
-            onChange={(value) => setValue(value)}
-            options={[
-                {
-                    label: "Не выбрано",
-                    value: "none",
-                },
-                {
-                    label: "Алматы",
-                    value: "almaty",
-                },
-                {
-                    label: "Астана",
-                    value: "astana",
-                },
-                {
-                    label: "Шымкент",
-                    value: "shymkent",
-                },
-            ]}
+            onChange={(_, option) =>
+                // @ts-ignore
+                setValue(option.value, option.label)
+            }
+            options={cities?.map((city) => ({
+                value: `${city.id}`,
+                label: city.name,
+            }))}
         ></Select>
     );
 }
 
 function StoreCheckboxes({
+    checked,
     setChecked,
     stores,
 }: {
+    checked: string[];
     setChecked: Dispatch<SetStateAction<string[]>>;
     stores: ProductPriceCity[];
 }) {
@@ -190,6 +100,12 @@ function StoreCheckboxes({
             {stores.map((store) => (
                 <div key={store.name.toLowerCase()}>
                     <Checkbox
+                        checked={
+                            checked.findIndex((name) => {
+                                console.log(name, store.name.toLowerCase());
+                                return name === store.name.toLowerCase();
+                            }) !== -1
+                        }
                         onChange={(e) => {
                             if (e.target.checked) {
                                 setChecked((prev) => [
@@ -217,7 +133,7 @@ function StoreCheckboxes({
 
 function findProductPriceAndCountInCity(
     storeName: string,
-    record: ProductPrice2
+    record: ProductWithPrices
 ) {
     let result = {
         price: 0,
@@ -306,7 +222,9 @@ export const UpdatePriceModal: FC<UpdatePriceModalProps> = ({
 export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
     const [page, setPage] = useState(0);
 
-    const [activeStores, setActiveStores] = useState<string[]>(["алматы"]);
+    const [activeStores, setActiveStores] = useState<string[]>(
+        myLocalStorage?.get("activeStores") || ["алматы"]
+    );
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
     const [searchValue, setSearchValue] = useState("");
@@ -315,32 +233,65 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
     const { data: products } = useGetProductsPrices(
         page,
         undefined,
-        debouncedSearchValue
+        debouncedSearchValue,
+        isPublished
     );
+    useEffect(() => {
+        myLocalStorage?.set("activeStores", activeStores);
+    }, [activeStores]);
     const uniqueStores = [];
     for (const store of new Set(activeStores)) {
-        uniqueStores.push(store);
+        if (products?.content[0].cities.length) {
+            const storeIndex = products.content[0].cities.findIndex(
+                (city) => city.name.toLowerCase() === store.toLowerCase()
+            );
+            if (storeIndex !== -1) {
+                uniqueStores.push(store);
+            }
+        } else {
+            uniqueStores.push(store);
+        }
     }
+    const { addCityPriceChange, addMainPriceChange, state } =
+        useProductPricesChange();
     const newColumns = [
         ...columns,
         {
             title: "Main price city",
-            render: (_: any) => <MainPriceCitySelect isEditable={isEditable} />,
+            render: (_: any, record: ProductWithPrices) => (
+                <MainPriceCitySelect
+                    isEditable={isEditable}
+                    setValue={(value, label) => {
+                        addMainPriceChange({
+                            productId: record.id,
+                            productName: record.name,
+                            mainCityId: Number(value),
+                            mainCityName: label,
+                        });
+                    }}
+                    cities={products?.content?.[0].cities}
+                />
+            ),
             width: 150,
             fixed: "left",
         },
-        ...uniqueStores.map((store) => ({
-            title: `${store.toLocaleUpperCase()}`,
-            width: 120,
-            render: (_: any, record: ProductPrice2) => (
-                <ProductPriceCell
-                    store={store}
-                    record={record}
-                    isEditable={isEditable}
-                />
-            ),
-        })),
+        ...uniqueStores
+            .sort((a, b) => a.localeCompare(b))
+            .map((store) => ({
+                title: `${store.toLocaleUpperCase()}`,
+                width: 120,
+                render: (_: any, record: ProductWithPrices) => (
+                    <ProductPriceCell
+                        store={store}
+                        record={record}
+                        state={state}
+                        isEditable={isEditable}
+                        addCityPriceChange={addCityPriceChange}
+                    />
+                ),
+            })),
     ];
+
     return (
         <div>
             <Modal
@@ -354,15 +305,9 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                 }}
             >
                 <StoreCheckboxes
+                    checked={activeStores}
                     setChecked={setActiveStores}
-                    stores={["Алматы", "Астана", "Шымкент"].map(
-                        (store, index) => ({
-                            name: store,
-                            id: index,
-                            code: `store-${index}`,
-                            enabled: true,
-                        })
-                    )}
+                    stores={products?.content?.[0]?.cities || []}
                 />
             </Modal>
             <div className="flex items-center justify-between mb-4">
@@ -390,13 +335,14 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
             <Table
                 // @ts-ignore
                 columns={newColumns}
-                dataSource={productsMock}
+                dataSource={products?.content?.[0]?.products || []}
                 rowKey={(r) => r.vendorCode}
                 scroll={{ x: 1200 }}
                 footer={() => (
                     <div className="flex justify-end">
                         {isEditable ? (
                             <SavePriceEditButton
+                                state={state}
                                 onClick={() => setIsEditable(false)}
                             />
                         ) : (
@@ -419,12 +365,19 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
         </div>
     );
 };
-function SavePriceEditButton({ onClick }: { onClick: () => void }) {
+function SavePriceEditButton({
+    onClick,
+    state,
+}: {
+    onClick: () => void;
+    state: ProductPriceChangeState;
+}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     return (
         <>
             <Modal
                 open={isModalOpen}
+                width={800}
                 title="Do you want to save changes?"
                 onOk={() => {
                     onClick();
@@ -434,15 +387,7 @@ function SavePriceEditButton({ onClick }: { onClick: () => void }) {
                     setIsModalOpen(false);
                 }}
             >
-                <div>
-                    Product A: Алматы 100{" -> "}400; Астана 200{" -> "}300;
-                </div>
-                <div>
-                    Product B: Алматы 100{" -> "}400; Астана 200{" -> "}300;
-                </div>
-                <div>
-                    Product C: Алматы 100{" -> "}400; Астана 200{" -> "}300;
-                </div>
+                {isModalOpen && <PriceChanges {...state} />}
             </Modal>
             <Button type="primary" onClick={() => setIsModalOpen(true)}>
                 Сохранить
@@ -451,16 +396,34 @@ function SavePriceEditButton({ onClick }: { onClick: () => void }) {
         </>
     );
 }
+
+function PriceChanges(state: ProductPriceChangeState) {
+    return (
+        <div>
+            {getPriceChanges(state).map((change, index) => (
+                <div key={index}>{change}</div>
+            ))}
+        </div>
+    );
+}
+
 function ProductPriceCell({
     store,
     record,
     isEditable,
+    addCityPriceChange,
+    state,
 }: {
     store: string;
-    record: ProductPrice2;
+    record: ProductWithPrices;
     isEditable: boolean;
+    addCityPriceChange: (cityPrice: ProductCityPriceChangeState) => void;
+    state: ProductPriceChangeState;
 }) {
-    const { price, count } = findProductPriceAndCountInCity(store, record);
+    const { price, count, storeId } = findProductPriceAndCountInCity(
+        store,
+        record
+    );
     return (
         <div className="relative w-full h-full ">
             <div
@@ -480,6 +443,25 @@ function ProductPriceCell({
                         position: "relative",
                         top: -4,
                         left: -7,
+                    }}
+                    value={
+                        state.cityPrices.find(
+                            (cityPrice) =>
+                                cityPrice.productId === record.id &&
+                                cityPrice.cityId === storeId
+                        )?.newPrice || price
+                    }
+                    onChange={(value) => {
+                        if (value !== null) {
+                            addCityPriceChange({
+                                productId: record.id,
+                                productName: record.name,
+                                cityId: storeId,
+                                cityName: store,
+                                prevPrice: price,
+                                newPrice: value,
+                            });
+                        }
                     }}
                 />
             ) : (

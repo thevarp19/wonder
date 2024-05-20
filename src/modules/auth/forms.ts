@@ -68,7 +68,12 @@ export const useSellerRegister = () => {
     });
 
     async function handleSubmit() {
-        await mutation.mutateAsync(formik.values);
+        await mutation.mutateAsync({
+            ...formik.values,
+            phoneNumber: formik.values.phoneNumber
+                .replace(/\s/g, "")
+                .substring(1),
+        });
     }
 
     return { formik, mutation };

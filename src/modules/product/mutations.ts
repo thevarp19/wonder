@@ -41,6 +41,9 @@ export const changeProductsVisibilityMutation = () => {
             queryClient.invalidateQueries({
                 queryKey: ["products"],
             });
+            queryClient.invalidateQueries({
+                queryKey: ["products-prices"],
+            });
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);

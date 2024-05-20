@@ -29,7 +29,7 @@ export const useGetProductsPrices = (
     isPublished: boolean | null = null
 ) => {
     return useQuery<GetProductPricesResponse>({
-        queryKey: [`products-prices`, page, size],
+        queryKey: [`products-prices`, page, size, searchValue, isPublished],
         queryFn: async () => {
             const { data } = await getProductsPrices(
                 page,

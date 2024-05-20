@@ -29,7 +29,7 @@ export function getProductsPrices(
     searchValue: string = "",
     isPublished: boolean | null = null
 ) {
-    let url = `/api/products?page=${page}&size=${size}&searchValue=${searchValue}&sortBy=id`;
+    let url = `/api/products/prices?page=${page}&size=${size}&searchValue=${searchValue}&sortBy=id`;
     if (isPublished !== null) {
         url += `&isPublished=${isPublished}`;
     }

@@ -57,7 +57,7 @@ export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
                 columns={columns}
                 loading={isPending}
                 dataSource={products?.content}
-                rowKey={"article"}
+                rowKey={(record) => record.vendorCode}
                 pagination={{
                     pageSize: 10,
                     total: products?.totalElements,

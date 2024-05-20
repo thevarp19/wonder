@@ -11,14 +11,14 @@ interface SellerProductsPageProps {}
 
 const items: MenuProps["items"] = [
     {
-        label: "Products",
-        key: "products",
-        icon: <ShopOutlined />,
-    },
-    {
         label: "Prices",
         key: "prices",
         icon: <MoneyCollectOutlined />,
+    },
+    {
+        label: "Products",
+        key: "products",
+        icon: <ShopOutlined />,
     },
 ];
 
