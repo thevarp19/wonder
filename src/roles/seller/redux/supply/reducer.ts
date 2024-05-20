@@ -30,6 +30,7 @@ export const sellerSupplyReducer = (
             myLocalStorage?.remove("supply-packs");
             myLocalStorage?.remove("supply-store");
             myLocalStorage?.remove("supply-date");
+            myLocalStorage?.remove("supply-server-id");
             return {
                 products: [],
                 packs: [],

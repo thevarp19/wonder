@@ -1,10 +1,13 @@
 import { Loading } from "@/components/ui/Loading";
 import { myLocalStorage } from "@/lib/storage/browserStorage";
 import { GetStoreResponse } from "@/modules/store/types";
+import { useAppDispatch } from "@/redux/utils";
+import { reset } from "@/roles/seller/redux/supply/actions";
 import { useSupply } from "@/roles/seller/redux/supply/selectors";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Modal } from "antd";
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 import { SupplyPDF } from ".";
 import { useGetSupply } from "../../queries";
 
@@ -20,6 +23,8 @@ export const SupplyPDFModal: FC<SupplyPDFModalProps> = ({
     store,
 }) => {
     const supply = useSupply();
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const { data, isSuccess, isPending } = useGetSupply(
         Number(supply.supplyServerId)
     );
@@ -47,6 +52,12 @@ export const SupplyPDFModal: FC<SupplyPDFModalProps> = ({
                                 />
                             }
                             fileName={`Supply-${Date.now()}.pdf`}
+                            onClick={() => {
+                                setTimeout(() => {
+                                    dispatch(reset());
+                                    navigate("/seller/supply");
+                                }, 500);
+                            }}
                         >
                             {({ loading }) =>
                                 loading

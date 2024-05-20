@@ -70,7 +70,12 @@ function mapCreateSupplyRequest(
 
 export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [step, setStep] = useState(Number(searchParams.get("step")) || 0);
+    const serverId = useSupply().supplyServerId;
+    console.log(serverId);
+
+    const [step, setStep] = useState(
+        serverId ? 3 : Number(searchParams.get("step")) || 0
+    );
     const dispatch = useAppDispatch();
     const supply = useSupply();
     const packs = useSupplyPacks();
@@ -162,6 +167,9 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             className={cn("")}
                             size="large"
                             onClick={() => {
+                                if (serverId) {
+                                    return;
+                                }
                                 setSearchParams({ step: `${step - 1}` });
                                 setStep((prev) => {
                                     return prev - 1;

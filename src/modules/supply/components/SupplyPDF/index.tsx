@@ -80,24 +80,27 @@ const PackBlock = ({
 }: {
     pack: SupplyPack;
     boxes: GetBoxResponse[] | undefined;
+    serverBoxes: GetSupplyById[][];
 }) => {
     // @ts-ignore
     const box = boxes?.find((b) => b.id === pack.box);
     return (
         <View style={styles.pack}>
-            <Text>Box barcode: {Date.now()}</Text>
+            {/* <Text>Box barcode: {boxBarcode}</Text> */}
             <Text>Box type: {box?.name}</Text>
             <Text>Box size: {box?.description}</Text>
             <Text> </Text>
             <Text>Products:</Text>
             <View>
-                {pack.products.map((product, index) => (
-                    <Text key={`${product.id}-${pack.id}`}>
-                        {index + 1}
-                        {" - "}
-                        {product.product.name}, {product.quantity} items
-                    </Text>
-                ))}
+                {pack.products
+                    .filter((p) => p.quantity > 0)
+                    .map((product, index) => (
+                        <Text key={`${product.id}-${pack.id}`}>
+                            {index + 1}
+                            {" - "}
+                            {product.product.name}, {product.quantity} items
+                        </Text>
+                    ))}
             </View>
         </View>
     );
@@ -139,6 +142,7 @@ export const SupplyPDF = ({
     supply: SupplyState;
     boxes: GetBoxResponse[] | undefined;
 }) => {
+    const groupedByBoxes = Object.values(groupByBox(packs));
     return (
         <Document>
             <Page
@@ -163,13 +167,16 @@ export const SupplyPDF = ({
                 </View>
                 <View style={styles.root}>
                     <View style={styles.grid}>
-                        {supply.packs.map((pack) => (
-                            <PackBlock
-                                key={pack.id}
-                                pack={pack}
-                                boxes={boxes}
-                            />
-                        ))}
+                        {supply.packs
+                            .filter((p) => p.products.length > 0)
+                            .map((pack) => (
+                                <PackBlock
+                                    key={pack.id}
+                                    pack={pack}
+                                    boxes={boxes}
+                                    serverBoxes={groupedByBoxes}
+                                />
+                            ))}
                     </View>
                 </View>
             </Page>
@@ -179,7 +186,7 @@ export const SupplyPDF = ({
                 </View>
                 <View style={styles.root}>
                     <View style={styles.grid}>
-                        {Object.values(groupByBox(packs)).map((packs) => (
+                        {groupedByBoxes.map((packs) => (
                             <View style={styles.product} key={packs[0].article}>
                                 <Image
                                     style={styles.barcode}
@@ -187,7 +194,12 @@ export const SupplyPDF = ({
                                         `${packs[0].boxBarCode}`
                                     )}
                                 />
-                                <Text>{packs[0].article}</Text>
+                                <Text style={styles.anchor}>
+                                    {packs[0].storeAddress.substring(
+                                        0,
+                                        packs[0].storeAddress.indexOf(",") || 7
+                                    )}
+                                </Text>
                                 <Text>{packs[0].shopName}</Text>
                                 <Text>
                                     {padNumberToThirteenDigits(supplyId)}

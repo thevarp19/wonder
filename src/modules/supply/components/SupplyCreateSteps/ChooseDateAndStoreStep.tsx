@@ -63,16 +63,6 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
                 Please choose the date and store
             </h1>
             <div className="flex gap-4 py-4">
-                <div className="h-96 max-w-72 w-72 min-w-72">
-                    <DatePicker
-                        className="w-full"
-                        open
-                        minDate={dayjs()}
-                        format={"DD-MM-YYYY"}
-                        value={date ? dayjs(date, "DD-MM-YYYY") : undefined}
-                        onChange={onDateChange}
-                    />
-                </div>
                 <Select
                     placeholder={"Choose a store"}
                     className="w-80"
@@ -91,6 +81,16 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
                             .includes(input.toLowerCase())
                     }
                 />
+                <div className="h-96 max-w-72 w-72 min-w-72">
+                    <DatePicker
+                        className="w-full"
+                        open
+                        minDate={dayjs()}
+                        format={"DD-MM-YYYY"}
+                        value={date ? dayjs(date, "DD-MM-YYYY") : undefined}
+                        onChange={onDateChange}
+                    />
+                </div>
             </div>
         </div>
     );

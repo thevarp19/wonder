@@ -26,7 +26,7 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [current, setCurrent] = useState(
-        searchParams.get("current") || "products"
+        searchParams.get("current") || "prices"
     );
     const onClick: MenuProps["onClick"] = useCallback((e: any) => {
         setCurrent(e.key);
