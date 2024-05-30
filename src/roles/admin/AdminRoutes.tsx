@@ -14,6 +14,7 @@ import {
     StoreEmployeesPage,
     UpdateStorePage,
 } from "./pages";
+import { AdminHomePage } from "./pages/AdminHomePage";
 
 interface AdminRoutesProps {}
 
@@ -37,11 +38,7 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                 }
             >
                 <Route path="/" element={<AdminLayout />}>
-                    <Route
-                        index
-                        path="/"
-                        element={<div className="">Admin</div>}
-                    />
+                    <Route index path="/" element={<AdminHomePage />} />
                     <Route path="/settings" element={<AdminSettingsPage />} />
                     <Route
                         path="/settings/create-store"
