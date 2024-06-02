@@ -16,7 +16,7 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     {
         title: "Order number",
         render: (_, record) => (
-            <Link to={`/seller/orders/${record.code}`}>{record.code}</Link>
+            <Link to={`/admin/orders/${record.code}`}>{record.code}</Link>
         ),
     },
     {
