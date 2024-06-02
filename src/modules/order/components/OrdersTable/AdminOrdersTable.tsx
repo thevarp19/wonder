@@ -1,9 +1,14 @@
-import { Table, TableColumnsType } from "antd";
+import { DateCell } from "@/components/ui/DateCell";
+import { Select, Table, TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetOrdersAdmin } from "../../queries";
 import { GetOrdersByDate } from "../../types";
-import { deliveryTypeMap, orderStatusMap } from "../../utils";
+import {
+    deliveryTypeColorMap,
+    deliveryTypeMap,
+    orderStatusMap,
+} from "../../utils";
 
 interface OrdersTableProps {}
 
@@ -11,50 +16,51 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     {
         title: "Order number",
         render: (_, record) => (
-            <Link to={`/admin/orders/${record.code}`}>{record.code}</Link>
+            <Link to={`/seller/orders/${record.code}`}>{record.code}</Link>
         ),
     },
     {
-        title: "Shop",
-        dataIndex: "sellerName",
+        title: "Shop name",
+        dataIndex: "code",
     },
     {
-        title: "Time",
-        render: (_, record) => (
-            <div>
-                <div>
-                    {new Date(record.creationDate).toLocaleDateString("ru-RU")}{" "}
-                </div>
-                {new Date(record.creationDate)
-                    .toLocaleTimeString("ru-RU")
-                    .substring(0, 5)}
-            </div>
-        ),
+        title: "Store",
+        dataIndex: "code",
+    },
+    {
+        title: "Order time",
+        render: (_, record) => <DateCell timestamp={record.creationDate} />,
     },
     {
         title: "Delivery type",
         dataIndex: "deliveryMode",
-        render: (_, record) => deliveryTypeMap(record.deliveryMode),
+        render: (_, record) => (
+            <Tag color={deliveryTypeColorMap(record.deliveryMode)}>
+                {deliveryTypeMap(record.deliveryMode)}
+            </Tag>
+        ),
     },
     {
         title: "Send time",
         render: (_, record) => (
-            <div>
-                <div>
-                    {new Date(record.plannedDeliveryDate).toLocaleDateString(
-                        "ru-RU"
-                    )}{" "}
-                </div>
-                {new Date(record.plannedDeliveryDate)
-                    .toLocaleTimeString("ru-RU")
-                    .substring(0, 5)}
-            </div>
+            <DateCell timestamp={record.plannedDeliveryDate} />
         ),
     },
     {
         title: "Status",
         dataIndex: "state",
-        render: (_, record) => orderStatusMap(record.state),
+        render: (_, record) => (
+            <Select
+                className="w-full"
+                value={orderStatusMap(record.state)}
+                options={[
+                    { value: "1", label: "Упаковка" },
+                    { value: "2", label: "Готов к отправке" },
+                    { value: "3", label: "Передача" },
+                    { value: "4", label: "Доставлено" },
+                ]}
+            />
+        ),
     },
     {
         title: "Price",

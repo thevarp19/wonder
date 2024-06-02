@@ -1,9 +1,14 @@
-import { Table, TableColumnsType } from "antd";
+import { DateCell } from "@/components/ui/DateCell";
+import { Select, Table, TableColumnsType, Tag } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useGetOrdersEmployee } from "../../queries";
 import { GetOrdersEmployee } from "../../types";
-import { deliveryTypeMap, orderStatusMap } from "../../utils";
+import {
+    deliveryTypeColorMap,
+    deliveryTypeMap,
+    orderStatusMap,
+} from "../../utils";
 
 const columns: TableColumnsType<GetOrdersEmployee> = [
     {
@@ -16,43 +21,37 @@ const columns: TableColumnsType<GetOrdersEmployee> = [
     },
     {
         title: "Time",
-        render: (_, record) => (
-            <div>
-                <div>
-                    {new Date(record.orderCreatedAt).toLocaleDateString(
-                        "ru-RU"
-                    )}{" "}
-                </div>
-                {new Date(record.orderCreatedAt)
-                    .toLocaleTimeString("ru-RU")
-                    .substring(0, 5)}
-            </div>
-        ),
+        render: (_, record) => <DateCell timestamp={record.orderCreatedAt} />,
     },
     {
         title: "Delivery type",
         dataIndex: "deliveryMode",
-        render: (_, record) => deliveryTypeMap(record.deliveryType),
+        render: (_, record) => (
+            <Tag color={deliveryTypeColorMap(record.deliveryType)}>
+                {deliveryTypeMap(record.deliveryType)}
+            </Tag>
+        ),
     },
     {
         title: "Send time",
-        render: (_, record) => (
-            <div>
-                <div>
-                    {new Date(record.orderToSendTime).toLocaleDateString(
-                        "ru-RU"
-                    )}{" "}
-                </div>
-                {new Date(record.orderToSendTime)
-                    .toLocaleTimeString("ru-RU")
-                    .substring(0, 5)}
-            </div>
-        ),
+        render: (_, record) => <DateCell timestamp={record.orderToSendTime} />,
     },
     {
         title: "Status",
         dataIndex: "state",
-        render: (_, record) => orderStatusMap(record.orderStatus),
+        render: (_, record) => (
+            <Select
+                className="w-full"
+                value={orderStatusMap(record.orderStatus)}
+                options={[
+                    { value: "1", label: "Упаковка" },
+                    { value: "2", label: "Готов к отправке" },
+                    { value: "3", label: "Передача" },
+                    { value: "4", label: "Доставлено" },
+                ]}
+            />
+        ),
+        width: 200,
     },
 ];
 

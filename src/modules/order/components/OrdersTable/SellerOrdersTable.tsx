@@ -1,3 +1,4 @@
+import { DateCell } from "@/components/ui/DateCell";
 import { Table, TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
@@ -22,16 +23,7 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     },
     {
         title: "Order time",
-        render: (_, record) => (
-            <div>
-                <div>
-                    {new Date(record.creationDate).toLocaleDateString("ru-RU")}{" "}
-                </div>
-                {new Date(record.creationDate)
-                    .toLocaleTimeString("ru-RU")
-                    .substring(0, 5)}
-            </div>
-        ),
+        render: (_, record) => <DateCell timestamp={record.creationDate} />,
     },
     {
         title: "Delivery type",
@@ -45,16 +37,7 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     {
         title: "Send time",
         render: (_, record) => (
-            <div>
-                <div>
-                    {new Date(record.plannedDeliveryDate).toLocaleDateString(
-                        "ru-RU"
-                    )}{" "}
-                </div>
-                {new Date(record.plannedDeliveryDate)
-                    .toLocaleTimeString("ru-RU")
-                    .substring(0, 5)}
-            </div>
+            <DateCell timestamp={record.plannedDeliveryDate} />
         ),
     },
     {
