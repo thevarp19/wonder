@@ -4,6 +4,7 @@ import { employeeLogout } from "@/roles/employee/redux/auth/actions";
 import {
     CarOutlined,
     HomeOutlined,
+    LineHeightOutlined,
     LogoutOutlined,
     ProfileOutlined,
     SearchOutlined,
@@ -35,6 +36,11 @@ const items: MenuProps["items"] = [
         key: "search",
         icon: <SearchOutlined />,
     },
+    {
+        label: <Link to={"/employee/sizes"}>Sizes</Link>,
+        key: "sizes",
+        icon: <LineHeightOutlined />,
+    },
 ];
 
 function pathToKey(key: string) {
@@ -49,6 +55,8 @@ function pathToKey(key: string) {
             return "orders";
         case "/employee/search":
             return "search";
+        case "/employee/sizes":
+            return "sizes";
         default:
             return "home";
     }

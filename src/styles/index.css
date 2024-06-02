@@ -17,3 +17,9 @@
     background-color: #fafafa;
     color: #fafafa;
 }
+
+@layer utilities {
+    .custom-no-after *::after {
+        @apply hidden;
+    }
+}

@@ -4,6 +4,7 @@ import { sellerLogout } from "@/roles/seller/redux/auth/actions";
 import {
     CarOutlined,
     HomeOutlined,
+    LineHeightOutlined,
     LogoutOutlined,
     NodeCollapseOutlined,
     ProductOutlined,
@@ -41,6 +42,11 @@ const items: MenuProps["items"] = [
         key: "supply",
         icon: <NodeCollapseOutlined />,
     },
+    {
+        label: <Link to={"/seller/sizes"}>Sizes</Link>,
+        key: "sizes",
+        icon: <LineHeightOutlined />,
+    },
 ];
 
 function pathToKey(key: string) {
@@ -57,6 +63,8 @@ function pathToKey(key: string) {
             return "supply";
         case "/seller/orders":
             return "orders";
+        case "/seller/sizes":
+            return "sizes";
         default:
             return "home";
     }

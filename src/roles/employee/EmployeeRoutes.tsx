@@ -8,6 +8,7 @@ import {
     EmployeeLoginPage,
     EmployeeOrderPage,
     EmployeeOrdersPage,
+    EmployeeProductSizesPage,
     EmployeeSearchPage,
     EmployeeSuppliesPage,
     ScanPage,
@@ -57,6 +58,10 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                         element={<EmployeeOrderPage />}
                     />
                     <Route path="/search" element={<EmployeeSearchPage />} />
+                    <Route
+                        path="/sizes"
+                        element={<EmployeeProductSizesPage />}
+                    />
                 </Route>
                 <Route path="/scan" element={<ScanLayout />}>
                     <Route index element={<ScanPage />} />

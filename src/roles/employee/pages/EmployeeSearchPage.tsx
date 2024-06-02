@@ -65,8 +65,6 @@ const columns: TableColumnsType<any> = [
     },
 ];
 
-export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
-    searchValue,
-}) => {
+export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({}) => {
     return <Table dataSource={[]} columns={columns} />;
 };

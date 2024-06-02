@@ -1,6 +1,7 @@
 import { SellerLoginPage } from "./SellerLoginPage";
 import { SellerOrderPage } from "./SellerOrderPage";
 import { SellerOrdersPage } from "./SellerOrdersPage";
+import { SellerProductSizesPage } from "./SellerProductSizesPage";
 import { SellerProductsPage } from "./SellerProductsPage";
 import { SellerProductsUploadPage } from "./SellerProductsUploadPage";
 import { SellerProfilePage } from "./SellerProfilePage";
@@ -13,6 +14,7 @@ export {
     SellerLoginPage,
     SellerOrderPage,
     SellerOrdersPage,
+    SellerProductSizesPage,
     SellerProductsPage,
     SellerProductsUploadPage,
     SellerProfilePage,
