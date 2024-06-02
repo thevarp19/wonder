@@ -1,5 +1,7 @@
+import { SearchInput } from "@/components/ui/SearchInput";
 import { OrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx";
-import { useGetOrderData } from "@/modules/order/queries";
+import { FilterOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 
@@ -8,36 +10,27 @@ interface SellerOrderPageProps {}
 export const SellerOrderPage: FC<SellerOrderPageProps> = ({}) => {
     const { orderId: orderIdRaw } = useParams();
     const orderId = parseInt(orderIdRaw || "");
-    const { data } = useGetOrderData(orderId);
-    const orderData = [
-        { label: "Order number", value: data?.code },
-        {
-            label: "Shop",
-            value: data?.sellerName,
-        },
-        {
-            label: "Time",
-            value: data?.creationDate,
-        },
-        {
-            label: "Delivery type",
-            value: data?.deliveryMode,
-        },
-        {
-            label: "Send time",
-            value: data?.plannedDeliveryDate,
-        },
-    ];
+
     return (
         <div>
-            <h1 className="pb-4 text-2xl font-semibold">Order: {orderId}</h1>
-            <div className="flex">
-                {orderData.map((item) => (
-                    <div key={item.label} className="mr-4">
-                        <div className="text-gray-500">{item.label}</div>
-                        <div>{item.value}</div>
-                    </div>
-                ))}
+            <h1 className="pb-4 text-2xl font-semibold ">
+                Order-<span className="underline">{orderId}</span>
+            </h1>
+            <div className="flex items-center justify-between mb-4">
+                <div className="w-full max-w-sm">
+                    <SearchInput
+                        searchValue={""}
+                        setSearchValue={() => {}}
+                        onSearch={() => {}}
+                    />
+                </div>
+                <div>
+                    <Button
+                        type="primary"
+                        size="large"
+                        icon={<FilterOutlined />}
+                    ></Button>
+                </div>
             </div>
             <OrderDetailsTable orderId={orderId} />
         </div>
