@@ -11,6 +11,19 @@ export function deliveryTypeMap(type: string) {
     }
 }
 
+export function deliveryTypeColorMap(type: string) {
+    switch (type) {
+        case "DELIVERY_PICKUP":
+            return "blue";
+        case "DELIVERY_REGIONAL_TODOOR":
+            return "green";
+        case "DELIVERY_LOCAL":
+            return "red";
+        default:
+            return "";
+    }
+}
+
 export function orderStatusMap(status: string) {
     switch (status) {
         case "CANCELLING":

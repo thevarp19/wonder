@@ -1,9 +1,9 @@
-import { Table, TableColumnsType } from "antd";
+import { Table, TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetOrdersSeller } from "../../queries";
 import { GetOrdersByDate } from "../../types";
-import { deliveryTypeMap } from "../../utils";
+import { deliveryTypeColorMap, deliveryTypeMap } from "../../utils";
 
 const columns: TableColumnsType<GetOrdersByDate> = [
     {
@@ -13,7 +13,15 @@ const columns: TableColumnsType<GetOrdersByDate> = [
         ),
     },
     {
-        title: "Time",
+        title: "Shop name",
+        dataIndex: "code",
+    },
+    {
+        title: "Store",
+        dataIndex: "code",
+    },
+    {
+        title: "Order time",
         render: (_, record) => (
             <div>
                 <div>
@@ -28,7 +36,11 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     {
         title: "Delivery type",
         dataIndex: "deliveryMode",
-        render: (_, record) => deliveryTypeMap(record.deliveryMode),
+        render: (_, record) => (
+            <Tag color={deliveryTypeColorMap(record.deliveryMode)}>
+                {deliveryTypeMap(record.deliveryMode)}
+            </Tag>
+        ),
     },
     {
         title: "Send time",
