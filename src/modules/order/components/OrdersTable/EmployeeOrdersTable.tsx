@@ -21,7 +21,7 @@ const columns: TableColumnsType<GetOrdersEmployee> = [
     },
     {
         title: "Time",
-        render: (_, record) => <DateCell timestamp={record.orderCreatedAt} />,
+        render: (_, record) => <DateCell timestamp={record?.orderCreatedAt} />,
     },
     {
         title: "Delivery type",

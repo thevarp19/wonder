@@ -1,5 +1,5 @@
 import { SellerStoresTable } from "@/modules/store/components/StoresTable/SellerStoresTable";
-import { DesktopOutlined, ShopOutlined } from "@ant-design/icons";
+import { ShopOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import { FC, useState } from "react";
 
@@ -9,11 +9,11 @@ const items: MenuProps["items"] = [
         key: "stores",
         icon: <ShopOutlined />,
     },
-    {
-        label: "Other page",
-        key: "other",
-        icon: <DesktopOutlined />,
-    },
+    // {
+    //     label: "Other page",
+    //     key: "other",
+    //     icon: <DesktopOutlined />,
+    // },
 ];
 
 interface SellerSettingsPageProps {}

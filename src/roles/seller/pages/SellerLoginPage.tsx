@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 interface SellerLoginPageProps {}
 
-export const SellerLoginPage: FC<SellerLoginPageProps> = ({}) => {
+export const SellerLoginPage: FC<SellerLoginPageProps> = () => {
     const navigate = useNavigate();
     const navigateToHome = () => navigate("/seller");
     const dispatch = useAppDispatch();

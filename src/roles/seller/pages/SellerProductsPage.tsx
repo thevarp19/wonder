@@ -45,14 +45,6 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
             {current === "products" && (
                 <div className="p-4">
                     <h1 className="pb-4 text-2xl font-semibold">Products</h1>
-                    <Button
-                        size="large"
-                        type="primary"
-                        className="mb-4"
-                        href="/seller/products/upload"
-                    >
-                        Upload products
-                    </Button>
                     <ProductsSearch
                         searchValue={searchValue}
                         setSearchValue={setSearchValue}
@@ -61,8 +53,16 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                 </div>
             )}
             {current === "prices" && (
-                <div className="p-4">
+                <div className="p-4 space-y-4">
                     <h1 className="text-2xl font-semibold">Product prices</h1>
+                    <Button
+                        size="large"
+                        type="primary"
+                        className="mb-4"
+                        href="/seller/products/upload"
+                    >
+                        Upload products
+                    </Button>
                     <ProductPriceTable />
                 </div>
             )}

@@ -99,55 +99,117 @@ function getColor(status: SupplyState) {
     }
 }
 
-const columns: TableColumnsType<GetSellerSupply> = [
-    {
-        title: "Supply ID",
-        dataIndex: "id",
-        render: (id) => padNumbers(id, 8),
-    },
-    {
-        title: "Address",
-        dataIndex: "formattedAddress",
-    },
-    {
-        title: "Send date",
-        render: (_, record) => record.supplyCreatedTime?.substring(0, 10),
-    },
-    {
-        title: "Receiving date",
-        dataIndex: "receivingDate",
-        render: (_, record) => record.supplyAcceptTime?.substring(0, 10),
-    },
-    {
-        title: "Status",
-        dataIndex: "supplyState",
-        render: (status) => {
-            return <Tag color={getColor(status)}>{status}</Tag>;
-        },
-    },
-    {
-        title: "Report",
-        render: () => {
-            return (
-                <Button
-                    danger
-                    icon={
-                        <DownloadOutlined
-                            color="#ef7214"
-                            style={{ color: "#ef7214" }}
-                        />
-                    }
-                ></Button>
-            );
-        },
-    },
-];
+// const columns: TableColumnsType<GetSellerSupply> = [
+//     {
+//         title: "Supply ID",
+//         dataIndex: "id",
+//         render: (id) => padNumbers(id, 8),
+//     },
+//     {
+//         title: "Address",
+//         dataIndex: "formattedAddress",
+//     },
+//     {
+//         title: "Send date",
+//         render: (_, record) => record.supplyCreatedTime?.substring(0, 10),
+//     },
+//     {
+//         title: "Receiving date",
+//         dataIndex: "receivingDate",
+//         render: (_, record) => record.supplyAcceptTime?.substring(0, 10),
+//     },
+//     {
+//         title: "Status",
+//         dataIndex: "supplyState",
+//         render: (status) => {
+//             return <Tag color={getColor(status)}>{status}</Tag>;
+//         },
+//     },
+//     {
+//         title: "Report",
+//         render: () => {
+//             return (
+//                 <Button
+//                     danger
+//                     loading={isPending}
+//                     onClick={() => {
+//                         setIsModalOpen(true);
+//                     }}
+//                     icon={
+//                         <DownloadOutlined
+//                             color="#ef7214"
+//                             style={{ color: "#ef7214" }}
+//                         />
+//                     }
+//                 ></Button>
+//             );
+//         },
+//     },
+// ];
 
 export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
     const { data, isPending } = useGetSellerSupplies();
+    // const { data: store } = useGetStore(supply?.store || -1);
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    // const { data: store } = useGetStore(supply?.[0]?.id || -1);
+    const columns: TableColumnsType<GetSellerSupply> = [
+        {
+            title: "Supply ID",
+            dataIndex: "id",
+            render: (id) => padNumbers(id, 8),
+        },
+        {
+            title: "Address",
+            dataIndex: "formattedAddress",
+        },
+        {
+            title: "Send date",
+            render: (_, record) => record.supplyCreatedTime?.substring(0, 10),
+        },
+        {
+            title: "Receiving date",
+            dataIndex: "receivingDate",
+            render: (_, record) => record.supplyAcceptTime?.substring(0, 10),
+        },
+        {
+            title: "Status",
+            dataIndex: "supplyState",
+            render: (status) => {
+                return <Tag color={getColor(status)}>{status}</Tag>;
+            },
+        },
+        {
+            title: "Report",
+            render: () => {
+                return (
+                    <Button
+                        danger
+                        loading={isPending}
+                        onClick={() => {
+                            // setIsModalOpen(true);
+                        }}
+                        icon={
+                            <DownloadOutlined
+                                color="#ef7214"
+                                style={{ color: "#ef7214" }}
+                            />
+                        }
+                    ></Button>
+                );
+            },
+        },
+    ];
+
     return (
         <div>
             <Table loading={isPending} columns={columns} dataSource={data} />
+            {/* {isModalOpen && store && supply.supplyServerId && (
+                <SupplyPDFModal
+                    store={store}
+                    setIsModalOpen={setIsModalOpen}
+                    isModalOpen={isModalOpen}
+                />
+            )} */}
         </div>
     );
 };

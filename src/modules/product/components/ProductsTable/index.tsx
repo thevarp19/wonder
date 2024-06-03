@@ -28,18 +28,36 @@ const columns: TableColumnsType<GetProductContent> = [
         render: (_, record) => <span>{record.prices[0].price}</span>,
     },
     {
+        title: "Quantity in Almaty",
+        render: (_, record) => <span>{record.prices[0]?.count}</span>,
+    },
+    {
         title: "Price in Astana",
         render: (_, record) => <span>{record.prices[1].price}</span>,
     },
     {
+        title: "Quantity in Astana",
+        render: (_, record) => <span>{record.prices[0]?.count}</span>,
+    },
+    {
         title: "Price in Shymkent",
         render: (_, record) => <span>{record.prices[2]?.price}</span>,
+    },
+    {
+        title: "Quantity in Shymkent",
+        render: (_, record) => <span>{record.prices[0]?.count}</span>,
     },
 ];
 
 export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
     const [page, setPage] = useState(0);
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
+    // const { data: productsCount } = useGetProductsPrices(
+    //     page,
+    //     undefined,
+    //     searchValue,
+    //     isPublished
+    // );
     const { data: products, isPending } = useGetProducts(
         page,
         undefined,

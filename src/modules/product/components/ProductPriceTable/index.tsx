@@ -77,10 +77,13 @@ function MainPriceCitySelect({
                 // @ts-ignore
                 setValue(option.value, option.label)
             }
-            options={cities?.map((city) => ({
-                value: `${city.id}`,
-                label: city.name,
-            }))}
+            options={[
+                { value: "-1", label: "Не выбрано" },
+                ...(cities ?? []).map((city) => ({
+                    value: `${city.id}`,
+                    label: city.name,
+                })),
+            ]}
         ></Select>
     );
 }

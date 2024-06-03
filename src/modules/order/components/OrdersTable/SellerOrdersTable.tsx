@@ -4,7 +4,11 @@ import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetOrdersSeller } from "../../queries";
 import { GetOrdersByDate } from "../../types";
-import { deliveryTypeColorMap, deliveryTypeMap } from "../../utils";
+import {
+    deliveryTypeColorMap,
+    deliveryTypeMap,
+    orderStatusMap,
+} from "../../utils";
 
 const columns: TableColumnsType<GetOrdersByDate> = [
     {
@@ -15,7 +19,7 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     },
     {
         title: "Shop name",
-        dataIndex: "code",
+        dataIndex: "sellerName",
     },
     {
         title: "Store",
@@ -43,7 +47,7 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     {
         title: "Status",
         dataIndex: "state",
-        render: (_, record) => deliveryTypeMap(record.state),
+        render: (_, record) => orderStatusMap(record.state),
     },
     {
         title: "Price",

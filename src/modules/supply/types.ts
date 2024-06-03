@@ -64,6 +64,7 @@ export interface SupplyBoxProduct {
 
 export interface GetSellerSupply {
     id: number;
+    formattedAddress: string;
     supplyCreatedTime: string;
     supplyAcceptTime: string;
     supplyState: SupplyState;
