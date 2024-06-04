@@ -16,6 +16,7 @@ import {
     SellerSupplyCreatePage,
     SellerSupplyPage,
 } from "./pages";
+import { SellerHomePage } from "./pages/SellerHomePage";
 
 interface SellerRoutesProps {}
 
@@ -39,7 +40,7 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                 }
             >
                 <Route path="/" element={<SellerLayout />}>
-                    <Route index path="/" element={<div>Seller</div>} />
+                    <Route index path="/" element={<SellerHomePage />} />
                     <Route path="/settings" element={<SellerSettingsPage />} />
                     <Route path="/profile" element={<SellerProfilePage />} />
                     <Route path="/products" element={<SellerProductsPage />} />
