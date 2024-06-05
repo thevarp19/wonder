@@ -7,55 +7,65 @@ import {
     XAxis,
     YAxis,
 } from "recharts";
-export const LineCharts: FC = () => {
+export const AreaCharts: FC = () => {
     const data = [
         {
             date: "4 марта",
-            tenge: 2400,
-            amt: 2400,
+            id: 1,
+            sum: 10400,
         },
         {
             date: "5 марта",
-            tenge: 4400,
-            amt: 4400,
+            id: 2,
+            sum: 4400,
         },
         {
             date: "6 марта",
-            tenge: 3400,
-            amt: 3400,
+            id: 3,
+            sum: 3400,
         },
         {
             date: "7 марта",
-            tenge: 1400,
-            amt: 1400,
+            id: 4,
+            sum: 1400,
         },
         {
             date: "8 марта",
-            tenge: 2700,
-            amt: 2700,
+            id: 5,
+            sum: 2700,
         },
         {
             date: "10 марта",
-            tenge: 3100,
-            amt: 3100,
+            id: 6,
+            sum: 3100,
         },
         {
             date: "14 марта",
-            tenge: 2000,
-            amt: 2000,
+            id: 7,
+            sum: 2000,
         },
         {
             date: "18 марта",
-            tenge: 4000,
-            amt: 4000,
+            id: 8,
+            sum: 4000,
+        },
+        {
+            date: "19 марта",
+            id: 9,
+            sum: 1000,
+        },
+        {
+            date: "20 марта",
+            id: 10,
+            sum: 2000,
         },
     ];
     return (
         <div className="p-2 bg-orange-100 shadow-2xl rounded-xl">
             <div className="p-10 bg-white rounded-md">
-                <AreaChart width={850} height={350} data={data}>
+                <AreaChart width={800} height={350} data={data}>
                     <CartesianGrid y={99999} strokeDasharray="0" />
-                    <XAxis dataKey="date" padding={{ left: 30, right: 30 }} />
+                    <XAxis dataKey="date" />
                     <YAxis strokeWidth={0} />
                     <Tooltip />
                     {/* <Legend /> */}
@@ -63,7 +73,8 @@ export const LineCharts: FC = () => {
                     <Area
                         dot={{ stroke: "#FFA500", strokeWidth: 2 }}
                         type="monotone"
-                        dataKey="tenge"
+                        dataKey="sum"
+                        label={"Tenge"}
                         stroke="#FFA500"
                         fill="#FFA800"
                         activeDot={{ r: 8 }}
