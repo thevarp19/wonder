@@ -23,26 +23,17 @@ const columns: TableColumnsType<GetProductContent> = [
         dataIndex: "isPublished",
         render: (_, record) => <ProductEnableSwitch {...record} />,
     },
-    {
-        title: "Price in Almaty",
-        render: (_, record) => <span>{record.prices[0].price}</span>,
-    },
+
     {
         title: "Quantity in Almaty",
         render: (_, record) => <span>{record.prices[0]?.count}</span>,
     },
-    {
-        title: "Price in Astana",
-        render: (_, record) => <span>{record.prices[1].price}</span>,
-    },
+
     {
         title: "Quantity in Astana",
         render: (_, record) => <span>{record.prices[0]?.count}</span>,
     },
-    {
-        title: "Price in Shymkent",
-        render: (_, record) => <span>{record.prices[2]?.price}</span>,
-    },
+
     {
         title: "Quantity in Shymkent",
         render: (_, record) => <span>{record.prices[0]?.count}</span>,

@@ -1,7 +1,5 @@
 import { SearchInput } from "@/components/ui/SearchInput";
 import { SellerOrdersTable } from "@/modules/order/components/OrdersTable/SellerOrdersTable";
-import { FilterOutlined } from "@ant-design/icons";
-import { Button } from "antd";
 import { FC, useState } from "react";
 
 interface SellerOrdersPageProps {}
@@ -20,13 +18,13 @@ export const SellerOrdersPage: FC<SellerOrdersPageProps> = ({}) => {
                         onSearch={() => {}}
                     />
                 </div>
-                <div>
+                {/* <div>
                     <Button
                         type="primary"
                         size="large"
                         icon={<FilterOutlined />}
                     ></Button>
-                </div>
+                </div> */}
             </div>
             <SellerOrdersTable />
         </div>

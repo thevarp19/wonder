@@ -1,7 +1,7 @@
 export function deliveryTypeMap(type: string) {
     switch (type) {
         case "DELIVERY_LOCAL":
-            return "Cилами продавца";
+            return "Express доставка";
         case "DELIVERY_PICKUP":
             return "Самовывоз";
         case "DELIVERY_REGIONAL_TODOOR":
@@ -9,7 +9,7 @@ export function deliveryTypeMap(type: string) {
         case "DELiVERY_POSTOMAT":
             return "Kaspi Postomat";
         case "DELIVERY_REGIONAL_PICKUP":
-            return "Доставка до областного склада с самовывозом";
+            return "Самовывоз";
         default:
             return "Доставка";
     }
@@ -17,17 +17,35 @@ export function deliveryTypeMap(type: string) {
 
 export function deliveryTypeColorMap(type: string) {
     switch (type) {
-        case "NEW":
-            return "blue";
-        case "SIGN_REQUIRED":
+        case "DELIVERY_LOCAL":
             return "orange";
-        case "PICKUP":
-            return "green";
-        case "DELIVERY":
-            return "purple";
-        case "KASPI_DELIVERY":
+        case "DELIVERY_REGIONAL_PICKUP":
+            return "gray";
+        case "DELIVERY_REGIONAL_TODOOR":
             return "red";
-        case "ARCHIVE":
+        case "DELiVERY_POSTOMAT":
+            return "red";
+        case "DELIVERY_PICKUP":
+            return "gray";
+        default:
+            return "";
+    }
+}
+export function orderStatusColorMap(status: string) {
+    switch (status) {
+        case "APPROVED_BY_BANK":
+            return "yellow";
+        case "ACCEPTED_BY_MERCHANT":
+            return "blue";
+        case "COMPLETED":
+            return "green";
+        case "CANCELLED":
+            return "red";
+        case "CANCELLING":
+            return "orange";
+        case "KASPI_DELIVERY_RETURN_REQUESTED":
+            return "purple";
+        case "RETURNED":
             return "gray";
         default:
             return "";

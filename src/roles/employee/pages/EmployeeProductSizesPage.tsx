@@ -1,4 +1,3 @@
-import { FilterButton } from "@/components/ui/FilterButton";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { UpdateSizesForm } from "@/modules/product/components/UpdateSizesForm";
 import { EditOutlined } from "@ant-design/icons";
@@ -41,9 +40,9 @@ export const EmployeeProductSizesPage: FC<
                             onSearch={() => {}}
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <FilterButton />
-                    </div>
+                    </div> */}
                 </div>
                 <div>
                     <Button size="large" type="primary" className="uppercase">
@@ -94,14 +93,14 @@ const columns: TableColumnsType<any> = [
         title: "Комментарий",
         dataIndex: "comment",
     },
-    {
-        title: "",
-        render: () => (
-            <Button type="primary" className="uppercase" size="small">
-                Скан
-            </Button>
-        ),
-    },
+    // {
+    //     title: "",
+    //     render: () => (
+    //         <Button type="primary" className="uppercase" size="small">
+    //             Скан
+    //         </Button>
+    //     ),
+    // },
     {
         title: "",
         render: () => <UpdateSizesModal productId={1} />,

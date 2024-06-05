@@ -1,4 +1,3 @@
-import { FilterButton } from "@/components/ui/FilterButton";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { AdminOrdersTable } from "@/modules/order/components/OrdersTable/AdminOrdersTable";
 import { Menu, MenuProps } from "antd";
@@ -41,9 +40,9 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
                         onSearch={() => {}}
                     />
                 </div>
-                <div>
+                {/* <div>
                     <FilterButton />
-                </div>
+                </div> */}
             </div>
             <div>
                 <Menu

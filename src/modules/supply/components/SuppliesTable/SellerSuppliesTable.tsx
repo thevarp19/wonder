@@ -1,7 +1,10 @@
+import { useAppDispatch } from "@/redux/utils";
+import { setSupplyId } from "@/roles/employee/redux/scan/actions";
+import { useSupply } from "@/roles/seller/redux/supply/selectors";
 import { padNumbers } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Table, TableColumnsType, Tag } from "antd";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useGetSellerSupplies } from "../../queries";
 import { GetSellerSupply, SupplyState } from "../../types";
 
@@ -148,10 +151,11 @@ function getColor(status: SupplyState) {
 // ];
 
 export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
+    const dispatch = useAppDispatch();
+    const supply = useSupply();
+    // const { data: store } = useGetStore(supply.store || -1);
     const { data, isPending } = useGetSellerSupplies();
-    // const { data: store } = useGetStore(supply?.store || -1);
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-    // const { data: store } = useGetStore(supply?.[0]?.id || -1);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const columns: TableColumnsType<GetSellerSupply> = [
         {
             title: "Supply ID",
@@ -180,13 +184,14 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
         },
         {
             title: "Report",
-            render: () => {
+            render: (_, record) => {
                 return (
                     <Button
                         danger
                         loading={isPending}
                         onClick={() => {
-                            // setIsModalOpen(true);
+                            dispatch(setSupplyId(record.id));
+                            setIsModalOpen(true);
                         }}
                         icon={
                             <DownloadOutlined

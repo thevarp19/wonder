@@ -1,8 +1,8 @@
 import { FC } from "react";
 import {
+    Area,
+    AreaChart,
     CartesianGrid,
-    Line,
-    LineChart,
     Tooltip,
     XAxis,
     YAxis,
@@ -53,19 +53,22 @@ export const LineCharts: FC = () => {
     return (
         <div className="p-2 bg-orange-100 shadow-2xl rounded-xl">
             <div className="p-10 bg-white rounded-md">
-                <LineChart width={850} height={350} data={data}>
+                <AreaChart width={850} height={350} data={data}>
                     <CartesianGrid y={99999} strokeDasharray="0" />
                     <XAxis dataKey="date" padding={{ left: 30, right: 30 }} />
                     <YAxis strokeWidth={0} />
                     <Tooltip />
                     {/* <Legend /> */}
-                    <Line
+
+                    <Area
+                        dot={{ stroke: "#FFA500", strokeWidth: 2 }}
                         type="monotone"
                         dataKey="tenge"
                         stroke="#FFA500"
+                        fill="#FFA800"
                         activeDot={{ r: 8 }}
                     />
-                </LineChart>
+                </AreaChart>
             </div>
         </div>
     );

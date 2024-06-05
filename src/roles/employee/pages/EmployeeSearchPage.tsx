@@ -1,4 +1,3 @@
-import { FilterButton } from "@/components/ui/FilterButton";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { Button, Table, TableColumnsType } from "antd";
 import { FC } from "react";
@@ -17,9 +16,9 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
                             onSearch={() => {}}
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <FilterButton />
-                    </div>
+                    </div> */}
                 </div>
                 <div>
                     <Button size="large" type="primary" className="uppercase">
