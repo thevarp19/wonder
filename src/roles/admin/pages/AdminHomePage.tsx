@@ -1,3 +1,4 @@
+import { box, boxOpen, scan, tenge } from "@/assets";
 import { Image } from "@/components/ui/Image";
 import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
 import { useGetAdminSalesInfo } from "@/modules/statistics/queries";
@@ -26,7 +27,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                 <div className="flex flex-col gap-4">
                     <ResultsCard
                         statisticsName="Заказы"
-                        iconSrc="src/assets/img/box-open.svg"
+                        iconSrc={boxOpen}
                         statistics={
                             // { count: 42, percent: 18 }
                             statistics?.ordersInfo
@@ -34,7 +35,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                     />
                     <ResultsCard
                         statisticsName="Продавцов"
-                        iconSrc="src/assets/img/box.svg"
+                        iconSrc={box}
                         statistics={
                             { count: 30, percent: -12 }
                             // statistics?.sellersInfo
@@ -42,7 +43,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                     />
                     <ResultsCard
                         statisticsName="Поставок"
-                        iconSrc="src/assets/img/scan.svg"
+                        iconSrc={scan}
                         statistics={
                             { count: 65, percent: 42 }
                             // statistics?.suppliesInfo
@@ -50,7 +51,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                     />
                     <ResultsCard
                         statisticsName="Чек"
-                        iconSrc="src/assets/img/tenge.svg"
+                        iconSrc={tenge}
                         statistics={
                             { count: 1243244, percent: 12 }
                             // statistics?.incomeInfo
@@ -127,10 +128,7 @@ const ResultsCard = ({
         <Card className="max-h-[155px] ">
             <div className="flex items-center justify-between text-3xl">
                 {statisticsName}{" "}
-                <ResultIcon
-                    src={iconSrc}
-                    color={bgColor ? `bg-[${bgColor}]` : ""}
-                />
+                <ResultIcon src={iconSrc} color={bgColor ? `${bgColor}` : ""} />
             </div>
             <div className="flex gap-5 whitespace-nowrap">
                 <div className="text-4xl">{`${statistics?.count} ${

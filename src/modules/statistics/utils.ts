@@ -1,13 +1,13 @@
 export const getColorByStatisticsName = (name: string) => {
     switch (name) {
         case "Чек":
-            return "#EAF6EC";
+            return "bg-[#EAF6EC]";
         case "Поставок":
-            return "#EDFBFE";
+            return "bg-[#EDFBFE]";
         case "Продавцов":
-            return "#FBEBEC";
+            return "bg-[#FBEBEC]";
         case "Заказы":
-            return "#D8E7FF";
+            return "bg-[#D8E7FF]";
         default:
             return "";
     }
