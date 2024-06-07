@@ -1,5 +1,5 @@
 import { DateCell } from "@/components/ui/DateCell";
-import { Select, Table, TableColumnsType, Tag } from "antd";
+import { Table, TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetOrdersAdmin } from "../../queries";
@@ -7,6 +7,7 @@ import { GetOrdersByDate } from "../../types";
 import {
     deliveryTypeColorMap,
     deliveryTypeMap,
+    orderStatusColorMap,
     orderStatusMap,
 } from "../../utils";
 
@@ -50,16 +51,19 @@ const columns: TableColumnsType<GetOrdersByDate> = [
         title: "Status",
         dataIndex: "state",
         render: (_, record) => (
-            <Select
-                className="w-full"
-                value={orderStatusMap(record.state)}
-                options={[
-                    { value: "1", label: "Упаковка" },
-                    { value: "2", label: "Готов к отправке" },
-                    { value: "3", label: "Передача" },
-                    { value: "4", label: "Доставлено" },
-                ]}
-            />
+            <Tag color={orderStatusColorMap(record.state)}>
+                {orderStatusMap(record.state)}
+            </Tag>
+            // <Select
+            //     className="w-full"
+            //     value={orderStatusMap(record.state)}
+            //     options={[
+            //         { value: "1", label: "Упаковка" },
+            //         { value: "2", label: "Готов к отправке" },
+            //         { value: "3", label: "Передача" },
+            //         { value: "4", label: "Доставлено" },
+            //     ]}
+            // />
         ),
     },
     {

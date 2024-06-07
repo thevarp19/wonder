@@ -1,6 +1,7 @@
 import { box, boxOpen, scan, tenge } from "@/assets";
 import { Image } from "@/components/ui/Image";
 import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
+import { ProductsCountTable } from "@/modules/statistics/components/ProductCountTable";
 import { useGetAdminSalesInfo } from "@/modules/statistics/queries";
 import { StatisticsInfo } from "@/modules/statistics/types";
 import { getColorByStatisticsName } from "@/modules/statistics/utils";
@@ -62,8 +63,8 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                     <AreaCharts />
                     <div className="flex gap-5">
                         <div className="w-[65%] p-2 shadow-2xl rounded-xl">
-                            <div className="p-10 bg-white rounded-md">
-                                <div className="bg-orange"></div>
+                            <div className="bg-orange">
+                                <ProductsCountTable />
                             </div>
                         </div>
                         <div className="w-[35%] p-2 bg-orange-100 shadow-2xl rounded-xl">

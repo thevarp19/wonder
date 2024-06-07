@@ -63,7 +63,7 @@ export const AreaCharts: FC = () => {
     return (
         <div className="p-2 bg-orange-100 shadow-2xl rounded-xl">
             <div className="p-10 bg-white rounded-md">
-                <AreaChart width={800} height={350} data={data}>
+                <AreaChart width={800} height={310} data={data}>
                     <CartesianGrid y={99999} strokeDasharray="0" />
                     <XAxis dataKey="date" />
                     <YAxis strokeWidth={0} />
