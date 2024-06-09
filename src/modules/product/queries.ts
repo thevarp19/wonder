@@ -1,6 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { getProducts, getProductsPrices } from "./api";
-import { GetProductPricesResponse, GetProductResponse } from "./types";
+import {
+    getProducts,
+    getProductsByParams,
+    getProductsPrices,
+    getProductsWithSizes,
+} from "./api";
+import {
+    GetProductPricesResponse,
+    GetProductResponse,
+    GetProductsByParamsResponse,
+    GetProductsWithSizesResponse,
+} from "./types";
 
 export const useGetProducts = (
     page: number = 0,
@@ -16,6 +26,81 @@ export const useGetProducts = (
                 size,
                 searchValue,
                 isPublished
+            );
+            return data;
+        },
+    });
+};
+export const useGetProductsWithSizes = (
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    byArticle: boolean = true,
+    byVendorCode: boolean = true,
+    byProductName: boolean = true,
+    byShopName: boolean = true,
+    byCellCode: boolean = true
+) => {
+    return useQuery<GetProductsWithSizesResponse>({
+        queryKey: [
+            `productsWithSizes`,
+            page,
+            size,
+            searchValue,
+            byArticle,
+            byVendorCode,
+            byProductName,
+            byShopName,
+            byCellCode,
+        ],
+        queryFn: async () => {
+            const { data } = await getProductsWithSizes(
+                page,
+                size,
+                searchValue,
+                byArticle,
+                byVendorCode,
+                byProductName,
+                byShopName,
+                byCellCode
+            );
+            return data;
+        },
+    });
+};
+
+export const useGetProductsByParams = (
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    byArticle: boolean = true,
+    byVendorCode: boolean = true,
+    byProductName: boolean = true,
+    byShopName: boolean = true,
+    byCellCode: boolean = true
+) => {
+    return useQuery<GetProductsByParamsResponse>({
+        queryKey: [
+            `productsByParams`,
+            page,
+            size,
+            searchValue,
+            byArticle,
+            byVendorCode,
+            byProductName,
+            byShopName,
+            byCellCode,
+        ],
+        queryFn: async () => {
+            const { data } = await getProductsByParams(
+                page,
+                size,
+                searchValue,
+                byArticle,
+                byVendorCode,
+                byProductName,
+                byShopName,
+                byCellCode
             );
             return data;
         },

@@ -1,8 +1,12 @@
 import { SearchInput } from "@/components/ui/SearchInput";
 import { UpdateSizesForm } from "@/modules/product/components/UpdateSizesForm";
+import { useUpdateProductSize } from "@/modules/product/forms";
+import { useGetProductsWithSizes } from "@/modules/product/queries";
+import { useScannerResults } from "@/modules/scan/hooks";
+import { toScanProductsSizes } from "@/modules/scan/utils";
 import { EditOutlined } from "@ant-design/icons";
 import { Button, Menu, MenuProps, Modal, Table, TableColumnsType } from "antd";
-import { FC, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 interface EmployeeProductSizesPageProps {}
@@ -28,16 +32,28 @@ export const EmployeeProductSizesPage: FC<
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
     };
+    const scanSearchValue = useScannerResults();
+    const [searchValue, setSearchValue] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
 
+    const handleSearch = useCallback(() => {
+        setSearchQuery(searchValue);
+    }, [searchValue]);
+    useEffect(() => {
+        if (scanSearchValue) {
+            setSearchQuery(scanSearchValue);
+            setSearchValue(scanSearchValue);
+        }
+    }, [scanSearchValue]);
     return (
         <div>
             <div className="flex items-center justify-between gap-20 mb-4">
                 <div className="flex items-center justify-between max-w-md gap-8 grow">
                     <div className="w-full max-w-sm">
                         <SearchInput
-                            searchValue={""}
-                            setSearchValue={() => {}}
-                            onSearch={() => {}}
+                            searchValue={searchValue}
+                            setSearchValue={setSearchValue}
+                            onSearch={handleSearch}
                         />
                     </div>
                     {/* <div>
@@ -45,7 +61,12 @@ export const EmployeeProductSizesPage: FC<
                     </div> */}
                 </div>
                 <div>
-                    <Button size="large" type="primary" className="uppercase">
+                    <Button
+                        size="large"
+                        type="primary"
+                        onClick={toScanProductsSizes}
+                        className="uppercase"
+                    >
                         CКАНИРОВАТЬ
                     </Button>
                 </div>
@@ -56,7 +77,7 @@ export const EmployeeProductSizesPage: FC<
                 onClick={onClick}
                 selectedKeys={[current]}
             />
-            <EmployeeSearchResultsTable searchValue={""} />
+            <EmployeeSearchResultsTable searchValue={searchQuery} />
         </div>
     );
 };
@@ -64,13 +85,15 @@ export const EmployeeProductSizesPage: FC<
 const columns: TableColumnsType<any> = [
     {
         title: "Артикул",
-        dataIndex: "name",
-        key: "name",
+        dataIndex: "productArticle",
+        key: "productArticle",
     },
     {
         title: "Наименование",
         render: (_, record) => (
-            <Link to={`/product/${record.id}`}>{record.name}</Link>
+            <Link to={`/product/${record.productArticle}`}>
+                {record.productName}
+            </Link>
         ),
     },
     {
@@ -103,28 +126,44 @@ const columns: TableColumnsType<any> = [
     // },
     {
         title: "",
-        render: () => <UpdateSizesModal productId={1} />,
+        render: (_, record) => (
+            <UpdateSizesModal
+                vendorCode={record.vendorCode}
+                productName={record.productName}
+            />
+        ),
     },
 ];
 
-const UpdateSizesModal = ({ productId }: { productId: number }) => {
+const UpdateSizesModal = ({
+    vendorCode,
+    productName,
+}: {
+    vendorCode: string;
+    productName: string;
+}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const { formik } = useUpdateProductSize(vendorCode);
     return (
         <>
             <Modal
                 open={isModalOpen}
+                confirmLoading={formik.isSubmitting}
                 onCancel={() => setIsModalOpen(false)}
+                onOk={() => {
+                    formik.submitForm();
+                    setIsModalOpen(false);
+                }}
                 destroyOnClose
             >
-                <div>
-                    <div> Артикул: {productId}</div>
-                    <div>
+                <div className="flex flex-col gap-2">
+                    <div className="py-2"> Артикул: {vendorCode}</div>
+                    <div className="py-2">
                         {" "}
                         Наименование:{" "}
-                        <span className="underline">Product name</span>
+                        <span className="underline">{productName}</span>
                     </div>
-                    <UpdateSizesForm productId={productId} />
+                    <UpdateSizesForm formik={formik} />
                 </div>
             </Modal>
             <EditOutlined
@@ -135,21 +174,35 @@ const UpdateSizesModal = ({ productId }: { productId: number }) => {
     );
 };
 
-export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({}) => {
+export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
+    searchValue,
+}) => {
+    const [page, setPage] = useState(0);
+    const { data, isPending } = useGetProductsWithSizes(
+        page,
+        undefined,
+        searchValue,
+        true,
+        true,
+        true,
+        true,
+        true
+    );
     return (
         <Table
-            dataSource={[
-                {
-                    id: 1,
-                    name: "Product name",
-                    length: 1,
-                    width: 2,
-                    height: 3,
-                    weight: 4,
-                    comment: "Comment",
-                },
-            ]}
             columns={columns}
+            loading={isPending}
+            dataSource={data?.content}
+            rowKey={(record) => record.vendorCode}
+            pagination={{
+                pageSize: 10,
+                total: data?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
+                },
+                current: page + 1,
+            }}
         />
     );
 };

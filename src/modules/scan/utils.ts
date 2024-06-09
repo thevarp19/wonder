@@ -11,3 +11,10 @@ export function toScanCell() {
 export function toScanProducts() {
     window.location.href = `${scannerUrl}&type=multiple&step=3`;
 }
+
+export function toScanProductsSearch() {
+    window.location.href = `${scannerUrl}&type=single&useFor=employeeSearch`;
+}
+export function toScanProductsSizes() {
+    window.location.href = `${scannerUrl}&type=single&useFor=employeeSize`;
+}

@@ -27,6 +27,14 @@ export interface CreateStoreRequest {
     dayOfWeekWorks: WorkDayOfWeekRequest[];
 }
 
+export interface UpdateProductSizeRequest {
+    weight: number;
+    height: number;
+    length: number;
+    width: number;
+    comment: string;
+}
+
 export interface GetStoreResponse {
     id: number;
     kaspiId: string;

@@ -1,9 +1,12 @@
 import { axiosAuthorized } from "@/lib/axios";
+import { UpdateProductSizeRequest } from "../store/types";
 import {
     ChangeProductPriceRequest,
     GetProductContent,
     GetProductPricesResponse,
     GetProductResponse,
+    GetProductsByParamsResponse,
+    GetProductsWithSizesResponse,
 } from "./types";
 
 export function createProductsFromFile(formData: FormData) {
@@ -41,7 +44,40 @@ export function changeProductVisibility(id: number, isVisible: boolean) {
         `/api/products/publish?productId=${id}&isPublished=${isVisible}`
     );
 }
+export function updateProductSize(
+    id: string,
+    values: UpdateProductSizeRequest
+) {
+    return axiosAuthorized.put(`/api/products/change-size/${id}`, values);
+}
 
 export function changeProductPrice(value: ChangeProductPriceRequest) {
     return axiosAuthorized.patch<void>(`/api/products/price`, value);
+}
+
+export function getProductsWithSizes(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    byArticle: boolean = true,
+    byVendorCode: boolean = true,
+    byProductName: boolean = true,
+    byShopName: boolean = true,
+    byCellCode: boolean = true
+) {
+    let url = `/api/products/get-with-sizes?searchValue=${searchValue}&byArticle=${byArticle}&byVendorCode=${byVendorCode}&byProductName=${byProductName}&byShopName=${byShopName}&byCellCode=${byCellCode}&page=${page}&size=${size}`;
+    return axiosAuthorized.get<GetProductsWithSizesResponse>(url);
+}
+export function getProductsByParams(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    byArticle: boolean = true,
+    byVendorCode: boolean = true,
+    byProductName: boolean = true,
+    byShopName: boolean = true,
+    byCellCode: boolean = true
+) {
+    let url = `/api/products/search-by-params?searchValue=${searchValue}&byArticle=${byArticle}&byVendorCode=${byVendorCode}&byProductName=${byProductName}&byShopName=${byShopName}&byCellCode=${byCellCode}&page=${page}&size=${size}`;
+    return axiosAuthorized.get<GetProductsByParamsResponse>(url);
 }

@@ -1,20 +1,18 @@
 import { FormikInput } from "@/components/ui/FormikInput";
-import { useCreateStore } from "@/modules/store/forms";
-import { Form, Input } from "antd";
+import { Form } from "antd";
+import TextArea from "antd/es/input/TextArea";
 import { FC } from "react";
 
 interface UpdateSizesFormProps {
-    productId: number;
+    formik: any;
 }
 
-export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({}) => {
-    const { formik } = useCreateStore();
-
+export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({ formik }) => {
     return (
         <>
             <Form className="">
                 <FormikInput
-                    name="firstName"
+                    name="length"
                     formik={formik}
                     formItemProps={{
                         label: (
@@ -30,7 +28,7 @@ export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({}) => {
                     }}
                 />
                 <FormikInput
-                    name="firstName"
+                    name="height"
                     formik={formik}
                     formItemProps={{
                         label: (
@@ -46,7 +44,7 @@ export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({}) => {
                     }}
                 />
                 <FormikInput
-                    name="firstName"
+                    name="width"
                     formik={formik}
                     formItemProps={{
                         label: (
@@ -62,7 +60,7 @@ export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({}) => {
                     }}
                 />
                 <FormikInput
-                    name="firstName"
+                    name="weight"
                     formik={formik}
                     formItemProps={{
                         label: (
@@ -77,11 +75,15 @@ export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({}) => {
                         style: { width: "100%" },
                     }}
                 />
-            </Form>
-            <Form layout="vertical">
-                <Form.Item label="Комментарий">
-                    <Input.TextArea />
-                </Form.Item>
+                <div className="flex flex-col gap-2">
+                    <h2>Комментарий</h2>
+                    <TextArea
+                        name="comment"
+                        value={formik.values.comment}
+                        onChange={formik.handleChange}
+                        className="w-full"
+                    />
+                </div>
             </Form>
         </>
     );

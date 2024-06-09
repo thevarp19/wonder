@@ -1,37 +1,32 @@
 import { ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC, useState } from "react";
-import { useGetSellerProductCount } from "../queries";
-import { GetProductCount } from "../types";
+import { useGetAdminLastOrders } from "../queries";
+import { GetLastOrders } from "../types";
 
 interface ProductsCountTableProps {
     searchValue?: string;
 }
 
-const columns: TableColumnsType<GetProductCount> = [
+const columns: TableColumnsType<GetLastOrders> = [
     {
-        title: "Article",
-        dataIndex: "article",
+        title: "Order Code",
+        dataIndex: "orderCode",
     },
     {
-        title: "Name",
-        render: (_, record) => <a href={record.article}>{record.name}</a>,
-    },
-
-    {
-        title: "Quantity",
-        render: (_, record) => <span>{record.count}</span>,
+        title: "Shop Name",
+        render: (_, record) => <span>{record.shopName}</span>,
     },
 
     {
-        title: "Store Address",
-        render: (_, record) => <span>{record.storeFormattedAddress}</span>,
+        title: "Price",
+        render: (_, record) => <span>{record.price}</span>,
     },
 ];
 
-export const ProductsCountTable: FC<ProductsCountTableProps> = ({}) => {
+export const LastOrdersTable: FC<ProductsCountTableProps> = ({}) => {
     const [page, setPage] = useState(0);
 
-    const { data: products, isPending } = useGetSellerProductCount(
+    const { data: lastOrders, isPending } = useGetAdminLastOrders(
         page,
         undefined
     );
@@ -124,11 +119,11 @@ export const ProductsCountTable: FC<ProductsCountTableProps> = ({}) => {
                 size="small"
                 columns={columns}
                 loading={isPending}
-                dataSource={products?.content}
-                rowKey={(record) => record.article}
+                dataSource={lastOrders?.content}
+                rowKey={(record) => record.orderCode}
                 pagination={{
                     pageSize: 4,
-                    total: products?.totalElements,
+                    total: lastOrders?.totalElements,
                     showSizeChanger: false,
                     onChange(page) {
                         setPage(page - 1);

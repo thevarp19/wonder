@@ -1,5 +1,8 @@
 import { formatPrice } from "@/utils/shared.util";
+import { useFormik } from "formik";
 import { useReducer } from "react";
+import { UpdateProductSizeRequest } from "../store/types";
+import { updateProductSizeMutation } from "./mutations";
 import { ChangeProductPriceRequest } from "./types";
 
 export interface ProductCityPriceChangeState {
@@ -145,4 +148,28 @@ export const useProductPricesChange = () => {
     }
 
     return { state, dispatch, addCityPriceChange, addMainPriceChange };
+};
+
+export const useUpdateProductSize = (productId: string) => {
+    const mutation = updateProductSizeMutation(productId);
+
+    const formik = useFormik<UpdateProductSizeRequest>({
+        initialValues: {
+            weight: 0,
+            height: 0,
+            length: 0,
+            width: 0,
+            comment: "",
+        },
+        // validationSchema: createStoreSchema,
+        // validateOnBlur: true,
+        // validateOnChange: true,
+        onSubmit: handleSubmit,
+    });
+
+    async function handleSubmit() {
+        await mutation.mutateAsync(formik.values);
+    }
+
+    return { formik, mutation };
 };

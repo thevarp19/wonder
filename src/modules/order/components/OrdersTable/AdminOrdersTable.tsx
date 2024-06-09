@@ -22,11 +22,11 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     },
     {
         title: "Shop name",
-        dataIndex: "code",
+        dataIndex: "sellerName",
     },
     {
         title: "Store",
-        dataIndex: "code",
+        dataIndex: "sellerName",
     },
     {
         title: "Order time",

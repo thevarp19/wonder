@@ -45,7 +45,7 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                     size: "large",
                 }}
             />
-            <FormikInput
+            {/* <FormikInput
                 name="streetNumber"
                 formik={formik}
                 formItemProps={{
@@ -64,8 +64,8 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                 inputProps={{
                     size: "large",
                 }}
-            />
-            <FormikInput
+            /> */}
+            {/* <FormikInput
                 name="district"
                 formik={formik}
                 formItemProps={{
@@ -74,8 +74,8 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                 inputProps={{
                     size: "large",
                 }}
-            />
-            <FormikInput
+            /> */}
+            {/* <FormikInput
                 name="building"
                 formik={formik}
                 formItemProps={{
@@ -84,7 +84,7 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                 inputProps={{
                     size: "large",
                 }}
-            />
+            /> */}
             <FormikInput
                 name="apartment"
                 formik={formik}

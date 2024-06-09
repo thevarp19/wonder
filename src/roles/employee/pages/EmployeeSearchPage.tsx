@@ -1,19 +1,36 @@
 import { SearchInput } from "@/components/ui/SearchInput";
+import { useGetProductsByParams } from "@/modules/product/queries";
+import { useScannerResults } from "@/modules/scan/hooks";
+import { toScanProductsSearch } from "@/modules/scan/utils";
 import { Button, Table, TableColumnsType } from "antd";
-import { FC } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 interface EmployeeSearchPageProps {}
 
 export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
+    const scanSearchValue = useScannerResults();
+
+    const [searchValue, setSearchValue] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const handleSearch = useCallback(() => {
+        setSearchQuery(searchValue);
+    }, [searchValue]);
+    useEffect(() => {
+        if (scanSearchValue) {
+            setSearchQuery(scanSearchValue);
+            setSearchValue(scanSearchValue);
+        }
+    }, [scanSearchValue]);
     return (
         <div>
             <div className="flex items-center justify-between gap-20 mb-4">
                 <div className="flex items-center justify-between max-w-md gap-8 grow">
                     <div className="w-full max-w-sm">
                         <SearchInput
-                            searchValue={""}
-                            setSearchValue={() => {}}
-                            onSearch={() => {}}
+                            searchValue={searchValue}
+                            setSearchValue={setSearchValue}
+                            onSearch={handleSearch}
                         />
                     </div>
                     {/* <div>
@@ -21,12 +38,17 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
                     </div> */}
                 </div>
                 <div>
-                    <Button size="large" type="primary" className="uppercase">
+                    <Button
+                        size="large"
+                        type="primary"
+                        onClick={toScanProductsSearch}
+                        className="uppercase"
+                    >
                         CКАНИРОВАТЬ
                     </Button>
                 </div>
             </div>
-            <EmployeeSearchResultsTable searchValue={""} />
+            <EmployeeSearchResultsTable searchValue={searchQuery} />
         </div>
     );
 };
@@ -34,36 +56,70 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
 const columns: TableColumnsType<any> = [
     {
         title: "ID товара",
-        dataIndex: "id",
-        key: "id",
+        dataIndex: "productId",
+        key: "productId",
+    },
+    {
+        title: "Vendor Code",
+        dataIndex: "productId",
+        key: "productId",
     },
     {
         title: "Артикул",
-        dataIndex: "name",
-        key: "name",
+        dataIndex: "article",
+        key: "article",
     },
     {
         title: "Наименование",
-        dataIndex: "phone",
-        key: "phone",
+        dataIndex: "productName",
+        key: "productName",
     },
     {
         title: "Называние магазина",
-        dataIndex: "email",
-        key: "email",
+        dataIndex: "shopName",
+        key: "shopName",
     },
     {
-        title: "Расположение",
-        dataIndex: "role",
-        key: "role",
+        title: "Сell Code",
+        dataIndex: "cellCode",
+        key: "cellCode",
     },
     {
         title: "Цена",
-        dataIndex: "role",
-        key: "role",
+        dataIndex: "price",
+        key: "price",
     },
 ];
 
-export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({}) => {
-    return <Table dataSource={[]} columns={columns} />;
+export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
+    searchValue,
+}) => {
+    const [page, setPage] = useState(0);
+    const { data, isPending } = useGetProductsByParams(
+        page,
+        undefined,
+        searchValue,
+        true,
+        true,
+        true,
+        true,
+        true
+    );
+    return (
+        <Table
+            columns={columns}
+            loading={isPending}
+            dataSource={data?.content}
+            rowKey={(record) => record.vendorCode}
+            pagination={{
+                pageSize: 10,
+                total: data?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
+                },
+                current: page + 1,
+            }}
+        />
+    );
 };

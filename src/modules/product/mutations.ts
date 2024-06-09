@@ -1,10 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { App } from "antd";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
+import { UpdateProductSizeRequest } from "../store/types";
 import {
     changeProductPrice,
     changeProductVisibility,
     createProductsFromFile,
+    updateProductSize,
 } from "./api";
 import { ChangeProductPriceRequest, GetProductContent } from "./types";
 
@@ -24,7 +27,26 @@ export const createProductsFromFileMutation = () => {
         },
     });
 };
-
+export const updateProductSizeMutation = (id: string) => {
+    const { message } = App.useApp();
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    return useMutation<void, AxiosError<any>, UpdateProductSizeRequest>({
+        async mutationFn(values) {
+            await updateProductSize(id, values);
+        },
+        onSuccess() {
+            message.success("Success!");
+            navigate("/employee/sizes/");
+            queryClient.invalidateQueries({
+                queryKey: ["productsWithSizes"],
+            });
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
+        },
+    });
+};
 export const changeProductsVisibilityMutation = () => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();

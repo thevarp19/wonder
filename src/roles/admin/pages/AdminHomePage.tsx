@@ -1,20 +1,57 @@
 import { box, boxOpen, scan, tenge } from "@/assets";
 import { Image } from "@/components/ui/Image";
 import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
-import { ProductsCountTable } from "@/modules/statistics/components/ProductCountTable";
-import { useGetAdminSalesInfo } from "@/modules/statistics/queries";
+import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable";
+import {
+    useGetAdminDailyInfo,
+    useGetAdminSalesInfo,
+    useGetAdminTopSeller,
+} from "@/modules/statistics/queries";
 import { StatisticsInfo } from "@/modules/statistics/types";
 import { getColorByStatisticsName } from "@/modules/statistics/utils";
 import { cn } from "@/utils/shared.util";
 import { Card, Spin } from "antd";
-import clsx from "clsx";
 import { FC } from "react";
 
 interface AdminHomePageProps {}
 
 export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
-    const { data: statistics, isPending } = useGetAdminSalesInfo("MONTH");
-
+    // const topSellers = {
+    //     content: [
+    //         {
+    //             shopName: "Wonder",
+    //             totalIncome: 329000,
+    //         },
+    //         {
+    //             shopName: "Kaspi",
+    //             totalIncome: 15900,
+    //         },
+    //         {
+    //             shopName: "Jusan",
+    //             totalIncome: 30000,
+    //         },
+    //         {
+    //             shopName: "Alore",
+    //             totalIncome: 15500,
+    //         },
+    //         {
+    //             shopName: "Aitek",
+    //             totalIncome: 11500,
+    //         },
+    //     ],
+    // };
+    // const topSellersLoading = false;
+    const duration = "MONTH";
+    const { data: statistics, isPending } = useGetAdminSalesInfo(duration);
+    const { data: dailyInfo, isPending: getDailyLoading } =
+        useGetAdminDailyInfo(duration);
+    const { data: topSellers, isPending: topSellersLoading } =
+        useGetAdminTopSeller();
+    const sortedTopSellers = topSellers?.content
+        ? topSellers.content
+              .sort((a, b) => b.totalIncome - a.totalIncome)
+              .slice(0, 4)
+        : [];
     if (isPending) {
         return (
             <div className="flex items-center justify-center h-[500px]">
@@ -38,70 +75,64 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                         statisticsName="Продавцов"
                         iconSrc={box}
                         statistics={
-                            { count: 30, percent: -12 }
-                            // statistics?.sellersInfo
+                            // { count: 30, percent: -12 }
+                            statistics?.sellersInfo
                         }
                     />
                     <ResultsCard
                         statisticsName="Поставок"
                         iconSrc={scan}
                         statistics={
-                            { count: 65, percent: 42 }
-                            // statistics?.suppliesInfo
+                            // { count: 65, percent: 42 }
+                            statistics?.suppliesInfo
                         }
                     />
                     <ResultsCard
                         statisticsName="Чек"
                         iconSrc={tenge}
                         statistics={
-                            { count: 1243244, percent: 12 }
-                            // statistics?.incomeInfo
+                            // { count: 1243244, percent: 12 }
+                            statistics?.incomeInfo
                         }
                     />
                 </div>
                 <div className="flex flex-col gap-5">
-                    <AreaCharts />
+                    <AreaCharts
+                        data={dailyInfo || []}
+                        duration={duration}
+                        loading={getDailyLoading}
+                    />
                     <div className="flex gap-5">
-                        <div className="w-[65%] p-2 shadow-2xl rounded-xl">
-                            <div className="bg-orange">
-                                <ProductsCountTable />
+                        <div className="w-[65%] p-2 bg-[#fcdfc9] rounded-xl h-max">
+                            <div className="bg-white rounded-xl">
+                                <LastOrdersTable />
                             </div>
                         </div>
-                        <div className="w-[35%] p-2 bg-orange-100 shadow-2xl rounded-xl">
-                            <div className="bg-white rounded-[10px] h-full flex flex-col gap-2">
+                        <div className="w-[35%] p-1 bg-orange-100 shadow-2xl rounded-xl">
+                            <div className="bg-white rounded-[10px] h-full flex flex-col gap-4 p-2">
                                 <div className="bg-[#EF7214] rounded-md text-white font-semibold text-center">
                                     ТОП Продавцы
                                 </div>
-                                <div className="grid grid-cols-2 gap-2 place-items-center">
-                                    <TopSellerCard
-                                        place="1"
-                                        name="John Doe"
-                                        sum="1000"
-                                    />
-                                    <TopSellerCard
-                                        place="2"
-                                        name="John Doe"
-                                        sum="1000"
-                                    />
-                                    <TopSellerCard
-                                        place="3"
-                                        name="John Doe"
-                                        sum="1000"
-                                    />
-                                    <TopSellerCard
-                                        place="4"
-                                        name="John Doe"
-                                        sum="1000"
-                                    />
-                                </div>
+                                {topSellersLoading ? (
+                                    <Spin />
+                                ) : (
+                                    <div className="grid grid-cols-2 gap-2 place-items-center">
+                                        {sortedTopSellers?.map(
+                                            (item, index) => (
+                                                <TopSellerCard
+                                                    key={index}
+                                                    place={index + 1}
+                                                    name={item.shopName}
+                                                    sum={item.totalIncome}
+                                                />
+                                            )
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="flex flex-col gap-4">
-                <div className=""></div>
-                <div className={clsx("")}></div>
             </div>
         </div>
     );
@@ -166,19 +197,23 @@ const TopSellerCard = ({
     name,
     sum,
 }: {
-    place: string;
+    place: number;
     name: string;
-    sum: string;
+    sum: number;
 }) => {
     return (
-        <div className="p-2 border-2 border-[#EF7214] rounded-xl w-max flex flex-col items-center">
-            <div className="flex items-center gap-2">
-                <div className=" bg-[#EF7214] w-8 h-8 rounded-full text-white p-2 text-lg flex justify-center items-center shadow-xl font-bold">
+        <div className="p-2 border-2 border-[#EF7214] rounded-xl w-full max-w-full flex flex-col items-center">
+            <div className="flex items-center justify-start w-full gap-2">
+                <div className="bg-[#EF7214] w-8 h-8 rounded-full text-white p-2 text-lg flex justify-center items-center shadow-xl font-bold">
                     {place}
                 </div>
-                <div className="text-base font-bold text-[#EF7214]">{name}</div>
+                <div className="text-sm font-bold text-[#EF7214] text-">
+                    {name}
+                </div>
             </div>
-            <div className="text-2xl font-semibold text-[#EF7214]">{sum}₸</div>
+            <div className="text-2xl font-semibold text-[#EF7214]">
+                {sum.toLocaleString("ru")}₸
+            </div>
         </div>
     );
 };

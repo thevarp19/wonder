@@ -22,9 +22,35 @@ export interface GetProductResponse
 export interface GetProductPricesResponse
     extends BasePaginationResponse<GetProductPricesContent> {}
 
+export interface GetProductsWithSizesResponse
+    extends BasePaginationResponse<GetProductsWithSizesContent[]> {}
+
+export interface GetProductsByParamsResponse
+    extends BasePaginationResponse<GetProductByParamsContent[]> {}
+
 export interface GetProductPricesContent {
     cities: ProductPriceCity[];
     products: ProductWithPrices[];
+}
+export interface GetProductsWithSizesContent {
+    productName: string;
+    productArticle: string;
+    vendorCode: string;
+    width: number;
+    length: number;
+    weight: number;
+    height: number;
+    comment: string;
+    state: string;
+}
+export interface GetProductByParamsContent {
+    productId: number;
+    vendorCode: string;
+    article: string;
+    productName: string;
+    shopName: string;
+    cellCode: string;
+    price: number;
 }
 
 export interface ProductPriceCity {
