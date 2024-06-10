@@ -13,21 +13,21 @@ const columns: TableColumnsType<GetStoreResponse> = [
         dataIndex: "kaspiId",
     },
     {
-        title: "Address",
+        title: "Адрес",
         render: (_, record) => <StoreAddressCell {...record} />,
     },
     {
-        title: "Working time",
+        title: "Рабочее время",
         render: (_, record) => (
             <StoreWorkingTimeCell dayOfWeeks={record.availableWorkTimes} />
         ),
     },
     {
-        title: "Status",
+        title: "Статус",
         render: (_, record) => (
             <div className="flex items-center gap-2">
                 <Switch disabled checked={record.enabled} />
-                <span>Active</span>
+                <span>Активный</span>
             </div>
         ),
     },

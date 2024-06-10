@@ -13,7 +13,7 @@ interface GeneralLayoutProps {
     profileItems: MenuProps["items"];
     logoLink: string;
     userEmail: string;
-    role: "Admin" | "Seller" | "Employee";
+    role: "Администратор" | "Продавец" | "Сотрудник";
     selectedKeys: string[];
 }
 

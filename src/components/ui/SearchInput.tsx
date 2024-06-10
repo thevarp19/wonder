@@ -17,14 +17,14 @@ export const SearchInput: FC<SearchInputProps> = ({
         <div className="flex items-end gap-4 my-2">
             <Input
                 prefix={<SearchOutlined />}
-                placeholder="Search"
+                placeholder="Поиск"
                 value={searchValue}
                 onChange={(e) => {
                     setSearchValue(e.target.value);
                 }}
             />
             <Button type="primary" onClick={onSearch}>
-                Search
+                Поиск
             </Button>
         </div>
     );

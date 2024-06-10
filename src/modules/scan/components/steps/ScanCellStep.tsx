@@ -44,19 +44,19 @@ export const ScanCellStep: FC<ScanCellStepProps> = ({}) => {
     const { message } = App.useApp();
     useEffect(() => {
         if (isError) {
-            message.error("Invalid box id", 3);
+            message.error("Неверный идентификатор коробки", 3);
         }
     }, [isError]);
     return (
         <div>
-            <p>Box barcode: {boxBarcode}</p>
+            <p>Штрих-код коробки: {boxBarcode}</p>
             {data && (
                 <div className="p-4 border-2 border-black w-max">
-                    <p>Box products:</p>
+                    <p>Продукты в коробке:</p>
                     <ul>
                         {groupBoxProducts(data.products).map((product) => (
                             <li key={product.product.article}>
-                                {product.product.name}, {product.count} psc
+                                {product.product.name}, {product.count} шт.
                             </li>
                         ))}
                     </ul>
@@ -68,7 +68,7 @@ export const ScanCellStep: FC<ScanCellStepProps> = ({}) => {
                 className="my-4"
                 onClick={toScanCell}
             >
-                Scan cell
+                Сканировать ячейку
             </Button>
         </div>
     );

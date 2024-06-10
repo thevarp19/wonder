@@ -15,17 +15,17 @@ import { Link, useLocation } from "react-router-dom";
 interface AdminLayoutProps {}
 const items: MenuProps["items"] = [
     {
-        label: <Link to={"/admin"}>Home</Link>,
+        label: <Link to={"/admin"}>Главная</Link>,
         key: "home",
         icon: <HomeOutlined />,
     },
     {
-        label: <Link to={"/admin/orders"}>Orders</Link>,
+        label: <Link to={"/admin/orders"}>Заказы</Link>,
         key: "orders",
         icon: <CarOutlined />,
     },
     {
-        label: <Link to={"/admin/settings"}>Settings</Link>,
+        label: <Link to={"/admin/settings"}>Настройки</Link>,
         key: "settings",
         icon: <SettingOutlined />,
     },
@@ -54,7 +54,7 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
     const profileItems: MenuProps["items"] = [
         {
             key: "profile",
-            label: "Profile",
+            label: "Профиль",
             icon: <ProfileOutlined />,
         },
         {
@@ -67,7 +67,7 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
                         dispatch(adminLogout());
                     }}
                 >
-                    Logout
+                    Выйти
                 </Link>
             ),
             icon: <LogoutOutlined />,
@@ -81,7 +81,7 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
             menuItems={items}
             profileItems={profileItems}
             logoLink="/admin"
-            role="Admin"
+            role="Администратор"
             userEmail={adminAuth.userData?.email || "email@gmail.com"}
             selectedKeys={selectedKeys}
         />

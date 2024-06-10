@@ -25,7 +25,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="row"
                     formik={formik}
                     formItemProps={{
-                        label: "Row",
+                        label: "Строка",
                         required: true,
                     }}
                     inputProps={{
@@ -37,7 +37,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="col"
                     formik={formik}
                     formItemProps={{
-                        label: "Column",
+                        label: "Столбец",
                         required: true,
                     }}
                     inputProps={{
@@ -49,7 +49,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="cell"
                     formik={formik}
                     formItemProps={{
-                        label: "Number",
+                        label: "Номер",
                         required: true,
                     }}
                     inputProps={{
@@ -63,7 +63,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="width"
                     formik={formik}
                     formItemProps={{
-                        label: "Width",
+                        label: "Ширина",
                     }}
                     inputProps={{
                         size: "large",
@@ -74,7 +74,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="height"
                     formik={formik}
                     formItemProps={{
-                        label: "Height",
+                        label: "Высота",
                     }}
                     inputProps={{
                         size: "large",
@@ -85,7 +85,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="depth"
                     formik={formik}
                     formItemProps={{
-                        label: "Depth",
+                        label: "Глубина",
                     }}
                     inputProps={{
                         size: "large",
@@ -97,7 +97,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                 name="comment"
                 formik={formik}
                 formItemProps={{
-                    label: "Comment",
+                    label: "Комментарий",
                 }}
                 inputProps={{
                     size: "large",
@@ -112,7 +112,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                 className={cn("w-full mt-6")}
                 loading={mutation.isPending}
             >
-                {"Create"}
+                {"Создать"}
             </Button>
         </Form>
     );

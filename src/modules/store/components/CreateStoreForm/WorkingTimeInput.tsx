@@ -9,13 +9,13 @@ interface WorkingTimeInputProps {
 }
 
 const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
+    "Понедельник",
+    "Вторник",
+    "Среда",
+    "Четверг",
+    "Пятница",
+    "Суббота",
+    "Воскресенье",
 ];
 
 export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({ onChange }) => {
@@ -71,7 +71,7 @@ export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({ onChange }) => {
                     "text-gray-400": detailed,
                 })}
             >
-                <span className="w-28">Mon-Sun: </span>
+                <span className="w-28">Пн-Вс: </span>
                 <TimePicker
                     format="HH:mm"
                     needConfirm={false}
@@ -87,7 +87,7 @@ export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({ onChange }) => {
                         setMainOpenTime(`${dateString}`);
                     }}
                 />
-                <span>until</span>
+                <span>до</span>
                 <TimePicker
                     format="HH:mm"
                     needConfirm={false}
@@ -118,7 +118,7 @@ export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({ onChange }) => {
                         setDetailed(e.target.checked);
                     }}
                 >
-                    Detailed
+                    Подробно
                 </Checkbox>
             </div>
 
@@ -135,12 +135,14 @@ export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({ onChange }) => {
         </div>
     );
 };
+
 interface WorkingTimeUnitProps {
     day: WorkDayOfWeekRequest;
     values: WorkDayOfWeekRequest[];
     setValues: Dispatch<SetStateAction<WorkDayOfWeekRequest[]>>;
     index: number;
 }
+
 const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
     day,
     setValues,
@@ -208,7 +210,7 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                     );
                 }}
             />
-            <span>until</span>
+            <span>до</span>
             <TimePicker
                 format="HH:mm"
                 needConfirm={false}

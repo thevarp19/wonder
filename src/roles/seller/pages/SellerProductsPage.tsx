@@ -11,12 +11,12 @@ interface SellerProductsPageProps {}
 
 const items: MenuProps["items"] = [
     {
-        label: "Prices",
+        label: "Цены",
         key: "prices",
         icon: <MoneyCollectOutlined />,
     },
     {
-        label: "Products",
+        label: "Товары",
         key: "products",
         icon: <ShopOutlined />,
     },
@@ -44,7 +44,7 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
             />
             {current === "products" && (
                 <div className="p-4">
-                    <h1 className="pb-4 text-2xl font-semibold">Products</h1>
+                    <h1 className="pb-4 text-2xl font-semibold">Товары</h1>
                     <ProductsSearch
                         searchValue={searchValue}
                         setSearchValue={setSearchValue}
@@ -54,14 +54,14 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
             )}
             {current === "prices" && (
                 <div className="p-4 space-y-4">
-                    <h1 className="text-2xl font-semibold">Product prices</h1>
+                    <h1 className="text-2xl font-semibold">Цены на товары</h1>
                     <Button
                         size="large"
                         type="primary"
                         className="mb-4"
                         href="/seller/products/upload"
                     >
-                        Upload products
+                        Загрузить товары
                     </Button>
                     <ProductPriceTable />
                 </div>

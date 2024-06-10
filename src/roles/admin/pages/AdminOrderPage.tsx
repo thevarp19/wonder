@@ -13,7 +13,7 @@ export const AdminOrderPage: FC<AdminOrderPageProps> = ({}) => {
     return (
         <div>
             <h1 className="pb-4 text-2xl font-semibold">
-                Order- <span className="underline">{orderId}</span>
+                Заказ - <span className="underline">{orderId}</span>
             </h1>
             <div className="flex items-center justify-between mb-4">
                 <div className="w-full max-w-sm">

@@ -13,25 +13,25 @@ import {
 
 const columns: TableColumnsType<GetOrdersByDate> = [
     {
-        title: "Order number",
+        title: "Номер заказа",
         render: (_, record) => (
             <Link to={`/seller/orders/${record.code}`}>{record.code}</Link>
         ),
     },
     {
-        title: "Shop name",
+        title: "Название магазина",
         dataIndex: "sellerName",
     },
     {
-        title: "Store",
+        title: "Магазин",
         dataIndex: "code",
     },
     {
-        title: "Order time",
+        title: "Время заказа",
         render: (_, record) => <DateCell timestamp={record.creationDate} />,
     },
     {
-        title: "Delivery type",
+        title: "Тип доставки",
         dataIndex: "deliveryMode",
         render: (_, record) => (
             <Tag color={deliveryTypeColorMap(record.deliveryMode)}>
@@ -40,13 +40,13 @@ const columns: TableColumnsType<GetOrdersByDate> = [
         ),
     },
     {
-        title: "Send time",
+        title: "Время отправки",
         render: (_, record) => (
             <DateCell timestamp={record.plannedDeliveryDate} />
         ),
     },
     {
-        title: "Status",
+        title: "Статус",
         dataIndex: "state",
         render: (_, record) => (
             <Tag color={orderStatusColorMap(record.state)}>
@@ -55,11 +55,11 @@ const columns: TableColumnsType<GetOrdersByDate> = [
         ),
     },
     {
-        title: "Price",
+        title: "Цена",
         render: (_, record) => <div>{record.totalPrice} KZT</div>,
     },
     {
-        title: "Trade price",
+        title: "Торговая цена",
         render: (_, record) => <div>{record.tradePrice} KZT</div>,
     },
 ];

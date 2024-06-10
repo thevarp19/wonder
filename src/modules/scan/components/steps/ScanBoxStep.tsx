@@ -13,7 +13,7 @@ export const ScanBoxStep: FC<ScanBoxStepProps> = ({}) => {
                 className="my-4"
                 onClick={toScanBox}
             >
-                Scan box
+                Сканировать коробку
             </Button>
         </div>
     );

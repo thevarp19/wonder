@@ -29,7 +29,7 @@ export const createBoxMutation = () => {
             await createBox(formData);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
             navigate("/admin/settings/?menu_x=boxes");
         },
         onError(error) {
@@ -47,7 +47,7 @@ export const deleteBoxMutation = (id: number) => {
             await deleteBox(id);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
             navigate("/admin/settings/?menu_x=boxes");
             queryClient.invalidateQueries({
                 queryKey: ["boxes"],

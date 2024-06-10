@@ -51,7 +51,7 @@ export const SubmitStep: FC<SubmitStepProps> = ({}) => {
 
     return (
         <div>
-            <h2 className="my-2 text-xl font-semibold">Cells</h2>
+            <h2 className="my-2 text-xl font-semibold">Ячейки</h2>
             <div className="flex flex-wrap gap-4">
                 {cells.map((cell) => (
                     <ProductsInCell key={cell.barcode} cell={cell} />
@@ -61,7 +61,7 @@ export const SubmitStep: FC<SubmitStepProps> = ({}) => {
                 <div className="flex gap-8">
                     <div>
                         <h2 className="my-2 text-xl font-semibold">
-                            Products which haven`t scanned:{" "}
+                            Продукты, которые не были отсканированы:{" "}
                             {nonScannedProducts(data, cells).length}
                         </h2>
                         <div className="p-4 mb-4 border-2 border-black w-max">
@@ -84,7 +84,7 @@ export const SubmitStep: FC<SubmitStepProps> = ({}) => {
                                 setSearchParams({ step: "0" });
                             }}
                         >
-                            Start scanning
+                            Начать сканирование
                         </Button>
                     </a>
                 </div>
@@ -96,8 +96,8 @@ export const SubmitStep: FC<SubmitStepProps> = ({}) => {
 function ProductsInCell({ cell }: { cell: ScanCell }) {
     return (
         <div className="w-full max-w-sm p-4 border border-black">
-            <p>Cell barcode: {cell.barcode}</p>
-            <p>Products:</p>
+            <p>Штрих-код ячейки: {cell.barcode}</p>
+            <p>Продукты:</p>
             <ul>
                 {cell.products.map((product) => (
                     <li key={product}>{product}</li>

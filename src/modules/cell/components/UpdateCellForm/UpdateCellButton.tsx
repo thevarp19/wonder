@@ -23,13 +23,13 @@ export const UpdateCellButton: FC<UpdateCellButtonProps> = ({
                 icon={<EditOutlined />}
                 onClick={() => setIsModalOpen(true)}
             >
-                Edit
+                Редактировать
             </Button>
         );
     return (
         <>
             <Modal
-                title="Update Cell"
+                title="Обновить ячейку"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
                 okButtonProps={{ style: { display: "none" } }}
@@ -48,7 +48,7 @@ export const UpdateCellButton: FC<UpdateCellButtonProps> = ({
                 icon={<EditOutlined />}
                 onClick={() => setIsModalOpen(true)}
             >
-                Edit
+                Редактировать
             </Button>
         </>
     );

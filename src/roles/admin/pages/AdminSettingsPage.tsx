@@ -7,12 +7,12 @@ import { useSearchParams } from "react-router-dom";
 
 const items: MenuProps["items"] = [
     {
-        label: "Stores",
+        label: "Магазины",
         key: "stores",
         icon: <ShopOutlined />,
     },
     {
-        label: "Boxes",
+        label: "Ящики",
         key: "boxes",
         icon: <BoxPlotOutlined />,
     },
@@ -42,28 +42,28 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
             />
             {current === "stores" && (
                 <div className="p-4">
-                    <h1 className="pb-4 text-2xl font-semibold">Stores</h1>
+                    <h1 className="pb-4 text-2xl font-semibold">Магазины</h1>
                     <Button
                         size="large"
                         type="primary"
                         className="mb-4"
                         href="/admin/settings/create-store"
                     >
-                        Create a new store
+                        Создать новый магазин
                     </Button>
                     <StoresTable />
                 </div>
             )}
             {current === "boxes" && (
                 <div className="p-4">
-                    <h1 className="pb-4 text-2xl font-semibold">Boxes</h1>
+                    <h1 className="pb-4 text-2xl font-semibold">Ящики</h1>
                     <Button
                         size="large"
                         type="primary"
                         className="mb-4"
                         href="/admin/settings/create-box"
                     >
-                        Create a new box
+                        Создать новый ящик
                     </Button>
                     <BoxesTable />
                 </div>

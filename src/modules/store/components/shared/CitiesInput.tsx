@@ -21,7 +21,7 @@ export const CitiesInput: FC<CitiesInputProps> = ({ ...props }) => {
 
     return (
         <Select
-            placeholder={"City"}
+            placeholder={"Город"}
             options={options}
             showSearch
             filterOption={(input, option) =>

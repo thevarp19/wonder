@@ -42,7 +42,7 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                     <Route
                         index
                         path="/"
-                        element={<div className="">Employee</div>}
+                        element={<div className="">Сотрудник</div>}
                     />
                     <Route
                         path="/supplies"

@@ -19,7 +19,7 @@ export const PrintAllCellsButton: FC<PrintAllCellsButtonProps> = ({
     if (!store || !cells) {
         return (
             <Button icon={<PrinterOutlined />} loading disabled>
-                Print all cells
+                Печать всех ячеек
             </Button>
         );
     }
@@ -37,8 +37,7 @@ export const PrintAllCellsButton: FC<PrintAllCellsButtonProps> = ({
                 }}
                 icon={<PrinterOutlined />}
             >
-                {" "}
-                Print all cells
+                Печать всех ячеек
             </Button>
         </>
     );
@@ -68,15 +67,17 @@ export const CellsPDFModal: FC<CellsPDFModalProps> = ({
                     <CancelBtn />
                     <PDFDownloadLink
                         document={<CellPDF cells={cells} store={store} />}
-                        fileName={`Cell-${store.id}.pdf`}
+                        fileName={`Ячейка-${store.id}.pdf`}
                     >
                         {({ loading }) =>
-                            loading ? "Loading document..." : "Download now!"
+                            loading
+                                ? "Загрузка документа..."
+                                : "Скачать сейчас!"
                         }
                     </PDFDownloadLink>
                 </div>
             )}
-            title="Print"
+            title="Печать"
         >
             <PDFViewer showToolbar={true} width={"100%"} height={"100%"}>
                 <CellPDF cells={cells} store={store} />

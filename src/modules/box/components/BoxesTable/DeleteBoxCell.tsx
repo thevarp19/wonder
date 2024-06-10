@@ -7,14 +7,14 @@ export const DeleteBoxCell: FC<{ id: number }> = ({ id }) => {
     const { mutateAsync } = deleteBoxMutation(id);
     return (
         <Popconfirm
-            title="Delete the box"
-            description="Are you sure to delete this box?"
+            title="Удалить коробку"
+            description="Вы уверены, что хотите удалить эту коробку?"
             onConfirm={async () => {
                 await mutateAsync();
             }}
         >
             <Button danger icon={<DeleteOutlined />}>
-                Delete
+                Удалить
             </Button>
         </Popconfirm>
     );

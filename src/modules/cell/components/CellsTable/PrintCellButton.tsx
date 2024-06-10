@@ -17,7 +17,7 @@ export const PrintCellButton: FC<PrintCellButtonProps> = ({ store, cell }) => {
     if (!store) {
         return (
             <Button icon={<PrinterOutlined />} loading disabled>
-                Print
+                Печать
             </Button>
         );
     }
@@ -35,7 +35,7 @@ export const PrintCellButton: FC<PrintCellButtonProps> = ({ store, cell }) => {
                     setIsModalOpen(true);
                 }}
             >
-                Print
+                Печать
             </Button>
         </>
     );
@@ -71,12 +71,14 @@ export const CellPDFModal: FC<CellPDFModalProps> = ({
                         )}.pdf`}
                     >
                         {({ loading }) =>
-                            loading ? "Loading document..." : "Download now!"
+                            loading
+                                ? "Загрузка документа..."
+                                : "Скачать сейчас!"
                         }
                     </PDFDownloadLink>
                 </div>
             )}
-            title="Print"
+            title="Печать"
         >
             <PDFViewer showToolbar={true} width={"100%"} height={"100%"}>
                 <CellBlockPDF cell={cell} store={store} />

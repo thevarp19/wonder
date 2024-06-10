@@ -22,14 +22,14 @@ export const SellerLoginPage: FC<SellerLoginPageProps> = () => {
             <section className="flex flex-col items-center w-full max-w-sm">
                 <Logo />
                 <h1 className="py-5 text-2xl font-semibold">
-                    Log in as a seller
+                    Войти как продавец
                 </h1>
                 <LoginForm success={success} />
                 <Link
                     to="/seller/register"
                     className="w-full mt-5 text-blue-500"
                 >
-                    Don't have an account? Register here
+                    Нет аккаунта? Зарегистрируйтесь здесь
                 </Link>
             </section>
         </div>

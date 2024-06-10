@@ -34,7 +34,7 @@ export const ProductPublishedFilter: FC<ProductPublishedFilterProps> = ({
                     }
                 }}
             >
-                Published
+                Опубликованные
             </Checkbox>
             <Checkbox
                 onChange={(e) => {
@@ -47,7 +47,7 @@ export const ProductPublishedFilter: FC<ProductPublishedFilterProps> = ({
                     }
                 }}
             >
-                Unpublished
+                Неопубликованные
             </Checkbox>
         </div>
     );

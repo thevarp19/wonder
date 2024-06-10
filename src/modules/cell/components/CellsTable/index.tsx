@@ -20,30 +20,30 @@ interface CellsTableColumn extends GetCellResponse {
 
 const columns: TableColumnsType<CellsTableColumn> = [
     {
-        title: "Cell number",
+        title: "Номер ячейки",
         dataIndex: "cell",
     },
     {
-        title: "Row",
+        title: "Строка",
         dataIndex: "row",
     },
     {
-        title: "Column",
+        title: "Столбец",
         dataIndex: "col",
     },
     {
-        title: "Print",
+        title: "Печать",
         render: (_, record) => (
             <PrintCellButton store={record.store} cell={{ ...record }} />
         ),
     },
     {
-        title: "Comment",
+        title: "Комментарий",
         dataIndex: "comment",
         render: (_, record) => record.comment || "-",
     },
     {
-        title: "Size",
+        title: "Размер",
         render: (_, record) =>
             record.width && record.height && record.depth ? (
                 <div>
@@ -60,7 +60,7 @@ const columns: TableColumnsType<CellsTableColumn> = [
             ),
     },
     {
-        title: "Edit",
+        title: "Редактировать",
         render: (_, record) => (
             <UpdateCellButton
                 storeId={record.store?.id}
@@ -69,7 +69,7 @@ const columns: TableColumnsType<CellsTableColumn> = [
         ),
     },
     {
-        title: "Delete",
+        title: "Удалить",
         render: (_, record) => (
             <DeleteCellCell id={record.id} storeId={record.store?.id || -1} />
         ),

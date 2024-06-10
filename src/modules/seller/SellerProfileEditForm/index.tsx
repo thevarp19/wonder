@@ -16,7 +16,7 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({}) => {
                 <FormikInput
                     formik={formik}
                     formItemProps={{
-                        label: "Name",
+                        label: "Имя",
                         required: true,
                     }}
                     name="firstName"
@@ -24,7 +24,7 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({}) => {
                 <FormikInput
                     formik={formik}
                     formItemProps={{
-                        label: "Surname",
+                        label: "Фамилия",
                         required: true,
                     }}
                     name="lastName"
@@ -32,7 +32,7 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({}) => {
                 <FormikInput
                     name="phoneNumber"
                     formik={formik}
-                    formItemProps={{ label: "Phone", required: true }}
+                    formItemProps={{ label: "Телефон", required: true }}
                     inputProps={{
                         onChange: (e) => {
                             phoneNumberChangeHandler(e, formik.handleChange);
@@ -43,17 +43,23 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({}) => {
                 <FormikInput
                     name="sellerName"
                     formik={formik}
-                    formItemProps={{ label: "Shop name", required: true }}
+                    formItemProps={{
+                        label: "Название магазина",
+                        required: true,
+                    }}
                 />
                 <FormikInput
                     name="sellerId"
                     formik={formik}
-                    formItemProps={{ label: "Shop ID", required: true }}
+                    formItemProps={{
+                        label: "Идентификатор магазина",
+                        required: true,
+                    }}
                 />
                 <FormikInput
                     name="tokenKaspi"
                     formik={formik}
-                    formItemProps={{ label: "API Kaspi token", required: true }}
+                    formItemProps={{ label: "API токен Kaspi", required: true }}
                 />
 
                 <Button
@@ -64,7 +70,7 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({}) => {
                     loading={mutation.isPending}
                     className="w-full"
                 >
-                    Update
+                    Обновить
                 </Button>
             </Form>
         </div>

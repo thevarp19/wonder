@@ -12,11 +12,11 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
     return (
         <div>
             <h1 className="pb-4 text-2xl font-semibold">
-                Order- <span className="underline">{orderId}</span>
+                Заказ- <span className="underline">{orderId}</span>
             </h1>
 
             <Button type="primary" size="large" className="my-4">
-                Start packing
+                Начать упаковку
             </Button>
             <AdminOrderDetailsTable orderId={orderId} />
         </div>

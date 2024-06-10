@@ -5,12 +5,12 @@ import { FC, useState } from "react";
 
 const items: MenuProps["items"] = [
     {
-        label: "Stores",
+        label: "Магазины",
         key: "stores",
         icon: <ShopOutlined />,
     },
     // {
-    //     label: "Other page",
+    //     label: "Другая страница",
     //     key: "other",
     //     icon: <DesktopOutlined />,
     // },
@@ -34,7 +34,7 @@ export const SellerSettingsPage: FC<SellerSettingsPageProps> = ({}) => {
             />
             {current === "stores" && (
                 <div className="p-4">
-                    <h1 className="pb-4 text-2xl font-semibold">Stores</h1>
+                    <h1 className="pb-4 text-2xl font-semibold">Магазины</h1>
                     <SellerStoresTable />
                 </div>
             )}

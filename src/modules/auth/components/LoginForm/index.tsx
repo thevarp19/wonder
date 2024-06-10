@@ -3,6 +3,7 @@ import { Button, Form } from "antd";
 import { FC } from "react";
 import { useLogin } from "../../forms";
 import { LoginResponse } from "../../types";
+
 interface LoginFormProps {
     success: (data: LoginResponse) => void;
 }
@@ -18,7 +19,7 @@ export const LoginForm: FC<LoginFormProps> = ({ success }) => {
                 name="email"
                 formik={formik}
                 inputProps={{
-                    placeholder: "Email",
+                    placeholder: "Электронная почта",
                     size: "large",
                 }}
             />
@@ -26,7 +27,7 @@ export const LoginForm: FC<LoginFormProps> = ({ success }) => {
                 name="password"
                 formik={formik}
                 inputProps={{
-                    placeholder: "Password",
+                    placeholder: "Пароль",
                     size: "large",
                 }}
             />
@@ -37,7 +38,7 @@ export const LoginForm: FC<LoginFormProps> = ({ success }) => {
                 className={"w-full"}
                 loading={mutation.isPending}
             >
-                Log in
+                Войти
             </Button>
         </Form>
     );

@@ -99,26 +99,26 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     function nextStep() {
         if (step === 0) {
             if (supply.products.length === 0) {
-                message.error("Please add products");
+                message.error("Пожалуйста, добавьте товары");
                 return;
             }
             dispatch(saveProducts());
         } else if (step === 1) {
             if (!supply.store || !supply.date) {
-                message.error("Please choose store and date");
+                message.error("Пожалуйста, выберите магазин и дату");
                 return;
             }
             const parts = supply.date.split("-");
             const formattedDate = `${parts?.[2]}-${parts?.[1]}-${parts?.[0]}`;
             console.log(new Date(formattedDate), new Date());
             if (new Date(formattedDate) <= new Date()) {
-                message.error("Please choose store and date");
+                message.error("Пожалуйста, выберите магазин и дату");
                 return;
             }
             dispatch(saveDateAndStore());
         } else if (step === 2) {
             if (supply.packs.length === 0) {
-                message.error("Please create packs");
+                message.error("Пожалуйста, создайте упаковки");
                 return;
             }
             dispatch(savePacks());
@@ -139,23 +139,23 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     return (
         <div className="min-h-full bg-white rounded-t-lg">
             <div className="p-4">
-                <h1 className="pb-4 text-2xl font-semibold">Supply</h1>
+                <h1 className="pb-4 text-2xl font-semibold">Поставка</h1>
                 <Steps
                     responsive={false}
                     className="!mb-10"
                     current={step}
                     items={[
                         {
-                            title: "Add products",
+                            title: "Добавить товары",
                         },
                         {
-                            title: "Choose store and date",
+                            title: "Выбрать магазин и дату",
                         },
                         {
-                            title: "Pack products",
+                            title: "Упаковать товары",
                         },
                         {
-                            title: "Print",
+                            title: "Печать",
                             icon: <PrinterOutlined />,
                         },
                     ]}
@@ -176,7 +176,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                                 });
                             }}
                         >
-                            Previous
+                            Назад
                         </Button>
                     )}
                     {step !== steps.length - 1 && (
@@ -186,7 +186,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             onClick={nextStep}
                             type="primary"
                         >
-                            Save
+                            Сохранить
                         </Button>
                     )}
                     {step === steps.length - 1 &&
@@ -205,7 +205,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                                 }}
                                 type="primary"
                             >
-                                Create
+                                Создать
                             </Button>
                         )}
                     {step === steps.length - 1 && supply.supplyServerId && (
@@ -218,7 +218,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             }}
                             type="primary"
                         >
-                            Print
+                            Печать
                         </Button>
                     )}
                     {isModalOpen &&

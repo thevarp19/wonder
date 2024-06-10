@@ -7,6 +7,7 @@ import { cn } from "@/utils/shared.util";
 import { Button, Form, Switch } from "antd";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
+
 interface UpdateStoreFormProps {}
 
 export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
@@ -23,13 +24,13 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 name="kaspiId"
                 formik={formik}
                 formItemProps={{
-                    label: "Kaspi ID",
+                    label: "Kaspi ID (Идентификатор Kaspi)",
                 }}
                 inputProps={{
                     size: "large",
                 }}
             />
-            <Form.Item label="City" className="w-full">
+            <Form.Item label="Город" className="w-full">
                 <CitiesInput
                     className=""
                     size="large"
@@ -39,7 +40,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                     }}
                 />
             </Form.Item>
-            <Form.Item label={"Enabled"}>
+            <Form.Item label={"Включено"}>
                 <div className="flex items-center gap-2">
                     <Switch
                         checked={formik.values.enabled}
@@ -48,7 +49,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                         }}
                     />
                     <span className="text-base">
-                        {formik.values.enabled ? "Active" : "Not active"}
+                        {formik.values.enabled ? "Активно" : "Неактивно"}
                     </span>
                 </div>
             </Form.Item>
@@ -56,7 +57,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 name="streetName"
                 formik={formik}
                 formItemProps={{
-                    label: "Street name",
+                    label: "Название улицы",
                 }}
                 inputProps={{
                     size: "large",
@@ -66,7 +67,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 name="streetNumber"
                 formik={formik}
                 formItemProps={{
-                    label: "Street number",
+                    label: "Номер улицы",
                 }}
                 inputProps={{
                     size: "large",
@@ -76,7 +77,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 name="town"
                 formik={formik}
                 formItemProps={{
-                    label: "Town",
+                    label: "Город",
                 }}
                 inputProps={{
                     size: "large",
@@ -86,7 +87,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 name="district"
                 formik={formik}
                 formItemProps={{
-                    label: "District",
+                    label: "Район",
                 }}
                 inputProps={{
                     size: "large",
@@ -96,7 +97,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 name="building"
                 formik={formik}
                 formItemProps={{
-                    label: "Building",
+                    label: "Здание",
                 }}
                 inputProps={{
                     size: "large",
@@ -106,13 +107,13 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 name="apartment"
                 formik={formik}
                 formItemProps={{
-                    label: "Apartment number",
+                    label: "Номер квартиры",
                 }}
                 inputProps={{
                     size: "large",
                 }}
             />
-            <Form.Item label={"Working time"} className={cn("w-max")}>
+            <Form.Item label={"Рабочее время"} className={cn("w-max")}>
                 <UpdateWorkingTimeInput
                     initialValues={storeDetails?.availableWorkTimes}
                     onChange={(values) => {
@@ -128,7 +129,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 className={cn("w-full")}
                 loading={mutation.isPending}
             >
-                {"Update"}
+                {"Обновить"}
             </Button>
         </Form>
     );

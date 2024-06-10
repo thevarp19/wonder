@@ -26,7 +26,7 @@ export const CreateEmployeeForm: FC<CreateEmployeeFormProps> = ({
                     name="firstName"
                     formik={formik}
                     formItemProps={{
-                        label: "First Name",
+                        label: "Имя",
                         required: true,
                     }}
                     inputProps={{
@@ -38,7 +38,7 @@ export const CreateEmployeeForm: FC<CreateEmployeeFormProps> = ({
                     name="lastName"
                     formik={formik}
                     formItemProps={{
-                        label: "Last Name",
+                        label: "Фамилия",
                         required: true,
                     }}
                     inputProps={{
@@ -51,7 +51,7 @@ export const CreateEmployeeForm: FC<CreateEmployeeFormProps> = ({
                 <FormikInput
                     name="phoneNumber"
                     formik={formik}
-                    formItemProps={{ label: "Phone number", required: true }}
+                    formItemProps={{ label: "Номер телефона", required: true }}
                     inputProps={{
                         size: "large",
                         onChange: (e) => {
@@ -62,7 +62,10 @@ export const CreateEmployeeForm: FC<CreateEmployeeFormProps> = ({
                 <FormikInput
                     name="email"
                     formik={formik}
-                    formItemProps={{ label: "Email", required: true }}
+                    formItemProps={{
+                        label: "Электронная почта",
+                        required: true,
+                    }}
                     inputProps={{
                         size: "large",
                     }}
@@ -71,7 +74,7 @@ export const CreateEmployeeForm: FC<CreateEmployeeFormProps> = ({
             <FormikPasswordInput
                 name="password"
                 formik={formik}
-                formItemProps={{ label: "Password", required: true }}
+                formItemProps={{ label: "Пароль", required: true }}
                 inputProps={{
                     size: "large",
                     type: "password",
@@ -80,7 +83,7 @@ export const CreateEmployeeForm: FC<CreateEmployeeFormProps> = ({
             <FormikPasswordInput
                 name="repeatPassword"
                 formik={formik}
-                formItemProps={{ label: "Password", required: true }}
+                formItemProps={{ label: "Повторите пароль", required: true }}
                 inputProps={{
                     size: "large",
                     type: "password",
@@ -94,7 +97,7 @@ export const CreateEmployeeForm: FC<CreateEmployeeFormProps> = ({
                 className={cn("w-full mt-6")}
                 loading={mutation.isPending}
             >
-                {"Create"}
+                {"Создать"}
             </Button>
         </Form>
     );

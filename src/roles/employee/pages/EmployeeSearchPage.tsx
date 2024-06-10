@@ -61,8 +61,8 @@ const columns: TableColumnsType<any> = [
     },
     {
         title: "Vendor Code",
-        dataIndex: "productId",
-        key: "productId",
+        dataIndex: "vendorCode",
+        key: "vendorCode",
     },
     {
         title: "Артикул",
@@ -80,7 +80,7 @@ const columns: TableColumnsType<any> = [
         key: "shopName",
     },
     {
-        title: "Сell Code",
+        title: "Код ячейки",
         dataIndex: "cellCode",
         key: "cellCode",
     },

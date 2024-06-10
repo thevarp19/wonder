@@ -26,7 +26,7 @@ export const createStoreMutation = () => {
             });
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
             navigate("/admin/settings/");
         },
         onError(error) {
@@ -51,7 +51,7 @@ export const updateStoreMutation = (id: number) => {
             });
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
             navigate("/admin/settings/");
             queryClient.invalidateQueries({
                 queryKey: ["stores"],
@@ -78,7 +78,7 @@ export const bindBoxToStoreMutation = () => {
             });
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);
@@ -101,7 +101,7 @@ export const removeBoxFromStoreMutation = () => {
             });
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);

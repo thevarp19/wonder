@@ -12,7 +12,8 @@ import * as actions from "@/roles/seller/redux/supply/actions";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 dayjs.extend(updateLocale);
-dayjs.updateLocale("en", {
+dayjs.updateLocale("ru", {
+    // Update locale to Russian
     weekStart: 1,
 });
 interface ChooseDateAndStoreStepProps {}
@@ -26,7 +27,7 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
         // @ts-ignore
         const selectedStore = stores?.find((temp) => store === temp.id);
         if (!selectedStore) {
-            message.error("Please choose store first");
+            message.error("Пожалуйста, выберите магазин");
             dispatch(actions.setDate(`${dayjs().format("DD-MM-YYYY")}`));
             return false;
         }
@@ -41,12 +42,12 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
                 (time) => time.dayOfWeek === dayNumber
             )
         ) {
-            message.error("Store is not working on this day");
+            message.error("Магазин не работает в этот день");
             dispatch(actions.setDate(`${dayjs().format("DD-MM-YYYY")}`));
             return false;
         }
         if (day.toDate().getTime() < new Date().getTime()) {
-            message.error("You can't choose past date");
+            message.error("Вы не можете выбрать прошедшую дату");
             dispatch(actions.setDate(`${dayjs().format("DD-MM-YYYY")}`));
             return false;
         }
@@ -60,11 +61,11 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
     return (
         <div>
             <h1 className="text-2xl font-semibold">
-                Please choose the date and store
+                Пожалуйста, выберите дату и магазин
             </h1>
             <div className="flex gap-4 py-4">
                 <Select
-                    placeholder={"Choose a store"}
+                    placeholder={"Выберите магазин"}
                     className="w-80"
                     options={stores?.map((store) => ({
                         label: getStoreFullAddress(store),

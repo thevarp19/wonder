@@ -9,12 +9,12 @@ export const SellerProfilePage: FC<SellerProfilePageProps> = ({}) => {
         <div className="gap-4">
             <div className="w-full ">
                 <h1 className="flex items-center justify-between max-w-sm mb-4 text-2xl font-semibold">
-                    Edit profile{" "}
+                    Редактировать профиль{" "}
                     <Popconfirm
-                        title="Do you wanna reset your password?"
-                        description="You will got an email with link"
+                        title="Вы хотите сбросить пароль?"
+                        description="Вы получите электронное письмо со ссылкой"
                     >
-                        <Button type="primary">Reset password</Button>
+                        <Button type="primary">Сбросить пароль</Button>
                     </Popconfirm>
                 </h1>
                 <SellerProfileEdit />

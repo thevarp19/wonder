@@ -34,7 +34,7 @@ export const UpdateCellForm: FC<UpdateCellFormProps> = ({
                     name="row"
                     formik={formik}
                     formItemProps={{
-                        label: "Row",
+                        label: "Строка",
                         required: true,
                     }}
                     inputProps={{
@@ -46,7 +46,7 @@ export const UpdateCellForm: FC<UpdateCellFormProps> = ({
                     name="col"
                     formik={formik}
                     formItemProps={{
-                        label: "Column",
+                        label: "Столбец",
                         required: true,
                     }}
                     inputProps={{
@@ -58,7 +58,7 @@ export const UpdateCellForm: FC<UpdateCellFormProps> = ({
                     name="cell"
                     formik={formik}
                     formItemProps={{
-                        label: "Number",
+                        label: "Номер",
                         required: true,
                     }}
                     inputProps={{
@@ -72,7 +72,7 @@ export const UpdateCellForm: FC<UpdateCellFormProps> = ({
                     name="width"
                     formik={formik}
                     formItemProps={{
-                        label: "Width",
+                        label: "Ширина",
                     }}
                     inputProps={{
                         size: "large",
@@ -83,7 +83,7 @@ export const UpdateCellForm: FC<UpdateCellFormProps> = ({
                     name="height"
                     formik={formik}
                     formItemProps={{
-                        label: "Height",
+                        label: "Высота",
                     }}
                     inputProps={{
                         size: "large",
@@ -94,7 +94,7 @@ export const UpdateCellForm: FC<UpdateCellFormProps> = ({
                     name="depth"
                     formik={formik}
                     formItemProps={{
-                        label: "Depth",
+                        label: "Глубина",
                     }}
                     inputProps={{
                         size: "large",
@@ -106,7 +106,7 @@ export const UpdateCellForm: FC<UpdateCellFormProps> = ({
                 name="comment"
                 formik={formik}
                 formItemProps={{
-                    label: "Comment",
+                    label: "Комментарий",
                 }}
                 inputProps={{
                     size: "large",
@@ -123,7 +123,7 @@ export const UpdateCellForm: FC<UpdateCellFormProps> = ({
                     formik.submitForm();
                 }}
             >
-                {"Update cell"}
+                {"Обновить ячейку"}
             </Button>
         </Form>
     );

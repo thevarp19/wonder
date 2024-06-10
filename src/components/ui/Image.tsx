@@ -9,7 +9,7 @@ export const Image: FC<ImageProps> = ({
     wrapperClassName,
     ...props
 }) => {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     return (
         <div
@@ -19,6 +19,7 @@ export const Image: FC<ImageProps> = ({
         >
             <img
                 loading="lazy"
+                onLoadStart={() => setLoading(true)}
                 onLoad={() => setLoading(false)}
                 className={`object-contain object-center ${
                     className ? className : ""

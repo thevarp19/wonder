@@ -15,7 +15,7 @@ export const createSupplyMutation = (
             return data;
         },
         onSuccess(data) {
-            message.success("Success!");
+            message.success("Успешно!");
             if (onSuccess) {
                 onSuccess(data.id);
             }
@@ -34,7 +34,7 @@ export const acceptSupplyMutation = (onSuccess?: () => void) => {
             await acceptSupplyProducts(values);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
             if (onSuccess) {
                 onSuccess();
             }

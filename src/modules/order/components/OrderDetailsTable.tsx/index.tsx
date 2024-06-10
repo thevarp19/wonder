@@ -11,36 +11,36 @@ interface OrderDetailsTableProps {
 
 const columns: TableColumnsType<GetOrderById> = [
     {
-        title: "Article",
+        title: "Артикул",
         dataIndex: "productArticle",
         render: (text, record) => (
             <Link to={`/product/${record.productVendorCode}`}>{text}</Link>
         ),
     },
     {
-        title: "Product name",
+        title: "Название продукта",
         dataIndex: "productName",
     },
     {
-        title: "Cell number",
+        title: "Номер ячейки",
         dataIndex: "cellCode",
     },
     {
-        title: "Vendor code",
+        title: "Артикул поставщика",
         dataIndex: "productVendorCode",
     },
     {
-        title: "Trade price",
+        title: "Оптовая цена",
         dataIndex: "productTradePrice",
         render: (text) => <PriceCell price={text} />,
     },
     {
-        title: "Sell price",
+        title: "Цена продажи",
         dataIndex: "productSellPrice",
         render: (text) => <PriceCell price={text} />,
     },
     {
-        title: "Income",
+        title: "Доход",
         dataIndex: "income",
         render: (text) => <PriceCell price={text} />,
     },

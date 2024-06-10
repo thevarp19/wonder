@@ -18,25 +18,45 @@ interface StoreBoxesModalProps {
     storeId: string;
 }
 
+const DeleteBoxCell: FC<{ boxId: string; storeId: string }> = ({
+    boxId,
+    storeId,
+}) => {
+    const { mutateAsync } = removeBoxFromStoreMutation();
+    return (
+        <Popconfirm
+            title="Удалить коробку из магазина"
+            description="Вы уверены, что хотите удалить эту коробку?"
+            onConfirm={async () => {
+                await mutateAsync({ storeId, boxId });
+            }}
+        >
+            <Button danger icon={<DeleteOutlined />}>
+                Удалить
+            </Button>
+        </Popconfirm>
+    );
+};
+
 export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
     boxTypes,
     storeId,
 }) => {
     const columns: TableColumnsType<GetBoxResponse> = [
         {
-            title: "Box ID",
+            title: "ID коробки",
             dataIndex: "id",
         },
         {
-            title: "Name",
+            title: "Название",
             dataIndex: "name",
         },
         {
-            title: "Sizes",
+            title: "Размеры",
             dataIndex: "description",
         },
         {
-            title: "Delete",
+            title: "Удалить",
             render: (_, record) => (
                 <DeleteBoxCell boxId={`${record.id}`} storeId={storeId} />
             ),
@@ -52,7 +72,7 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                     setIsModalOpen(true);
                 }}
             >
-                Boxes
+                Коробки
             </Button>
             <Modal
                 open={isModalOpen}
@@ -65,7 +85,7 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
             >
                 <div className="space-x-4">
                     <Select
-                        placeholder={"Add a new box"}
+                        placeholder={"Добавить новую коробку"}
                         className="w-80"
                         value={formik.values.boxId}
                         onChange={(value) => {
@@ -88,7 +108,7 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                             formik.handleSubmit();
                         }}
                     >
-                        Add
+                        Добавить
                     </Button>
                 </div>
                 <Table
@@ -101,25 +121,5 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                 />
             </Modal>
         </div>
-    );
-};
-
-const DeleteBoxCell: FC<{ boxId: string; storeId: string }> = ({
-    boxId,
-    storeId,
-}) => {
-    const { mutateAsync } = removeBoxFromStoreMutation();
-    return (
-        <Popconfirm
-            title="Delete the box from store"
-            description="Are you sure to delete this box?"
-            onConfirm={async () => {
-                await mutateAsync({ storeId, boxId });
-            }}
-        >
-            <Button danger icon={<DeleteOutlined />}>
-                Delete
-            </Button>
-        </Popconfirm>
     );
 };

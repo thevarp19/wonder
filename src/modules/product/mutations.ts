@@ -20,7 +20,7 @@ export const createProductsFromFileMutation = () => {
             return data;
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);
@@ -36,7 +36,7 @@ export const updateProductSizeMutation = (id: string) => {
             await updateProductSize(id, values);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
             navigate("/employee/sizes/");
             queryClient.invalidateQueries({
                 queryKey: ["productsWithSizes"],
@@ -59,7 +59,7 @@ export const changeProductsVisibilityMutation = () => {
             await changeProductVisibility(values.id, values.isPublished);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
             queryClient.invalidateQueries({
                 queryKey: ["products"],
             });
@@ -81,7 +81,7 @@ export const changeProductPriceMutation = () => {
             await changeProductPrice(values);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
             queryClient.invalidateQueries({
                 queryKey: ["products"],
             });

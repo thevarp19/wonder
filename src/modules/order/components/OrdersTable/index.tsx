@@ -9,17 +9,17 @@ interface OrdersTableProps {}
 
 const columns: TableColumnsType<GetOrdersByDate> = [
     {
-        title: "Order number",
+        title: "Номер заказа",
         render: (_, record) => (
             <Link to={`/admin/orders/${record.code}`}>{record.code}</Link>
         ),
     },
     {
-        title: "Shop",
+        title: "Магазин",
         dataIndex: "sellerName",
     },
     {
-        title: "Time",
+        title: "Время",
         render: (_, record) => (
             <div>
                 <div>
@@ -32,12 +32,12 @@ const columns: TableColumnsType<GetOrdersByDate> = [
         ),
     },
     {
-        title: "Delivery type",
+        title: "Тип доставки",
         dataIndex: "deliveryMode",
         render: (_, record) => deliveryTypeMap(record.deliveryMode),
     },
     {
-        title: "Send time",
+        title: "Время отправки",
         render: (_, record) => (
             <div>
                 <div>
@@ -52,16 +52,16 @@ const columns: TableColumnsType<GetOrdersByDate> = [
         ),
     },
     {
-        title: "Status",
+        title: "Статус",
         dataIndex: "state",
         render: (_, record) => orderStatusMap(record.state),
     },
     {
-        title: "Price",
+        title: "Цена",
         render: (_, record) => <div>{record.totalPrice} KZT</div>,
     },
     {
-        title: "Trade price",
+        title: "Торговая цена",
         render: (_, record) => <div>{record.tradePrice} KZT</div>,
     },
 ];

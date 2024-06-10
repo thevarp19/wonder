@@ -26,26 +26,26 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
 
     const columns: TableColumnsType<ProductQuantity> = [
         {
-            title: "Article",
+            title: "Артикул",
             render: (_, record) => <span>{record.product.id}</span>,
         },
         {
-            title: "Name",
+            title: "Название",
             render: (_, record) => (
                 <a href={record.product.vendorCode}>{record.product.name}</a>
             ),
         },
         {
-            title: "Price in Almaty",
+            title: "Цена в Алматы",
             render: (_, record) => (
                 <span>{record.product.prices[0].price}</span>
             ),
         },
         {
-            title: "Quantity",
+            title: "Количество",
             render: (_, record) => (
                 <span>
-                    <Form.Item label="Quantity">
+                    <Form.Item label="Количество">
                         <InputNumber
                             name="quantity"
                             value={record.quantity}
@@ -64,7 +64,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
             ),
         },
         {
-            title: "Delete",
+            title: "Удалить",
             render: (_, record) => (
                 <DeleteButton
                     onConfirm={() => {
@@ -79,10 +79,12 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
 
     return (
         <Form layout="vertical">
-            <h1 className="text-2xl font-semibold">Please add products</h1>
+            <h1 className="text-2xl font-semibold">
+                Пожалуйста, добавьте продукты
+            </h1>
             <div className="my-4">
                 <Button type="primary" onClick={() => setIsModalOpen(true)}>
-                    Upload from file
+                    Загрузить из файла
                 </Button>
                 <Modal
                     open={isModalOpen}

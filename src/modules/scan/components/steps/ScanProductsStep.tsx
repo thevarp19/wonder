@@ -21,14 +21,14 @@ export const ScanProductsStep: FC<ScanProductsStepProps> = ({}) => {
     }, [cellBarcodeInUrl]);
     return (
         <div>
-            <p>Current cell barcode: {cellBarcode}</p>
+            <p>Текущий штрих-код ячейки: {cellBarcode}</p>
             <Button
                 size="large"
                 type="primary"
                 className="my-4"
                 onClick={toScanProducts}
             >
-                Scan products
+                Сканировать товары
             </Button>
         </div>
     );

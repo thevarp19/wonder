@@ -19,7 +19,7 @@ export const CreateBoxForm: FC<CreateBoxFormProps> = ({}) => {
                 name="name"
                 formik={formik}
                 formItemProps={{
-                    label: "Name",
+                    label: "Имя",
                 }}
                 inputProps={{
                     size: "large",
@@ -29,7 +29,7 @@ export const CreateBoxForm: FC<CreateBoxFormProps> = ({}) => {
                 name="width"
                 formik={formik}
                 formItemProps={{
-                    label: "Width",
+                    label: "Ширина",
                 }}
                 inputProps={{
                     size: "large",
@@ -40,7 +40,7 @@ export const CreateBoxForm: FC<CreateBoxFormProps> = ({}) => {
                 name="height"
                 formik={formik}
                 formItemProps={{
-                    label: "Height",
+                    label: "Высота",
                 }}
                 inputProps={{
                     size: "large",
@@ -51,7 +51,7 @@ export const CreateBoxForm: FC<CreateBoxFormProps> = ({}) => {
                 name="length"
                 formik={formik}
                 formItemProps={{
-                    label: "Length",
+                    label: "Длина",
                 }}
                 inputProps={{
                     size: "large",
@@ -77,7 +77,7 @@ export const CreateBoxForm: FC<CreateBoxFormProps> = ({}) => {
                 }}
             >
                 <Button size="large" icon={<UploadOutlined />}>
-                    Click to Upload
+                    Загрузить файл
                 </Button>
             </Upload>
             <Button
@@ -87,7 +87,7 @@ export const CreateBoxForm: FC<CreateBoxFormProps> = ({}) => {
                 className={cn("w-full mt-6")}
                 loading={mutation.isPending}
             >
-                {"Create"}
+                {"Создать"}
             </Button>
         </Form>
     );

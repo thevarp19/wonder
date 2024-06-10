@@ -17,27 +17,27 @@ import { Link, useLocation } from "react-router-dom";
 interface EmployeeLayoutProps {}
 const items: MenuProps["items"] = [
     {
-        label: <Link to={"/employee"}>Home</Link>,
+        label: <Link to={"/employee"}>Главная</Link>,
         key: "home",
         icon: <HomeOutlined />,
     },
     {
-        label: <Link to={"/employee/supplies"}>Supplies</Link>,
+        label: <Link to={"/employee/supplies"}>Поставки</Link>,
         key: "supplies",
         icon: <SettingOutlined />,
     },
     {
-        label: <Link to={"/employee/orders"}>Orders</Link>,
+        label: <Link to={"/employee/orders"}>Заказы</Link>,
         key: "orders",
         icon: <CarOutlined />,
     },
     {
-        label: <Link to={"/employee/search"}>Search</Link>,
+        label: <Link to={"/employee/search"}>Поиск</Link>,
         key: "search",
         icon: <SearchOutlined />,
     },
     {
-        label: <Link to={"/employee/sizes"}>Sizes</Link>,
+        label: <Link to={"/employee/sizes"}>Размеры</Link>,
         key: "sizes",
         icon: <LineHeightOutlined />,
     },
@@ -72,7 +72,7 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
     const profileItems: MenuProps["items"] = [
         {
             key: "profile",
-            label: "Profile",
+            label: "Профиль",
             icon: <ProfileOutlined />,
         },
         {
@@ -85,7 +85,7 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
                         dispatch(employeeLogout());
                     }}
                 >
-                    Logout
+                    Выйти
                 </Link>
             ),
             icon: <LogoutOutlined />,
@@ -99,7 +99,7 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
             menuItems={items}
             profileItems={profileItems}
             logoLink="/employee"
-            role="Employee"
+            role="Сотрудник"
             userEmail={employeeAuth.userData?.email || "email@gmail.com"}
             selectedKeys={selectedKeys}
         />

@@ -4,27 +4,27 @@ import { GetSupplyProducts, SupplyEmployeeProduct } from "../../types";
 
 const columns: TableColumnsType<SupplyEmployeeProduct> = [
     {
-        title: "Article",
+        title: "Артикул",
         dataIndex: "article",
     },
     {
-        title: "Name",
+        title: "Название",
         dataIndex: "name",
     },
     {
-        title: "Vendor code",
+        title: "Артикул поставщика",
         dataIndex: "vendorCode",
     },
     {
-        title: "Box barcode",
+        title: "Штрих-код коробки",
         dataIndex: "vendorCodeOfBox",
     },
     {
-        title: "Box type name",
+        title: "Название типа коробки",
         dataIndex: "typeOfBoxName",
     },
     {
-        title: "Status",
+        title: "Статус",
         dataIndex: "productStateInStore",
     },
 ];
@@ -43,6 +43,9 @@ export const SupplyEmployeeProductsTable: FC<
             dataSource={data?.products}
             rowKey={"id"}
             loading={isPending}
+            locale={{
+                emptyText: "Нет данных",
+            }}
         />
     );
 };

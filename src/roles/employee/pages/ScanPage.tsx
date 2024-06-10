@@ -6,7 +6,7 @@ import { acceptSupplyMutation } from "@/modules/supply/mutations";
 import { AcceptSupplyProductRequest } from "@/modules/supply/types";
 import { useAppSelector } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
-import { App, Button, Steps } from "antd";
+import { App, Button, Popconfirm, Steps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -54,28 +54,28 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
     return (
         <div className="min-h-full bg-white rounded-t-sm">
             <div className="p-2">
-                <h1 className="pb-2 text-lg font-semibold">Scan</h1>
+                <h1 className="pb-2 text-lg font-semibold">Сканирование</h1>
                 <Steps
                     className="!mb-4 text-sm"
                     current={step}
                     items={[
                         {
-                            title: "Scan box",
+                            title: "Сканирование коробки",
                         },
                         {
-                            title: "Scan cell",
+                            title: "Сканирование ячейки",
                         },
                         {
-                            title: "Scan products",
+                            title: "Сканирование продуктов",
                         },
                         {
-                            title: "Submit",
+                            title: "Отправить",
                         },
                     ]}
                 />
                 {steps[step]}
                 <div className={cn("flex justify-end gap-4")}>
-                    {step !== 0 && (
+                    {step !== 0 && step !== steps.length - 1 && (
                         <Button
                             className={cn("")}
                             onClick={() => {
@@ -85,7 +85,7 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
                                 });
                             }}
                         >
-                            Previous
+                            Преведущий
                         </Button>
                     )}
                     {step !== steps.length - 1 && (
@@ -94,18 +94,45 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
                             onClick={nextStep}
                             type="primary"
                         >
-                            Next
+                            Следующий
                         </Button>
                     )}
                     {step === steps.length - 1 && (
                         <Button
                             className={cn("")}
-                            onClick={onSubmit}
-                            type="primary"
-                            loading={isPending}
+                            onClick={() => {
+                                setSearchParams({ step: `0` });
+                                setStep(0);
+                            }}
                         >
-                            Submit
+                            Следующий коробка
                         </Button>
+                    )}
+                    {step === steps.length - 1 && (
+                        <Button
+                            className={cn("")}
+                            onClick={() => {
+                                setSearchParams({ step: `1` });
+                                setStep(1);
+                            }}
+                        >
+                            Следующий ячейка
+                        </Button>
+                    )}
+                    {step === steps.length - 1 && (
+                        <Popconfirm
+                            title="Отправить продукты"
+                            description="Вы уверены, что отправите?"
+                            onConfirm={onSubmit}
+                        >
+                            <Button
+                                className={cn("")}
+                                type="primary"
+                                loading={isPending}
+                            >
+                                Отправить
+                            </Button>
+                        </Popconfirm>
                     )}
                 </div>
             </div>

@@ -22,7 +22,7 @@ export const StoreSwitch: FC<StoreSwitchProps> = ({ record }) => {
                     );
                 }}
             />
-            <span>{record.enabled ? "Active" : "Not active"}</span>
+            <span>{record.enabled ? "Активно" : "Неактивно"}</span>
         </div>
     );
 };

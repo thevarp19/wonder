@@ -87,10 +87,10 @@ const PackBlock = ({
     return (
         <View style={styles.pack}>
             {/* <Text>Box barcode: {boxBarcode}</Text> */}
-            <Text>Box type: {box?.name}</Text>
-            <Text>Box size: {box?.description}</Text>
+            <Text>Тип коробки: {box?.name}</Text>
+            <Text>Размер коробки: {box?.description}</Text>
             <Text> </Text>
-            <Text>Products:</Text>
+            <Text>Продукты:</Text>
             <View>
                 {pack.products
                     .filter((p) => p.quantity > 0)
@@ -98,7 +98,7 @@ const PackBlock = ({
                         <Text key={`${product.id}-${pack.id}`}>
                             {index + 1}
                             {" - "}
-                            {product.product.name}, {product.quantity} items
+                            {product.product.name}, {product.quantity} шт.
                         </Text>
                     ))}
             </View>
@@ -127,7 +127,7 @@ function groupByBox(packs: GetSupplyById[]) {
     return grouped;
 }
 
-export const SupplyReportPDF = ({
+export const SupplyPDF = ({
     date,
     store,
     packs,
@@ -182,7 +182,7 @@ export const SupplyReportPDF = ({
             </Page>
             <Page size="A4">
                 <View style={styles.header}>
-                    <Text>Boxes</Text>
+                    <Text>Коробки</Text>
                 </View>
                 <View style={styles.root}>
                     <View style={styles.grid}>
@@ -211,7 +211,7 @@ export const SupplyReportPDF = ({
             </Page>
             <Page size="A4">
                 <View style={styles.header}>
-                    <Text>Products</Text>
+                    <Text>Продукты</Text>
                 </View>
                 <View style={styles.root}>
                     <View style={styles.grid}>

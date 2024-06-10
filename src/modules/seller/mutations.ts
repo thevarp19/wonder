@@ -12,7 +12,7 @@ export const sellerUpdateMutation = () => {
             await updateSellerProfile(values.id, values);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
             queryClient.invalidateQueries({ queryKey: ["seller-profile"] });
         },
         onError(error) {

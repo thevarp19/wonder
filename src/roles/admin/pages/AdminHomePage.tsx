@@ -1,4 +1,4 @@
-import { box, boxOpen, scan, tenge } from "@/assets";
+import { boxIcon, boxOpenIcon, scanIcon, tengeIcon } from "@/assets";
 import { Image } from "@/components/ui/Image";
 import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
 import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable";
@@ -65,7 +65,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                 <div className="flex flex-col gap-4">
                     <ResultsCard
                         statisticsName="Заказы"
-                        iconSrc={boxOpen}
+                        iconSrc={boxOpenIcon}
                         statistics={
                             // { count: 42, percent: 18 }
                             statistics?.ordersInfo
@@ -73,7 +73,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                     />
                     <ResultsCard
                         statisticsName="Продавцов"
-                        iconSrc={box}
+                        iconSrc={boxIcon}
                         statistics={
                             // { count: 30, percent: -12 }
                             statistics?.sellersInfo
@@ -81,7 +81,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                     />
                     <ResultsCard
                         statisticsName="Поставок"
-                        iconSrc={scan}
+                        iconSrc={scanIcon}
                         statistics={
                             // { count: 65, percent: 42 }
                             statistics?.suppliesInfo
@@ -89,7 +89,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                     />
                     <ResultsCard
                         statisticsName="Чек"
-                        iconSrc={tenge}
+                        iconSrc={tengeIcon}
                         statistics={
                             // { count: 1243244, percent: 12 }
                             statistics?.incomeInfo

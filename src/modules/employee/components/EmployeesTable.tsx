@@ -31,7 +31,7 @@ const columns: TableColumnsType<EmployeesTableColumns> = [
         dataIndex: "id",
     },
     {
-        title: "Name",
+        title: "Имя",
         render: (_, record) => (
             <span>
                 {record.firstName} {record.lastName}
@@ -39,25 +39,25 @@ const columns: TableColumnsType<EmployeesTableColumns> = [
         ),
     },
     {
-        title: "Phone number",
+        title: "Номер телефона",
         dataIndex: "phoneNumber",
     },
     {
-        title: "Email",
+        title: "Электронная почта",
         dataIndex: "email",
     },
     {
-        title: "Edit",
+        title: "Редактировать",
         render: (_, record) => (
             <UpdateEmployeeModal storeId={record.storeId} id={record.id} />
         ),
     },
     {
-        title: "Change Password",
+        title: "Изменить пароль",
         render: (_, record) => <ChangeEmployeePasswordModal id={record.id} />,
     },
     {
-        title: "Delete",
+        title: "Удалить",
         render: (_, record) => (
             <DeleteEmployeeCell id={record.id} storeId={record.storeId} />
         ),
@@ -96,7 +96,7 @@ const UpdateEmployeeModal = ({
     return (
         <>
             <Modal
-                title="Update Employee"
+                title="Обновить информацию о сотруднике"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
                 okButtonProps={{ style: { display: "none" } }}
@@ -129,10 +129,10 @@ const ChangeEmployeePasswordModal = ({ id }: { id: number }) => {
         setLoading(true);
         try {
             await changeEmployeePassword(id, values);
-            message.success("Success!");
+            message.success("Успешно!");
             setIsModalOpen(false);
         } catch (e: any) {
-            message.error(e?.response?.data.message || "Error");
+            message.error(e?.response?.data.message || "Ошибка");
         } finally {
             setLoading(false);
         }
@@ -140,7 +140,7 @@ const ChangeEmployeePasswordModal = ({ id }: { id: number }) => {
     return (
         <>
             <Modal
-                title="Change Employee password"
+                title="Изменить пароль сотрудника"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
                 okButtonProps={{ style: { display: "none" } }}
@@ -148,14 +148,14 @@ const ChangeEmployeePasswordModal = ({ id }: { id: number }) => {
             >
                 <Form onFinish={onFinish} layout="vertical">
                     <Form.Item
-                        label="Old password"
+                        label="Старый пароль"
                         required
                         name={"oldPassword"}
                     >
                         <Input.Password />
                     </Form.Item>
                     <Form.Item
-                        label="New password"
+                        label="Новый пароль"
                         required
                         name={"newPassword"}
                         rules={[{ min: 6, max: 20 }]}
@@ -168,7 +168,7 @@ const ChangeEmployeePasswordModal = ({ id }: { id: number }) => {
                             type="primary"
                             loading={loading}
                         >
-                            Change
+                            Изменить
                         </Button>
                     </Form.Item>
                 </Form>
@@ -177,7 +177,7 @@ const ChangeEmployeePasswordModal = ({ id }: { id: number }) => {
                 icon={<LockOutlined />}
                 onClick={() => setIsModalOpen(true)}
             >
-                Change password
+                Изменить пароль
             </Button>
         </>
     );

@@ -1,29 +1,30 @@
 import * as Yup from "yup";
 
-export const requiredStringSchema = (fieldName: string = "This field") =>
-    Yup.string().required(`${fieldName} is required!`);
+export const requiredStringSchema = (fieldName: string = "Это поле") =>
+    Yup.string().required(`${fieldName} обязательно для заполнения!`);
 
-export const requiredNumberSchema = (fieldName: string = "This field") =>
-    Yup.number().required(`${fieldName} is required!`);
+export const requiredNumberSchema = (fieldName: string = "Это поле") =>
+    Yup.number().required(`${fieldName} обязательно для заполнения!`);
 
-export const requiredBooleanSchema = (fieldName: string = "This field") =>
-    Yup.boolean().required(`${fieldName} is required!`);
+export const requiredBooleanSchema = (fieldName: string = "Это поле") =>
+    Yup.boolean().required(`${fieldName} обязательно для заполнения!`);
 
-export const emailSchema = () => Yup.string().email("Invalid email address!");
+export const emailSchema = () =>
+    Yup.string().email("Некорректный адрес электронной почты!");
 
 const KzPhoneNumberRegex = /^\+\d \d{3} \d{3} \d{2} \d{2}$/;
 
 export const KzPhoneNumberSchema = () =>
     Yup.string().matches(
         KzPhoneNumberRegex,
-        "The field must contain valid phone number"
+        "Поле должно содержать корректный номер телефона"
     );
 
-export const passwordSchemas = (passwordFieldName: string = "password") => ({
+export const passwordSchemas = (passwordFieldName: string = "пароль") => ({
     self: Yup.string().max(20).min(6),
     repeat: Yup.string().test(
         "password-match",
-        "Passwords must match",
+        "Пароли должны совпадать",
         function (value) {
             return value === this.parent[passwordFieldName];
         }

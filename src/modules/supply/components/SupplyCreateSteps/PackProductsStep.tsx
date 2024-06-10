@@ -20,7 +20,7 @@ export const PackProductsStep: FC<PackProductsStepProps> = ({}) => {
 
     return (
         <div>
-            <h1 className="mb-4 text-2xl font-semibold">Packing</h1>
+            <h1 className="mb-4 text-2xl font-semibold">Упаковка</h1>
             <div className="flex flex-col gap-4">
                 {packs.map((pack, index) => (
                     <PackItem key={pack.id} pack={pack} index={index} />
@@ -34,7 +34,7 @@ export const PackProductsStep: FC<PackProductsStepProps> = ({}) => {
                     dispatch(actions.createPack(findNextBoxOption(packs)));
                 }}
             >
-                Add a new pack
+                Добавить новую упаковку
             </Button>
         </div>
     );
@@ -47,7 +47,7 @@ const BoxSelect: FC<{ pack: SupplyPack }> = ({ pack }) => {
     return (
         <Select
             loading={isPending}
-            placeholder={"Choose a box"}
+            placeholder={"Выберите коробку"}
             className="w-80"
             options={store?.availableBoxTypes?.map((box) => ({
                 label: `${box.name} ${box.description}`,
@@ -118,7 +118,7 @@ function getProductQuantityLabel(
 ) {
     return `${value.product.name.substring(0, 15)}${
         value.product.name.length > 15 ? "..." : ""
-    } - max: ${getAvailableProductQuantity(
+    } - макс: ${getAvailableProductQuantity(
         packs,
         "-1",
         products,
@@ -233,14 +233,14 @@ const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
                     {/* <h2>{pack.id}</h2> */}
                     <BoxSelect pack={pack} />
                     <Popconfirm
-                        title="Delete the pack"
-                        description="Are you sure to delete this pack?"
+                        title="Удалить упаковку"
+                        description="Вы уверены, что хотите удалить эту упаковку?"
                         onConfirm={() => {
                             dispatch(actions.removePack(pack.id));
                         }}
                     >
                         <Button danger icon={<DeleteOutlined />}>
-                            Delete
+                            Удалить
                         </Button>
                     </Popconfirm>
                     <Button
@@ -269,7 +269,7 @@ const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
                             );
                         }}
                     >
-                        Copy
+                        Копировать
                     </Button>
                 </div>
             }
@@ -311,7 +311,7 @@ const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
                         }
                     }}
                 >
-                    Add product
+                    Добавить продукт
                 </Button>
             </div>
         </Card>

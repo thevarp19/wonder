@@ -9,7 +9,7 @@ export const SellerOrdersPage: FC<SellerOrdersPageProps> = ({}) => {
     // const debouncedSearchValue = useDebounce(searchValue, 500);
     return (
         <div>
-            <h1 className="pb-4 text-2xl font-semibold">Orders</h1>
+            <h1 className="pb-4 text-2xl font-semibold">Заказы</h1>
             <div className="flex items-center justify-between mb-4">
                 <div className="w-full max-w-sm">
                     <SearchInput

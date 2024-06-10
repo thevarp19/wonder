@@ -15,7 +15,7 @@ export const createEmployeeMutation = (
             await createEmployee(values);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
 
             queryClient.invalidateQueries({
                 queryKey: [`employees`, storeId],
@@ -40,7 +40,7 @@ export const updateEmployeeMutation = (
             await updateEmployee(id, values);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
             queryClient.invalidateQueries({
                 queryKey: [`employees`, storeId],
             });
@@ -63,7 +63,7 @@ export const deleteEmployeeMutation = (id: number, storeId: number) => {
             await deleteEmployee(id);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
 
             queryClient.invalidateQueries({
                 queryKey: [`employees`, storeId],

@@ -12,7 +12,7 @@ import {
 
 const columns: TableColumnsType<GetOrdersEmployee> = [
     {
-        title: "Order number",
+        title: "Номер заказа",
         render: (_, record) => (
             <Link to={`/employee/orders/${record.orderCode}`}>
                 {record.orderCode}
@@ -20,11 +20,11 @@ const columns: TableColumnsType<GetOrdersEmployee> = [
         ),
     },
     {
-        title: "Time",
+        title: "Время",
         render: (_, record) => <DateCell timestamp={record?.orderCreatedAt} />,
     },
     {
-        title: "Delivery type",
+        title: "Тип доставки",
         dataIndex: "deliveryMode",
         render: (_, record) => (
             <Tag color={deliveryTypeColorMap(record.deliveryType)}>
@@ -33,11 +33,11 @@ const columns: TableColumnsType<GetOrdersEmployee> = [
         ),
     },
     {
-        title: "Send time",
+        title: "Время отправки",
         render: (_, record) => <DateCell timestamp={record.orderToSendTime} />,
     },
     {
-        title: "Status",
+        title: "Статус",
         dataIndex: "state",
         render: (_, record) => (
             <Select

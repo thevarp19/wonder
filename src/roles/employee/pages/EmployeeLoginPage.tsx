@@ -20,9 +20,7 @@ export const EmployeeLoginPage: FC<EmployeeLoginPageProps> = ({}) => {
     return (
         <div className="flex flex-col items-center mt-[10vh]">
             <Logo />
-            <h1 className="py-5 text-2xl font-semibold">
-                Log in as an employee
-            </h1>
+            <h1 className="py-5 text-2xl font-semibold">Войти как сотрудник</h1>
             <LoginForm success={success} />
         </div>
     );

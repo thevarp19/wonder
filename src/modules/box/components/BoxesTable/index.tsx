@@ -5,22 +5,21 @@ import { GetBoxResponse } from "../../types";
 import { DeleteBoxCell } from "./DeleteBoxCell";
 
 interface BoxesTableProps {}
-
 const columns: TableColumnsType<GetBoxResponse> = [
     {
-        title: "Box ID",
+        title: "ID коробки",
         dataIndex: "id",
     },
     {
-        title: "Name",
+        title: "Название",
         dataIndex: "name",
     },
     {
-        title: "Sizes",
+        title: "Размеры",
         dataIndex: "description",
     },
     {
-        title: "Delete",
+        title: "Удалить",
         render: (_, record) => <DeleteBoxCell id={record.id} />,
     },
 ];
@@ -33,6 +32,9 @@ export const BoxesTable: FC<BoxesTableProps> = ({}) => {
             dataSource={boxes}
             rowKey={"id"}
             loading={isPending}
+            locale={{
+                emptyText: "Нет данных",
+            }}
         />
     );
 };

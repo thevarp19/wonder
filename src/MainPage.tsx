@@ -10,16 +10,16 @@ export const MainPage: FC<MainPageProps> = ({}) => {
         <div className="flex justify-center w-screen h-screen">
             <section className="flex flex-col items-center gap-5 absolute top-[20vh]">
                 <Logo />
-                <p className="text-xl">Sign in as</p>
+                <p className="text-xl">Войти как</p>
                 <div className={cn("flex items-center gap-5")}>
                     <Button type="primary" size="large" href="/admin">
-                        Admin
+                        Администратор
                     </Button>
                     <Button type="primary" size="large" href="/seller">
-                        Seller
+                        Продавец
                     </Button>
                     <Button type="primary" size="large" href="/employee">
-                        Employee
+                        Сотрудник
                     </Button>
                 </div>
             </section>

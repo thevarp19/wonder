@@ -53,17 +53,17 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                 current={1}
                 items={[
                     {
-                        title: "Profile",
+                        title: "Профиль",
                         icon: <UserOutlined />,
                         status: current >= 1 ? "process" : "wait",
                     },
                     {
-                        title: "Shop",
+                        title: "Магазин",
                         icon: <ShopOutlined />,
                         status: current >= 2 ? "process" : "wait",
                     },
                     {
-                        title: "Account",
+                        title: "Аккаунт",
                         icon: <SolutionOutlined />,
                         status: current == 3 ? "process" : "wait",
                     },
@@ -81,7 +81,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                         formik={formik}
                         formItemProps={{ className: cn("w-full") }}
                         inputProps={{
-                            placeholder: "First name",
+                            placeholder: "Имя",
                             size: "large",
                         }}
                     />
@@ -90,7 +90,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                         formik={formik}
                         formItemProps={{ className: cn("w-full") }}
                         inputProps={{
-                            placeholder: "Last name",
+                            placeholder: "Фамилия",
                             size: "large",
                         }}
                     />
@@ -99,7 +99,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                         formik={formik}
                         formItemProps={{ className: cn("w-full") }}
                         inputProps={{
-                            placeholder: "Phone number",
+                            placeholder: "Номер телефона",
                             size: "large",
                             onChange: (e) => {
                                 phoneNumberChangeHandler(
@@ -115,7 +115,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             onClick={next}
                             className={cn("w-full")}
                         >
-                            Next step
+                            Следующий шаг
                         </Button>
                     </Form.Item>
                 </div>
@@ -127,7 +127,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                         formik={formik}
                         formItemProps={{ className: cn("w-full") }}
                         inputProps={{
-                            placeholder: "Shop name",
+                            placeholder: "Название магазина",
                             size: "large",
                         }}
                     />
@@ -136,7 +136,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                         formik={formik}
                         formItemProps={{ className: cn("w-full") }}
                         inputProps={{
-                            placeholder: "Seller ID",
+                            placeholder: "ID продавца",
                             size: "large",
                         }}
                     />
@@ -145,7 +145,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                         formik={formik}
                         formItemProps={{ className: cn("w-full") }}
                         inputProps={{
-                            placeholder: "API Kaspi token",
+                            placeholder: "Токен Kaspi API",
                             size: "large",
                         }}
                     />
@@ -155,7 +155,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             onClick={next}
                             className={cn("w-full")}
                         >
-                            Next step
+                            Следующий шаг
                         </Button>
                     </Form.Item>
                     <Form.Item className="w-full">
@@ -164,7 +164,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             onClick={prev}
                             className={cn("w-full")}
                         >
-                            Previous
+                            Назад
                         </Button>
                     </Form.Item>
                 </div>
@@ -185,7 +185,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                         formik={formik}
                         formItemProps={{ className: cn("w-full") }}
                         inputProps={{
-                            placeholder: "Password",
+                            placeholder: "Пароль",
                             size: "large",
                             type: "password",
                         }}
@@ -195,7 +195,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                         formik={formik}
                         formItemProps={{ className: cn("w-full") }}
                         inputProps={{
-                            placeholder: "Repeat password",
+                            placeholder: "Повторите пароль",
                             size: "large",
                             type: "password",
                         }}
@@ -208,7 +208,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             loading={mutation.isPending}
                             className={cn("w-full")}
                         >
-                            Register
+                            Зарегистрироваться
                         </Button>
                     </Form.Item>
                     <Form.Item className="w-full">
@@ -217,7 +217,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             onClick={prev}
                             className={cn("w-full")}
                         >
-                            Previous
+                            Назад
                         </Button>
                     </Form.Item>
                 </div>

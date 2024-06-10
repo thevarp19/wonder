@@ -17,8 +17,8 @@ export const SupplyDetailsPage: FC<SupplyDetailsPageProps> = ({}) => {
         <div>
             <div className="flex items-center justify-between my-4">
                 <div className="flex flex-col gap-1 text-xl font-semibold">
-                    <span>Id: {supplyId}</span>
-                    <span>Store: {data?.storeAddress}</span>
+                    <span>Идентификатор: {supplyId}</span>
+                    <span>Магазин: {data?.storeAddress}</span>
                 </div>
                 <Link to={`/employee/scan`}>
                     <Button
@@ -28,7 +28,7 @@ export const SupplyDetailsPage: FC<SupplyDetailsPageProps> = ({}) => {
                             dispatch(setSupplyId(Number(supplyId)));
                         }}
                     >
-                        Start scanning
+                        Начать сканирование
                     </Button>
                 </Link>
             </div>

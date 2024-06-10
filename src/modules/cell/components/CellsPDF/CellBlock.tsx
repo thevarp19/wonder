@@ -46,10 +46,10 @@ export const CellBlock = ({ cell, store }: CellBlockProps) => {
     return (
         <View style={styles.cell}>
             <Text style={{ maxWidth: "150px", width: "100%" }}>
-                Address: {store.address}
+                Адрес: {store.address}
             </Text>
             <Text>
-                Size: {cell.width}x{cell.height}x{cell.depth}
+                Размер: {cell.width}x{cell.height}x{cell.depth}
             </Text>
             <Image style={styles.barcode} src={generateBarcodeBase64(code)} />
         </View>

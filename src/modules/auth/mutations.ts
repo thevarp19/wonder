@@ -20,7 +20,7 @@ export const loginMutation = (success: (data: LoginResponse) => void) => {
         onSuccess(data) {
             success(data);
             // console.log("role", getRoles());
-            message.success("Success!");
+            message.success("Успешно!");
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);
@@ -41,7 +41,7 @@ export const sellerRegisterMutation = () => {
             return data;
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
             navigate("/seller/login");
         },
         onError(error) {

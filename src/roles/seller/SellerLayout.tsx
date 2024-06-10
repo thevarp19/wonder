@@ -17,27 +17,27 @@ import { Link, useLocation } from "react-router-dom";
 interface SellerLayoutProps {}
 const items: MenuProps["items"] = [
     {
-        label: <Link to={"/seller"}>Home</Link>,
+        label: <Link to={"/seller"}>Главная</Link>,
         key: "home",
         icon: <HomeOutlined />,
     },
     {
-        label: <Link to={"/seller/settings"}>Settings</Link>,
+        label: <Link to={"/seller/settings"}>Настройки</Link>,
         key: "settings",
         icon: <SettingOutlined />,
     },
     {
-        label: <Link to={"/seller/orders"}>Orders</Link>,
+        label: <Link to={"/seller/orders"}>Заказы</Link>,
         key: "orders",
         icon: <CarOutlined />,
     },
     {
-        label: <Link to={"/seller/products"}>Products</Link>,
+        label: <Link to={"/seller/products"}>Товары</Link>,
         key: "products",
         icon: <ProductOutlined />,
     },
     {
-        label: <Link to={"/seller/supply"}>Supply</Link>,
+        label: <Link to={"/seller/supply"}>Поставки</Link>,
         key: "supply",
         icon: <NodeCollapseOutlined />,
     },
@@ -72,7 +72,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
     const profileItems: MenuProps["items"] = [
         {
             key: "profile",
-            label: <Link to={"/seller/profile"}>Profile</Link>,
+            label: <Link to={"/seller/profile"}>Профиль</Link>,
             icon: <ProfileOutlined />,
         },
         {
@@ -85,7 +85,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                         dispatch(sellerLogout());
                     }}
                 >
-                    Logout
+                    Выйти
                 </Link>
             ),
             icon: <LogoutOutlined />,
@@ -99,7 +99,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             menuItems={items}
             profileItems={profileItems}
             logoLink="/seller"
-            role="Seller"
+            role="Продавец"
             userEmail={sellerAuth.userData?.email || "email@gmail.com"}
             selectedKeys={selectedKeys}
         />

@@ -11,11 +11,11 @@ export const SellerRegisterPage: FC<SellerRegisterPageProps> = ({}) => {
             <section className="flex flex-col items-center w-full max-w-sm">
                 <Logo />
                 <h1 className="py-5 text-2xl font-semibold">
-                    Register as a seller
+                    Зарегистрируйтесь как продавец
                 </h1>
                 <SellerRegisterForm />
                 <Link to={"/seller/login"} className="w-full">
-                    Already have an account? Log in here
+                    Уже есть аккаунт? Войдите здесь
                 </Link>
             </section>
         </div>

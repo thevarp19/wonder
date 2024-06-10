@@ -9,8 +9,8 @@ import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Modal } from "antd";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
+import { SupplyPDF } from ".";
 import { useGetSupply } from "../../queries";
-import { SupplyPDF } from "../SupplyPDF";
 
 interface SupplyPDFModalProps {
     isModalOpen?: boolean;
@@ -52,7 +52,7 @@ export const SupplyPDFModal: FC<SupplyPDFModalProps> = ({
                                     boxes={boxes}
                                 />
                             }
-                            fileName={`Supply-${padNumbers(
+                            fileName={`Поставка-${padNumbers(
                                 supply.supplyServerId,
                                 8
                             )}.pdf`}
@@ -65,14 +65,14 @@ export const SupplyPDFModal: FC<SupplyPDFModalProps> = ({
                         >
                             {({ loading }) =>
                                 loading
-                                    ? "Loading document..."
-                                    : "Download now!"
+                                    ? "Загрузка документа..."
+                                    : "Скачать сейчас!"
                             }
                         </PDFDownloadLink>
                     )}
                 </div>
             )}
-            title="Print"
+            title="Печать"
         >
             {isPending && <Loading />}
             {isSuccess && store && supply.supplyServerId && (

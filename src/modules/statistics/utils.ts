@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
+import "dayjs/locale/ru";
 import { DurationType } from "./types";
-
 export const getColorByStatisticsName = (name: string) => {
     switch (name) {
         case "Чек":
@@ -17,17 +17,18 @@ export const getColorByStatisticsName = (name: string) => {
 };
 
 export const formatLocalDate = (dateString: string, duration: DurationType) => {
+    dayjs.locale("ru");
     const date = dayjs(dateString);
     switch (duration) {
         case "DAY":
-            return date.format("HH:mm"); // Format to show hours and minutes
+            return date.format("HH:mm");
         case "WEEK":
-            return date.format("ddd"); // Format to show day of the week (e.g., Mon, Tue)
+            return date.format("ddd");
         case "MONTH":
-            return date.format("MMM D"); // Format to show month and day (e.g., Jan 1)
+            return date.format("MMM D");
         case "YEAR":
-            return date.format("MMM"); // Format to show month (e.g., Jan, Feb)
+            return date.format("MMM");
         default:
-            return dateString; // Default to the original string if no duration matches
+            return dateString;
     }
 };

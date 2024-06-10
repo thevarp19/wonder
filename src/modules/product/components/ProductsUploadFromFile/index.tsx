@@ -19,12 +19,12 @@ export const ProductsUploadFromFile: FC<ProductsUploadFromFileProps> = ({
     }, [data]);
     return (
         <div className="p-4">
-            <h1 className="pb-4 text-2xl font-semibold">Upload products</h1>
+            <h1 className="pb-4 text-2xl font-semibold">Загрузка продуктов</h1>
             <a
                 className=""
                 href="https://storage.googleapis.com/wonder-bucket/%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D1%84%D0%B0%D0%B8%CC%86%D0%BB%D0%B0%20%D0%B8%D0%BC%D0%BF%D0%BE%D1%80%D1%82%D0%B0.xlsx"
             >
-                Download an example file
+                Скачать пример файла
             </a>
             <div className="relative max-w-sm mt-4">
                 {isPending && (
@@ -48,7 +48,7 @@ export const ProductsUploadFromFile: FC<ProductsUploadFromFileProps> = ({
                         <InboxOutlined />
                     </p>
                     <p className="ant-upload-text">
-                        Click or drag file to this area to upload
+                        Нажмите или перетащите файл в эту область для загрузки
                     </p>
                     <p className="ant-upload-hint"></p>
                 </Upload.Dragger>

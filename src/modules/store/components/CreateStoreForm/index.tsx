@@ -20,13 +20,13 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                 name="kaspiId"
                 formik={formik}
                 formItemProps={{
-                    label: "Kaspi ID",
+                    label: "Kaspi ID (Идентификатор Kaspi)",
                 }}
                 inputProps={{
                     size: "large",
                 }}
             />
-            <Form.Item label="City" className="w-full">
+            <Form.Item label="Город" className="w-full">
                 <CitiesInput
                     className=""
                     size="large"
@@ -39,17 +39,17 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                 name="streetName"
                 formik={formik}
                 formItemProps={{
-                    label: "Street name",
+                    label: "Название улицы",
                 }}
                 inputProps={{
                     size: "large",
                 }}
             />
-            {/* <FormikInput
+            <FormikInput
                 name="streetNumber"
                 formik={formik}
                 formItemProps={{
-                    label: "Street number",
+                    label: "Номер улицы",
                 }}
                 inputProps={{
                     size: "large",
@@ -59,43 +59,43 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                 name="town"
                 formik={formik}
                 formItemProps={{
-                    label: "Town",
-                }}
-                inputProps={{
-                    size: "large",
-                }}
-            /> */}
-            {/* <FormikInput
-                name="district"
-                formik={formik}
-                formItemProps={{
-                    label: "District",
-                }}
-                inputProps={{
-                    size: "large",
-                }}
-            /> */}
-            {/* <FormikInput
-                name="building"
-                formik={formik}
-                formItemProps={{
-                    label: "Building",
-                }}
-                inputProps={{
-                    size: "large",
-                }}
-            /> */}
-            <FormikInput
-                name="apartment"
-                formik={formik}
-                formItemProps={{
-                    label: "Apartment number",
+                    label: "Город",
                 }}
                 inputProps={{
                     size: "large",
                 }}
             />
-            <Form.Item label={"Working time"} className={cn("w-max")}>
+            <FormikInput
+                name="district"
+                formik={formik}
+                formItemProps={{
+                    label: "Район",
+                }}
+                inputProps={{
+                    size: "large",
+                }}
+            />
+            <FormikInput
+                name="building"
+                formik={formik}
+                formItemProps={{
+                    label: "Здание",
+                }}
+                inputProps={{
+                    size: "large",
+                }}
+            />
+            <FormikInput
+                name="apartment"
+                formik={formik}
+                formItemProps={{
+                    label: "Номер квартиры",
+                }}
+                inputProps={{
+                    size: "large",
+                }}
+            />
+            <Form.Item label={"Рабочее время"} className={cn("w-max")}>
                 <WorkingTimeInput
                     onChange={(values) => {
                         formik.setFieldValue("dayOfWeekWorks", values);
@@ -110,7 +110,7 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                 className={cn("w-full")}
                 loading={mutation.isPending}
             >
-                {"Create"}
+                {"Создать"}
             </Button>
         </Form>
     );

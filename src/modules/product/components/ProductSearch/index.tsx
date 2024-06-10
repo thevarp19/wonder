@@ -12,7 +12,7 @@ export function ProductsSearch({
         <div className="my-2">
             <Input
                 prefix={<SearchOutlined />}
-                placeholder="Search"
+                placeholder="Поиск"
                 value={searchValue}
                 onChange={(e) => {
                     setSearchValue(e.target.value);

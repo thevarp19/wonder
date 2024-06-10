@@ -17,32 +17,32 @@ const columns: TableColumnsType<GetStoreResponse> = [
         dataIndex: "kaspiId",
     },
     {
-        title: "Address",
+        title: "Адрес",
         render: (_, record) => <StoreAddressCell {...record} />,
     },
     {
-        title: "Working time",
+        title: "Рабочее время",
         render: (_, record) => (
             <StoreWorkingTimeCell dayOfWeeks={record.availableWorkTimes} />
         ),
     },
     {
-        title: "Status",
+        title: "Статус",
         render: (_, record) => <StoreSwitch record={record} />,
     },
     {
-        title: "Cells",
+        title: "Ячейки",
         render: (_, record) => (
             <Link
                 to={`/admin/settings/cells/${record.id}`}
                 className="cursor-pointer"
             >
-                <Button>Cells</Button>
+                <Button>Ячейки</Button>
             </Link>
         ),
     },
     {
-        title: "Edit",
+        title: "Редактировать",
         render: (_, record) => (
             <Link
                 to={`/admin/settings/update-store/${record.id}`}
@@ -53,7 +53,7 @@ const columns: TableColumnsType<GetStoreResponse> = [
         ),
     },
     {
-        title: "Employees",
+        title: "Сотрудники",
         render: (_, record) => (
             <Link
                 to={`/admin/settings/employees/${record.id}`}
@@ -64,7 +64,7 @@ const columns: TableColumnsType<GetStoreResponse> = [
         ),
     },
     {
-        title: "Box types",
+        title: "Типы ящиков",
         render: (_, record) => (
             <StoreBoxesModal
                 storeId={`${record.id}`}

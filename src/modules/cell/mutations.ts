@@ -58,7 +58,7 @@ export const deleteCellMutation = (id: number, storeId: number) => {
             await deleteCell(id);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
 
             queryClient.invalidateQueries({
                 queryKey: [`cells`, storeId],

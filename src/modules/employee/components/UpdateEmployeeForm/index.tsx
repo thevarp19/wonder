@@ -37,7 +37,7 @@ export const UpdateEmployeeForm: FC<UpdateEmployeeFormProps> = ({
                     name="firstName"
                     formik={formik}
                     formItemProps={{
-                        label: "First Name",
+                        label: "Имя",
                         required: true,
                     }}
                     inputProps={{
@@ -49,7 +49,7 @@ export const UpdateEmployeeForm: FC<UpdateEmployeeFormProps> = ({
                     name="lastName"
                     formik={formik}
                     formItemProps={{
-                        label: "Last Name",
+                        label: "Фамилия",
                         required: true,
                     }}
                     inputProps={{
@@ -62,7 +62,7 @@ export const UpdateEmployeeForm: FC<UpdateEmployeeFormProps> = ({
                 <FormikInput
                     name="phoneNumber"
                     formik={formik}
-                    formItemProps={{ label: "Phone number", required: true }}
+                    formItemProps={{ label: "Номер телефона", required: true }}
                     inputProps={{
                         size: "large",
                         onChange: (e) => {
@@ -73,7 +73,10 @@ export const UpdateEmployeeForm: FC<UpdateEmployeeFormProps> = ({
                 <FormikInput
                     name="email"
                     formik={formik}
-                    formItemProps={{ label: "Email", required: true }}
+                    formItemProps={{
+                        label: "Электронная почта",
+                        required: true,
+                    }}
                     inputProps={{
                         size: "large",
                     }}
@@ -87,7 +90,7 @@ export const UpdateEmployeeForm: FC<UpdateEmployeeFormProps> = ({
                 className={cn("w-full mt-6")}
                 loading={mutation.isPending}
             >
-                {"Update"}
+                {"Обновить"}
             </Button>
         </Form>
     );

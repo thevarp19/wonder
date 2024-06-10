@@ -5,49 +5,30 @@ import { GetSupplyById } from "../../types";
 
 const columns: TableColumnsType<GetSupplyById> = [
     {
-        title: "Article",
+        title: "Артикул",
         dataIndex: "article",
     },
     {
-        title: "Name",
+        title: "Название",
         dataIndex: "name",
     },
     {
-        title: "Vendor code",
+        title: "Артикул поставщика",
         dataIndex: "vendorCode",
     },
     {
-        title: "Box barcode",
+        title: "Штрих-код коробки",
         dataIndex: "boxBarCode",
     },
     {
-        title: "Box type name",
+        title: "Название типа коробки",
         dataIndex: "boxTypeName",
     },
     {
-        title: "Shop name",
+        title: "Название магазина",
         dataIndex: "shopName",
     },
 ];
-
-// function generateMockData(numberOfEntries: number) {
-//     const mockDataArray = [];
-
-//     for (let i = 0; i < numberOfEntries; i++) {
-//         const data = {
-//             article: `Article${i}`,
-//             name: `Name${i}`,
-//             vendorCode: `Vendor${i}`,
-//             boxBarCode: `Barcode${i}`,
-//             boxTypeName: `Type${i}`,
-//             storeAddress: `Address${i}`,
-//         };
-
-//         mockDataArray.push(data);
-//     }
-
-//     return mockDataArray;
-// }
 
 interface SupplyDetailsTableProps {
     supplyId: number;
@@ -63,6 +44,9 @@ export const SupplyDetailsTable: FC<SupplyDetailsTableProps> = ({
             dataSource={[]}
             rowKey={"id"}
             loading={!isPending}
+            locale={{
+                emptyText: "Нет данных",
+            }}
         />
     );
 };

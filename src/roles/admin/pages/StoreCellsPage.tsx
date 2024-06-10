@@ -12,17 +12,17 @@ interface StoreCellsPageProps {}
 export const StoreCellsPage: FC<StoreCellsPageProps> = ({}) => {
     const { storeId: rawStoreId } = useParams();
     if (!rawStoreId) {
-        return <div>Invalid store id</div>;
+        return <div>Неверный идентификатор магазина</div>;
     }
     const storeId = parseInt(rawStoreId);
     if (isNaN(storeId)) {
-        return <div>Invalid store id</div>;
+        return <div>Неверный идентификатор магазина</div>;
     }
     const { data: cells, isPending } = useGetCells(storeId);
     const { data: store, isPending: isStorePending } = useGetStore(storeId);
     return (
         <div>
-            <h1 className="mb-4 text-2xl font-semibold">Store: {storeId}</h1>
+            <h1 className="mb-4 text-2xl font-semibold">Магазин: {storeId}</h1>
             <div className="flex gap-4 mb-4">
                 <CreateCellModal storeId={storeId} />
                 <PrintAllCellsButton store={store} cells={cells} />
@@ -42,7 +42,7 @@ const CreateCellModal = ({ storeId }: { storeId: number }) => {
     return (
         <>
             <Modal
-                title="Create Cell"
+                title="Создать ячейку"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
                 okButtonProps={{ style: { display: "none" } }}
@@ -56,7 +56,7 @@ const CreateCellModal = ({ storeId }: { storeId: number }) => {
                 />
             </Modal>
             <Button type="primary" onClick={() => setIsModalOpen(true)}>
-                Create Cell
+                Создать ячейку
             </Button>
         </>
     );

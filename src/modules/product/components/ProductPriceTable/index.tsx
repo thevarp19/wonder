@@ -29,13 +29,13 @@ interface ProductPriceTableProps {}
 
 const columns: TableColumnsType<ProductWithPrices> = [
     {
-        title: "Article",
+        title: "Артикул",
         dataIndex: "vendorCode",
         fixed: "left",
         width: 150,
     },
     {
-        title: "Name",
+        title: "Название",
         render: (_, record) => (
             <a href={record.vendorCode} className="">
                 {record.name}
@@ -45,7 +45,7 @@ const columns: TableColumnsType<ProductWithPrices> = [
         width: 150,
     },
     {
-        title: "Published",
+        title: "Опубликовано",
         dataIndex: "isPublished",
         render: (_, record) => (
             <ProductEnableSwitch enabled={record.published} id={record.id} />
@@ -53,7 +53,7 @@ const columns: TableColumnsType<ProductWithPrices> = [
         width: 100,
     },
     {
-        title: "Count",
+        title: "Количество",
         render: (_, record) => <div className="">{record.count}</div>,
         width: 70,
         fixed: "left",
@@ -190,7 +190,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
     const newColumns = [
         ...columns,
         {
-            title: "Main price city",
+            title: "Главный город цены",
             render: (_: any, record: ProductWithPrices) => (
                 <MainPriceCitySelect
                     isEditable={isEditable}
@@ -229,7 +229,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
     return (
         <div>
             <Modal
-                title="stores"
+                title="Магазины"
                 open={isModalOpen}
                 onCancel={() => {
                     setIsModalOpen(false);
@@ -263,7 +263,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                     }}
                     type="primary"
                 >
-                    Stores
+                    Магазины
                 </Button>
             </div>
             <Table
@@ -317,7 +317,7 @@ function SavePriceEditButton({
             <Modal
                 open={isModalOpen}
                 width={800}
-                title="Do you want to save changes?"
+                title="Хотите сохранить изменения?"
                 onOk={async () => {
                     await onClick();
                     setIsModalOpen(false);

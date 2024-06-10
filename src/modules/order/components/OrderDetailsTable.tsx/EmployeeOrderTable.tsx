@@ -19,28 +19,28 @@ const columns: TableColumnsType<GetOrderById> = [
         ),
     },
     {
-        title: "Article",
+        title: "Артикул",
         dataIndex: "productArticle",
     },
     {
-        title: "Product name",
+        title: "Название продукта",
         dataIndex: "productName",
     },
     {
-        title: "Cell number",
+        title: "Номер ячейки",
         dataIndex: "cellCode",
     },
     {
-        title: "Vendor code",
+        title: "Артикул поставщика",
         dataIndex: "productVendorCode",
     },
     {
-        title: "Sell price",
+        title: "Цена продажи",
         dataIndex: "productSellPrice",
         render: (text) => <PriceCell price={text} />,
     },
     {
-        title: "Status",
+        title: "Статус",
         render: (_) => <OrderStatusCell status={"Не сканировано"} />,
     },
 ];

@@ -4,21 +4,20 @@ import dayjs from "dayjs";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { WorkDayOfWeekRequest, WorkDayOfWeekResponse } from "../../types";
+
 interface UpdateWorkingTimeInputProps {
     onChange: (values: WorkDayOfWeekRequest[]) => void;
     initialValues?: WorkDayOfWeekResponse[];
 }
-
 const days = [
-    { name: "Monday", index: 1 },
-    { name: "Tuesday", index: 2 },
-    { name: "Wednesday", index: 3 },
-    { name: "Thursday", index: 4 },
-    { name: "Friday", index: 5 },
-    { name: "Saturday", index: 6 },
-    { name: "Sunday", index: 7 },
+    { name: "Понедельник", index: 1 },
+    { name: "Вторник", index: 2 },
+    { name: "Среда", index: 3 },
+    { name: "Четверг", index: 4 },
+    { name: "Пятница", index: 5 },
+    { name: "Суббота", index: 6 },
+    { name: "Воскресенье", index: 7 },
 ];
-
 const mapResponseToRequest = (initialValues?: WorkDayOfWeekResponse[]) => {
     return days.map((day) => {
         const res = {
@@ -77,7 +76,7 @@ export const UpdateWorkingTimeInput: FC<UpdateWorkingTimeInputProps> = ({
                     "text-gray-400": detailed,
                 })}
             >
-                <span className="w-28">Mon-Sun: </span>
+                <span className="w-28">Пн-Вс: </span>
                 <TimePicker
                     format="HH:mm"
                     needConfirm={false}
@@ -93,7 +92,7 @@ export const UpdateWorkingTimeInput: FC<UpdateWorkingTimeInputProps> = ({
                         setMainOpenTime(`${dateString}`);
                     }}
                 />
-                <span>until</span>
+                <span>до</span>
                 <TimePicker
                     format="HH:mm"
                     needConfirm={false}
@@ -125,7 +124,7 @@ export const UpdateWorkingTimeInput: FC<UpdateWorkingTimeInputProps> = ({
                         setDetailed(e.target.checked);
                     }}
                 >
-                    Detailed
+                    Подробно
                 </Checkbox>
             </div>
 
@@ -215,7 +214,7 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                     );
                 }}
             />
-            <span>until</span>
+            <span>до</span>
             <TimePicker
                 format="HH:mm"
                 needConfirm={false}

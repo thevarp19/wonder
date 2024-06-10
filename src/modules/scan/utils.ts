@@ -16,5 +16,5 @@ export function toScanProductsSearch() {
     window.location.href = `${scannerUrl}&type=single&useFor=employeeSearch`;
 }
 export function toScanProductsSizes() {
-    window.location.href = `${scannerUrl}&type=single&useFor=employeeSize`;
+    window.location.href = `${scannerUrl}&type=single&useFor=employeeSizes`;
 }

@@ -11,31 +11,31 @@ interface ProductsTableProps {
 
 const columns: TableColumnsType<GetProductContent> = [
     {
-        title: "Article",
+        title: "Артикул",
         dataIndex: "vendorCode",
     },
     {
-        title: "Name",
+        title: "Название",
         render: (_, record) => <a href={record.vendorCode}>{record.name}</a>,
     },
     {
-        title: "Published",
+        title: "Опубликовано",
         dataIndex: "isPublished",
         render: (_, record) => <ProductEnableSwitch {...record} />,
     },
 
     {
-        title: "Quantity in Almaty",
+        title: "Количество в Алматы",
         render: (_, record) => <span>{record.prices[0]?.count}</span>,
     },
 
     {
-        title: "Quantity in Astana",
+        title: "Количество в Астане",
         render: (_, record) => <span>{record.prices[0]?.count}</span>,
     },
 
     {
-        title: "Quantity in Shymkent",
+        title: "Количество в Шымкенте",
         render: (_, record) => <span>{record.prices[0]?.count}</span>,
     },
 ];

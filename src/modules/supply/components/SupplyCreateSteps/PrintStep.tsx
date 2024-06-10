@@ -30,11 +30,11 @@ export const PrintStep: FC<PrintStepProps> = ({}) => {
         }));
     return (
         <div className="mb-4">
-            <h1 className="mb-4 text-2xl font-semibold">Print</h1>
+            <h1 className="mb-4 text-2xl font-semibold">Печать</h1>
             <h2 className="flex items-center gap-1 mb-4 text-xl font-medium">
-                Store: {store && <StoreAddressCell {...store} />}
+                Магазин: {store && <StoreAddressCell {...store} />}
             </h2>
-            <h2 className="mb-4 text-xl font-medium">Date: {supply.date}</h2>
+            <h2 className="mb-4 text-xl font-medium">Дата: {supply.date}</h2>
             <div className="grid grid-cols-2 gap-4">
                 {handledPacks.map((pack, index) => (
                     <PackItem key={pack.id} pack={pack} index={index} />
@@ -51,18 +51,18 @@ const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
         <Card
             title={
                 <div className="flex gap-4">
-                    <h2>Pack {index + 1}</h2>
+                    <h2>Пакет {index + 1}</h2>
                 </div>
             }
         >
             <div className="flex flex-col gap-4">
                 <h3>
-                    Box type: {box?.name}
+                    Тип коробки: {box?.name}
                     {", "}
                     {box?.description}
                 </h3>
                 <div>
-                    <h3>Products:</h3>
+                    <h3>Продукты:</h3>
                     <ol>
                         {pack.products.map((product, index) => (
                             <li key={product.id} className="flex">

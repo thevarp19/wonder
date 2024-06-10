@@ -9,16 +9,16 @@ interface StoreEmployeesPageProps {}
 export const StoreEmployeesPage: FC<StoreEmployeesPageProps> = ({}) => {
     const { storeId: rawStoreId } = useParams();
     if (!rawStoreId) {
-        return <div>Invalid store id</div>;
+        return <div>Неверный идентификатор магазина</div>;
     }
     const storeId = parseInt(rawStoreId);
     if (isNaN(storeId)) {
-        return <div>Invalid store id</div>;
+        return <div>Неверный идентификатор магазина</div>;
     }
 
     return (
         <div>
-            <h1 className="mb-4 text-2xl font-semibold">Store: {storeId}</h1>
+            <h1 className="mb-4 text-2xl font-semibold">Магазин: {storeId}</h1>
             <div className="flex gap-4 mb-4">
                 <CreateEmployeeModal storeId={storeId} />
             </div>
@@ -32,7 +32,7 @@ const CreateEmployeeModal = ({ storeId }: { storeId: number }) => {
     return (
         <>
             <Modal
-                title="Create Employee"
+                title="Создать сотрудника"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
                 okButtonProps={{ style: { display: "none" } }}
@@ -46,7 +46,7 @@ const CreateEmployeeModal = ({ storeId }: { storeId: number }) => {
                 />
             </Modal>
             <Button type="primary" onClick={() => setIsModalOpen(true)}>
-                Create Employee
+                Создать сотрудника
             </Button>
         </>
     );

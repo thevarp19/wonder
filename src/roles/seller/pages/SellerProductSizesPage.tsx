@@ -85,12 +85,12 @@ export const SellerSearchResultsTable: FC<{ searchValue: string }> = ({}) => {
             dataSource={[
                 {
                     id: 1,
-                    name: "Product name",
+                    name: "Название продукта",
                     length: 1,
                     width: 2,
                     height: 3,
                     weight: 4,
-                    comment: "Comment",
+                    comment: "Комментарий",
                 },
             ]}
             columns={columns}
