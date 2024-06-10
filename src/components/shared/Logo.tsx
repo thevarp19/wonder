@@ -1,4 +1,4 @@
-import { logoIcon } from "@/assets";
+import { logo } from "@/assets";
 import { cn } from "@/utils/shared.util";
 import { FC } from "react";
 import { Link } from "react-router-dom";
@@ -11,7 +11,7 @@ interface LogoProps {
 export const Logo: FC<LogoProps> = ({ link }) => {
     return (
         <Link to={link || "/"}>
-            <Image src={logoIcon} alt="logo" className={cn("w-40 h-10")} />
+            <Image src={logo} alt="logo" className={cn("w-40 h-10")} />
         </Link>
     );
 };
