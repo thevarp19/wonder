@@ -33,7 +33,7 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
     const { data, isPending } = useGetSellerSupplies();
     const columns: TableColumnsType<GetSellerSupply> = [
         {
-            title: "Идентификатор поставки",
+            title: "Номер поставки",
             dataIndex: "id",
             render: (id) => padNumbers(id, 8),
         },
@@ -46,7 +46,7 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
             render: (_, record) => record.supplyCreatedTime?.substring(0, 10),
         },
         {
-            title: "Дата получения",
+            title: "Дата приема",
             dataIndex: "receivingDate",
             render: (_, record) => record.supplyAcceptTime?.substring(0, 10),
         },

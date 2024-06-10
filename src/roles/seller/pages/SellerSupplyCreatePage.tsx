@@ -99,7 +99,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     function nextStep() {
         if (step === 0) {
             if (supply.products.length === 0) {
-                message.error("Пожалуйста, добавьте товары");
+                message.error("Пожалуйста, добавьте продукты");
                 return;
             }
             dispatch(saveProducts());
@@ -146,13 +146,13 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                     current={step}
                     items={[
                         {
-                            title: "Добавить товары",
+                            title: "Добавить продукты",
                         },
                         {
                             title: "Выбрать магазин и дату",
                         },
                         {
-                            title: "Упаковать товары",
+                            title: "Упаковать продукты",
                         },
                         {
                             title: "Печать",

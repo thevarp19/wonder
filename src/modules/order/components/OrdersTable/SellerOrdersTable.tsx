@@ -40,15 +40,15 @@ const columns: TableColumnsType<GetOrdersByDate> = [
         ),
     },
     {
-        title: "Планируемая дата доставки",
-        render: (_, record) => (
-            <DateCell timestamp={record.plannedDeliveryDate} />
-        ),
-    },
-    {
         title: "Дата передачи",
         render: (_, record) => (
             <DateCell timestamp={record.courierTransmissionDate} />
+        ),
+    },
+    {
+        title: "Планируемая дата доставки",
+        render: (_, record) => (
+            <DateCell timestamp={record.plannedDeliveryDate} />
         ),
     },
     {

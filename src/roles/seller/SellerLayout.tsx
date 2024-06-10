@@ -32,7 +32,7 @@ const items: MenuProps["items"] = [
         icon: <CarOutlined />,
     },
     {
-        label: <Link to={"/seller/products"}>Товары</Link>,
+        label: <Link to={"/seller/products"}>Продукты</Link>,
         key: "products",
         icon: <ProductOutlined />,
     },

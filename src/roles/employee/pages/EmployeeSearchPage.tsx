@@ -55,7 +55,7 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
 
 const columns: TableColumnsType<any> = [
     {
-        title: "ID товара",
+        title: "ID продукта",
         dataIndex: "productId",
         key: "productId",
     },

@@ -119,7 +119,7 @@ export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
                         <div className="w-[35%] p-2 bg-orange-100 shadow-2xl rounded-xl">
                             <div className="bg-white rounded-[10px] h-full flex flex-col gap-2">
                                 <div className="bg-[#EF7214] rounded-md text-white font-semibold text-center">
-                                    ТОП Товары
+                                    ТОП Продукты
                                 </div>
                                 {topProductsLoading ? (
                                     <Spin />

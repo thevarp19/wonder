@@ -28,7 +28,7 @@ export const ScanProductsStep: FC<ScanProductsStepProps> = ({}) => {
                 className="my-4"
                 onClick={toScanProducts}
             >
-                Сканировать товары
+                Сканировать продукты
             </Button>
         </div>
     );
