@@ -51,7 +51,7 @@ const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
         <Card
             title={
                 <div className="flex gap-4">
-                    <h2>Пакет {index + 1}</h2>
+                    <h2>Упаковка {index + 1}</h2>
                 </div>
             }
         >

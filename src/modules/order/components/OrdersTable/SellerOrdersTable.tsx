@@ -23,7 +23,7 @@ const columns: TableColumnsType<GetOrdersByDate> = [
         dataIndex: "sellerName",
     },
     {
-        title: "Магазин",
+        title: "Склад",
         dataIndex: "code",
     },
     {
@@ -40,9 +40,15 @@ const columns: TableColumnsType<GetOrdersByDate> = [
         ),
     },
     {
-        title: "Время отправки",
+        title: "Планируемая дата доставки",
         render: (_, record) => (
             <DateCell timestamp={record.plannedDeliveryDate} />
+        ),
+    },
+    {
+        title: "Дата передачи",
+        render: (_, record) => (
+            <DateCell timestamp={record.courierTransmissionDate} />
         ),
     },
     {
@@ -77,7 +83,7 @@ export const SellerOrdersTable: FC<SellerOrdersTableProps> = ({}) => {
         <Table
             columns={columns}
             dataSource={orders?.content}
-            rowKey={"id"}
+            rowKey={"code"}
             loading={isPending}
             pagination={{
                 pageSize: 10,

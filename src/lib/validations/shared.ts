@@ -20,7 +20,7 @@ export const KzPhoneNumberSchema = () =>
         "Поле должно содержать корректный номер телефона"
     );
 
-export const passwordSchemas = (passwordFieldName: string = "пароль") => ({
+export const passwordSchemas = (passwordFieldName: string = "password") => ({
     self: Yup.string().max(20).min(6),
     repeat: Yup.string().test(
         "password-match",
