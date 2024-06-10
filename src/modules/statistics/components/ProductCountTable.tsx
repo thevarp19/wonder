@@ -47,7 +47,7 @@ export const ProductsCountTable: FC<ProductsCountTableProps> = ({}) => {
                 dataSource={products?.content}
                 rowKey={(record) => record.article}
                 pagination={{
-                    pageSize: 4,
+                    pageSize: 10,
                     total: products?.totalElements,
                     showSizeChanger: false,
                     onChange(page) {

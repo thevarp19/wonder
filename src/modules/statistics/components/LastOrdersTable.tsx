@@ -1,5 +1,4 @@
 import { ConfigProvider, Table, TableColumnsType } from "antd";
-import ruRU from "antd/lib/locale/ru_RU";
 import { FC, useState } from "react";
 import { useGetAdminLastOrders } from "../queries";
 import { GetLastOrders } from "../types";
@@ -32,7 +31,7 @@ export const LastOrdersTable: FC<ProductsCountTableProps> = ({}) => {
     );
 
     return (
-        <ConfigProvider locale={ruRU}>
+        <ConfigProvider>
             <Table
                 className="h-full"
                 size="small"
@@ -41,7 +40,7 @@ export const LastOrdersTable: FC<ProductsCountTableProps> = ({}) => {
                 dataSource={lastOrders?.content}
                 rowKey={(record) => record.orderCode}
                 pagination={{
-                    pageSize: 4,
+                    pageSize: 10,
                     total: lastOrders?.totalElements,
                     showSizeChanger: false,
                     onChange(page) {

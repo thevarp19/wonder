@@ -1,6 +1,13 @@
+import { FilterButton } from "@/components/ui/FilterButton";
+import { SearchInput } from "@/components/ui/SearchInput";
 import { BoxesTable } from "@/modules/box/components/BoxesTable";
 import { StoresTable } from "@/modules/store/components/StoresTable";
-import { BoxPlotOutlined, ShopOutlined } from "@ant-design/icons";
+import { XMLTable } from "@/modules/xml/components/XMLTable";
+import {
+    BoxPlotOutlined,
+    FileMarkdownOutlined,
+    ShopOutlined,
+} from "@ant-design/icons";
 import { Button, Menu, MenuProps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -12,9 +19,14 @@ const items: MenuProps["items"] = [
         icon: <ShopOutlined />,
     },
     {
-        label: "Ящики",
+        label: "Коробки",
         key: "boxes",
         icon: <BoxPlotOutlined />,
+    },
+    {
+        label: "XML",
+        key: "xml",
+        icon: <FileMarkdownOutlined />,
     },
 ];
 
@@ -37,7 +49,9 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
                 mode="horizontal"
                 onClick={onClick}
                 selectedKeys={[
-                    ["stores", "boxes"].includes(current) ? current : "stores",
+                    ["stores", "boxes", "xml"].includes(current)
+                        ? current
+                        : "stores",
                 ]}
             />
             {current === "stores" && (
@@ -56,16 +70,32 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
             )}
             {current === "boxes" && (
                 <div className="p-4">
-                    <h1 className="pb-4 text-2xl font-semibold">Ящики</h1>
+                    <h1 className="pb-4 text-2xl font-semibold">Коробки</h1>
                     <Button
                         size="large"
                         type="primary"
                         className="mb-4"
                         href="/admin/settings/create-box"
                     >
-                        Создать новый ящик
+                        Создать новый коробку
                     </Button>
                     <BoxesTable />
+                </div>
+            )}
+            {current === "xml" && (
+                <div className="p-4">
+                    <h1 className="pb-4 text-2xl font-semibold">XML Таблица</h1>
+                    <div className="flex items-center mb-4">
+                        <div className="flex items-center w-full max-w-sm gap-5">
+                            <SearchInput
+                                searchValue={""}
+                                setSearchValue={() => {}}
+                                onSearch={() => {}}
+                            />
+                            <FilterButton />
+                        </div>
+                    </div>
+                    <XMLTable />
                 </div>
             )}
         </div>

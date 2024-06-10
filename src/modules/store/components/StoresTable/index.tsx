@@ -64,7 +64,7 @@ const columns: TableColumnsType<GetStoreResponse> = [
         ),
     },
     {
-        title: "Типы ящиков",
+        title: "Типы коробок",
         render: (_, record) => (
             <StoreBoxesModal
                 storeId={`${record.id}`}

@@ -14,7 +14,7 @@ export const SearchInput: FC<SearchInputProps> = ({
     onSearch,
 }) => {
     return (
-        <div className="flex items-end gap-4 my-2">
+        <div className="flex items-end w-full gap-4 my-2">
             <Input
                 prefix={<SearchOutlined />}
                 placeholder="Поиск"
