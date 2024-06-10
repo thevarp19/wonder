@@ -63,7 +63,12 @@ export const useGetOrdersSeller = (
     return useQuery<GetOrdersSeller>({
         queryKey: ["seller-orders", startDate, endDate, page, size],
         queryFn: async () => {
-            const { data } = await getOrdersSeller(startDate, endDate);
+            const { data } = await getOrdersSeller(
+                startDate,
+                endDate,
+                page,
+                size
+            );
             return {
                 ...data,
                 content: data.content
