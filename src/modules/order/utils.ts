@@ -9,7 +9,7 @@ export function deliveryTypeMap(type: string) {
         case "DELiVERY_POSTOMAT":
             return "Kaspi Postomat";
         case "DELIVERY_REGIONAL_PICKUP":
-            return "Самовывоз";
+            return "Kaspi Доставка в Postomat";
         default:
             return "Доставка";
     }
