@@ -29,8 +29,16 @@ const columns: TableColumnsType<GetOrdersByDate> = [
         dataIndex: "sellerName",
     },
     {
-        title: "Время заказа",
-        render: (_, record) => <DateCell timestamp={record.creationDate} />,
+        title: "Планируемая дата доставки",
+        render: (_, record) => (
+            <DateCell timestamp={record.plannedDeliveryDate} />
+        ),
+    },
+    {
+        title: "Дата передачи",
+        render: (_, record) => (
+            <DateCell timestamp={record.courierTransmissionDate} />
+        ),
     },
     {
         title: "Тип доставки",
