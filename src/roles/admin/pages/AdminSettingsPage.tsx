@@ -14,7 +14,7 @@ import { useSearchParams } from "react-router-dom";
 
 const items: MenuProps["items"] = [
     {
-        label: "Магазины",
+        label: "Склады",
         key: "stores",
         icon: <ShopOutlined />,
     },
