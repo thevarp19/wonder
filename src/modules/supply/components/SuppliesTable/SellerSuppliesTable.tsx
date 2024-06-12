@@ -58,7 +58,7 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
         },
         {
             title: "Отчет",
-            render: (_, record) => {
+            render: (_) => {
                 return (
                     <Button
                         danger

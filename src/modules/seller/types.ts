@@ -4,7 +4,7 @@ export interface GetSellerProfile {
     sellerName: string;
     sellerId: string;
     tokenKaspi: string;
-    xmlUpdatedAt: string;
+    xmlUpdatedAt?: string;
     pathToXml?: string;
     firstName: string;
     lastName: string;
