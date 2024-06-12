@@ -5,8 +5,10 @@ export function createBox(formData: FormData) {
     return axiosAuthorized.post(`/api/box-types`, formData);
 }
 
-export function getBoxes() {
-    return axiosAuthorized.get<GetBoxResponse[]>(`/api/box-types`);
+export function getBoxes(id: number) {
+    return axiosAuthorized.get<GetBoxResponse[]>(
+        `/api/box-types?store-id=${id}`
+    );
 }
 
 export function deleteBox(id: number) {

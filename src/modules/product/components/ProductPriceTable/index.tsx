@@ -229,7 +229,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
     return (
         <div>
             <Modal
-                title="Магазины"
+                title="Склады"
                 open={isModalOpen}
                 onCancel={() => {
                     setIsModalOpen(false);
@@ -263,7 +263,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                     }}
                     type="primary"
                 >
-                    Магазины
+                    Склады
                 </Button>
             </div>
             <Table

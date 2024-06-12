@@ -18,7 +18,7 @@ export const SupplyDetailsPage: FC<SupplyDetailsPageProps> = ({}) => {
             <div className="flex items-center justify-between my-4">
                 <div className="flex flex-col gap-1 text-xl font-semibold">
                     <span>Идентификатор: {supplyId}</span>
-                    <span>Магазин: {data?.storeAddress}</span>
+                    <span>Склад: {data?.storeAddress}</span>
                 </div>
                 <Link to={`/employee/scan`}>
                     <Button

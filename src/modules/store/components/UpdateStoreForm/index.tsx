@@ -73,46 +73,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                     size: "large",
                 }}
             />
-            <FormikInput
-                name="town"
-                formik={formik}
-                formItemProps={{
-                    label: "Город",
-                }}
-                inputProps={{
-                    size: "large",
-                }}
-            />
-            <FormikInput
-                name="district"
-                formik={formik}
-                formItemProps={{
-                    label: "Район",
-                }}
-                inputProps={{
-                    size: "large",
-                }}
-            />
-            <FormikInput
-                name="building"
-                formik={formik}
-                formItemProps={{
-                    label: "Здание",
-                }}
-                inputProps={{
-                    size: "large",
-                }}
-            />
-            <FormikInput
-                name="apartment"
-                formik={formik}
-                formItemProps={{
-                    label: "Номер квартиры",
-                }}
-                inputProps={{
-                    size: "large",
-                }}
-            />
+
             <Form.Item label={"Рабочее время"} className={cn("w-max")}>
                 <UpdateWorkingTimeInput
                     initialValues={storeDetails?.availableWorkTimes}

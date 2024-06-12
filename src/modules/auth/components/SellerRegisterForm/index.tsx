@@ -58,7 +58,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                         status: current >= 1 ? "process" : "wait",
                     },
                     {
-                        title: "Магазин",
+                        title: "Склад",
                         icon: <ShopOutlined />,
                         status: current >= 2 ? "process" : "wait",
                     },
@@ -127,7 +127,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                         formik={formik}
                         formItemProps={{ className: cn("w-full") }}
                         inputProps={{
-                            placeholder: "Название магазина",
+                            placeholder: "Название склада",
                             size: "large",
                         }}
                     />

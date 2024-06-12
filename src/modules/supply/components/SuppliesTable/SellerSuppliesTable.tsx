@@ -1,9 +1,10 @@
 import { padNumbers } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Table, TableColumnsType, Tag } from "antd";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useGetSellerSupplies } from "../../queries";
 import { GetSellerSupply, SupplyState } from "../../types";
+import { SupplyPDFReportModal } from "../SupplyReportPDF/SupplyPDFReportModal";
 
 // interface Supply {}
 
@@ -27,9 +28,13 @@ function getColor(status: SupplyState) {
 }
 
 export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [reportId, setReportId] = useState<number | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [reportId, setReportId] = useState<number | null>(null);
     const { data, isPending } = useGetSellerSupplies();
+
+    useEffect(() => {
+        console.log(reportId);
+    }, [reportId]);
     const columns: TableColumnsType<GetSellerSupply> = [
         {
             title: "Номер поставки",
@@ -58,14 +63,14 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
         },
         {
             title: "Отчет",
-            render: (_) => {
+            render: (_, record) => {
                 return (
                     <Button
                         danger
                         loading={isPending}
                         onClick={() => {
-                            // setIsModalOpen(true);
-                            // setReportId(record.id);
+                            setIsModalOpen(true);
+                            setReportId(record.id);
                         }}
                         icon={
                             <DownloadOutlined
@@ -82,13 +87,13 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
     return (
         <div>
             <Table loading={isPending} columns={columns} dataSource={data} />
-            {/* {isModalOpen && reportId && (
+            {isModalOpen && reportId && (
                 <SupplyPDFReportModal
                     reportId={reportId || null}
                     setIsModalOpen={setIsModalOpen}
                     isModalOpen={isModalOpen}
                 />
-            )} */}
+            )}
         </div>
     );
 };

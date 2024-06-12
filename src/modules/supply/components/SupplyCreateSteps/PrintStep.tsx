@@ -32,7 +32,7 @@ export const PrintStep: FC<PrintStepProps> = ({}) => {
         <div className="mb-4">
             <h1 className="mb-4 text-2xl font-semibold">Печать</h1>
             <h2 className="flex items-center gap-1 mb-4 text-xl font-medium">
-                Магазин: {store && <StoreAddressCell {...store} />}
+                Склад: {store && <StoreAddressCell {...store} />}
             </h2>
             <h2 className="mb-4 text-xl font-medium">Дата: {supply.date}</h2>
             <div className="grid grid-cols-2 gap-4">
@@ -45,7 +45,8 @@ export const PrintStep: FC<PrintStepProps> = ({}) => {
 };
 
 const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
-    const { data: boxes } = useGetBoxes();
+    const supply = useSupply();
+    const { data: boxes } = useGetBoxes(Number(supply?.store) || -1);
     const box = boxes?.find((box) => `${box.id}` == `${pack.box}`);
     return (
         <Card

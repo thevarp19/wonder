@@ -24,7 +24,7 @@ const columns: TableColumnsType<GetProductCount> = [
     },
 
     {
-        title: "Адрес магазина",
+        title: "Адрес склада",
         render: (_, record) => <span>{record.storeFormattedAddress}</span>,
     },
 ];

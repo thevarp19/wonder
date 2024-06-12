@@ -9,16 +9,16 @@ interface StoreEmployeesPageProps {}
 export const StoreEmployeesPage: FC<StoreEmployeesPageProps> = ({}) => {
     const { storeId: rawStoreId } = useParams();
     if (!rawStoreId) {
-        return <div>Неверный идентификатор магазина</div>;
+        return <div>Неверный идентификатор склада</div>;
     }
     const storeId = parseInt(rawStoreId);
     if (isNaN(storeId)) {
-        return <div>Неверный идентификатор магазина</div>;
+        return <div>Неверный идентификатор склада</div>;
     }
 
     return (
         <div>
-            <h1 className="mb-4 text-2xl font-semibold">Магазин: {storeId}</h1>
+            <h1 className="mb-4 text-2xl font-semibold">Склад: {storeId}</h1>
             <div className="flex gap-4 mb-4">
                 <CreateEmployeeModal storeId={storeId} />
             </div>

@@ -16,6 +16,7 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
     const handleSearch = useCallback(() => {
         setSearchQuery(searchValue);
     }, [searchValue]);
+
     useEffect(() => {
         if (scanSearchValue) {
             setSearchQuery(scanSearchValue);
@@ -55,11 +56,6 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
 
 const columns: TableColumnsType<any> = [
     {
-        title: "ID продукта",
-        dataIndex: "productId",
-        key: "productId",
-    },
-    {
         title: "Vendor Code",
         dataIndex: "vendorCode",
         key: "vendorCode",
@@ -75,7 +71,7 @@ const columns: TableColumnsType<any> = [
         key: "productName",
     },
     {
-        title: "Называние магазина",
+        title: "Название склада",
         dataIndex: "shopName",
         key: "shopName",
     },
@@ -101,7 +97,7 @@ export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
         searchValue,
         false,
         false,
-        false,
+        true,
         false,
         false
     );

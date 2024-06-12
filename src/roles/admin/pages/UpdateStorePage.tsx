@@ -10,7 +10,7 @@ export const UpdateStorePage: FC<UpdateStorePageProps> = ({}) => {
     return (
         <div className="flex flex-col items-center pb-10">
             <h1 className="w-full max-w-sm py-4 pb-10 text-2xl font-semibold">
-                Магазин {storeId}
+                Склад {storeId}
             </h1>
             <UpdateStoreForm />
         </div>

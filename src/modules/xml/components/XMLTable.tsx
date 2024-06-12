@@ -4,11 +4,11 @@ import { XMLTableType } from "../types";
 interface XMLTableProps {}
 const columns: TableColumnsType<XMLTableType> = [
     {
-        title: "ID магазина",
+        title: "ID склада",
         dataIndex: "storeId",
     },
     {
-        title: "Название магазина",
+        title: "Название склада",
         dataIndex: "storeName",
     },
     {
@@ -35,7 +35,7 @@ const columns: TableColumnsType<XMLTableType> = [
 const mockData: XMLTableType[] = [
     {
         storeId: "1",
-        storeName: "Магазин 1",
+        storeName: "Склад 1",
         lastName: "Иванов",
         firstName: "Иван",
         phoneNumber: "+77001112233",
@@ -44,7 +44,7 @@ const mockData: XMLTableType[] = [
     },
     {
         storeId: "2",
-        storeName: "Магазин 2",
+        storeName: "Склад 2",
         lastName: "Петров",
         firstName: "Петр",
         phoneNumber: "+77001112234",
@@ -53,7 +53,7 @@ const mockData: XMLTableType[] = [
     },
     {
         storeId: "3",
-        storeName: "Магазин 3",
+        storeName: "Склад 3",
         lastName: "Сидоров",
         firstName: "Сидор",
         phoneNumber: "+77001112235",

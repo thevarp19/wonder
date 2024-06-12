@@ -27,7 +27,7 @@ export const SupplyPDFModal: FC<SupplyPDFModalProps> = ({
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { data, isSuccess, isPending } = useGetSupply(
-        Number(supply.supplyServerId)
+        Number(supply.supplyServerId) //there not works
     );
     const boxes = myLocalStorage?.get("boxes");
 

@@ -7,7 +7,7 @@ import { FC, useState } from "react";
 
 const items: MenuProps["items"] = [
     {
-        label: "Магазины",
+        label: "Склады",
         key: "stores",
         icon: <ShopOutlined />,
     },

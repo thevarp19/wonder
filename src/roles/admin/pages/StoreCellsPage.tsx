@@ -12,17 +12,17 @@ interface StoreCellsPageProps {}
 export const StoreCellsPage: FC<StoreCellsPageProps> = ({}) => {
     const { storeId: rawStoreId } = useParams();
     if (!rawStoreId) {
-        return <div>Неверный идентификатор магазина</div>;
+        return <div>Неверный идентификатор скалада</div>;
     }
     const storeId = parseInt(rawStoreId);
     if (isNaN(storeId)) {
-        return <div>Неверный идентификатор магазина</div>;
+        return <div>Неверный идентификатор склада</div>;
     }
     const { data: cells, isPending } = useGetCells(storeId);
     const { data: store, isPending: isStorePending } = useGetStore(storeId);
     return (
         <div>
-            <h1 className="mb-4 text-2xl font-semibold">Магазин: {storeId}</h1>
+            <h1 className="mb-4 text-2xl font-semibold">Склад: {storeId}</h1>
             <div className="flex gap-4 mb-4">
                 <CreateCellModal storeId={storeId} />
                 <PrintAllCellsButton store={store} cells={cells} />

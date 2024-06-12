@@ -25,7 +25,7 @@ const DeleteBoxCell: FC<{ boxId: string; storeId: string }> = ({
     const { mutateAsync } = removeBoxFromStoreMutation();
     return (
         <Popconfirm
-            title="Удалить коробку из магазина"
+            title="Удалить коробку из склада"
             description="Вы уверены, что хотите удалить эту коробку?"
             onConfirm={async () => {
                 await mutateAsync({ storeId, boxId });
@@ -62,7 +62,7 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
             ),
         },
     ];
-    const { data: boxes, isPending } = useGetBoxes();
+    const { data: boxes, isPending } = useGetBoxes(Number(storeId));
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { formik, mutation } = useBindBoxToStore(storeId);
     return (

@@ -13,7 +13,7 @@ const columns: TableColumnsType<GetLastOrders> = [
         dataIndex: "orderCode",
     },
     {
-        title: "Название магазина",
+        title: "Название склада",
         render: (_, record) => <span>{record.shopName}</span>,
     },
     {

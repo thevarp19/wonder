@@ -2,22 +2,25 @@ import { axiosAuthorized } from "@/lib/axios";
 import { SellerProfileEdit } from "@/modules/seller/SellerProfileEditForm";
 import { useGetSellerProfile } from "@/modules/seller/queries";
 import { formatDateTime } from "@/utils/shared.util";
-import { Button, Popconfirm, Spin } from "antd";
+import { App, Button, Popconfirm, Spin } from "antd";
 import { FC } from "react";
 
 interface SellerProfilePageProps {}
 
 export const SellerProfilePage: FC<SellerProfilePageProps> = ({}) => {
     const { data } = useGetSellerProfile();
+    const { message } = App.useApp();
 
     const handleClick = () => {
         axiosAuthorized
             .get("/api/products/xml")
             .then((response) => {
                 console.log("XML data:", response.data);
+                message.success("XML файл успешно сгенерирован");
             })
             .catch((error) => {
                 console.error("Error fetching XML:", error);
+                message.error("Ошибка при генерации XML файла");
             });
     };
     return (

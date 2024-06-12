@@ -4,7 +4,9 @@ import { useGetBoxes } from "../../queries";
 import { GetBoxResponse } from "../../types";
 import { DeleteBoxCell } from "./DeleteBoxCell";
 
-interface BoxesTableProps {}
+interface BoxesTableProps {
+    id: number;
+}
 const columns: TableColumnsType<GetBoxResponse> = [
     {
         title: "ID коробки",
@@ -24,8 +26,8 @@ const columns: TableColumnsType<GetBoxResponse> = [
     },
 ];
 
-export const BoxesTable: FC<BoxesTableProps> = ({}) => {
-    const { data: boxes, isPending } = useGetBoxes();
+export const BoxesTable: FC<BoxesTableProps> = ({ id }) => {
+    const { data: boxes, isPending } = useGetBoxes(id);
     return (
         <Table
             columns={columns}

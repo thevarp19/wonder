@@ -79,10 +79,12 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     const dispatch = useAppDispatch();
     const supply = useSupply();
     const packs = useSupplyPacks();
-    const { data: boxes, isSuccess } = useGetBoxes();
+    // @ts-ignore
+    const { data: boxes, isSuccess } = useGetBoxes(supply.store || -1);
     useEffect(() => {
         myLocalStorage?.set("boxes", boxes);
     }, [boxes]);
+
     const handledPacks = packs
         .filter(
             (pack) =>
@@ -105,14 +107,14 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
             dispatch(saveProducts());
         } else if (step === 1) {
             if (!supply.store || !supply.date) {
-                message.error("Пожалуйста, выберите магазин и дату");
+                message.error("Пожалуйста, выберите склад и дату");
                 return;
             }
             const parts = supply.date.split("-");
             const formattedDate = `${parts?.[2]}-${parts?.[1]}-${parts?.[0]}`;
             console.log(new Date(formattedDate), new Date());
             if (new Date(formattedDate) <= new Date()) {
-                message.error("Пожалуйста, выберите магазин и дату");
+                message.error("Пожалуйста, выберите склад и дату");
                 return;
             }
             dispatch(saveDateAndStore());
@@ -149,7 +151,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             title: "Добавить продукты",
                         },
                         {
-                            title: "Выбрать магазин и дату",
+                            title: "Выбрать склад и дату",
                         },
                         {
                             title: "Упаковать продукты",

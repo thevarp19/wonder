@@ -8,12 +8,9 @@ export function mapGetStoreToUpdate(
         cityId: response.city.id,
         streetName: response.streetName,
         streetNumber: response.streetNumber,
-        town: response.town,
-        district: response.district,
-        building: response.building,
+
         latitude: 0,
         longitude: 0,
-        apartment: response.apartment,
         enabled: response.enabled,
         dayOfWeekWorks: response.availableWorkTimes.map((item) => ({
             numericDayOfWeek: item.dayOfWeek,

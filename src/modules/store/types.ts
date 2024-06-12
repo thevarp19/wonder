@@ -18,10 +18,6 @@ export interface CreateStoreRequest {
     cityId: number;
     streetName: string;
     streetNumber: string;
-    town: string;
-    district: string;
-    building: string;
-    apartment: string;
     latitude: number;
     longitude: number;
     dayOfWeekWorks: WorkDayOfWeekRequest[];
@@ -40,10 +36,6 @@ export interface GetStoreResponse {
     kaspiId: string;
     streetName: "string";
     streetNumber: "string";
-    town: "string";
-    district: "string";
-    building: "string";
-    apartment: "string";
     formattedAddress: "string";
     city: { id: number; name: string };
     availableWorkTimes: WorkDayOfWeekResponse[];
@@ -58,11 +50,7 @@ export interface UpdateStoreRequest {
     cityId: number;
     streetName: string;
     streetNumber: string;
-    town: string;
-    district: string;
-    building: string;
     latitude: number;
     longitude: number;
-    apartment: string;
     dayOfWeekWorks: WorkDayOfWeekRequest[];
 }

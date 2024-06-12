@@ -27,7 +27,7 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
         // @ts-ignore
         const selectedStore = stores?.find((temp) => store === temp.id);
         if (!selectedStore) {
-            message.error("Пожалуйста, выберите магазин");
+            message.error("Пожалуйста, выберите склад");
             dispatch(actions.setDate(`${dayjs().format("DD-MM-YYYY")}`));
             return false;
         }
@@ -42,7 +42,7 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
                 (time) => time.dayOfWeek === dayNumber
             )
         ) {
-            message.error("Магазин не работает в этот день");
+            message.error("Склад не работает в этот день");
             dispatch(actions.setDate(`${dayjs().format("DD-MM-YYYY")}`));
             return false;
         }
@@ -61,11 +61,11 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
     return (
         <div>
             <h1 className="text-2xl font-semibold">
-                Пожалуйста, выберите дату и магазин
+                Пожалуйста, выберите дату и склад
             </h1>
             <div className="flex gap-4 py-4">
                 <Select
-                    placeholder={"Выберите магазин"}
+                    placeholder={"Выберите склад"}
                     className="w-80"
                     options={stores?.map((store) => ({
                         label: getStoreFullAddress(store),

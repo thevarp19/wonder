@@ -48,7 +48,7 @@ export function updateProductSize(
     id: string,
     values: UpdateProductSizeRequest
 ) {
-    return axiosAuthorized.put(`/api/products/change-size/${id}`, values);
+    return axiosAuthorized.patch(`/api/products/change-size/${id}`, values);
 }
 
 export function changeProductPrice(value: ChangeProductPriceRequest) {

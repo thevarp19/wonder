@@ -45,7 +45,7 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
                     name="sellerName"
                     formik={formik}
                     formItemProps={{
-                        label: "Название магазина",
+                        label: "Название склада",
                         required: true,
                     }}
                 />
@@ -53,7 +53,7 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
                     name="sellerId"
                     formik={formik}
                     formItemProps={{
-                        label: "Идентификатор магазина",
+                        label: "Идентификатор склада",
                         required: true,
                     }}
                 />
