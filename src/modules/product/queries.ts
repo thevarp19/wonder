@@ -35,11 +35,11 @@ export const useGetProductsWithSizes = (
     page: number = 0,
     size: number = 10,
     searchValue: string = "",
-    byArticle: boolean = true,
-    byVendorCode: boolean = true,
-    byProductName: boolean = true,
-    byShopName: boolean = true,
-    byCellCode: boolean = true
+    byArticle: boolean = false,
+    byVendorCode: boolean = false,
+    byProductName: boolean = false,
+    byShopName: boolean = false,
+    byCellCode: boolean = false
 ) => {
     return useQuery<GetProductsWithSizesResponse>({
         queryKey: [
@@ -73,11 +73,11 @@ export const useGetProductsByParams = (
     page: number = 0,
     size: number = 10,
     searchValue: string = "",
-    byArticle: boolean = true,
-    byVendorCode: boolean = true,
-    byProductName: boolean = true,
-    byShopName: boolean = true,
-    byCellCode: boolean = true
+    byArticle: boolean = false,
+    byVendorCode: boolean = false,
+    byProductName: boolean = false,
+    byShopName: boolean = false,
+    byCellCode: boolean = false
 ) => {
     return useQuery<GetProductsByParamsResponse>({
         queryKey: [

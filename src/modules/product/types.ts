@@ -1,9 +1,9 @@
 import { BasePaginationResponse } from "@/types";
 
 export interface ProductPrice {
-    cityId?: number;
+    cityId: number;
     cityName: string;
-    price?: number;
+    price: number;
     count: number;
 }
 
