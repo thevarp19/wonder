@@ -7,6 +7,7 @@ import {
     GetSupplyBox,
     GetSupplyById,
     GetSupplyProducts,
+    GetSupplyReport,
 } from "./types";
 
 export function getSuppliesByDate(startDate: string, endDate: string) {
@@ -46,4 +47,9 @@ export function createSupply(data: CreateSupplyRequest) {
 
 export function acceptSupplyProducts(values: AcceptSupplyProductRequest) {
     return axiosAuthorized.post(`/api/supplies/employee/scan`, values);
+}
+export function getSupplyReport(id: number) {
+    return axiosAuthorized.get<GetSupplyReport>(
+        `/api/supplies/seller/report/${id}`
+    );
 }

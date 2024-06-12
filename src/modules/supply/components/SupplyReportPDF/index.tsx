@@ -1,7 +1,5 @@
 import { GetBoxResponse } from "@/modules/box/types";
-import { GetStoreResponse } from "@/modules/store/types";
-import { getStoreFullAddress } from "@/modules/store/utils";
-import { SupplyState } from "@/roles/seller/redux/supply/reducer";
+import { formatDate } from "@/utils/shared.util";
 import {
     Document,
     Font,
@@ -13,7 +11,7 @@ import {
 } from "@react-pdf/renderer";
 import JsBarcode from "jsbarcode";
 import { SupplyPack } from "../../../../roles/seller/types/supply";
-import { GetSupplyById } from "../../types";
+import { GetSupplyById, GetSupplyReport } from "../../types";
 
 Font.register({
     family: "Roboto",
@@ -127,22 +125,8 @@ function groupByBox(packs: GetSupplyById[]) {
     return grouped;
 }
 
-export const SupplyPDF = ({
-    date,
-    store,
-    packs,
-    supplyId,
-    supply,
-    boxes,
-}: {
-    supplyId: number;
-    date: string;
-    store: GetStoreResponse;
-    packs: GetSupplyById[];
-    supply: SupplyState;
-    boxes: GetBoxResponse[] | undefined;
-}) => {
-    const groupedByBoxes = Object.values(groupByBox(packs));
+export const SupplyPDFReport = ({ data }: { data: GetSupplyReport }) => {
+    // const groupedByBoxes = Object.values(groupByBox(packs));
     return (
         <Document>
             <Page
@@ -153,16 +137,15 @@ export const SupplyPDF = ({
             >
                 <View style={styles.header}>
                     <Text>
-                        Дата составления:{" "}
-                        {new Date()
-                            .toLocaleDateString("ru-RU")
-                            .replace(".", "-")
-                            .replace(".", "-")}
+                        Дата составления: {formatDate(data.supplyCreationDate)}
                     </Text>
-                    <Text>Дата доставки: {date}</Text>
-                    <Text>Адрес склада: {getStoreFullAddress(store)}</Text>
                     <Text>
-                        Номер поставки: {padNumberToThirteenDigits(supplyId)}
+                        Дата доставки: {formatDate(data.supplyDeliveredDate)}
+                    </Text>
+                    <Text>Адрес склада: {data.ormattedAddress}</Text>
+                    <Text>
+                        Номер поставки:{" "}
+                        {padNumberToThirteenDigits(data.supplyId)}
                     </Text>
                 </View>
                 <View style={styles.root}>

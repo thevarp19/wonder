@@ -1,35 +1,23 @@
 import { Loading } from "@/components/ui/Loading";
-import { myLocalStorage } from "@/lib/storage/browserStorage";
-import { GetStoreResponse } from "@/modules/store/types";
-import { useAppDispatch } from "@/redux/utils";
-import { reset } from "@/roles/seller/redux/supply/actions";
-import { useSupply } from "@/roles/seller/redux/supply/selectors";
 import { padNumbers } from "@/utils/shared.util";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Modal } from "antd";
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
-import { SupplyPDF } from ".";
-import { useGetSupply } from "../../queries";
+import { SupplyPDFReport } from ".";
+import { useGetSupplyReport } from "../../queries";
 
 interface SupplyPDFModalProps {
     isModalOpen?: boolean;
     setIsModalOpen: (value: boolean) => void;
-    store: GetStoreResponse;
+    reportId: number | null;
 }
 
-export const SupplyPDFModal: FC<SupplyPDFModalProps> = ({
+export const SupplyPDFReportModal: FC<SupplyPDFModalProps> = ({
     isModalOpen,
     setIsModalOpen,
-    store,
+    reportId,
 }) => {
-    const supply = useSupply();
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    const { data, isSuccess, isPending } = useGetSupply(
-        Number(supply.supplyServerId)
-    );
-    const boxes = myLocalStorage?.get("boxes");
+    const { data, isSuccess, isPending } = useGetSupplyReport(reportId || -1);
 
     return (
         <Modal
@@ -40,28 +28,13 @@ export const SupplyPDFModal: FC<SupplyPDFModalProps> = ({
             footer={(_, { CancelBtn }) => (
                 <div className="flex items-center justify-end gap-4">
                     <CancelBtn />
-                    {isSuccess && data && supply.supplyServerId && (
+                    {isSuccess && data && reportId && (
                         <PDFDownloadLink
-                            document={
-                                <SupplyPDF
-                                    date={`${supply.date}`}
-                                    store={store}
-                                    packs={data}
-                                    supplyId={supply.supplyServerId}
-                                    supply={supply}
-                                    boxes={boxes}
-                                />
-                            }
+                            document={<SupplyPDFReport data={data} />}
                             fileName={`Поставка-${padNumbers(
-                                supply.supplyServerId,
+                                data.supplyId,
                                 8
                             )}.pdf`}
-                            onClick={() => {
-                                setTimeout(() => {
-                                    dispatch(reset());
-                                    navigate("/seller/supply");
-                                }, 500);
-                            }}
                         >
                             {({ loading }) =>
                                 loading
@@ -75,16 +48,9 @@ export const SupplyPDFModal: FC<SupplyPDFModalProps> = ({
             title="Печать"
         >
             {isPending && <Loading />}
-            {isSuccess && store && supply.supplyServerId && (
+            {isSuccess && reportId && (
                 <PDFViewer showToolbar={true} width={"100%"} height={"100%"}>
-                    <SupplyPDF
-                        supplyId={supply.supplyServerId}
-                        date={`${supply.date}`}
-                        store={store}
-                        packs={data}
-                        supply={supply}
-                        boxes={boxes}
-                    />
+                    <SupplyPDFReport data={data} />
                 </PDFViewer>
             )}
         </Modal>

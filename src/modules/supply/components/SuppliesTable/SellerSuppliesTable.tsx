@@ -1,5 +1,3 @@
-import { useAppDispatch } from "@/redux/utils";
-import { setSupplyId } from "@/roles/employee/redux/scan/actions";
 import { padNumbers } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Table, TableColumnsType, Tag } from "antd";
@@ -29,7 +27,8 @@ function getColor(status: SupplyState) {
 }
 
 export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
-    const dispatch = useAppDispatch();
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [reportId, setReportId] = useState<number | null>(null);
     const { data, isPending } = useGetSellerSupplies();
     const columns: TableColumnsType<GetSellerSupply> = [
         {
@@ -65,8 +64,8 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
                         danger
                         loading={isPending}
                         onClick={() => {
-                            dispatch(setSupplyId(record.id));
                             // setIsModalOpen(true);
+                            // setReportId(record.id);
                         }}
                         icon={
                             <DownloadOutlined
@@ -83,9 +82,9 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
     return (
         <div>
             <Table loading={isPending} columns={columns} dataSource={data} />
-            {/* {isModalOpen && store && supply.supplyServerId && (
-                <SupplyPDFModal
-                    store={store}
+            {/* {isModalOpen && reportId && (
+                <SupplyPDFReportModal
+                    reportId={reportId || null}
                     setIsModalOpen={setIsModalOpen}
                     isModalOpen={isModalOpen}
                 />

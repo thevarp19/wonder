@@ -1,11 +1,15 @@
 import { axiosAuthorized } from "@/lib/axios";
 import { SellerProfileEdit } from "@/modules/seller/SellerProfileEditForm";
-import { Button, Popconfirm } from "antd";
+import { useGetSellerProfile } from "@/modules/seller/queries";
+import { formatDateTime } from "@/utils/shared.util";
+import { Button, Popconfirm, Spin } from "antd";
 import { FC } from "react";
 
 interface SellerProfilePageProps {}
 
 export const SellerProfilePage: FC<SellerProfilePageProps> = ({}) => {
+    const { data } = useGetSellerProfile();
+
     const handleClick = () => {
         axiosAuthorized
             .get("/api/products/xml")
@@ -36,9 +40,18 @@ export const SellerProfilePage: FC<SellerProfilePageProps> = ({}) => {
                     >
                         Сгенерировать XML
                     </Button>
-                    <h2>Последнее обновление 12.06.2024 19:29</h2>
+                    <h2>
+                        Последнее обновление{" "}
+                        {formatDateTime(data?.xmlUpdatedAt ?? "")}
+                    </h2>
                 </div>
-                <SellerProfileEdit />
+                {data ? (
+                    <SellerProfileEdit data={data} />
+                ) : (
+                    <div>
+                        <Spin />
+                    </div>
+                )}
             </div>
         </div>
     );

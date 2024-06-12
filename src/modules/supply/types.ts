@@ -83,3 +83,24 @@ export interface AcceptSupplyProductRequest {
         productArticles: string[];
     }[];
 }
+interface ProductInfo {
+    productName: string;
+    productCount: number;
+}
+
+export interface SupplyBoxInfo {
+    boxVendorCode: string;
+    boxDescription: string;
+    boxName: string;
+    productInfo: ProductInfo[];
+}
+
+export interface GetSupplyReport {
+    supplyId: number;
+    supplyCreationDate: string;
+    supplySelectedDate: string;
+    supplyDeliveredDate: string;
+    supplyAcceptanceDate: string;
+    formattedAddress: string;
+    supplyBoxInfo: SupplyBoxInfo[];
+}

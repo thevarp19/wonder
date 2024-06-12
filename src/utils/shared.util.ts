@@ -64,3 +64,23 @@ export const useDebounce = (value: any, delay: number) => {
     }, [value, delay]);
     return debouncedValue;
 };
+export const formatDateTime = (isoString: string) => {
+    const date = new Date(isoString);
+    return date.toLocaleString("ru-RU", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+    });
+};
+
+export const formatDate = (isoString: string) => {
+    const date = new Date(isoString);
+    return date.toLocaleString("ru-RU", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+    });
+};

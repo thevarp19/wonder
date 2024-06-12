@@ -3,12 +3,13 @@ import { phoneNumberChangeHandler } from "@/utils/form.util";
 import { Button, Form } from "antd";
 import { FC } from "react";
 import { useUpdateSellerProfile } from "../forms";
-import { useGetSellerProfile } from "../queries";
+import { GetSellerProfile } from "../types";
 
-interface SellerProfileEditProps {}
+interface SellerProfileEditProps {
+    data: GetSellerProfile;
+}
 
-export const SellerProfileEdit: FC<SellerProfileEditProps> = ({}) => {
-    const { data } = useGetSellerProfile();
+export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
     const { formik, mutation } = useUpdateSellerProfile(data);
     return (
         <div>
