@@ -24,5 +24,5 @@ export function mapGetStoreToUpdate(
 }
 
 export function getStoreFullAddress(store: GetStoreResponse): string {
-    return `${store.address}`;
+    return `${store.formattedAddress}`;
 }

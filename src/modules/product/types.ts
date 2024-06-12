@@ -1,9 +1,9 @@
 import { BasePaginationResponse } from "@/types";
 
 export interface ProductPrice {
-    cityId: number;
+    cityId?: number;
     cityName: string;
-    price: number;
+    price?: number;
     count: number;
 }
 
@@ -78,5 +78,5 @@ export interface GetProductContent {
     keycloakUserId: string;
     name: string;
     enabled: boolean;
-    prices: ProductPrice[];
+    counts: ProductPrice[];
 }

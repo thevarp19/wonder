@@ -24,7 +24,7 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     },
     {
         title: "Склад",
-        dataIndex: "code",
+        dataIndex: "storeFormattedAddress",
     },
     {
         title: "Время заказа",

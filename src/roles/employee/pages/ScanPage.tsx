@@ -8,7 +8,7 @@ import { useAppSelector } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
 import { App, Button, Popconfirm, Steps } from "antd";
 import { FC, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 interface ScanPageProps {}
 
@@ -23,6 +23,7 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [step, setStep] = useState(Number(searchParams.get("step")) || 0);
     const { message } = App.useApp();
+    const navigate = useNavigate();
     const supplyState = useAppSelector((state) => state.employee.scan);
     const { isPending, mutateAsync } = acceptSupplyMutation();
     const onSubmit = () => {
@@ -43,6 +44,7 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
             values.productCells.push(tempValue);
         });
         mutateAsync(values);
+        navigate("/employee/supplies");
     };
     function nextStep() {
         setSearchParams({ step: `${step + 1}` });

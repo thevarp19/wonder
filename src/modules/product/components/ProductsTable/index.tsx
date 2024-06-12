@@ -26,17 +26,17 @@ const columns: TableColumnsType<GetProductContent> = [
 
     {
         title: "Количество в Алматы",
-        render: (_, record) => <span>{record.prices[0]?.count}</span>,
+        render: (_, record) => <span>{record.counts[0].count}</span>,
     },
 
     {
         title: "Количество в Астане",
-        render: (_, record) => <span>{record.prices[0]?.count}</span>,
+        render: (_, record) => <span>{record.counts[1].count}</span>,
     },
 
     {
         title: "Количество в Шымкенте",
-        render: (_, record) => <span>{record.prices[0]?.count}</span>,
+        render: (_, record) => <span>{record.counts[2].count}</span>,
     },
 ];
 

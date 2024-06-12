@@ -1,11 +1,13 @@
 import { FC } from "react";
 
 interface StoreAddressCellProps {
-    address: string;
+    formattedAddress: string;
     city: { id: number; name: string };
     streetName: string;
 }
 
-export const StoreAddressCell: FC<StoreAddressCellProps> = ({ address }) => {
-    return <div>{address}</div>;
+export const StoreAddressCell: FC<StoreAddressCellProps> = ({
+    formattedAddress,
+}) => {
+    return <div>{formattedAddress}</div>;
 };

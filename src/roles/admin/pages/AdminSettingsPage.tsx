@@ -56,14 +56,14 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
             />
             {current === "stores" && (
                 <div className="p-4">
-                    <h1 className="pb-4 text-2xl font-semibold">Магазины</h1>
+                    <h1 className="pb-4 text-2xl font-semibold">Склады</h1>
                     <Button
                         size="large"
                         type="primary"
                         className="mb-4"
                         href="/admin/settings/create-store"
                     >
-                        Создать новый магазин
+                        Создать новый склад
                     </Button>
                     <StoresTable />
                 </div>

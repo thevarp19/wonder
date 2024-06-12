@@ -44,7 +44,7 @@ export interface GetStoreResponse {
     district: "string";
     building: "string";
     apartment: "string";
-    address: "string";
+    formattedAddress: "string";
     city: { id: number; name: string };
     availableWorkTimes: WorkDayOfWeekResponse[];
     availableBoxTypes: GetBoxResponse[];

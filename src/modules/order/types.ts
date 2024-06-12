@@ -35,6 +35,7 @@ export interface GetOrdersByDate {
     waybillNumber: string;
     deliveryCost: number;
     sellerName: string;
+    storeFormattedAddress: string;
 }
 
 export interface GetOrdersEmployee {

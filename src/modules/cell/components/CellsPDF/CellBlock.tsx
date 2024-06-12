@@ -46,7 +46,7 @@ export const CellBlock = ({ cell, store }: CellBlockProps) => {
     return (
         <View style={styles.cell}>
             <Text style={{ maxWidth: "150px", width: "100%" }}>
-                Адрес: {store.address}
+                Адрес: {store.formattedAddress}
             </Text>
             <Text>
                 Размер: {cell.width}x{cell.height}x{cell.depth}
