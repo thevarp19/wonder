@@ -31,7 +31,7 @@ export const SupplyPDFReportModal: FC<SupplyPDFModalProps> = ({
                     {isSuccess && data && reportId && (
                         <PDFDownloadLink
                             document={<SupplyPDFReport data={data} />}
-                            fileName={`Поставка-${padNumbers(
+                            fileName={`Отчет о поставке-${padNumbers(
                                 data.supplyId,
                                 8
                             )}.pdf`}
