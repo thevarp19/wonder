@@ -16,6 +16,9 @@ export interface GetOrdersAdmin
 export interface GetOrdersSeller
     extends BasePaginationResponse<GetOrdersByDate> {}
 
+export interface GetOrdersEmployee
+    extends BasePaginationResponse<GetOrdersEmployeeContent> {}
+
 export interface GetOrdersByDate {
     id: number;
     kaspiId: string;
@@ -38,7 +41,7 @@ export interface GetOrdersByDate {
     storeFormattedAddress: string;
 }
 
-export interface GetOrdersEmployee {
+export interface GetOrdersEmployeeContent {
     orderCode: string;
     orderCreatedAt: string;
     deliveryType: string;

@@ -38,16 +38,37 @@ export function getOrdersSeller(
     startDate: string,
     endDate: string,
     page: number = 0,
-    size: number = 10
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "",
+    byOrderCode: boolean = false,
+    byShopName: boolean = false,
+    byStoreAddress: boolean = false,
+    byProductName: boolean = true,
+    byProductArticle: boolean = false,
+    byProductVendorCode: boolean = false
 ) {
     return axiosAuthorized.get<GetOrdersSeller>(
-        `/api/orders/seller?start-date=${startDate}&end-date=${endDate}&page=${page}&size=${size}`
+        `/api/orders/seller?start-date=${startDate}&end-date=${endDate}&page=${page}&size=${size}&searchValue=${searchValue}&deliveryMode=${deliveryMode}&byOrderCode=${byOrderCode}&byShopName=${byShopName}&byStoreAddress=${byStoreAddress}&byProductName=${byProductName}&byProductArticle=${byProductArticle}&byProductVendorCode=${byProductVendorCode}`
     );
 }
 
-export function getOrdersEmployee(startDate: string, endDate: string) {
-    return axiosAuthorized.get<GetOrdersEmployee[]>(
-        `/api/orders/employee?start-date=${startDate}&end-date=${endDate}`
+export function getOrdersEmployee(
+    startDate: string,
+    endDate: string,
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "",
+    byOrderCode: boolean = false,
+    byShopName: boolean = false,
+    byStoreAddress: boolean = false,
+    byProductName: boolean = true,
+    byProductArticle: boolean = false,
+    byProductVendorCode: boolean = false
+) {
+    return axiosAuthorized.get<GetOrdersEmployee>(
+        `/api/orders/employee?start-date=${startDate}&end-date=${endDate}&page=${page}&size=${size}&searchValue=${searchValue}&deliveryMode=${deliveryMode}&byOrderCode=${byOrderCode}&byShopName=${byShopName}&byStoreAddress=${byStoreAddress}&byProductName=${byProductName}&byProductArticle=${byProductArticle}&byProductVendorCode=${byProductVendorCode}`
     );
 }
 

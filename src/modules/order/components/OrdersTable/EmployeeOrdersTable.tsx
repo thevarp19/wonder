@@ -1,16 +1,16 @@
 import { DateCell } from "@/components/ui/DateCell";
 import { Select, Table, TableColumnsType, Tag } from "antd";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetOrdersEmployee } from "../../queries";
-import { GetOrdersEmployee } from "../../types";
+import { DeliveryMode, GetOrdersEmployeeContent } from "../../types";
 import {
     deliveryTypeColorMap,
     deliveryTypeMap,
     orderStatusMap,
 } from "../../utils";
 
-const columns: TableColumnsType<GetOrdersEmployee> = [
+const columns: TableColumnsType<GetOrdersEmployeeContent> = [
     {
         title: "Номер заказа",
         render: (_, record) => (
@@ -55,19 +55,57 @@ const columns: TableColumnsType<GetOrdersEmployee> = [
     },
 ];
 
-interface EmployeeOrdersTableProps {}
+interface EmployeeOrdersTableProps {
+    searchValue: string;
+    deliveryMode: DeliveryMode;
+    byOrderCode: boolean;
+    byShopName: boolean;
+    byStoreAddress: boolean;
+    byProductName: boolean;
+    byProductArticle: boolean;
+    byProductVendorCode: boolean;
+}
 
-export const EmployeeOrdersTable: FC<EmployeeOrdersTableProps> = ({}) => {
+export const EmployeeOrdersTable: FC<EmployeeOrdersTableProps> = ({
+    searchValue,
+    deliveryMode,
+    byOrderCode,
+    byShopName,
+    byStoreAddress,
+    byProductName,
+    byProductArticle,
+    byProductVendorCode,
+}) => {
+    const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetOrdersEmployee(
         "2000-12-02",
-        "2040-12-02"
+        "2040-12-02",
+        page,
+        10,
+        searchValue,
+        deliveryMode,
+        byOrderCode,
+        byShopName,
+        byStoreAddress,
+        byProductName,
+        byProductArticle,
+        byProductVendorCode
     );
     return (
         <Table
             columns={columns}
-            dataSource={orders}
+            dataSource={orders?.content}
             rowKey={"orderCode"}
             loading={isPending}
+            pagination={{
+                pageSize: 10,
+                total: orders?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
+                },
+                current: page + 1,
+            }}
         />
     );
 };

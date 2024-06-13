@@ -1,8 +1,9 @@
 import { PriceCell } from "@/components/ui/PriceCell";
-import { Button, Table, TableColumnsType } from "antd";
+import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 // import { useGetOrder } from "../../queries";
+import { useGetAdminOrder } from "../../queries";
 import { GetOrderById } from "../../types";
 
 interface AdminOrderDetailsTableProps {
@@ -39,38 +40,36 @@ const columns: TableColumnsType<GetOrderById> = [
         dataIndex: "productSellPrice",
         render: (text) => <PriceCell price={text} />,
     },
-    {
-        title: "Статус",
-        render: (_) => <OrderStatusCell status={"Не сканировано"} />,
-    },
+    // {
+    //     title: "Статус",
+    //     render: (_) => <OrderStatusCell status={"Не сканировано"} />,
+    // },
 ];
 
-export const OrderStatusCell: FC<{ status: string }> = ({ status }) => {
-    return (
-        <div className="flex items-center gap-4">
-            {status}
-            {status === "Не сканировано" && (
-                <Button type="primary" size="small">
-                    Скан
-                </Button>
-            )}
-        </div>
-    );
-};
+// export const OrderStatusCell: FC<{ status: string }> = ({ status }) => {
+//     return (
+//         <div className="flex items-center gap-4">
+//             {status}
+//             {status === "Не сканировано" && (
+//                 <Button type="primary" size="small">
+//                     Скан
+//                 </Button>
+//             )}
+//         </div>
+//     );
+// };
 
-export const AdminOrderDetailsTable: FC<AdminOrderDetailsTableProps> = (
-    {
-        // orderId,
-    }
-) => {
-    // const { data, isPending } = useGetOrder(orderId);
+export const AdminOrderDetailsTable: FC<AdminOrderDetailsTableProps> = ({
+    orderId,
+}) => {
+    const { data, isPending } = useGetAdminOrder(orderId);
 
     return (
         <Table
             columns={columns}
-            dataSource={[]}
+            dataSource={data}
             rowKey={"productVendorCode"}
-            loading={true}
+            loading={isPending}
         />
     );
 };

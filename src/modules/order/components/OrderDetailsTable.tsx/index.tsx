@@ -2,7 +2,6 @@
 // import { Table, TableColumnsType } from "antd";
 // import { FC } from "react";
 // import { Link } from "react-router-dom";
-// import { useGetOrder } from "../../queries";
 // import { GetOrderById } from "../../types";
 
 // interface OrderDetailsTableProps {

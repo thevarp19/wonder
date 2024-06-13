@@ -84,32 +84,97 @@ export const useGetOrdersSeller = (
     startDate: string,
     endDate: string,
     page: number = 0,
-    size: number = 10
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode,
+    byOrderCode: boolean = true,
+    byShopName: boolean = false,
+    byStoreAddress: boolean = false,
+    byProductName: boolean = false,
+    byProductArticle: boolean = false,
+    byProductVendorCode: boolean = false
 ) => {
     return useQuery<GetOrdersSeller>({
-        queryKey: ["seller-orders", startDate, endDate, page, size],
+        queryKey: [
+            "seller-orders",
+            startDate,
+            endDate,
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+            byOrderCode,
+            byShopName,
+            byStoreAddress,
+            byProductName,
+            byProductArticle,
+            byProductVendorCode,
+        ],
         queryFn: async () => {
             const { data } = await getOrdersSeller(
                 startDate,
                 endDate,
                 page,
-                size
+                size,
+                searchValue,
+                deliveryMode,
+                byOrderCode,
+                byShopName,
+                byStoreAddress,
+                byProductName,
+                byProductArticle,
+                byProductVendorCode
             );
-            return {
-                ...data,
-                content: data.content
-                    .filter((order) => order.waybill !== null)
-                    .sort((a, b) => b.creationDate - a.creationDate),
-            };
+            return data;
         },
     });
 };
 
-export const useGetOrdersEmployee = (startDate: string, endDate: string) => {
-    return useQuery<GetOrdersEmployee[]>({
-        queryKey: ["orders-employee", startDate, endDate],
+export const useGetOrdersEmployee = (
+    startDate: string,
+    endDate: string,
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode,
+    byOrderCode: boolean = true,
+    byShopName: boolean = false,
+    byStoreAddress: boolean = false,
+    byProductName: boolean = false,
+    byProductArticle: boolean = false,
+    byProductVendorCode: boolean = false
+) => {
+    return useQuery<GetOrdersEmployee>({
+        queryKey: [
+            "orders-employee",
+            startDate,
+            endDate,
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+            byOrderCode,
+            byShopName,
+            byStoreAddress,
+            byProductName,
+            byProductArticle,
+            byProductVendorCode,
+        ],
         queryFn: async () => {
-            const { data } = await getOrdersEmployee(startDate, endDate);
+            const { data } = await getOrdersEmployee(
+                startDate,
+                endDate,
+                page,
+                size,
+                searchValue,
+                deliveryMode,
+                byOrderCode,
+                byShopName,
+                byStoreAddress,
+                byProductName,
+                byProductArticle,
+                byProductVendorCode
+            );
             return data;
         },
     });

@@ -17,11 +17,11 @@ const items: MenuProps["items"] = [
         key: "all",
     },
     {
-        label: "Отсканированные",
+        label: "Известные",
         key: "scanned",
     },
     {
-        label: "Не отсканированные",
+        label: "Не известные",
         key: "non-scanned",
     },
 ];
