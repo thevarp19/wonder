@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import {
     getAdminOrderById,
-    getOrderDetailEmployee,
+    getEmployeeOrderById,
     getOrdersAdmin,
     getOrdersByDate,
     getOrdersEmployee,
     getOrdersSeller,
+    getSellerOrderById,
 } from "./api";
 import {
     DeliveryMode,
     GetOrderById,
-    GetOrderDetailEmployee,
     GetOrdersAdmin,
     GetOrdersByDate,
     GetOrdersEmployee,
@@ -180,21 +180,40 @@ export const useGetOrdersEmployee = (
     });
 };
 
-export const useGetOrderDetailEmployee = (id: number) => {
-    return useQuery<GetOrderDetailEmployee[]>({
-        queryKey: [`order-employee-${id}`],
-        queryFn: async () => {
-            const { data } = await getOrderDetailEmployee(id);
-            return data;
-        },
-    });
-};
+// export const useGetOrderDetailEmployee = (id: number) => {
+//     return useQuery<GetOrderDetailEmployee[]>({
+//         queryKey: [`order-employee-${id}`],
+//         queryFn: async () => {
+//             const { data } = await getEmployeeOrderById(id);
+//             return data;
+//         },
+//     });
+// };
 
 export const useGetAdminOrder = (id: number) => {
     return useQuery<GetOrderById[]>({
         queryKey: [`order-admin-${id}`],
         queryFn: async () => {
             const { data } = await getAdminOrderById(id);
+            return data;
+        },
+    });
+};
+export const useGetSellerOrder = (id: number) => {
+    return useQuery<GetOrderById[]>({
+        queryKey: [`order-admin-${id}`],
+        queryFn: async () => {
+            const { data } = await getSellerOrderById(id);
+            return data;
+        },
+    });
+};
+
+export const useGetEmployeeOrder = (id: number) => {
+    return useQuery<any>({
+        queryKey: [`order-employee-${id}`],
+        queryFn: async () => {
+            const { data } = await getEmployeeOrderById(id);
             return data;
         },
     });

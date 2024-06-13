@@ -1,4 +1,5 @@
 import { SearchInput } from "@/components/ui/SearchInput";
+import { SellerOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/SellerOrderDetailsTable";
 // import { OrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx";
 import { FilterOutlined } from "@ant-design/icons";
 import { Button } from "antd";
@@ -32,7 +33,7 @@ export const SellerOrderPage: FC<SellerOrderPageProps> = ({}) => {
                     ></Button>
                 </div>
             </div>
-            {/* <OrderDetailsTable orderId={orderId} /> */}
+            <SellerOrderDetailsTable orderId={orderId} />
         </div>
     );
 };

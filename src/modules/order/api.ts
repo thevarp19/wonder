@@ -72,18 +72,19 @@ export function getOrdersEmployee(
     );
 }
 
-export function getOrderDetailEmployee(id: number) {
-    return axiosAuthorized.get<GetOrderDetailEmployee[]>(
-        `/api/orders/employee/details/${id}`
-    );
-}
-
 export function getAdminOrderById(id: number) {
     return axiosAuthorized.get<GetOrderById[]>(
         `/api/orders/admin/details/${id}`
     );
 }
 
-export function getOrder(id: number) {
-    return axiosAuthorized.get<GetOrdersByDate>(`/api/orders/${id}`);
+export function getSellerOrderById(id: number) {
+    return axiosAuthorized.get<GetOrderById[]>(
+        `/api/orders/seller/details/${id}`
+    );
+}
+export function getEmployeeOrderById(id: number) {
+    return axiosAuthorized.get<GetOrderDetailEmployee[]>(
+        `/api/orders/employee/details/${id}`
+    );
 }

@@ -48,13 +48,19 @@ export interface GetOrdersEmployeeContent {
     orderToSendTime: string;
     orderStatus: string;
 }
+export interface Product {
+    id: number;
+    article: string;
+    name: string;
+    cellCode: string;
+}
 
 export interface GetOrderDetailEmployee {
-    orderName: string;
-    orderArticle: string;
-    orderVendorCode: string;
-    orderCell: string;
+    products: Product[];
+    deliveryMode: DeliveryMode;
+    deliveryTime: string;
 }
+
 export type DeliveryMode =
     | "DELIVERY_LOCAL"
     | "DELIVERY_PICKUP"
