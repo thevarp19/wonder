@@ -10,6 +10,7 @@ import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 interface EmployeeProductSizesPageProps {}
+
 const items: MenuProps["items"] = [
     {
         label: "Все",
@@ -24,6 +25,7 @@ const items: MenuProps["items"] = [
         key: "non-scanned",
     },
 ];
+
 export const EmployeeProductSizesPage: FC<
     EmployeeProductSizesPageProps
 > = ({}) => {
@@ -32,6 +34,7 @@ export const EmployeeProductSizesPage: FC<
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
     };
+
     const scanSearchValue = useScannerResults();
     const [searchValue, setSearchValue] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
@@ -39,12 +42,14 @@ export const EmployeeProductSizesPage: FC<
     const handleSearch = () => {
         setSearchQuery(searchValue);
     };
+
     useEffect(() => {
         if (scanSearchValue) {
             setSearchQuery(scanSearchValue);
             setSearchValue(scanSearchValue);
         }
     }, [scanSearchValue]);
+
     return (
         <div>
             <div className="flex items-center justify-between gap-20 mb-4">
@@ -67,7 +72,7 @@ export const EmployeeProductSizesPage: FC<
                         onClick={toScanProductsSizes}
                         className="uppercase"
                     >
-                        CКАНИРОВАТЬ
+                        СКАНИРОВАТЬ
                     </Button>
                 </div>
             </div>
@@ -77,16 +82,19 @@ export const EmployeeProductSizesPage: FC<
                 onClick={onClick}
                 selectedKeys={[current]}
             />
-            <EmployeeSearchResultsTable searchValue={searchQuery} />
+            <EmployeeSearchResultsTable
+                searchValue={searchQuery}
+                filterKey={current}
+            />
         </div>
     );
 };
 
 const columns: TableColumnsType<any> = [
     {
-        title: "Артикул",
-        dataIndex: "productArticle",
-        key: "productArticle",
+        title: "Vendor Код",
+        dataIndex: "vendorCode",
+        key: "vendorCode",
     },
     {
         title: "Наименование",
@@ -116,14 +124,6 @@ const columns: TableColumnsType<any> = [
         title: "Комментарий",
         dataIndex: "comment",
     },
-    // {
-    //     title: "",
-    //     render: () => (
-    //         <Button type="primary" className="uppercase" size="small">
-    //             Скан
-    //         </Button>
-    //     ),
-    // },
     {
         title: "",
         render: (_, record) => (
@@ -145,6 +145,7 @@ const UpdateSizesModal = ({
     const [isModalOpen, setIsModalOpen] = useState(false);
     const primaryVendorCode = vendorCode.split("_")[0];
     const { formik } = useUpdateProductSize(primaryVendorCode);
+
     return (
         <>
             <Modal
@@ -160,7 +161,6 @@ const UpdateSizesModal = ({
                 <div className="flex flex-col gap-2">
                     <div className="py-2"> Артикул: {vendorCode}</div>
                     <div className="py-2">
-                        {" "}
                         Наименование:{" "}
                         <span className="underline">{productName}</span>
                     </div>
@@ -175,25 +175,36 @@ const UpdateSizesModal = ({
     );
 };
 
-export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
-    searchValue,
-}) => {
+export const EmployeeSearchResultsTable: FC<{
+    searchValue: string;
+    filterKey: string;
+}> = ({ searchValue, filterKey }) => {
     const [page, setPage] = useState(0);
     const { data, isPending } = useGetProductsWithSizes(
         page,
         undefined,
         searchValue,
+        false,
+        false,
         true,
-        true,
-        true,
-        true,
-        true
+        false,
+        false
     );
+
+    const filteredData = data?.content.filter((item: any) => {
+        if (filterKey === "scanned") {
+            return item.state !== "PENDING";
+        } else if (filterKey === "non-scanned") {
+            return item.state === "PENDING";
+        }
+        return true;
+    });
+
     return (
         <Table
             columns={columns}
             loading={isPending}
-            dataSource={data?.content}
+            dataSource={filteredData}
             rowKey={(record) => record.vendorCode}
             pagination={{
                 pageSize: 10,

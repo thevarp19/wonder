@@ -1,5 +1,6 @@
 import { FilterButton } from "@/components/ui/FilterButton";
 import { SearchInput } from "@/components/ui/SearchInput";
+import { BoxesTable } from "@/modules/box/components/BoxesTable";
 import { StoresTable } from "@/modules/store/components/StoresTable";
 import { XMLTable } from "@/modules/xml/components/XMLTable";
 import {
@@ -78,7 +79,7 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
                     >
                         Создать новый коробку
                     </Button>
-                    {/* <BoxesTable /> */}
+                    <BoxesTable />
                 </div>
             )}
             {current === "xml" && (

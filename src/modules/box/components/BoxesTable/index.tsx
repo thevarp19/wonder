@@ -1,11 +1,11 @@
 import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
-import { useGetBoxes } from "../../queries";
+import { useGetAllBoxes } from "../../queries";
 import { GetBoxResponse } from "../../types";
 import { DeleteBoxCell } from "./DeleteBoxCell";
 
 interface BoxesTableProps {
-    id: number;
+    // id: number;
 }
 const columns: TableColumnsType<GetBoxResponse> = [
     {
@@ -26,8 +26,8 @@ const columns: TableColumnsType<GetBoxResponse> = [
     },
 ];
 
-export const BoxesTable: FC<BoxesTableProps> = ({ id }) => {
-    const { data: boxes, isPending } = useGetBoxes(id);
+export const BoxesTable: FC<BoxesTableProps> = ({}) => {
+    const { data: boxes, isPending } = useGetAllBoxes();
     return (
         <Table
             columns={columns}

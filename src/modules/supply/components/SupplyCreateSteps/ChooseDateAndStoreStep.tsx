@@ -3,8 +3,10 @@ import { useSupply } from "@/roles/seller/redux/supply/selectors";
 import { App, DatePicker, Select } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import updateLocale from "dayjs/plugin/updateLocale";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
+import { myLocalStorage } from "@/lib/storage/browserStorage";
+import { useGetBoxes } from "@/modules/box/queries";
 import { GetStoreResponse } from "@/modules/store/types";
 import { getStoreFullAddress } from "@/modules/store/utils";
 import { useAppDispatch } from "@/redux/utils";
@@ -23,6 +25,11 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
     const dispatch = useAppDispatch();
     const { message } = App.useApp();
     const { data: stores, isPending } = useGetStores();
+    //@ts-ignore
+    const { data: boxes } = useGetBoxes(store);
+    useEffect(() => {
+        myLocalStorage?.set("boxes", boxes);
+    }, [boxes]);
     function onDateChange(day: Dayjs, dateString: string | string[]) {
         // @ts-ignore
         const selectedStore = stores?.find((temp) => store === temp.id);

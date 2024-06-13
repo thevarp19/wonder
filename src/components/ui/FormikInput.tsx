@@ -36,25 +36,12 @@ export const FormikItem: FC<FormikItemProps> = ({
     );
 };
 
-// const withFormik =
-//     (InputComponent: any, formik: FormikProps<any>, name: string) =>
-//     (props: any) => {
-//         return (
-//             <InputComponent
-//                 onChange={formik.handleChange}
-//                 onBlur={formik.handleBlur}
-//                 name={name}
-//                 value={formik.values[name]}
-//                 {...props}
-//             />
-//         );
-//     };
-
 interface FormikInputProps {
     formik: FormikProps<any>;
     name: string;
     inputProps?: InputProps;
     formItemProps?: FormItemProps;
+    inputRef?: React.RefObject<any>;
 }
 
 export const FormikInput: FC<FormikInputProps> = ({
@@ -62,10 +49,12 @@ export const FormikInput: FC<FormikInputProps> = ({
     name,
     formItemProps,
     inputProps,
+    inputRef,
 }) => {
     return (
         <FormikItem formik={formik} name={name} formItemProps={formItemProps}>
             <Input
+                ref={inputRef}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 name={name}
@@ -81,6 +70,7 @@ interface FormikNumberInputProps {
     name: string;
     inputProps?: InputNumberProps;
     formItemProps?: FormItemProps;
+    inputRef?: React.RefObject<any>;
 }
 
 export const FormikNumberInput: FC<FormikNumberInputProps> = ({
@@ -88,10 +78,12 @@ export const FormikNumberInput: FC<FormikNumberInputProps> = ({
     name,
     formItemProps,
     inputProps,
+    inputRef,
 }) => {
     return (
         <FormikItem formik={formik} name={name} formItemProps={formItemProps}>
             <InputNumber
+                ref={inputRef}
                 onChange={(value) => {
                     formik.setFieldValue(name, value);
                 }}
@@ -110,6 +102,7 @@ interface FormikPasswordInputProps {
     name: string;
     inputProps?: PasswordProps;
     formItemProps?: FormItemProps;
+    inputRef?: React.RefObject<any>;
 }
 
 export const FormikPasswordInput: FC<FormikPasswordInputProps> = ({
@@ -117,10 +110,12 @@ export const FormikPasswordInput: FC<FormikPasswordInputProps> = ({
     name,
     formItemProps,
     inputProps,
+    inputRef,
 }) => {
     return (
         <FormikItem formik={formik} name={name} formItemProps={formItemProps}>
             <Input.Password
+                ref={inputRef}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 name={name}

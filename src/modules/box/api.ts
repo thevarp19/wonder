@@ -10,6 +10,9 @@ export function getBoxes(id: number) {
         `/api/box-types?store-id=${id}`
     );
 }
+export function getAllBoxes() {
+    return axiosAuthorized.get<GetBoxResponse[]>(`/api/box-types/all`);
+}
 
 export function deleteBox(id: number) {
     return axiosAuthorized.delete(`/api/box-types/${id}`);

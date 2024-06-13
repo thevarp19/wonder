@@ -1,5 +1,3 @@
-import { myLocalStorage } from "@/lib/storage/browserStorage";
-import { useGetBoxes } from "@/modules/box/queries";
 import { GetBoxResponse } from "@/modules/box/types";
 import { useGetStore } from "@/modules/store/queries";
 import { SupplyPDFModal } from "@/modules/supply/components/SupplyPDF/SupplyPDFModal";
@@ -9,7 +7,7 @@ import { useAppDispatch } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
 import { PrinterOutlined } from "@ant-design/icons";
 import { App, Button, Steps } from "antd";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
     AddProductsStep,
@@ -80,10 +78,6 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     const supply = useSupply();
     const packs = useSupplyPacks();
     // @ts-ignore
-    const { data: boxes, isSuccess } = useGetBoxes(supply.store || -1);
-    useEffect(() => {
-        myLocalStorage?.set("boxes", boxes);
-    }, [boxes]);
 
     const handledPacks = packs
         .filter(
@@ -132,7 +126,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
         });
     }
     // @ts-ignore
-    const { data: store } = useGetStore(supply?.store || -1);
+    const { data: store } = useGetStore(supply?.store);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { mutateAsync, isPending } = createSupplyMutation((id) => {
         dispatch(setSupplyId(id));
@@ -223,16 +217,13 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             Печать
                         </Button>
                     )}
-                    {isModalOpen &&
-                        isSuccess &&
-                        store &&
-                        supply.supplyServerId && (
-                            <SupplyPDFModal
-                                store={store}
-                                setIsModalOpen={setIsModalOpen}
-                                isModalOpen={isModalOpen}
-                            />
-                        )}
+                    {isModalOpen && store && supply.supplyServerId && (
+                        <SupplyPDFModal
+                            store={store}
+                            setIsModalOpen={setIsModalOpen}
+                            isModalOpen={isModalOpen}
+                        />
+                    )}
                 </div>
             </div>
         </div>

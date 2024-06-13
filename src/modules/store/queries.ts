@@ -12,12 +12,14 @@ export const useGetStores = () => {
     });
 };
 
-export const useGetStore = (id: number) => {
+export const useGetStore = (id: number | null) => {
     return useQuery<GetStoreResponse>({
         queryKey: [`store`, id],
+
         queryFn: async () => {
-            const { data } = await getStoreById(id);
+            const { data } = await getStoreById(id || -1);
             return data;
         },
+        enabled: id !== null,
     });
 };
