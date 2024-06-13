@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import {
-    getOrder,
-    getOrderById,
+    getAdminOrderById,
     getOrderDetailEmployee,
     getOrdersAdmin,
     getOrdersByDate,
@@ -9,6 +8,7 @@ import {
     getOrdersSeller,
 } from "./api";
 import {
+    DeliveryMode,
     GetOrderById,
     GetOrderDetailEmployee,
     GetOrdersAdmin,
@@ -21,23 +21,49 @@ export const useGetOrdersAdmin = (
     startDate: string,
     endDate: string,
     page: number = 0,
-    size: number = 10
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode,
+    byOrderCode: boolean = true,
+    byShopName: boolean = false,
+    byStoreAddress: boolean = false,
+    byProductName: boolean = false,
+    byProductArticle: boolean = false,
+    byProductVendorCode: boolean = false
 ) => {
     return useQuery<GetOrdersAdmin>({
-        queryKey: [`orders-admin`, startDate, endDate, page, size],
+        queryKey: [
+            `orders-admin`,
+            startDate,
+            endDate,
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+            byOrderCode,
+            byShopName,
+            byStoreAddress,
+            byProductName,
+            byProductArticle,
+            byProductVendorCode,
+        ],
+
         queryFn: async () => {
             const { data } = await getOrdersAdmin(
                 startDate,
                 endDate,
                 page,
-                size
+                size,
+                searchValue,
+                deliveryMode,
+                byOrderCode,
+                byShopName,
+                byStoreAddress,
+                byProductName,
+                byProductArticle,
+                byProductVendorCode
             );
-            return {
-                ...data,
-                content: data.content
-                    .filter((order) => order.waybill !== null)
-                    .sort((a, b) => b.creationDate - a.creationDate),
-            };
+            return data;
         },
     });
 };
@@ -99,21 +125,11 @@ export const useGetOrderDetailEmployee = (id: number) => {
     });
 };
 
-export const useGetOrder = (id: number) => {
+export const useGetAdminOrder = (id: number) => {
     return useQuery<GetOrderById[]>({
-        queryKey: [`orders-${id}`],
+        queryKey: [`order-admin-${id}`],
         queryFn: async () => {
-            const { data } = await getOrderById(id);
-            return data;
-        },
-    });
-};
-
-export const useGetOrderData = (id: number) => {
-    return useQuery<GetOrdersByDate>({
-        queryKey: [`store`, id],
-        queryFn: async () => {
-            const { data } = await getOrder(id);
+            const { data } = await getAdminOrderById(id);
             return data;
         },
     });

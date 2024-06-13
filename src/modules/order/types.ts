@@ -52,3 +52,10 @@ export interface GetOrderDetailEmployee {
     orderVendorCode: string;
     orderCell: string;
 }
+export type DeliveryMode =
+    | "DELIVERY_LOCAL"
+    | "DELIVERY_PICKUP"
+    | "DELIVERY_REGIONAL_PICKUP"
+    | "DELiVERY_POSTOMAT"
+    | "DELIVERY_REGIONAL_TODOOR"
+    | "";

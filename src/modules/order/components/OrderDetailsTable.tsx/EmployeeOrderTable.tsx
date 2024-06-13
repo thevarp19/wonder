@@ -2,7 +2,7 @@ import { PriceCell } from "@/components/ui/PriceCell";
 import { Button, Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { useGetOrder } from "../../queries";
+// import { useGetOrder } from "../../queries";
 import { GetOrderById } from "../../types";
 
 interface AdminOrderDetailsTableProps {
@@ -58,17 +58,19 @@ export const OrderStatusCell: FC<{ status: string }> = ({ status }) => {
     );
 };
 
-export const AdminOrderDetailsTable: FC<AdminOrderDetailsTableProps> = ({
-    orderId,
-}) => {
-    const { data, isPending } = useGetOrder(orderId);
+export const AdminOrderDetailsTable: FC<AdminOrderDetailsTableProps> = (
+    {
+        // orderId,
+    }
+) => {
+    // const { data, isPending } = useGetOrder(orderId);
 
     return (
         <Table
             columns={columns}
-            dataSource={data}
+            dataSource={[]}
             rowKey={"productVendorCode"}
-            loading={isPending}
+            loading={true}
         />
     );
 };

@@ -1,4 +1,4 @@
-import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/EmployeeOrderTable";
+// import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/EmployeeOrderTable";
 import { Button } from "antd";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
@@ -18,7 +18,7 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
             <Button type="primary" size="large" className="my-4">
                 Начать упаковку
             </Button>
-            <AdminOrderDetailsTable orderId={orderId} />
+            {/* <AdminOrderDetailsTable orderId={orderId} /> */}
         </div>
     );
 };

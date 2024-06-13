@@ -3,7 +3,7 @@ import { Table, TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetOrdersAdmin } from "../../queries";
-import { GetOrdersByDate } from "../../types";
+import { DeliveryMode, GetOrdersByDate } from "../../types";
 import {
     deliveryTypeColorMap,
     deliveryTypeMap,
@@ -11,7 +11,16 @@ import {
     orderStatusMap,
 } from "../../utils";
 
-interface OrdersTableProps {}
+interface OrdersTableProps {
+    searchValue: string;
+    deliveryMode: DeliveryMode;
+    byOrderCode: boolean;
+    byShopName: boolean;
+    byStoreAddress: boolean;
+    byProductName: boolean;
+    byProductArticle: boolean;
+    byProductVendorCode: boolean;
+}
 
 const columns: TableColumnsType<GetOrdersByDate> = [
     {
@@ -82,12 +91,30 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     },
 ];
 
-export const AdminOrdersTable: FC<OrdersTableProps> = ({}) => {
+export const AdminOrdersTable: FC<OrdersTableProps> = ({
+    searchValue,
+    deliveryMode,
+    byOrderCode,
+    byShopName,
+    byStoreAddress,
+    byProductName,
+    byProductArticle,
+    byProductVendorCode,
+}) => {
     const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetOrdersAdmin(
         "2000-12-02",
         "2040-12-02",
-        page
+        page,
+        10,
+        searchValue,
+        deliveryMode,
+        byOrderCode,
+        byShopName,
+        byStoreAddress,
+        byProductName,
+        byProductArticle,
+        byProductVendorCode
     );
     return (
         <Table

@@ -1,6 +1,6 @@
 import { FilterButton } from "@/components/ui/FilterButton";
 import { SearchInput } from "@/components/ui/SearchInput";
-import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/EmployeeOrderTable";
+// import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/EmployeeOrderTable";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 
@@ -27,7 +27,7 @@ export const AdminOrderPage: FC<AdminOrderPageProps> = ({}) => {
                     <FilterButton />
                 </div>
             </div>
-            <AdminOrderDetailsTable orderId={orderId} />
+            {/* <AdminOrderDetailsTable orderId={orderId} /> */}
         </div>
     );
 };

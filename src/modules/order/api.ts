@@ -1,5 +1,6 @@
 import { axiosAuthorized } from "@/lib/axios";
 import {
+    DeliveryMode,
     GetOrderById,
     GetOrderDetailEmployee,
     GetOrdersAdmin,
@@ -12,10 +13,18 @@ export function getOrdersAdmin(
     startDate: string,
     endDate: string,
     page: number = 0,
-    size: number = 10
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "",
+    byOrderCode: boolean = false,
+    byShopName: boolean = false,
+    byStoreAddress: boolean = false,
+    byProductName: boolean = true,
+    byProductArticle: boolean = false,
+    byProductVendorCode: boolean = false
 ) {
     return axiosAuthorized.get<GetOrdersAdmin>(
-        `/api/orders/admin?start-date=${startDate}&end-date=${endDate}&page=${page}&size=${size}`
+        `/api/orders/admin?start-date=${startDate}&end-date=${endDate}&page=${page}&size=${size}&searchValue=${searchValue}&deliveryMode=${deliveryMode}&byOrderCode=${byOrderCode}&byShopName=${byShopName}&byStoreAddress=${byStoreAddress}&byProductName=${byProductName}&byProductArticle=${byProductArticle}&byProductVendorCode=${byProductVendorCode}`
     );
 }
 
@@ -48,7 +57,7 @@ export function getOrderDetailEmployee(id: number) {
     );
 }
 
-export function getOrderById(id: number) {
+export function getAdminOrderById(id: number) {
     return axiosAuthorized.get<GetOrderById[]>(
         `/api/orders/admin/details/${id}`
     );
