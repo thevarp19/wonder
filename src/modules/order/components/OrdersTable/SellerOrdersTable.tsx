@@ -3,7 +3,7 @@ import { Table, TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetOrdersSeller } from "../../queries";
-import { GetOrdersByDate } from "../../types";
+import { DeliveryMode, GetOrdersByDate } from "../../types";
 import {
     deliveryTypeColorMap,
     deliveryTypeMap,
@@ -70,14 +70,41 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     },
 ];
 
-interface SellerOrdersTableProps {}
+interface SellerOrdersTableProps {
+    searchValue: string;
+    deliveryMode: DeliveryMode;
+    byOrderCode: boolean;
+    byShopName: boolean;
+    byStoreAddress: boolean;
+    byProductName: boolean;
+    byProductArticle: boolean;
+    byProductVendorCode: boolean;
+}
 
-export const SellerOrdersTable: FC<SellerOrdersTableProps> = ({}) => {
+export const SellerOrdersTable: FC<SellerOrdersTableProps> = ({
+    searchValue,
+    deliveryMode,
+    byOrderCode,
+    byShopName,
+    byStoreAddress,
+    byProductName,
+    byProductArticle,
+    byProductVendorCode,
+}) => {
     const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetOrdersSeller(
         "2000-12-02",
         "2040-12-02",
-        page
+        page,
+        10,
+        searchValue,
+        deliveryMode,
+        byOrderCode,
+        byShopName,
+        byStoreAddress,
+        byProductName,
+        byProductArticle,
+        byProductVendorCode
     );
     return (
         <Table
