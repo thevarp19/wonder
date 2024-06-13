@@ -1,10 +1,10 @@
-import { boxIcon, boxOpenIcon, scanIcon, tengeIcon } from "@/assets";
+import { boxOpenIcon, scanIcon, tengeIcon } from "@/assets";
 import { Image } from "@/components/ui/Image";
 import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
 import { ProductsCountTable } from "@/modules/statistics/components/ProductCountTable";
 import {
-    useGetAdminSalesInfo,
     useGetSellerDailyInfo,
+    useGetSellerSalesInfo,
     useGetSellerTopProducts,
 } from "@/modules/statistics/queries";
 import { StatisticsInfo } from "@/modules/statistics/types";
@@ -52,7 +52,7 @@ export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
     // };
     // const topProductsLoading = false;
     const duration = "MONTH";
-    const { data: statistics, isPending } = useGetAdminSalesInfo(duration);
+    const { data: statistics, isPending } = useGetSellerSalesInfo(duration);
     const { data: dailyInfo, isPending: getDailyLoading } =
         useGetSellerDailyInfo(duration);
     const { data: topProducts, isPending: topProductsLoading } =
@@ -79,14 +79,14 @@ export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
                             statistics?.ordersInfo
                         }
                     />
-                    <ResultsCard
+                    {/* <ResultsCard
                         statisticsName="Продавцов"
                         iconSrc={boxIcon}
                         statistics={
                             // { count: 30, percent: -12 }
                             statistics?.sellersInfo
                         }
-                    />
+                    /> */}
                     <ResultsCard
                         statisticsName="Поставок"
                         iconSrc={scanIcon}
