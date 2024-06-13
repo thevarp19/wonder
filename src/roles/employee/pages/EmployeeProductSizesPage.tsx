@@ -6,7 +6,7 @@ import { useScannerResults } from "@/modules/scan/hooks";
 import { toScanProductsSizes } from "@/modules/scan/utils";
 import { EditOutlined } from "@ant-design/icons";
 import { Button, Menu, MenuProps, Modal, Table, TableColumnsType } from "antd";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 interface EmployeeProductSizesPageProps {}
@@ -36,9 +36,9 @@ export const EmployeeProductSizesPage: FC<
     const [searchValue, setSearchValue] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
 
-    const handleSearch = useCallback(() => {
+    const handleSearch = () => {
         setSearchQuery(searchValue);
-    }, [searchValue]);
+    };
     useEffect(() => {
         if (scanSearchValue) {
             setSearchQuery(scanSearchValue);
@@ -143,7 +143,8 @@ const UpdateSizesModal = ({
     productName: string;
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { formik } = useUpdateProductSize(vendorCode);
+    const primaryVendorCode = vendorCode.split("_")[0];
+    const { formik } = useUpdateProductSize(primaryVendorCode);
     return (
         <>
             <Modal

@@ -26,6 +26,15 @@ export function getProducts(
     return axiosAuthorized.get<GetProductResponse>(url);
 }
 
+export async function getProductsOptions({
+    pageParam = 0,
+    pageSize = 10,
+    searchValue = "",
+}) {
+    let url = `/api/products?page=${pageParam}&size=${pageSize}&searchValue=${searchValue}&sortBy=id`;
+    const { data } = await axiosAuthorized.get<GetProductResponse>(url);
+    return data;
+}
 export function getProductsPrices(
     page: number = 0,
     size: number = 10,

@@ -1,6 +1,6 @@
 import { DeleteButton } from "@/components/ui/DeleteButton";
 import { ProductsUploadFromFile } from "@/modules/product/components/ProductsUploadFromFile";
-import { useGetProducts } from "@/modules/product/queries";
+import { useInfiniteGetProducts } from "@/modules/product/queries";
 import { useAppDispatch } from "@/redux/utils";
 import * as actions from "@/roles/seller/redux/supply/actions";
 import { useSupplyProducts } from "@/roles/seller/redux/supply/selectors";
@@ -22,7 +22,8 @@ interface AddProductsStepProps {}
 export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
     const products = useSupplyProducts();
     const dispatch = useAppDispatch();
-    const { data: productOptions, isPending } = useGetProducts();
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
+        useInfiniteGetProducts();
 
     const columns: TableColumnsType<ProductQuantity> = [
         {
@@ -77,6 +78,14 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const handlePopupScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        if (!isFetchingNextPage) {
+            const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+            if (scrollTop + clientHeight >= scrollHeight - 50 && hasNextPage) {
+                fetchNextPage();
+            }
+        }
+    };
     return (
         <Form layout="vertical">
             <h1 className="text-2xl font-semibold">
@@ -108,18 +117,21 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                     loading={isPending}
                     value={products.map((e) => e.product.id)}
                     onSelect={(value) => {
-                        const p = productOptions?.content.find(
-                            (product) => product.id === value
-                        );
+                        const p = data?.pages
+                            .flatMap((page) => page.content)
+                            .find((product) => product.id === value);
                         p && dispatch(actions.addProduct(p));
                     }}
                     onDeselect={(value) => {
                         dispatch(actions.removeProduct(Number(value)));
                     }}
-                    options={productOptions?.content.map((product) => ({
-                        label: product.name,
-                        value: product.id,
-                    }))}
+                    onPopupScroll={handlePopupScroll}
+                    options={data?.pages.flatMap((page) =>
+                        page.content.map((product) => ({
+                            label: product.name,
+                            value: product.id,
+                        }))
+                    )}
                     filterOption={(input, option) =>
                         !!option?.label
                             ?.toString()

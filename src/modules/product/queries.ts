@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import {
     getProducts,
     getProductsByParams,
+    getProductsOptions,
     getProductsPrices,
     getProductsWithSizes,
 } from "./api";
@@ -31,6 +32,22 @@ export const useGetProducts = (
         },
     });
 };
+export const useInfiniteGetProducts = (pageSize = 10, searchValue = "") => {
+    return useInfiniteQuery<GetProductResponse>({
+        queryKey: ["products", searchValue],
+        queryFn: ({ pageParam = 0 }: any) =>
+            getProductsOptions({
+                pageParam,
+                pageSize,
+                searchValue,
+            }),
+        initialPageParam: 0,
+        getNextPageParam: (lastPage) => {
+            return lastPage.last ? undefined : lastPage.page + 1;
+        },
+    });
+};
+
 export const useGetProductsWithSizes = (
     page: number = 0,
     size: number = 10,

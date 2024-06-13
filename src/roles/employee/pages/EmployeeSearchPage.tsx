@@ -3,7 +3,7 @@ import { useGetProductsByParams } from "@/modules/product/queries";
 import { useScannerResults } from "@/modules/scan/hooks";
 import { toScanProductsSearch } from "@/modules/scan/utils";
 import { Button, Table, TableColumnsType } from "antd";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface EmployeeSearchPageProps {}
 
@@ -13,9 +13,9 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
     const [searchValue, setSearchValue] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
 
-    const handleSearch = useCallback(() => {
+    const handleSearch = () => {
         setSearchQuery(searchValue);
-    }, [searchValue]);
+    };
 
     useEffect(() => {
         if (scanSearchValue) {
