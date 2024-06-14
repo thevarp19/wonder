@@ -178,7 +178,7 @@ const UpdateSizesModal = ({
 export const EmployeeSearchResultsTable: FC<{
     searchValue: string;
     filterKey: string;
-}> = ({ searchValue }) => {
+}> = ({ searchValue, filterKey }) => {
     const [page, setPage] = useState(0);
     const { data, isPending } = useGetProductsWithSizes(
         page,
@@ -188,11 +188,39 @@ export const EmployeeSearchResultsTable: FC<{
         true
     );
 
+    const [filteredData, setFilteredData] = useState<any[]>([]);
+
+    useEffect(() => {
+        if (data?.content) {
+            const filtered = data.content.filter((item: any) => {
+                if (filterKey === "scanned") {
+                    return (
+                        item.width !== null &&
+                        item.length !== null &&
+                        item.weight !== null &&
+                        item.height !== null &&
+                        item.comment !== ""
+                    );
+                } else if (filterKey === "non-scanned") {
+                    return (
+                        item.width === null &&
+                        item.length === null &&
+                        item.weight === null &&
+                        item.height === null &&
+                        item.comment === ""
+                    );
+                }
+                return true;
+            });
+            setFilteredData(filtered);
+        }
+    }, [data, filterKey]);
+
     return (
         <Table
             columns={columns}
             loading={isPending}
-            dataSource={data?.content}
+            dataSource={filteredData}
             rowKey={(record) => record.vendorCode}
             pagination={{
                 pageSize: 10,
