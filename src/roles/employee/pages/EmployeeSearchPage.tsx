@@ -95,11 +95,8 @@ export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
         page,
         undefined,
         searchValue,
-        false,
-        false,
         true,
-        false,
-        false
+        true
     );
     return (
         <Table

@@ -52,11 +52,8 @@ export const useGetProductsWithSizes = (
     page: number = 0,
     size: number = 10,
     searchValue: string = "",
-    byArticle: boolean = false,
     byVendorCode: boolean = false,
-    byProductName: boolean = false,
-    byShopName: boolean = false,
-    byCellCode: boolean = false
+    byProductName: boolean = false
 ) => {
     return useQuery<GetProductsWithSizesResponse>({
         queryKey: [
@@ -64,22 +61,16 @@ export const useGetProductsWithSizes = (
             page,
             size,
             searchValue,
-            byArticle,
             byVendorCode,
             byProductName,
-            byShopName,
-            byCellCode,
         ],
         queryFn: async () => {
             const { data } = await getProductsWithSizes(
                 page,
                 size,
                 searchValue,
-                byArticle,
                 byVendorCode,
-                byProductName,
-                byShopName,
-                byCellCode
+                byProductName
             );
             return data;
         },
@@ -90,11 +81,8 @@ export const useGetProductsByParams = (
     page: number = 0,
     size: number = 10,
     searchValue: string = "",
-    byArticle: boolean = false,
     byVendorCode: boolean = false,
-    byProductName: boolean = false,
-    byShopName: boolean = false,
-    byCellCode: boolean = false
+    byProductName: boolean = false
 ) => {
     return useQuery<GetProductsByParamsResponse>({
         queryKey: [
@@ -102,22 +90,16 @@ export const useGetProductsByParams = (
             page,
             size,
             searchValue,
-            byArticle,
             byVendorCode,
             byProductName,
-            byShopName,
-            byCellCode,
         ],
         queryFn: async () => {
             const { data } = await getProductsByParams(
                 page,
                 size,
                 searchValue,
-                byArticle,
                 byVendorCode,
-                byProductName,
-                byShopName,
-                byCellCode
+                byProductName
             );
             return data;
         },

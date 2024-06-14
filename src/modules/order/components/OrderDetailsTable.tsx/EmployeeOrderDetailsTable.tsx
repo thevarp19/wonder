@@ -1,12 +1,17 @@
 import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
-// import { useGetOrder } from "../../queries";
 import { useGetEmployeeOrder } from "../../queries";
-import { Product } from "../../types";
 
 interface EmployeeOrderDetailsTableProps {
     orderId: number;
+}
+
+interface Product {
+    id: string;
+    article: string;
+    name: string;
+    cellCode: string;
 }
 
 const columns: TableColumnsType<Product> = [
@@ -43,28 +48,24 @@ const columns: TableColumnsType<Product> = [
     // },
 ];
 
-// export const OrderStatusCell: FC<{ status: string }> = ({ status }) => {
-//     return (
-//         <div className="flex items-center gap-4">
-//             {status}
-//             {status === "Не сканировано" && (
-//                 <Button type="primary" size="small">
-//                     Скан
-//                 </Button>
-//             )}
-//         </div>
-//     );
-// };
-
 export const EmployeeOrderDetailsTable: FC<EmployeeOrderDetailsTableProps> = ({
     orderId,
 }) => {
     const { data, isPending } = useGetEmployeeOrder(orderId);
 
+    const transformedData = data?.products.map(
+        (product: any, index: number) => ({
+            id: index.toString(),
+            article: product.productArticle,
+            name: product.productName,
+            cellCode: product.productCell,
+        })
+    );
+
     return (
         <Table
             columns={columns}
-            dataSource={data?.products}
+            dataSource={transformedData}
             rowKey={"id"}
             loading={isPending}
         />

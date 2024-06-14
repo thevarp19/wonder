@@ -68,25 +68,19 @@ export function getProductsWithSizes(
     page: number = 0,
     size: number = 10,
     searchValue: string = "",
-    byArticle: boolean = false,
     byVendorCode: boolean = false,
-    byProductName: boolean = false,
-    byShopName: boolean = false,
-    byCellCode: boolean = false
+    byProductName: boolean = false
 ) {
-    let url = `/api/products/get-with-sizes?searchValue=${searchValue}&byArticle=${byArticle}&byVendorCode=${byVendorCode}&byProductName=${byProductName}&byShopName=${byShopName}&byCellCode=${byCellCode}&page=${page}&size=${size}`;
+    let url = `/api/products/get-with-sizes?searchValue=${searchValue}&byVendorCode=${byVendorCode}&byProductName=${byProductName}&page=${page}&size=${size}`;
     return axiosAuthorized.get<GetProductsWithSizesResponse>(url);
 }
 export function getProductsByParams(
     page: number = 0,
     size: number = 10,
     searchValue: string = "",
-    byArticle: boolean = false,
     byVendorCode: boolean = false,
-    byProductName: boolean = false,
-    byShopName: boolean = false,
-    byCellCode: boolean = false
+    byProductName: boolean = false
 ) {
-    let url = `/api/products/search-by-params?searchValue=${searchValue}&byArticle=${byArticle}&byVendorCode=${byVendorCode}&byProductName=${byProductName}&byShopName=${byShopName}&byCellCode=${byCellCode}&page=${page}&size=${size}`;
+    let url = `/api/products/search-by-params?searchValue=${searchValue}&byVendorCode=${byVendorCode}&byProductName=${byProductName}&page=${page}&size=${size}`;
     return axiosAuthorized.get<GetProductsByParamsResponse>(url);
 }

@@ -178,33 +178,21 @@ const UpdateSizesModal = ({
 export const EmployeeSearchResultsTable: FC<{
     searchValue: string;
     filterKey: string;
-}> = ({ searchValue, filterKey }) => {
+}> = ({ searchValue }) => {
     const [page, setPage] = useState(0);
     const { data, isPending } = useGetProductsWithSizes(
         page,
         undefined,
         searchValue,
-        false,
-        false,
         true,
-        false,
-        false
+        true
     );
-
-    const filteredData = data?.content.filter((item: any) => {
-        if (filterKey === "scanned") {
-            return item.state !== "PENDING";
-        } else if (filterKey === "non-scanned") {
-            return item.state === "PENDING";
-        }
-        return true;
-    });
 
     return (
         <Table
             columns={columns}
             loading={isPending}
-            dataSource={filteredData}
+            dataSource={data?.content}
             rowKey={(record) => record.vendorCode}
             pagination={{
                 pageSize: 10,
