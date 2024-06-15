@@ -1,8 +1,5 @@
-import { SearchInput } from "@/components/ui/SearchInput";
 import { SellerOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/SellerOrderDetailsTable";
 // import { OrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx";
-import { FilterOutlined } from "@ant-design/icons";
-import { Button } from "antd";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 
@@ -18,7 +15,7 @@ export const SellerOrderPage: FC<SellerOrderPageProps> = ({}) => {
                 Заказ-<span className="underline">{orderId}</span>
             </h1>
             <div className="flex items-center justify-between mb-4">
-                <div className="w-full max-w-sm">
+                {/* <div className="w-full max-w-sm">
                     <SearchInput
                         searchValue={""}
                         setSearchValue={() => {}}
@@ -31,7 +28,7 @@ export const SellerOrderPage: FC<SellerOrderPageProps> = ({}) => {
                         size="large"
                         icon={<FilterOutlined />}
                     ></Button>
-                </div>
+                </div> */}
             </div>
             <SellerOrderDetailsTable orderId={orderId} />
         </div>

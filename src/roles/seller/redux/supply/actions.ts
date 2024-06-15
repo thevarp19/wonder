@@ -133,3 +133,9 @@ export const setSupplyId = (id: number): types.SetSupplyId => {
         payload: id,
     };
 };
+export const setReportPath = (pathToReport: string): types.SetReportPath => {
+    return {
+        type: types.SET_REPORT_PATH,
+        payload: pathToReport,
+    };
+};

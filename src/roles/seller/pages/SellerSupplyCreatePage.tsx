@@ -1,6 +1,6 @@
 import { GetBoxResponse } from "@/modules/box/types";
 import { useGetStore } from "@/modules/store/queries";
-import { SupplyPDFModal } from "@/modules/supply/components/SupplyPDF/SupplyPDFModal";
+// import { SupplyPDFModal } from "@/modules/supply/components/SupplyPDF/SupplyPDFModal";
 import { createSupplyMutation } from "@/modules/supply/mutations";
 import { CreateSupplyRequest } from "@/modules/supply/types";
 import { useAppDispatch } from "@/redux/utils";
@@ -8,7 +8,7 @@ import { cn } from "@/utils/shared.util";
 import { PrinterOutlined } from "@ant-design/icons";
 import { App, Button, Steps } from "antd";
 import { FC, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
     AddProductsStep,
     ChooseDateAndStoreStep,
@@ -16,9 +16,11 @@ import {
     PrintStep,
 } from "../../../modules/supply/components/SupplyCreateSteps";
 import {
+    reset,
     saveDateAndStore,
     savePacks,
     saveProducts,
+    setReportPath,
     setSupplyId,
 } from "../redux/supply/actions";
 import { SupplyState } from "../redux/supply/reducer";
@@ -76,6 +78,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     );
     const dispatch = useAppDispatch();
     const supply = useSupply();
+    const navigate = useNavigate();
     const packs = useSupplyPacks();
     // @ts-ignore
 
@@ -127,10 +130,13 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     }
     // @ts-ignore
     const { data: store } = useGetStore(supply?.store);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const { mutateAsync, isPending } = createSupplyMutation((id) => {
-        dispatch(setSupplyId(id));
-    });
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    const { mutateAsync, isPending } = createSupplyMutation(
+        (id, pathToReport) => {
+            dispatch(setSupplyId(id));
+            dispatch(setReportPath(pathToReport));
+        }
+    );
 
     return (
         <div className="min-h-full bg-white rounded-t-lg">
@@ -205,25 +211,30 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             </Button>
                         )}
                     {step === steps.length - 1 && supply.supplyServerId && (
-                        <Button
-                            className={cn("")}
-                            size="large"
-                            loading={isPending}
-                            onClick={() => {
-                                setIsModalOpen(true);
-                            }}
-                            type="primary"
-                        >
-                            Печать
-                        </Button>
+                        <Link target="_blank" to={supply.pathToReport ?? ""}>
+                            <Button
+                                className={cn("")}
+                                size="large"
+                                loading={isPending}
+                                onClick={() => {
+                                    setTimeout(() => {
+                                        dispatch(reset());
+                                        navigate("/seller/supply");
+                                    }, 500);
+                                }}
+                                type="primary"
+                            >
+                                Печать
+                            </Button>
+                        </Link>
                     )}
-                    {isModalOpen && store && supply.supplyServerId && (
+                    {/* {isModalOpen && store && supply.supplyServerId && (
                         <SupplyPDFModal
                             store={store}
                             setIsModalOpen={setIsModalOpen}
                             isModalOpen={isModalOpen}
                         />
-                    )}
+                    )} */}
                 </div>
             </div>
         </div>

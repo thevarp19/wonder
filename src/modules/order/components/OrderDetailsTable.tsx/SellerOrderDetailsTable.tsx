@@ -1,7 +1,6 @@
 import { PriceCell } from "@/components/ui/PriceCell";
 import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
-import { Link } from "react-router-dom";
 // import { useGetOrder } from "../../queries";
 import { useGetSellerOrder } from "../../queries";
 import { GetOrderById } from "../../types";
@@ -14,9 +13,9 @@ const columns: TableColumnsType<GetOrderById> = [
     {
         title: "ID",
         render: (_, record) => (
-            <Link to={`/product/${record.productVendorCode}`}>
-                {record.productVendorCode}
-            </Link>
+            // <Link to={`/product/${record.productVendorCode}`}>
+            <span>{record.productVendorCode}</span>
+            // </Link>
         ),
     },
     {

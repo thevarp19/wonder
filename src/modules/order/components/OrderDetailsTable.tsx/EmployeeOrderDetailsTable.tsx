@@ -1,6 +1,5 @@
 import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
-import { Link } from "react-router-dom";
 import { useGetEmployeeOrder } from "../../queries";
 
 interface EmployeeOrderDetailsTableProps {
@@ -17,9 +16,7 @@ interface Product {
 const columns: TableColumnsType<Product> = [
     {
         title: "ID",
-        render: (_, record) => (
-            <Link to={`/product/${record.id}`}>{record.id}</Link>
-        ),
+        render: (_, record) => <span> {record.id}</span>,
     },
     {
         title: "Артикул",

@@ -21,6 +21,7 @@ export const SAVE_DATE_AND_STORE = "SUPPLY_SAVE_DATE_AND_STORE";
 
 export const RESET = "SUPPLY_RESET";
 export const SET_SUPPLY_ID = "SUPPLY_SET_SUPPLY_ID";
+export const SET_REPORT_PATH = "SUPPLY_SET_REPORT_PATH";
 
 export interface SetProducts {
     type: typeof SET_PRODUCTS;
@@ -103,6 +104,11 @@ export interface SetSupplyId {
     payload: number;
 }
 
+export interface SetReportPath {
+    type: typeof SET_REPORT_PATH;
+    payload: string;
+}
+
 export type SupplyActions =
     | AddProducts
     | UpdateProductQuantity
@@ -118,4 +124,5 @@ export type SupplyActions =
     | SetDate
     | SaveDateAndStore
     | Reset
-    | SetSupplyId;
+    | SetSupplyId
+    | SetReportPath;

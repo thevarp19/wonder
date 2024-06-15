@@ -33,7 +33,8 @@ const initialState: ProductPriceChangeState = {
 
 type ProductPriceChangeAction =
     | { type: "ADD_CITY_PRICE_CHANGE"; payload: ProductCityPriceChangeState }
-    | { type: "ADD_MAIN_PRICE_CHANGE"; payload: ProductMainPriceChangeState };
+    | { type: "ADD_MAIN_PRICE_CHANGE"; payload: ProductMainPriceChangeState }
+    | { type: "RESET_CHANGES" };
 
 export function getPriceChangeRequest(
     state: ProductPriceChangeState
@@ -44,7 +45,10 @@ export function getPriceChangeRequest(
             cityId: cityPrice.cityId,
             productId: cityPrice.productId,
         })),
-        mainPriceList: [],
+        mainPriceList: state.mainPrices.map((mainPrice) => ({
+            productId: mainPrice.productId,
+            mainCityId: mainPrice.mainCityId,
+        })),
     };
 }
 
@@ -126,6 +130,8 @@ function reducer(
                     },
                 ],
             };
+        case "RESET_CHANGES":
+            return initialState;
         default:
             return state;
     }
@@ -147,9 +153,18 @@ export const useProductPricesChange = () => {
         dispatch({ type: "ADD_MAIN_PRICE_CHANGE", payload: mainPrice });
     }
 
-    return { state, dispatch, addCityPriceChange, addMainPriceChange };
-};
+    function clearChanges() {
+        dispatch({ type: "RESET_CHANGES" });
+    }
 
+    return {
+        state,
+        dispatch,
+        addCityPriceChange,
+        addMainPriceChange,
+        clearChanges,
+    };
+};
 export const useUpdateProductSize = (productId: string) => {
     const mutation = updateProductSizeMutation(productId);
 

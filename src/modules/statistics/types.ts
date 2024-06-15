@@ -1,6 +1,12 @@
 import { BasePaginationResponse } from "@/types";
 
-export interface GetSalesInfoResponse {
+export interface GetSalesSellerInfoResponse {
+    ordersInfo: StatisticsInfo;
+    productsInfo: StatisticsInfo;
+    suppliesInfo: StatisticsInfo;
+    incomeInfo: StatisticsInfo;
+}
+export interface GetSalesAdminInfoResponse {
     ordersInfo: StatisticsInfo;
     sellersInfo: StatisticsInfo;
     suppliesInfo: StatisticsInfo;

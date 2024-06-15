@@ -14,13 +14,14 @@ import {
     GetDailyCountResponse,
     GetLastOrdersResponse,
     GetProductCountResponse,
-    GetSalesInfoResponse,
+    GetSalesAdminInfoResponse,
+    GetSalesSellerInfoResponse,
     GetTopProductResponse,
     GetTopSellerResponse,
 } from "./types";
 
 export const useGetAdminSalesInfo = (duration: DurationType) => {
-    return useQuery<GetSalesInfoResponse>({
+    return useQuery<GetSalesAdminInfoResponse>({
         queryKey: [`salesInfoAdmin`, duration],
         queryFn: async () => {
             const { data } = await getAdminSalesInfo(duration);
@@ -29,7 +30,7 @@ export const useGetAdminSalesInfo = (duration: DurationType) => {
     });
 };
 export const useGetSellerSalesInfo = (duration: DurationType) => {
-    return useQuery<GetSalesInfoResponse>({
+    return useQuery<GetSalesSellerInfoResponse>({
         queryKey: [`salesInfoSeller`, duration],
         queryFn: async () => {
             const { data } = await getSellerSalesInfo(duration);

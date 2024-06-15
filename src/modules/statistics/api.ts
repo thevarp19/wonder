@@ -3,18 +3,19 @@ import {
     GetDailyCountResponse,
     GetLastOrdersResponse,
     GetProductCountResponse,
-    GetSalesInfoResponse,
+    GetSalesAdminInfoResponse,
+    GetSalesSellerInfoResponse,
     GetTopProductResponse,
     GetTopSellerResponse,
 } from "./types";
 
 export function getAdminSalesInfo(duration: string) {
-    return axiosAuthorized.get<GetSalesInfoResponse>(
+    return axiosAuthorized.get<GetSalesAdminInfoResponse>(
         `/api/statistics/sales-information/admin-stats?duration=${duration}`
     );
 }
 export function getSellerSalesInfo(duration: string) {
-    return axiosAuthorized.get<GetSalesInfoResponse>(
+    return axiosAuthorized.get<GetSalesSellerInfoResponse>(
         `/api/statistics/sales-information/seller-stats?duration=${duration}`
     );
 }

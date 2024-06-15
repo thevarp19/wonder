@@ -3,14 +3,22 @@ import { App } from "antd";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { acceptSupplyProducts, createSupply } from "./api";
-import { AcceptSupplyProductRequest, CreateSupplyRequest } from "./types";
+import {
+    AcceptSupplyProductRequest,
+    CreateSupplyRequest,
+    CreateSupplyResponse,
+} from "./types";
 
 export const createSupplyMutation = (
-    onSuccess?: (supplyId: number) => void
+    onSuccess?: (supplyId: number, pathToReport: string) => void
 ) => {
     const { message } = App.useApp();
 
-    return useMutation<{ id: number }, AxiosError<any>, CreateSupplyRequest>({
+    return useMutation<
+        CreateSupplyResponse,
+        AxiosError<any>,
+        CreateSupplyRequest
+    >({
         async mutationFn(values) {
             const { data } = await createSupply(values);
             return data;
@@ -18,7 +26,7 @@ export const createSupplyMutation = (
         onSuccess(data) {
             message.success("Успешно!");
             if (onSuccess) {
-                onSuccess(data.id);
+                onSuccess(data.id, data.pathToReport);
             }
         },
         onError(error) {

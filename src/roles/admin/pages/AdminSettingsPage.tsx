@@ -1,13 +1,6 @@
-import { FilterButton } from "@/components/ui/FilterButton";
-import { SearchInput } from "@/components/ui/SearchInput";
 import { BoxesTable } from "@/modules/box/components/BoxesTable";
 import { StoresTable } from "@/modules/store/components/StoresTable";
-import { XMLTable } from "@/modules/xml/components/XMLTable";
-import {
-    BoxPlotOutlined,
-    FileMarkdownOutlined,
-    ShopOutlined,
-} from "@ant-design/icons";
+import { BoxPlotOutlined, ShopOutlined } from "@ant-design/icons";
 import { Button, Menu, MenuProps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -23,11 +16,11 @@ const items: MenuProps["items"] = [
         key: "boxes",
         icon: <BoxPlotOutlined />,
     },
-    {
-        label: "XML",
-        key: "xml",
-        icon: <FileMarkdownOutlined />,
-    },
+    // {
+    //     label: "XML",
+    //     key: "xml",
+    //     icon: <FileMarkdownOutlined />,
+    // },
 ];
 
 interface AdminSettingsPageProps {}
@@ -49,9 +42,7 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
                 mode="horizontal"
                 onClick={onClick}
                 selectedKeys={[
-                    ["stores", "boxes", "xml"].includes(current)
-                        ? current
-                        : "stores",
+                    ["stores", "boxes"].includes(current) ? current : "stores",
                 ]}
             />
             {current === "stores" && (
@@ -82,7 +73,7 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
                     <BoxesTable />
                 </div>
             )}
-            {current === "xml" && (
+            {/* {current === "xml" && (
                 <div className="p-4">
                     <h1 className="pb-4 text-2xl font-semibold">XML Таблица</h1>
                     <div className="flex items-center mb-4">
@@ -97,7 +88,7 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
                     </div>
                     <XMLTable />
                 </div>
-            )}
+            )} */}
         </div>
     );
 };

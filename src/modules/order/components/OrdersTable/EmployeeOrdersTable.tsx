@@ -42,6 +42,7 @@ const columns: TableColumnsType<GetOrdersEmployeeContent> = [
         render: (_, record) => (
             <Select
                 className="w-full"
+                disabled
                 value={orderStatusMap(record.orderStatus)}
                 options={[
                     { value: "1", label: "Упаковка" },

@@ -1,10 +1,11 @@
 import { padNumbers } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Table, TableColumnsType, Tag } from "antd";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
+import { Link } from "react-router-dom";
 import { useGetSellerSupplies } from "../../queries";
 import { GetSellerSupply, SupplyState } from "../../types";
-import { SupplyPDFReportModal } from "../SupplyReportPDF/SupplyPDFReportModal";
+// import { SupplyPDFReportModal } from "../SupplyReportPDF/SupplyPDFReportModal";
 
 // interface Supply {}
 
@@ -28,19 +29,19 @@ function getColor(status: SupplyState) {
 }
 
 export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [reportId, setReportId] = useState<number | null>(null);
     const { data, isPending } = useGetSellerSupplies();
 
-    useEffect(() => {
-        console.log(reportId);
-    }, [reportId]);
     const columns: TableColumnsType<GetSellerSupply> = [
         {
             title: "Номер поставки",
             dataIndex: "id",
-            render: (id) => padNumbers(id, 8),
+            render: (_, record) => (
+                <Link to={`/seller/supply/${record.id}`}>
+                    {padNumbers(record.id, 8)}
+                </Link>
+            ),
         },
+
         {
             title: "Адрес",
             dataIndex: "formattedAddress",
@@ -65,20 +66,18 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
             title: "Отчет",
             render: (_, record) => {
                 return (
-                    <Button
-                        danger
-                        loading={isPending}
-                        onClick={() => {
-                            setIsModalOpen(true);
-                            setReportId(record.id);
-                        }}
-                        icon={
-                            <DownloadOutlined
-                                color="#ef7214"
-                                style={{ color: "#ef7214" }}
-                            />
-                        }
-                    ></Button>
+                    <Link target="_blank" to={record.pathToReport}>
+                        <Button
+                            danger
+                            loading={isPending}
+                            icon={
+                                <DownloadOutlined
+                                    color="#ef7214"
+                                    style={{ color: "#ef7214" }}
+                                />
+                            }
+                        ></Button>
+                    </Link>
                 );
             },
         },
@@ -87,13 +86,6 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
     return (
         <div>
             <Table loading={isPending} columns={columns} dataSource={data} />
-            {isModalOpen && reportId && (
-                <SupplyPDFReportModal
-                    reportId={reportId || null}
-                    setIsModalOpen={setIsModalOpen}
-                    isModalOpen={isModalOpen}
-                />
-            )}
         </div>
     );
 };

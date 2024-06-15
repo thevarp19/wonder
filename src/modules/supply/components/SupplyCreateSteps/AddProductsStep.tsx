@@ -5,7 +5,7 @@ import { useAppDispatch } from "@/redux/utils";
 import * as actions from "@/roles/seller/redux/supply/actions";
 import { useSupplyProducts } from "@/roles/seller/redux/supply/selectors";
 import { ProductQuantity } from "@/roles/seller/types/supply";
-import { cn } from "@/utils/shared.util";
+import { cn, useDebounce } from "@/utils/shared.util";
 import {
     Button,
     Form,
@@ -22,8 +22,10 @@ interface AddProductsStepProps {}
 export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
     const products = useSupplyProducts();
     const dispatch = useAppDispatch();
+    const [searchValue, setSearchValue] = useState("");
+    const debouncedSearchValue = useDebounce(searchValue, 500);
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
-        useInfiniteGetProducts();
+        useInfiniteGetProducts(10, debouncedSearchValue);
 
     const columns: TableColumnsType<ProductQuantity> = [
         {
@@ -115,7 +117,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                     mode="multiple"
                     allowClear
                     loading={isPending}
-                    value={products.map((e) => e.product.id)}
+                    value={products.map((e: any) => e.product.id)}
                     onSelect={(value) => {
                         const p = data?.pages
                             .flatMap((page) => page.content)
@@ -125,6 +127,8 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                     onDeselect={(value) => {
                         dispatch(actions.removeProduct(Number(value)));
                     }}
+                    searchValue={searchValue}
+                    onSearch={setSearchValue}
                     onPopupScroll={handlePopupScroll}
                     options={data?.pages.flatMap((page) =>
                         page.content.map((product) => ({

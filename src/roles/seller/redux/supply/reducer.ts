@@ -10,6 +10,7 @@ export interface SupplyState {
     store: GetStoreResponse | null;
     date: string | null;
     supplyServerId: number | null;
+    pathToReport?: string;
 }
 
 const INITIAL_STATE: SupplyState = {
@@ -64,6 +65,8 @@ export const sellerSupplyReducer = (
             };
         case types.SET_PRODUCTS:
             return { ...state, products: action.payload };
+        case types.SET_REPORT_PATH:
+            return { ...state, pathToReport: action.payload };
         case types.ADD_PACK:
             const newPacks = [
                 ...state.packs.slice(0, action.payload.index),

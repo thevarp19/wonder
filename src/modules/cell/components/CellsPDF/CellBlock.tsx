@@ -1,4 +1,5 @@
 import { GetStoreResponse } from "@/modules/store/types";
+// import { generateBarcodeBase64 } from "@/modules/supply/components/SupplyPDF";
 import { generateBarcodeBase64 } from "@/modules/supply/components/SupplyPDF";
 import {
     Document,

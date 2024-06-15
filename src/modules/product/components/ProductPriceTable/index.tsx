@@ -64,15 +64,20 @@ function MainPriceCitySelect({
     isEditable,
     setValue,
     cities,
+    mainCityId,
 }: {
     isEditable: boolean;
+    mainCityId: number | null;
     cities: ProductPriceCity[] | undefined;
     setValue: (value: string, label: string) => void;
 }) {
+    const selectedCity = cities?.find((city) => city.id === mainCityId) || null;
+
     return (
         <Select
             disabled={!isEditable}
             style={{ width: 150 }}
+            defaultValue={selectedCity ? selectedCity.id.toString() : "-1"}
             onChange={(_, option) =>
                 // @ts-ignore
                 setValue(option.value, option.label)
@@ -80,7 +85,7 @@ function MainPriceCitySelect({
             options={[
                 { value: "-1", label: "Не выбрано" },
                 ...(cities ?? []).map((city) => ({
-                    value: `${city.id}`,
+                    value: city.id.toString(),
                     label: city.name,
                 })),
             ]}
@@ -185,8 +190,9 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
             uniqueStores.push(store);
         }
     }
-    const { addCityPriceChange, addMainPriceChange, state } =
+    const { addCityPriceChange, addMainPriceChange, state, clearChanges } =
         useProductPricesChange();
+
     const newColumns = [
         ...columns,
         {
@@ -194,6 +200,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
             render: (_: any, record: ProductWithPrices) => (
                 <MainPriceCitySelect
                     isEditable={isEditable}
+                    mainCityId={record?.mainPriceCityId}
                     setValue={(value, label) => {
                         addMainPriceChange({
                             productId: record.id,
@@ -224,6 +231,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                 ),
             })),
     ];
+
     const { mutateAsync } = changeProductPriceMutation();
 
     return (
@@ -283,6 +291,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                                     );
                                     setIsEditable(false);
                                 }}
+                                clearChanges={clearChanges}
                             />
                         ) : (
                             <Button onClick={() => setIsEditable(true)}>
@@ -307,9 +316,11 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
 function SavePriceEditButton({
     onClick,
     state,
+    clearChanges,
 }: {
     onClick: () => Promise<void>;
     state: ProductPriceChangeState;
+    clearChanges: () => void;
 }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     return (
@@ -328,10 +339,20 @@ function SavePriceEditButton({
             >
                 {isModalOpen && <PriceChanges {...state} />}
             </Modal>
-            <Button type="primary" onClick={() => setIsModalOpen(true)}>
-                Сохранить
-            </Button>
-            ;
+            <div className="flex gap-3">
+                <Button
+                    key="clear"
+                    onClick={() => {
+                        clearChanges();
+                        setIsModalOpen(false);
+                    }}
+                >
+                    Очистить
+                </Button>
+                <Button type="primary" onClick={() => setIsModalOpen(true)}>
+                    Сохранить
+                </Button>
+            </div>
         </>
     );
 }

@@ -6,6 +6,8 @@ export interface GetSupplyById {
     boxTypeName: string;
     storeAddress: string;
     shopName: string;
+    pathToBoxBarcode: string;
+    pathToProductBarcode: string;
 }
 
 export interface GetSupplyProducts {
@@ -34,6 +36,14 @@ export interface GetSuppliesByDate {
     }[];
 }
 
+export interface CreateSupplyResponse {
+    id: number;
+    supplyCreatedTime: string;
+    supplyAcceptTime: string;
+    supplyState: string;
+    pathToReport: string;
+    formattedAddress: string;
+}
 export interface CreateSupplyRequest {
     storeId: number;
     selectedTime: string;
@@ -67,6 +77,7 @@ export interface GetSellerSupply {
     formattedAddress: string;
     supplyCreatedTime: string;
     supplyAcceptTime: string;
+    pathToReport: string;
     supplyState: SupplyState;
 }
 export type SupplyState =

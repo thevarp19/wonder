@@ -13,6 +13,7 @@ export interface ProductWithPrices {
     name: string;
     published: boolean;
     vendorCode: string;
+    mainPriceCityId: number | null;
     prices: ProductPrice[];
 }
 

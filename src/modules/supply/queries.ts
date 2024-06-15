@@ -5,14 +5,12 @@ import {
     getSupplyBox,
     getSupplyById,
     getSupplyProducts,
-    getSupplyReport,
 } from "./api";
 import {
     GetSellerSupply,
     GetSuppliesByDate,
     GetSupplyById,
     GetSupplyProducts,
-    GetSupplyReport,
 } from "./types";
 
 export const useGetSuppliesByDate = (startDate: string, endDate: string) => {
@@ -35,15 +33,15 @@ export const useGetSupply = (id: number) => {
     });
 };
 
-export const useGetSupplyReport = (id: number) => {
-    return useQuery<GetSupplyReport>({
-        queryKey: [`suppliesReport-${id}`],
-        queryFn: async () => {
-            const { data } = await getSupplyReport(id);
-            return data;
-        },
-    });
-};
+// export const useGetSupplyReport = (id: number) => {
+//     return useQuery<GetSupplyReport>({
+//         queryKey: [`suppliesReport-${id}`],
+//         queryFn: async () => {
+//             const { data } = await getSupplyReport(id);
+//             return data;
+//         },
+//     });
+// };
 
 export const useGetSupplyProducts = (id: number) => {
     return useQuery<GetSupplyProducts>({

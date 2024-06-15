@@ -1,4 +1,4 @@
-import { boxOpenIcon, scanIcon, tengeIcon } from "@/assets";
+import { boxIcon, boxOpenIcon, scanIcon, tengeIcon } from "@/assets";
 import { Image } from "@/components/ui/Image";
 import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
 import { ProductsCountTable } from "@/modules/statistics/components/ProductCountTable";
@@ -79,20 +79,20 @@ export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
                             statistics?.ordersInfo
                         }
                     />
-                    {/* <ResultsCard
-                        statisticsName="Продавцов"
-                        iconSrc={boxIcon}
-                        statistics={
-                            // { count: 30, percent: -12 }
-                            statistics?.sellersInfo
-                        }
-                    /> */}
                     <ResultsCard
                         statisticsName="Поставок"
                         iconSrc={scanIcon}
                         statistics={
                             // { count: 65, percent: 42 }
                             statistics?.suppliesInfo
+                        }
+                    />
+                    <ResultsCard
+                        statisticsName="Артикул"
+                        iconSrc={boxIcon}
+                        statistics={
+                            // { count: 30, percent: -12 }
+                            statistics?.productsInfo
                         }
                     />
                     <ResultsCard
