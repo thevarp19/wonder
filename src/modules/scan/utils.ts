@@ -18,3 +18,7 @@ export function toScanProductsSearch() {
 export function toScanProductsSizes() {
     window.location.href = `${scannerUrl}&type=single&useFor=employeeSize`;
 }
+
+export function toScanProductsAssemble(orderId: number) {
+    window.location.href = `${scannerUrl}&type=multiple&useFor=employeeOrder&orderId=${orderId}`;
+}

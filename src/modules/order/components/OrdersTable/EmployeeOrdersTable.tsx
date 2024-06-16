@@ -1,14 +1,10 @@
 import { DateCell } from "@/components/ui/DateCell";
+import { PriceCell } from "@/components/ui/PriceCell";
 import { Select, Table, TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetOrdersEmployee } from "../../queries";
 import { DeliveryMode, GetOrdersEmployeeContent } from "../../types";
-import {
-    deliveryTypeColorMap,
-    deliveryTypeMap,
-    orderStatusMap,
-} from "../../utils";
 
 const columns: TableColumnsType<GetOrdersEmployeeContent> = [
     {
@@ -24,17 +20,25 @@ const columns: TableColumnsType<GetOrdersEmployeeContent> = [
         render: (_, record) => <DateCell timestamp={record?.orderCreatedAt} />,
     },
     {
+        title: "Склад",
+        dataIndex: "shopName",
+    },
+    {
+        title: "Адрес",
+        dataIndex: "formattedAddress",
+    },
+    {
         title: "Тип доставки",
         dataIndex: "deliveryMode",
-        render: (_, record) => (
-            <Tag color={deliveryTypeColorMap(record.deliveryType)}>
-                {deliveryTypeMap(record.deliveryType)}
-            </Tag>
-        ),
+        render: (_, record) => <Tag>{record.deliveryType}</Tag>,
     },
     {
         title: "Время отправки",
         render: (_, record) => <DateCell timestamp={record.orderToSendTime} />,
+    },
+    {
+        title: "Цена",
+        render: (_, record) => <PriceCell price={record.price} />,
     },
     {
         title: "Статус",
@@ -43,7 +47,7 @@ const columns: TableColumnsType<GetOrdersEmployeeContent> = [
             <Select
                 className="w-full"
                 disabled
-                value={orderStatusMap(record.orderStatus)}
+                value={record.descriptionOfOrderStatus}
                 options={[
                     { value: "1", label: "Упаковка" },
                     { value: "2", label: "Готов к отправке" },
@@ -52,7 +56,6 @@ const columns: TableColumnsType<GetOrdersEmployeeContent> = [
                 ]}
             />
         ),
-        width: 200,
     },
 ];
 

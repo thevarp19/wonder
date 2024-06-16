@@ -9,7 +9,6 @@ interface EmployeeSearchPageProps {}
 
 export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
     const scanSearchValue = useScannerResults();
-
     const [searchValue, setSearchValue] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -21,6 +20,15 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
         if (scanSearchValue) {
             setSearchQuery(scanSearchValue);
             setSearchValue(scanSearchValue);
+
+            const newSearchParams = new URLSearchParams(window.location.search);
+            newSearchParams.delete("result");
+            newSearchParams.delete("type");
+            newSearchParams.delete("step");
+            const newUrl = `${
+                window.location.pathname
+            }?${newSearchParams.toString()}`;
+            window.history.replaceState(null, "", newUrl);
         }
     }, [scanSearchValue]);
     return (

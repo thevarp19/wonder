@@ -42,23 +42,38 @@ export interface GetOrdersByDate {
 }
 
 export interface GetOrdersEmployeeContent {
-    orderCode: string;
-    orderCreatedAt: string;
-    deliveryType: string;
-    orderToSendTime: string;
     orderStatus: string;
-}
-export interface Product {
-    id: number;
-    article: string;
-    name: string;
-    cellCode: string;
+    descriptionOfOrderStatus: string;
+    orderAvailableAction: string;
+    orderCode: string;
+    shopName: string;
+    formattedAddress: string;
+    orderCreatedAt: string;
+    orderToSendTime: string;
+    deliveryType: string;
+    price: number;
+    productsCount: number;
 }
 
 export interface GetOrderDetailEmployee {
+    orderStatus: string;
+    descriptionOfOrderStatus: string;
+    orderAvailableAction: string;
     products: Product[];
-    deliveryMode: DeliveryMode;
-    deliveryTime: string;
+    deliveryMode: string;
+    waybill: string;
+    orderCode: string;
+    deliveryTime: string | null;
+}
+
+export interface Product {
+    productName: string;
+    productArticle: string;
+    productVendorCode: string;
+    pathToProductBarcode: string;
+    pathToBoxBarcode: string;
+    productStateInStore: string;
+    productCell: string;
 }
 
 export type DeliveryMode =
@@ -68,3 +83,26 @@ export type DeliveryMode =
     | "DELiVERY_POSTOMAT"
     | "DELIVERY_REGIONAL_TODOOR"
     | "";
+
+export interface ProductAssemble {
+    id: number;
+    article: string;
+    name: string;
+    cellCode: string;
+}
+
+export interface ProcessedProduct extends ProductAssemble {
+    processedEmployeeName: string;
+    processedDate: string;
+}
+
+export interface AssembleOrderResponse {
+    productsToProcess: ProductAssemble[];
+    processedProducts: ProcessedProduct[];
+    deliveryMode: string;
+    deadline: string;
+    sellerName: string;
+    startedEmployeeName: string;
+    orderCode: string;
+    assembleState: string;
+}

@@ -11,6 +11,7 @@ import {
 import {
     DeliveryMode,
     GetOrderById,
+    GetOrderDetailEmployee,
     GetOrdersAdmin,
     GetOrdersByDate,
     GetOrdersEmployee,
@@ -210,7 +211,7 @@ export const useGetSellerOrder = (id: number) => {
 };
 
 export const useGetEmployeeOrder = (id: number) => {
-    return useQuery<any>({
+    return useQuery<GetOrderDetailEmployee>({
         queryKey: [`order-employee-${id}`],
         queryFn: async () => {
             const { data } = await getEmployeeOrderById(id);

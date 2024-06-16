@@ -1,5 +1,6 @@
 import { axiosAuthorized } from "@/lib/axios";
 import {
+    AssembleOrderResponse,
     DeliveryMode,
     GetOrderById,
     GetOrderDetailEmployee,
@@ -84,7 +85,34 @@ export function getSellerOrderById(id: number) {
     );
 }
 export function getEmployeeOrderById(id: number) {
-    return axiosAuthorized.get<GetOrderDetailEmployee[]>(
+    return axiosAuthorized.get<GetOrderDetailEmployee>(
         `/api/orders/employee/details/${id}`
+    );
+}
+export function startAssemble(id: number) {
+    return axiosAuthorized.post<AssembleOrderResponse>(
+        `/api/assemblies/${id}/start`
+    );
+}
+export function assembleProducts(id: number, values: any) {
+    return axiosAuthorized.post<AssembleOrderResponse>(
+        `/api/assemblies/${id}/assemble-product`,
+        values
+    );
+}
+export function finishAssemble(id: number) {
+    return axiosAuthorized.post<any>(`/api/assemblies/${id}/finish`);
+}
+
+export function startPackage(id: number) {
+    return axiosAuthorized.post<any>(`/api/order-packages/${id}/start`);
+}
+export function finishPackage(id: number) {
+    return axiosAuthorized.post<any>(`/api/order-packages/${id}/finish`);
+}
+export function packageProducts(id: number, values: any) {
+    return axiosAuthorized.post<any>(
+        `/api/order-packages/${id}/package-product`,
+        values
     );
 }

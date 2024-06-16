@@ -47,6 +47,15 @@ export const EmployeeProductSizesPage: FC<
         if (scanSearchValue) {
             setSearchQuery(scanSearchValue);
             setSearchValue(scanSearchValue);
+
+            const newSearchParams = new URLSearchParams(window.location.search);
+            newSearchParams.delete("result");
+            newSearchParams.delete("type");
+            newSearchParams.delete("step");
+            const newUrl = `${
+                window.location.pathname
+            }?${newSearchParams.toString()}`;
+            window.history.replaceState(null, "", newUrl);
         }
     }, [scanSearchValue]);
 
@@ -199,7 +208,7 @@ export const EmployeeSearchResultsTable: FC<{
                         item.length !== null &&
                         item.weight !== null &&
                         item.height !== null &&
-                        item.comment !== ""
+                        item.comment !== null
                     );
                 } else if (filterKey === "non-scanned") {
                     return (
@@ -207,7 +216,7 @@ export const EmployeeSearchResultsTable: FC<{
                         item.length === null &&
                         item.weight === null &&
                         item.height === null &&
-                        item.comment === ""
+                        item.comment === null
                     );
                 }
                 return true;
