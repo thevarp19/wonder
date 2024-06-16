@@ -1,4 +1,7 @@
-import { BasePaginationResponse } from "@/types";
+import {
+    BasePaginationProductsSizesResponse,
+    BasePaginationResponse,
+} from "@/types";
 
 export interface ProductPrice {
     cityId: number;
@@ -21,18 +24,18 @@ export interface GetProductResponse
     extends BasePaginationResponse<GetProductContent> {}
 
 export interface GetProductPricesResponse
-    extends BasePaginationResponse<GetProductPricesContent> {}
+    extends BasePaginationProductsSizesResponse<GetProductPricesContent> {}
 
+export interface GetProductPricesContent {
+    cities: ProductPriceCity[];
+    products: ProductWithPrices[];
+}
 export interface GetProductsWithSizesResponse
     extends BasePaginationResponse<GetProductsWithSizesContent[]> {}
 
 export interface GetProductsByParamsResponse
     extends BasePaginationResponse<GetProductByParamsContent[]> {}
 
-export interface GetProductPricesContent {
-    cities: ProductPriceCity[];
-    products: ProductWithPrices[];
-}
 export interface GetProductsWithSizesContent {
     productName: string;
     productArticle: string;

@@ -99,7 +99,7 @@ export const AreaCharts: FC<AreaChartsProps> = ({
                 <AreaChart width={800} height={310} data={formattedData}>
                     <CartesianGrid y={99999} strokeDasharray="0" />
                     <XAxis dataKey="localDate" />
-                    <YAxis strokeWidth={0} dataKey="count" />
+                    <YAxis strokeWidth={0} dataKey="income" />
                     <Tooltip />
                     {/* <Legend /> */}
 

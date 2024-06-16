@@ -179,8 +179,8 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
     }, [activeStores]);
     const uniqueStores = [];
     for (const store of new Set(activeStores)) {
-        if (products?.content[0].cities.length) {
-            const storeIndex = products.content[0].cities.findIndex(
+        if (products?.content.cities.length) {
+            const storeIndex = products.content.cities.findIndex(
                 (city) => city.name.toLowerCase() === store.toLowerCase()
             );
             if (storeIndex !== -1) {
@@ -209,7 +209,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                             mainCityName: label,
                         });
                     }}
-                    cities={products?.content?.[0].cities}
+                    cities={products?.content?.cities}
                 />
             ),
             width: 150,
@@ -249,7 +249,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                 <StoreCheckboxes
                     checked={activeStores}
                     setChecked={setActiveStores}
-                    stores={products?.content?.[0]?.cities || []}
+                    stores={products?.content?.cities || []}
                 />
             </Modal>
             <div className="flex items-center justify-between mb-4">
@@ -277,7 +277,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
             <Table
                 // @ts-ignore
                 columns={newColumns}
-                dataSource={products?.content?.[0]?.products || []}
+                dataSource={products?.content?.products || []}
                 rowKey={(r) => r.vendorCode}
                 scroll={{ x: 1200 }}
                 footer={() => (
