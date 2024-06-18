@@ -1,4 +1,5 @@
 import { boxIcon, boxOpenIcon, scanIcon, tengeIcon } from "@/assets";
+import DurationSwitch from "@/components/ui/DurationSwitch";
 import { Image } from "@/components/ui/Image";
 import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
 import { ProductsCountTable } from "@/modules/statistics/components/ProductCountTable";
@@ -7,51 +8,16 @@ import {
     useGetSellerSalesInfo,
     useGetSellerTopProducts,
 } from "@/modules/statistics/queries";
-import { StatisticsInfo } from "@/modules/statistics/types";
+import { DurationType, StatisticsInfo } from "@/modules/statistics/types";
 import { getColorByStatisticsName } from "@/modules/statistics/utils";
 import { cn } from "@/utils/shared.util";
 import { Card, Spin } from "antd";
-import { FC } from "react";
+import { FC, useState } from "react";
 
 interface SellerHomePageProps {}
 
 export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
-    // const topProducts = {
-    //     content: [
-    //         {
-    //             productId: 7,
-    //             productName: "Электрогриль DSP KB1036",
-    //             productPrice: 40000,
-    //             count: 16,
-    //         },
-    //         {
-    //             productId: 6,
-    //             productName: "Cronier CR-935 утюжок",
-    //             productPrice: 80000,
-    //             count: 14,
-    //         },
-    //         {
-    //             productId: 2,
-    //             productName: "Электрочайник Super Crest SCT-4022",
-    //             productPrice: 150000,
-    //             count: 18,
-    //         },
-    //         {
-    //             productId: 4,
-    //             productName: "VGR V-306 роторная от сети ",
-    //             productPrice: 60000,
-    //             count: 12,
-    //         },
-    //         {
-    //             productId: 5,
-    //             productName: "ABS V-306  от сети ",
-    //             productPrice: 3500,
-    //             count: 2,
-    //         },
-    //     ],
-    // };
-    // const topProductsLoading = false;
-    const duration = "MONTH";
+    const [duration, setDuration] = useState<DurationType>("MONTH");
     const { data: statistics, isPending } = useGetSellerSalesInfo(duration);
     const { data: dailyInfo, isPending: getDailyLoading } =
         useGetSellerDailyInfo(duration);
@@ -68,7 +34,10 @@ export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
         );
     }
     return (
-        <div className="flex p-5 from-orange-500 to-white bg-gradient-to-r">
+        <div className="flex flex-col gap-3 p-5 from-orange-500 to-white bg-gradient-to-r">
+            <div className="p-2 bg-white rounded-md w-max">
+                <DurationSwitch duration={duration} setDuration={setDuration} />
+            </div>
             <div className="flex gap-6">
                 <div className="flex flex-col gap-4">
                     <ResultsCard

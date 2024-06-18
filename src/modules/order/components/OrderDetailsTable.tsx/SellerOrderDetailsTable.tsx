@@ -1,7 +1,9 @@
 import { PriceCell } from "@/components/ui/PriceCell";
-import { Table, TableColumnsType } from "antd";
+import { Button, Table, TableColumnsType } from "antd";
 import { FC } from "react";
 // import { useGetOrder } from "../../queries";
+import { DownloadOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 import { useGetSellerOrder } from "../../queries";
 import { GetOrderById } from "../../types";
 
@@ -39,6 +41,43 @@ const columns: TableColumnsType<GetOrderById> = [
         dataIndex: "productSellPrice",
         render: (text) => <PriceCell price={text} />,
     },
+    {
+        title: "Баркоды коробки",
+        render: (_, record) => {
+            return (
+                <Link target="_blank" to={record.pathToBoxBarcode}>
+                    <Button
+                        danger
+                        icon={
+                            <DownloadOutlined
+                                color="#ef7214"
+                                style={{ color: "#ef7214" }}
+                            />
+                        }
+                    ></Button>
+                </Link>
+            );
+        },
+    },
+    {
+        title: "Баркоды продуктов",
+        render: (_, record) => {
+            return (
+                <Link target="_blank" to={record.pathToProductBarcode}>
+                    <Button
+                        danger
+                        icon={
+                            <DownloadOutlined
+                                color="#ef7214"
+                                style={{ color: "#ef7214" }}
+                            />
+                        }
+                    ></Button>
+                </Link>
+            );
+        },
+    },
+
     // {
     //     title: "Статус",
     //     render: (_) => <OrderStatusCell status={"Не сканировано"} />,

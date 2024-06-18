@@ -8,6 +8,8 @@ export interface GetOrderById {
     productTradePrice: number;
     productSellPrice: number;
     income: number;
+    pathToProductBarcode: string;
+    pathToBoxBarcode: string;
 }
 
 export interface GetOrdersAdmin

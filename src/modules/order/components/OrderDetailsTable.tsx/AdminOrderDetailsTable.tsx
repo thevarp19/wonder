@@ -40,24 +40,7 @@ const columns: TableColumnsType<GetOrderById> = [
         dataIndex: "productSellPrice",
         render: (text) => <PriceCell price={text} />,
     },
-    // {
-    //     title: "Статус",
-    //     render: (_) => <OrderStatusCell status={"Не сканировано"} />,
-    // },
 ];
-
-// export const OrderStatusCell: FC<{ status: string }> = ({ status }) => {
-//     return (
-//         <div className="flex items-center gap-4">
-//             {status}
-//             {status === "Не сканировано" && (
-//                 <Button type="primary" size="small">
-//                     Скан
-//                 </Button>
-//             )}
-//         </div>
-//     );
-// };
 
 export const AdminOrderDetailsTable: FC<AdminOrderDetailsTableProps> = ({
     orderId,

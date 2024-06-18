@@ -1,3 +1,4 @@
+import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
@@ -34,9 +35,15 @@ const columns: TableColumnsType<GetSupplyById> = [
         render: (_, record) => {
             return (
                 <Link target="_blank" to={record.pathToBoxBarcode}>
-                    <Button danger className="!w-full">
-                        Скачать
-                    </Button>
+                    <Button
+                        danger
+                        icon={
+                            <DownloadOutlined
+                                color="#ef7214"
+                                style={{ color: "#ef7214" }}
+                            />
+                        }
+                    ></Button>
                 </Link>
             );
         },
@@ -46,9 +53,15 @@ const columns: TableColumnsType<GetSupplyById> = [
         render: (_, record) => {
             return (
                 <Link target="_blank" to={record.pathToProductBarcode}>
-                    <Button danger className="!w-full">
-                        Скачать
-                    </Button>
+                    <Button
+                        danger
+                        icon={
+                            <DownloadOutlined
+                                color="#ef7214"
+                                style={{ color: "#ef7214" }}
+                            />
+                        }
+                    ></Button>
                 </Link>
             );
         },

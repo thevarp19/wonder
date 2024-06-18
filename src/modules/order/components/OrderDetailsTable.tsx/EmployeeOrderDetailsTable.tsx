@@ -107,17 +107,7 @@ export const EmployeeOrderDetailsTable: FC<EmployeeOrderDetailsTableProps> = ({
                                 Сканировать продукты
                             </Button>
                         )}
-                        {data?.orderStatus === "PACKAGING_IN_PROGRESS" && (
-                            <Link
-                                target="_blank"
-                                className="flex justify-center"
-                                to={data?.waybill}
-                            >
-                                <Button type="primary">
-                                    Скачать накладную
-                                </Button>
-                            </Link>
-                        )}
+
                         {data?.orderStatus === "READY_TO_FINISH_PACKAGING" && (
                             <Popconfirm
                                 title="Упаковка продукта"

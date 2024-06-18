@@ -13,7 +13,7 @@ import { useScannerMultipleResults } from "@/modules/scan/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { App, Button, Spin } from "antd";
 import { FC, useEffect, useMemo, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 interface EmployeeOrderPageProps {}
 const createStatusConfig = (mutations: any, values: any) => ({
@@ -195,7 +195,19 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
             <h1 className="pb-4 text-2xl font-semibold">
                 Заказ- <span className="underline">{orderId}</span>
             </h1>
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-5">
+                {(data?.orderStatus === "PACKAGING_IN_PROGRESS" ||
+                    data?.orderStatus === "READY_TO_FINISH_PACKAGING") && (
+                    <Link
+                        target="_blank"
+                        className="flex justify-center"
+                        to={data?.waybill}
+                    >
+                        <Button size="large" type="primary">
+                            Скачать накладную
+                        </Button>
+                    </Link>
+                )}
                 {isPending ? <Spin /> : renderButton(orderStatus)}
             </div>
             <EmployeeOrderDetailsTable

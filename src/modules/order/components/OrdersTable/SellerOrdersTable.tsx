@@ -4,12 +4,7 @@ import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetOrdersSeller } from "../../queries";
 import { DeliveryMode, GetOrdersByDate } from "../../types";
-import {
-    deliveryTypeColorMap,
-    deliveryTypeMap,
-    orderStatusColorMap,
-    orderStatusMap,
-} from "../../utils";
+import { orderStatusColorMap, orderStatusMap } from "../../utils";
 
 const columns: TableColumnsType<GetOrdersByDate> = [
     {
@@ -33,11 +28,7 @@ const columns: TableColumnsType<GetOrdersByDate> = [
     {
         title: "Тип доставки",
         dataIndex: "deliveryMode",
-        render: (_, record) => (
-            <Tag color={deliveryTypeColorMap(record.deliveryMode)}>
-                {deliveryTypeMap(record.deliveryMode)}
-            </Tag>
-        ),
+        render: (_, record) => <Tag>{record.deliveryMode}</Tag>,
     },
     {
         title: "Дата передачи",

@@ -1,4 +1,5 @@
 import { boxIcon, boxOpenIcon, scanIcon, tengeIcon } from "@/assets";
+import DurationSwitch from "@/components/ui/DurationSwitch";
 import { Image } from "@/components/ui/Image";
 import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
 import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable";
@@ -7,41 +8,16 @@ import {
     useGetAdminSalesInfo,
     useGetAdminTopSeller,
 } from "@/modules/statistics/queries";
-import { StatisticsInfo } from "@/modules/statistics/types";
+import { DurationType, StatisticsInfo } from "@/modules/statistics/types";
 import { getColorByStatisticsName } from "@/modules/statistics/utils";
 import { cn } from "@/utils/shared.util";
 import { Card, Spin } from "antd";
-import { FC } from "react";
+import { FC, useState } from "react";
 
 interface AdminHomePageProps {}
 
 export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
-    // const topSellers = {
-    //     content: [
-    //         {
-    //             shopName: "Wonder",
-    //             totalIncome: 329000,
-    //         },
-    //         {
-    //             shopName: "Kaspi",
-    //             totalIncome: 15900,
-    //         },
-    //         {
-    //             shopName: "Jusan",
-    //             totalIncome: 30000,
-    //         },
-    //         {
-    //             shopName: "Alore",
-    //             totalIncome: 15500,
-    //         },
-    //         {
-    //             shopName: "Aitek",
-    //             totalIncome: 11500,
-    //         },
-    //     ],
-    // };
-    // const topSellersLoading = false;
-    const duration = "MONTH";
+    const [duration, setDuration] = useState<DurationType>("MONTH");
     const { data: statistics, isPending } = useGetAdminSalesInfo(duration);
     const { data: dailyInfo, isPending: getDailyLoading } =
         useGetAdminDailyInfo(duration);
@@ -61,39 +37,30 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     }
     return (
         <div className="flex p-5 from-orange-500 to-white bg-gradient-to-r">
+            <div className="p-2 bg-white rounded-md w-max">
+                <DurationSwitch duration={duration} setDuration={setDuration} />
+            </div>
             <div className="flex gap-6">
                 <div className="flex flex-col gap-4">
                     <ResultsCard
                         statisticsName="Заказы"
                         iconSrc={boxOpenIcon}
-                        statistics={
-                            // { count: 42, percent: 18 }
-                            statistics?.ordersInfo
-                        }
+                        statistics={statistics?.ordersInfo}
                     />
                     <ResultsCard
                         statisticsName="Продавцов"
                         iconSrc={boxIcon}
-                        statistics={
-                            // { count: 30, percent: -12 }
-                            statistics?.sellersInfo
-                        }
+                        statistics={statistics?.sellersInfo}
                     />
                     <ResultsCard
                         statisticsName="Поставок"
                         iconSrc={scanIcon}
-                        statistics={
-                            // { count: 65, percent: 42 }
-                            statistics?.suppliesInfo
-                        }
+                        statistics={statistics?.suppliesInfo}
                     />
                     <ResultsCard
                         statisticsName="Чек"
                         iconSrc={tengeIcon}
-                        statistics={
-                            // { count: 1243244, percent: 12 }
-                            statistics?.incomeInfo
-                        }
+                        statistics={statistics?.incomeInfo}
                     />
                 </div>
                 <div className="flex flex-col gap-5">
