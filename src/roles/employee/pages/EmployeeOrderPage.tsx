@@ -12,11 +12,11 @@ import { useGetEmployeeOrder } from "@/modules/order/queries";
 import { useScannerMultipleResults } from "@/modules/scan/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { App, Button, Spin } from "antd";
-import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useEffect, useMemo, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 
 interface EmployeeOrderPageProps {}
-const createStatusConfig = (mutations: any, values: any) => ({
+const createStatusConfig = (mutations: any) => ({
     ASSEMBLY_NOT_STARTED: {
         text: "Собрать заказ",
         disabled: false,
@@ -49,15 +49,6 @@ const createStatusConfig = (mutations: any, values: any) => ({
         },
     },
     PACKAGING_IN_PROGRESS: {
-        text: "Упаковать товары",
-        disabled: values.selectedRowKeys.length === 0,
-        action: () => {
-            mutations.packageProducts({
-                productArticles: values.selectedRowKeys,
-            });
-        },
-    },
-    READY_TO_FINISH_PACKAGING: {
         text: (
             <div className="flex items-center gap-2">
                 Идет упаковка
@@ -66,6 +57,13 @@ const createStatusConfig = (mutations: any, values: any) => ({
         ),
         disabled: true,
         action: () => {},
+    },
+    READY_TO_FINISH_PACKAGING: {
+        text: <div className="flex items-center gap-2">Завершить упаковку</div>,
+        disabled: false,
+        action: () => {
+            mutations.finishPackage();
+        },
     },
     READY_TO_SHIP_TO_COURIER: {
         text: "Готово к отправке, ожидание курьера",
@@ -114,19 +112,6 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
     const { mutateAsync: packageProducts } = packageProductsMutation(orderId);
     const { mutateAsync: finishPackage } = finishPackageMutation(orderId);
 
-    const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
-    const onSelectChange = (newSelectedRowKeys: string[]) => {
-        setSelectedRowKeys(newSelectedRowKeys);
-        console.log("selectedRowKeys changed", newSelectedRowKeys);
-    };
-
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-    };
-
-    const hasSelected = selectedRowKeys.length > 0;
-
     const mutations = {
         startAssembly,
         finishAssemble,
@@ -134,14 +119,12 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
         finishPackage,
         packageProducts,
     };
-    const values = {
-        selectedRowKeys,
-    };
+
     const newSearchParams = new URLSearchParams(window.location.search);
     const renderButton = (
         orderStatus: keyof ReturnType<typeof createStatusConfig>
     ) => {
-        const statusConfig = createStatusConfig(mutations, values);
+        const statusConfig = createStatusConfig(mutations);
         const config = statusConfig[orderStatus] || statusConfig.UNKNOWN_STATUS;
 
         return (
@@ -160,7 +143,6 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
         "UNKNOWN_STATUS";
     useEffect(() => {
         if (hasCalledEffect.current) return;
-
         const assembleProductsHandler = async () => {
             if (scannedProducts.length > 0) {
                 try {
@@ -174,19 +156,22 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
                     message.success("Продукты отправлены.");
                 } catch (error) {
                     message.error("Ошибка при отправке продуктов.");
-                } finally {
-                    newSearchParams.delete("result");
-                    newSearchParams.delete("type");
-                    newSearchParams.delete("step");
-                    const newUrl = `${
-                        window.location.pathname
-                    }?${newSearchParams.toString()}`;
-                    window.history.replaceState(null, "", newUrl);
                 }
             }
         };
 
-        assembleProductsHandler();
+        if (data?.orderStatus === "ASSEMBLY_IN_PROGRESS") {
+            assembleProductsHandler();
+        } else if (data?.orderStatus === "PACKAGING_IN_PROGRESS") {
+            // packageProducts({ productArticles: scannedProducts });
+        }
+        newSearchParams.delete("result");
+        newSearchParams.delete("type");
+        newSearchParams.delete("step");
+        const newUrl = `${
+            window.location.pathname
+        }?${newSearchParams.toString()}`;
+        window.history.replaceState(null, "", newUrl);
         hasCalledEffect.current = true;
     }, [scannedProducts]);
 
@@ -195,7 +180,7 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
             <h1 className="pb-4 text-2xl font-semibold">
                 Заказ- <span className="underline">{orderId}</span>
             </h1>
-            <div className="flex justify-end gap-5">
+            <div className="flex justify-end gap-5 my-4">
                 {(data?.orderStatus === "PACKAGING_IN_PROGRESS" ||
                     data?.orderStatus === "READY_TO_FINISH_PACKAGING") && (
                     <Link
@@ -214,10 +199,7 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
                 orderId={orderId}
                 data={data}
                 loading={isPending}
-                selectedRowKeys={selectedRowKeys}
-                hasSelected={hasSelected}
-                rowSelection={rowSelection}
-                finishPackage={finishPackage}
+                // finishPackage={finishPackage}
             />
         </div>
     );

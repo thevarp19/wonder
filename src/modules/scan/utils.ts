@@ -22,3 +22,7 @@ export function toScanProductsSizes() {
 export function toScanProductsAssemble(orderId: number) {
     window.location.href = `${scannerUrl}&type=multiple&useFor=employeeOrder&orderId=${orderId}`;
 }
+
+export function toScanProductsPackage(orderId: number) {
+    window.location.href = `${scannerUrl}&type=single&useFor=employeePackage&orderId=${orderId}`;
+}

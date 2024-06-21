@@ -36,7 +36,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
         );
     }
     return (
-        <div className="flex p-5 from-orange-500 to-white bg-gradient-to-r">
+        <div className="flex flex-col p-5 from-orange-500 to-white bg-gradient-to-r">
             <div className="p-2 bg-white rounded-md w-max">
                 <DurationSwitch duration={duration} setDuration={setDuration} />
             </div>
