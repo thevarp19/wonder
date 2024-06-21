@@ -1,3 +1,4 @@
+import { loginAdminBanner } from "@/assets";
 import { HeaderLogo } from "@/components/shared/HeaderLogo";
 import { LoginForm } from "@/modules/auth/components/LoginForm";
 import { LoginResponse } from "@/modules/auth/types";
@@ -25,7 +26,7 @@ export const AdminLoginPage: FC<AdminLoginPageProps> = ({}) => {
                     <img
                         loading="lazy"
                         className="object-cover object-center w-full h-[calc(100vh-70px)]"
-                        src="/src/assets/img/loginAdminBanner.png"
+                        src={loginAdminBanner}
                         alt="Banner"
                     />
                 </div>

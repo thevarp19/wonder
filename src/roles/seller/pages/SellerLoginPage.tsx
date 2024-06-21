@@ -1,3 +1,4 @@
+import { loginSellerBanner } from "@/assets";
 import { HeaderLogo } from "@/components/shared/HeaderLogo";
 import { LoginForm } from "@/modules/auth/components/LoginForm";
 import { LoginResponse } from "@/modules/auth/types";
@@ -25,7 +26,7 @@ export const SellerLoginPage: FC<SellerLoginPageProps> = () => {
                     <img
                         loading="lazy"
                         className="object-cover object-center w-full h-[calc(100vh-70px)]"
-                        src="/src/assets/img/loginBanner.png"
+                        src={loginSellerBanner}
                         alt="Banner"
                     />
                 </div>
