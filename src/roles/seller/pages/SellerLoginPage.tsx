@@ -1,4 +1,4 @@
-import { Logo } from "@/components/shared/Logo";
+import { HeaderLogo } from "@/components/shared/HeaderLogo";
 import { LoginForm } from "@/modules/auth/components/LoginForm";
 import { LoginResponse } from "@/modules/auth/types";
 import { useAppDispatch } from "@/redux/utils";
@@ -18,20 +18,42 @@ export const SellerLoginPage: FC<SellerLoginPageProps> = () => {
         navigateToHome();
     };
     return (
-        <div className="flex flex-col items-center mt-[10vh]">
-            <section className="flex flex-col items-center w-full max-w-sm">
-                <Logo />
-                <h1 className="py-5 text-2xl font-semibold">
-                    Войти как продавец
-                </h1>
-                <LoginForm success={success} />
-                <Link
-                    to="/seller/register"
-                    className="w-full mt-5 text-blue-500"
-                >
-                    Нет аккаунта? Зарегистрируйтесь здесь
-                </Link>
-            </section>
+        <div className="flex flex-col items-center h-screen bg-[#F7F9FB]">
+            <HeaderLogo />
+            <div className="flex w-full gap-10">
+                <div className="w-full">
+                    <img
+                        loading="lazy"
+                        className="object-cover object-center w-full h-[calc(100vh-70px)]"
+                        src="/src/assets/img/loginBanner.png"
+                        alt="Banner"
+                    />
+                </div>
+                <div className="flex items-center justify-center w-full">
+                    <div className="flex flex-col min-w-[450px]">
+                        <div className="pb-5">
+                            <h1 className="text-4xl font-semibold">
+                                Добро пожаловать!
+                            </h1>
+                            <h2 className="text-2xl text-[#6A6A6A]">
+                                Повышайте продажи и успех станет ближе!
+                            </h2>
+                        </div>
+                        <LoginForm success={success} />
+                        <div className="flex justify-start mt-5 w-max">
+                            <span>
+                                Нет аккаунта?{" "}
+                                <Link
+                                    to="/seller/register"
+                                    className="w-full visited:text-[#EF7214]"
+                                >
+                                    Регистрация
+                                </Link>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

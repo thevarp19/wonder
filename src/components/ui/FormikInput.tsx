@@ -58,6 +58,7 @@ export const FormikInput: FC<FormikInputProps> = ({
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 name={name}
+                required={false}
                 value={formik.values[name]}
                 {...inputProps}
             />

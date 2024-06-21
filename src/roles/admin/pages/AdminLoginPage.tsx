@@ -1,4 +1,4 @@
-import { Logo } from "@/components/shared/Logo";
+import { HeaderLogo } from "@/components/shared/HeaderLogo";
 import { LoginForm } from "@/modules/auth/components/LoginForm";
 import { LoginResponse } from "@/modules/auth/types";
 import { useAppDispatch } from "@/redux/utils";
@@ -18,12 +18,28 @@ export const AdminLoginPage: FC<AdminLoginPageProps> = ({}) => {
         navigateToHome();
     };
     return (
-        <div className="flex flex-col items-center mt-[10vh]">
-            <Logo />
-            <h1 className="py-5 text-2xl font-semibold">
-                Войти как администратор
-            </h1>
-            <LoginForm success={success} />
+        <div className="flex flex-col items-center h-screen bg-[#F7F9FB]">
+            <HeaderLogo />
+            <div className="flex w-full gap-10">
+                <div className="w-full">
+                    <img
+                        loading="lazy"
+                        className="object-cover object-center w-full h-[calc(100vh-70px)]"
+                        src="/src/assets/img/loginAdminBanner.png"
+                        alt="Banner"
+                    />
+                </div>
+                <div className="flex items-center justify-center w-full">
+                    <div className="flex flex-col min-w-[450px]">
+                        <div className="pb-10">
+                            <h1 className="text-4xl font-semibold">
+                                Добро пожаловать!
+                            </h1>
+                        </div>
+                        <LoginForm success={success} role="Admin" />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
