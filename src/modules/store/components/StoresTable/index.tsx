@@ -1,9 +1,9 @@
-import { EditOutlined, TeamOutlined } from "@ant-design/icons";
-import { Button, Table, TableColumnsType } from "antd";
+import { employeesIcon, pencilIcon } from "@/assets";
+import { Image } from "@/components/ui/Image";
+import { cn } from "@/utils/shared.util";
+import { Button, ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { useGetStores } from "../../queries";
-import { GetStoreResponse } from "../../types";
 import { StoreAddressCell } from "./StoreAddressCell";
 import { StoreBoxesModal } from "./StoreBoxesModal";
 import { StoreSwitch } from "./StoreSwitch";
@@ -11,7 +11,7 @@ import { StoreWorkingTimeCell } from "./StoreWorkingTimeCell";
 
 interface StoresTableProps {}
 
-const columns: TableColumnsType<GetStoreResponse> = [
+const columns: TableColumnsType<any> = [
     {
         title: "ID",
         dataIndex: "kaspiId",
@@ -37,7 +37,7 @@ const columns: TableColumnsType<GetStoreResponse> = [
                 to={`/admin/settings/cells/${record.id}`}
                 className="cursor-pointer"
             >
-                <Button>Ячейки</Button>
+                <Button className="!rounded-[16px]">Ячейки</Button>
             </Link>
         ),
     },
@@ -48,18 +48,23 @@ const columns: TableColumnsType<GetStoreResponse> = [
                 to={`/admin/settings/update-store/${record.id}`}
                 className="cursor-pointer"
             >
-                <EditOutlined style={{ fontSize: "24px" }} />
+                <Image
+                    src={pencilIcon}
+                    alt="pencilIcon"
+                    className={cn("w-7 h-7")}
+                />
             </Link>
         ),
     },
     {
         title: "Сотрудники",
         render: (_, record) => (
-            <Link
-                to={`/admin/settings/employees/${record.id}`}
-                className="cursor-pointer"
-            >
-                <TeamOutlined style={{ fontSize: "24px" }} />
+            <Link to={`/admin/settings/employees/${record.id}`} className="">
+                <Image
+                    src={employeesIcon}
+                    alt="employeesIcon"
+                    className={cn("w-7 h-7")}
+                />
             </Link>
         ),
     },
@@ -75,13 +80,62 @@ const columns: TableColumnsType<GetStoreResponse> = [
 ];
 
 export const StoresTable: FC<StoresTableProps> = ({}) => {
-    const { data: stores, isPending } = useGetStores();
+    const mockData = [
+        {
+            id: 1,
+            kaspiId: "KASPI123",
+            streetName: "Main Street",
+            streetNumber: "123",
+            formattedAddress: "123 Main Street",
+            city: { id: 1, name: "City" },
+            availableWorkTimes: [
+                { dayOfWeek: "Monday", startTime: "09:00", endTime: "18:00" },
+                { dayOfWeek: "Tuesday", startTime: "09:00", endTime: "18:00" },
+                {
+                    dayOfWeek: "Wednesday",
+                    startTime: "09:00",
+                    endTime: "18:00",
+                },
+                { dayOfWeek: "Thursday", startTime: "09:00", endTime: "18:00" },
+                { dayOfWeek: "Friday", startTime: "09:00", endTime: "18:00" },
+            ],
+            availableBoxTypes: [
+                { id: 1, name: "Box 1" },
+                { id: 2, name: "Box 2" },
+                { id: 3, name: "Box 3" },
+            ],
+            enabled: true,
+            userId: 1,
+        },
+    ];
+
+    // const { data: stores, isPending } = useGetStores();
+
     return (
-        <Table
-            columns={columns}
-            dataSource={stores?.sort((a, b) => a.id - b.id)}
-            rowKey={"id"}
-            loading={isPending}
-        />
+        <ConfigProvider
+            theme={{
+                components: {
+                    Table: {
+                        headerBg: "#fff",
+                        headerColor: "#1C1C1C66",
+                        headerBorderRadius: 10,
+                        headerSplitColor: "#fff",
+                        // colorBgContainer: "#F7F9FB",
+                        // borderColor: "#F7F9FB",
+                    },
+                },
+            }}
+        >
+            <Table
+                columns={columns}
+                // bordered
+                dataSource={
+                    // stores?.sort((a, b) => a.id - b.id) ||
+                    mockData
+                }
+                rowKey={"id"}
+                loading={false}
+            />
+        </ConfigProvider>
     );
 };

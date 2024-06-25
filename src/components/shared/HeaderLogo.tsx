@@ -19,9 +19,11 @@ export const HeaderLogo: FC<LogoProps> = ({ link }) => {
                     className={cn("w-[150px] h-[40px]")}
                 />
             </Link>
-            <Button type="primary" size="large">
-                На главную страницу
-            </Button>
+            <Link to={"https://wonderff.tilda.ws/"}>
+                <Button type="primary" size="large">
+                    На главную страницу
+                </Button>
+            </Link>
         </div>
     );
 };

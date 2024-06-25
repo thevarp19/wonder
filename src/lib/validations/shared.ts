@@ -21,7 +21,9 @@ export const KzPhoneNumberSchema = () =>
     );
 
 export const passwordSchemas = (passwordFieldName: string = "password") => ({
-    self: Yup.string().max(20).min(6),
+    self: Yup.string()
+        .max(20, "Пароль должен содержать не более 20 символов")
+        .min(6, "Пароль должен содержать не менее 6 символов"),
     repeat: Yup.string().test(
         "password-match",
         "Пароли должны совпадать",

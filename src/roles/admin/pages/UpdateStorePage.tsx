@@ -8,11 +8,11 @@ export const UpdateStorePage: FC<UpdateStorePageProps> = ({}) => {
     const { storeId } = useParams();
 
     return (
-        <div className="flex flex-col items-center pb-10">
-            <h1 className="w-full max-w-sm py-4 pb-10 text-2xl font-semibold">
-                Склад {storeId}
-            </h1>
-            <UpdateStoreForm />
+        <div className="flex flex-col items-center pt-5 bg-white h-max">
+            <div className="flex flex-col gap-10 items-center border border-[#D9D9D9] rounded-[28px] px-[126px] py-[34px]">
+                <h1 className="text-xl font-semibold">Склад {storeId}</h1>
+                <UpdateStoreForm />
+            </div>
         </div>
     );
 };

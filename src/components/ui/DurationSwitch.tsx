@@ -24,6 +24,7 @@ const DurationSwitch: FC<DurationSwitchProps> = ({ duration, setDuration }) => {
         <Dropdown
             trigger={["click"]}
             menu={{ items, onClick: handleMenuClick }}
+            className="text-[18px]"
         >
             <div className="cursor-pointer" onClick={(e) => e.preventDefault()}>
                 <Space>

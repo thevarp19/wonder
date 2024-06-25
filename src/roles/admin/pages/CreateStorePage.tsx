@@ -5,7 +5,7 @@ interface CreateStorePageProps {}
 
 export const CreateStorePage: FC<CreateStorePageProps> = ({}) => {
     return (
-        <div className="flex flex-col items-center pb-10">
+        <div className="flex flex-col items-center pt-5 bg-white h-max">
             <CreateStoreForm />
         </div>
     );

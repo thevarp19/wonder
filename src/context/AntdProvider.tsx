@@ -7,7 +7,7 @@ interface AntdProviderProps extends PropsWithChildren {}
 export const AntdProvider: FC<AntdProviderProps> = ({ children }) => {
     return (
         <StyleProvider hashPriority="high">
-            <ConfigProvider theme={{ token: { colorPrimary: "#ef7214" } }}>
+            <ConfigProvider theme={{ token: { colorPrimary: "#EF7214" } }}>
                 <App>{children}</App>
             </ConfigProvider>
         </StyleProvider>

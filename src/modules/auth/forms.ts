@@ -11,8 +11,10 @@ import * as Yup from "yup";
 import { loginMutation, sellerRegisterMutation } from "./mutations";
 
 const loginSchema = Yup.object().shape({
-    email: emailSchema().required(),
-    password: passwordSchemas("password").self.required(),
+    email: emailSchema().required("Это обязательное поле"),
+    password: passwordSchemas("password").self.required(
+        "Это обязательное поле"
+    ),
 });
 
 export const useLogin = (success: (loginData: LoginResponse) => void) => {
@@ -36,15 +38,19 @@ export const useLogin = (success: (loginData: LoginResponse) => void) => {
 };
 
 const sellerRegisterSchema = Yup.object().shape({
-    firstName: requiredStringSchema("First name"),
-    lastName: requiredStringSchema("Last name"),
-    email: emailSchema().required(),
-    phoneNumber: KzPhoneNumberSchema().required(),
-    password: passwordSchemas("password").self.required(),
-    repeatPassword: passwordSchemas("password").repeat.required(),
-    sellerName: requiredStringSchema("Seller name"),
-    sellerId: requiredStringSchema("Seller ID"),
-    tokenKaspi: requiredStringSchema("Kaspi token"),
+    firstName: requiredStringSchema("Имя"),
+    lastName: requiredStringSchema("Фамилия"),
+    email: emailSchema().required("Это обязательное поле"),
+    phoneNumber: KzPhoneNumberSchema().required("Это обязательное поле"),
+    password: passwordSchemas("password").self.required(
+        "Это обязательное поле"
+    ),
+    repeatPassword: passwordSchemas("password").repeat.required(
+        "Это обязательное поле"
+    ),
+    sellerName: requiredStringSchema("Название магазина"),
+    sellerId: requiredStringSchema("ID продавца"),
+    tokenKaspi: requiredStringSchema("Токен Каспи API"),
 });
 
 export const useSellerRegister = () => {

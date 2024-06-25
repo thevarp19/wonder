@@ -128,7 +128,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             }}
                         />
                     </div>
-                    <Form.Item className="w-full">
+                    <Form.Item className="w-full !mb-4">
                         <Button
                             type="primary"
                             size={"large"}
@@ -149,7 +149,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             formik={formik}
                             formItemProps={{ className: cn("w-full") }}
                             inputProps={{
-                                placeholder: "Название склада",
+                                placeholder: "Название магазина Kaspi",
                                 size: "large",
                             }}
                         />
@@ -178,7 +178,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             }}
                         />
                     </div>
-                    <Form.Item className="w-full">
+                    <Form.Item className="w-full !mb-4">
                         <Button
                             size={"large"}
                             onClick={next}
@@ -188,7 +188,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             Следующий шаг
                         </Button>
                     </Form.Item>
-                    <Form.Item className="w-full">
+                    <Form.Item className="w-full !mb-4">
                         <Button
                             size={"large"}
                             onClick={prev}
@@ -254,7 +254,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             </span>
                         </h2>
                     </div>
-                    <Form.Item className="w-full">
+                    <Form.Item className="w-full !mb-4">
                         <Button
                             htmlType="submit"
                             type="primary"
@@ -265,7 +265,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             Зарегистрироваться
                         </Button>
                     </Form.Item>
-                    <Form.Item className="w-full">
+                    <Form.Item className="w-full !mb-4">
                         <Button
                             size={"large"}
                             onClick={prev}

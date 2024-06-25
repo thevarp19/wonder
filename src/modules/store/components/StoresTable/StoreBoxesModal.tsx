@@ -68,6 +68,7 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
     return (
         <div>
             <Button
+                className="!rounded-[16px]"
                 onClick={() => {
                     setIsModalOpen(true);
                 }}

@@ -1,6 +1,8 @@
-import { SearchOutlined } from "@ant-design/icons";
+import { searchIcon } from "@/assets";
+import { cn } from "@/utils/shared.util";
 import { Button, Input } from "antd";
 import { FC } from "react";
+import { Image } from "./Image";
 
 interface SearchInputProps {
     searchValue: string;
@@ -16,7 +18,13 @@ export const SearchInput: FC<SearchInputProps> = ({
     return (
         <div className="flex items-end w-full gap-4 my-2">
             <Input
-                prefix={<SearchOutlined />}
+                prefix={
+                    <Image
+                        src={searchIcon}
+                        alt="collapse"
+                        className={cn("w-5 h-5")}
+                    />
+                }
                 placeholder="Поиск"
                 value={searchValue}
                 onChange={(e) => {

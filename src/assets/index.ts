@@ -1,18 +1,24 @@
-import boxOpenIcon from "./img/box-open.svg";
-import boxIcon from "./img/box.svg";
+import arrowFall from "./img/arrowFall.svg";
+import arrowRise from "./img/arrowRise.svg";
+import bellIcon from "./img/bell.svg";
+import employeesIcon from "./img/employees.svg";
 import icon from "./img/icon.svg";
 import loginAdminBanner from "./img/loginAdminBanner.png";
 import loginSellerBanner from "./img/loginSellerBanner.png";
 import logo from "./img/logo.svg";
-import scanIcon from "./img/scan.svg";
-import tengeIcon from "./img/tenge.svg";
+import pencilIcon from "./img/pencil.svg";
+import searchIcon from "./img/search.svg";
+import sidebarIcon from "./img/sidebar.svg";
 export {
-    boxIcon,
-    boxOpenIcon,
+    arrowFall,
+    arrowRise,
+    bellIcon,
+    employeesIcon,
     icon,
     loginAdminBanner,
     loginSellerBanner,
     logo,
-    scanIcon,
-    tengeIcon,
+    pencilIcon,
+    searchIcon,
+    sidebarIcon,
 };

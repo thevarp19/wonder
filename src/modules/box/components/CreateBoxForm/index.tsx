@@ -10,85 +10,91 @@ interface CreateBoxFormProps {}
 export const CreateBoxForm: FC<CreateBoxFormProps> = ({}) => {
     const { formik, mutation } = useCreateBox();
     return (
-        <Form
-            onFinish={formik.submitForm}
-            layout="vertical"
-            className="flex flex-col w-full max-w-sm gap-2 px-10"
-        >
-            <FormikInput
-                name="name"
-                formik={formik}
-                formItemProps={{
-                    label: "Имя",
-                }}
-                inputProps={{
-                    size: "large",
-                }}
-            />
-            <FormikNumberInput
-                name="width"
-                formik={formik}
-                formItemProps={{
-                    label: "Ширина",
-                }}
-                inputProps={{
-                    size: "large",
-                    style: { width: "100%" },
-                }}
-            />
-            <FormikNumberInput
-                name="height"
-                formik={formik}
-                formItemProps={{
-                    label: "Высота",
-                }}
-                inputProps={{
-                    size: "large",
-                    style: { width: "100%" },
-                }}
-            />
-            <FormikNumberInput
-                name="length"
-                formik={formik}
-                formItemProps={{
-                    label: "Длина",
-                }}
-                inputProps={{
-                    size: "large",
-                    style: { width: "100%" },
-                }}
-            />
-            <Upload
-                accept=".jpg,.jpeg,.png"
-                beforeUpload={(file) => {
-                    formik.setFieldValue("files", [
-                        ...formik.values.files,
-                        file,
-                    ]);
-                    return false;
-                }}
-                onRemove={(file) => {
-                    formik.setFieldValue(
-                        "files",
-                        // @ts-ignore
-                        formik.values.files.filter((f) => f.uid !== file.uid)
-                    );
-                    return true;
-                }}
+        <div className="flex flex-col gap-10 items-center border border-[#D9D9D9] rounded-[28px] px-[126px] py-[34px]">
+            <h2 className="text-sm font-semibold">Создать новую коробку</h2>
+
+            <Form
+                onFinish={formik.submitForm}
+                layout="vertical"
+                className="flex flex-col w-full min-w-[291px] gap-2"
             >
-                <Button size="large" icon={<UploadOutlined />}>
-                    Загрузить файл
+                <FormikInput
+                    name="name"
+                    formik={formik}
+                    formItemProps={{
+                        label: "Имя",
+                    }}
+                    inputProps={{
+                        size: "large",
+                    }}
+                />
+                <FormikNumberInput
+                    name="width"
+                    formik={formik}
+                    formItemProps={{
+                        label: "Ширина",
+                    }}
+                    inputProps={{
+                        size: "large",
+                        style: { width: "100%" },
+                    }}
+                />
+                <FormikNumberInput
+                    name="height"
+                    formik={formik}
+                    formItemProps={{
+                        label: "Высота",
+                    }}
+                    inputProps={{
+                        size: "large",
+                        style: { width: "100%" },
+                    }}
+                />
+                <FormikNumberInput
+                    name="length"
+                    formik={formik}
+                    formItemProps={{
+                        label: "Длина",
+                    }}
+                    inputProps={{
+                        size: "large",
+                        style: { width: "100%" },
+                    }}
+                />
+                <Upload
+                    accept=".jpg,.jpeg,.png"
+                    beforeUpload={(file) => {
+                        formik.setFieldValue("files", [
+                            ...formik.values.files,
+                            file,
+                        ]);
+                        return false;
+                    }}
+                    onRemove={(file) => {
+                        formik.setFieldValue(
+                            "files",
+                            formik.values.files.filter(
+                                // @ts-ignore
+                                (f) => f.uid !== file.uid
+                            )
+                        );
+                        return true;
+                    }}
+                >
+                    <Button size="large" icon={<UploadOutlined />}>
+                        Загрузить файл
+                    </Button>
+                </Upload>
+                <Button
+                    htmlType="submit"
+                    type="primary"
+                    size={"large"}
+                    className={cn("w-full !rounded-md mt-5")}
+                    loading={mutation.isPending}
+                >
+                    {"Создать"}
                 </Button>
-            </Upload>
-            <Button
-                htmlType="submit"
-                type="primary"
-                size={"large"}
-                className={cn("w-full mt-6")}
-                loading={mutation.isPending}
-            >
-                {"Создать"}
-            </Button>
-        </Form>
+            </Form>
+        </div>
     );
 };

@@ -1,6 +1,5 @@
 import { ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC, useState } from "react";
-import { useGetAdminLastOrders } from "../queries";
 import { GetLastOrders } from "../types";
 
 interface ProductsCountTableProps {
@@ -24,24 +23,80 @@ const columns: TableColumnsType<GetLastOrders> = [
 
 export const LastOrdersTable: FC<ProductsCountTableProps> = ({}) => {
     const [page, setPage] = useState(0);
-
-    const { data: lastOrders, isPending } = useGetAdminLastOrders(
-        page,
-        undefined
-    );
+    const isPending = false;
+    // const { data: lastOrders, isPending } = useGetAdminLastOrders(
+    //     page,
+    //     undefined
+    // );
+    const content = [
+        {
+            shopName: "Wireless Mouse",
+            price: 150,
+            orderCode: "1",
+        },
+        {
+            shopName: "Mechanical Keyboard",
+            price: 85,
+            orderCode: "2",
+        },
+        {
+            shopName: "27-inch Monitor",
+            price: 45,
+            orderCode: "3",
+        },
+        {
+            shopName: "USB-C Hub",
+            price: 200,
+            orderCode: "4",
+        },
+        {
+            shopName: "External Hard Drive",
+            price: 120,
+            orderCode: "5",
+        },
+        {
+            shopName: "27-inch Monitor",
+            price: 45,
+            orderCode: "3",
+        },
+        {
+            shopName: "USB-C Hub",
+            price: 200,
+            orderCode: "4",
+        },
+        {
+            shopName: "External Hard Drive",
+            price: 120,
+            orderCode: "5",
+        },
+    ];
 
     return (
-        <ConfigProvider>
+        <ConfigProvider
+            theme={{
+                components: {
+                    Table: {
+                        headerBg: "#F78936",
+                        headerColor: "#fff",
+                        headerBorderRadius: 10,
+                        headerSplitColor: "#F78936",
+                        colorBgContainer: "#F7F9FB",
+                        borderColor: "#F7F9FB",
+                        cellPaddingBlock: 20,
+                    },
+                },
+            }}
+        >
             <Table
                 className="h-full"
-                size="small"
+                // size="small"
                 columns={columns}
                 loading={isPending}
-                dataSource={lastOrders?.content}
+                dataSource={content}
                 rowKey={(record) => record.orderCode}
                 pagination={{
-                    pageSize: 10,
-                    total: lastOrders?.totalElements,
+                    pageSize: 5,
+                    total: 10,
                     showSizeChanger: false,
                     onChange(page) {
                         setPage(page - 1);

@@ -18,7 +18,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
         <Form
             onFinish={formik.submitForm}
             layout="vertical"
-            className="flex flex-col w-full max-w-sm gap-2 px-10"
+            className="flex flex-col w-full max-w-[291px]"
         >
             <FormikInput
                 name="kaspiId"
@@ -30,7 +30,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                     size: "large",
                 }}
             />
-            <Form.Item label="Город" className="w-full">
+            <Form.Item label="Город" className="w-full !mb-4">
                 <CitiesInput
                     className=""
                     size="large"
@@ -40,7 +40,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                     }}
                 />
             </Form.Item>
-            <Form.Item label={"Включено"}>
+            <Form.Item label={"Статус"} className="!mb-4">
                 <div className="flex items-center gap-2">
                     <Switch
                         checked={formik.values.enabled}
@@ -67,14 +67,33 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 name="streetNumber"
                 formik={formik}
                 formItemProps={{
-                    label: "Номер улицы",
+                    label: "Номер здания",
                 }}
                 inputProps={{
                     size: "large",
                 }}
             />
-
-            <Form.Item label={"Рабочее время"} className={cn("w-max")}>
+            <FormikInput
+                name="warehouseVolume"
+                formik={formik}
+                formItemProps={{
+                    label: "Объем склада",
+                }}
+                inputProps={{
+                    size: "large",
+                }}
+            />
+            <FormikInput
+                name="rentPrice"
+                formik={formik}
+                formItemProps={{
+                    label: "Аренда склада",
+                }}
+                inputProps={{
+                    size: "large",
+                }}
+            />
+            <Form.Item label={"Рабочее время"} className={cn("w-max !mb-4")}>
                 <UpdateWorkingTimeInput
                     initialValues={storeDetails?.availableWorkTimes}
                     onChange={(values) => {

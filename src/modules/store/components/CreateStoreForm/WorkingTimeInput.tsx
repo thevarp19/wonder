@@ -65,44 +65,46 @@ export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({ onChange }) => {
     }, [values]);
 
     return (
-        <div className={cn("flex flex-col gap-3")}>
+        <div className={cn("flex flex-col gap-8")}>
             <div
-                className={cn("flex items-center gap-2", {
+                className={cn("flex flex-col gap-[10px]", {
                     "text-gray-400": detailed,
                 })}
             >
                 <span className="w-28">Пн-Вс: </span>
-                <TimePicker
-                    format="HH:mm"
-                    needConfirm={false}
-                    disabled={detailed}
-                    defaultValue={dayjs("09:00", "HH:mm")}
-                    onChange={(_, dateString) => {
-                        setValues((prev) =>
-                            prev.map((value) => ({
-                                ...value,
-                                openTime: `${dateString}`,
-                            }))
-                        );
-                        setMainOpenTime(`${dateString}`);
-                    }}
-                />
-                <span>до</span>
-                <TimePicker
-                    format="HH:mm"
-                    needConfirm={false}
-                    disabled={detailed}
-                    defaultValue={dayjs("18:00", "HH:mm")}
-                    onChange={(_, dateString) => {
-                        setValues((prev) =>
-                            prev.map((value) => ({
-                                ...value,
-                                closeTime: `${dateString}`,
-                            }))
-                        );
-                        setMainCloseTime(`${dateString}`);
-                    }}
-                />
+                <div className="flex items-center gap-[10px]">
+                    <TimePicker
+                        format="HH:mm"
+                        needConfirm={false}
+                        disabled={detailed}
+                        defaultValue={dayjs("09:00", "HH:mm")}
+                        onChange={(_, dateString) => {
+                            setValues((prev) =>
+                                prev.map((value) => ({
+                                    ...value,
+                                    openTime: `${dateString}`,
+                                }))
+                            );
+                            setMainOpenTime(`${dateString}`);
+                        }}
+                    />
+                    <span>до</span>
+                    <TimePicker
+                        format="HH:mm"
+                        needConfirm={false}
+                        disabled={detailed}
+                        defaultValue={dayjs("18:00", "HH:mm")}
+                        onChange={(_, dateString) => {
+                            setValues((prev) =>
+                                prev.map((value) => ({
+                                    ...value,
+                                    closeTime: `${dateString}`,
+                                }))
+                            );
+                            setMainCloseTime(`${dateString}`);
+                        }}
+                    />
+                </div>
                 <Checkbox
                     checked={detailed}
                     onChange={(e) => {
@@ -121,17 +123,18 @@ export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({ onChange }) => {
                     Подробно
                 </Checkbox>
             </div>
-
-            {detailed &&
-                values.map((day, index) => (
-                    <WorkingTimeUnit
-                        key={index}
-                        day={day}
-                        index={index}
-                        values={values}
-                        setValues={setValues}
-                    />
-                ))}
+            <div className="flex flex-col gap-3">
+                {detailed &&
+                    values.map((day, index) => (
+                        <WorkingTimeUnit
+                            key={index}
+                            day={day}
+                            index={index}
+                            values={values}
+                            setValues={setValues}
+                        />
+                    ))}
+            </div>
         </div>
     );
 };
@@ -153,10 +156,10 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
         <div
             className={cn(
                 { "text-gray-400": !active },
-                "flex items-center gap-2"
+                "flex flex-col gap-[10px]"
             )}
         >
-            <div className={cn("flex items-center gap-2 w-28")}>
+            <div className={cn("flex items-center gap-[10px] w-28")}>
                 <Checkbox
                     defaultChecked={active}
                     checked={active}
@@ -191,45 +194,47 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                 />
                 <span>{days[index]}</span>
             </div>
-            <TimePicker
-                format="HH:mm"
-                defaultValue={dayjs(day.openTime, "HH:mm")}
-                needConfirm={false}
-                disabled={!active}
-                onChange={(_, dateString) => {
-                    setValues((prev) =>
-                        prev.map((value, idx) => {
-                            if (idx === index) {
-                                return {
-                                    ...value,
-                                    openTime: `${dateString}`,
-                                };
-                            }
-                            return value;
-                        })
-                    );
-                }}
-            />
-            <span>до</span>
-            <TimePicker
-                format="HH:mm"
-                needConfirm={false}
-                disabled={!active}
-                defaultValue={dayjs(day.closeTime, "HH:mm")}
-                onChange={(_, dateString) => {
-                    setValues((prev) =>
-                        prev.map((value, idx) => {
-                            if (idx === index) {
-                                return {
-                                    ...value,
-                                    closeTime: `${dateString}`,
-                                };
-                            }
-                            return value;
-                        })
-                    );
-                }}
-            />
+            <div className="flex items-center gap-[10px]">
+                <TimePicker
+                    format="HH:mm"
+                    defaultValue={dayjs(day.openTime, "HH:mm")}
+                    needConfirm={false}
+                    disabled={!active}
+                    onChange={(_, dateString) => {
+                        setValues((prev) =>
+                            prev.map((value, idx) => {
+                                if (idx === index) {
+                                    return {
+                                        ...value,
+                                        openTime: `${dateString}`,
+                                    };
+                                }
+                                return value;
+                            })
+                        );
+                    }}
+                />
+                <span>до</span>
+                <TimePicker
+                    format="HH:mm"
+                    needConfirm={false}
+                    disabled={!active}
+                    defaultValue={dayjs(day.closeTime, "HH:mm")}
+                    onChange={(_, dateString) => {
+                        setValues((prev) =>
+                            prev.map((value, idx) => {
+                                if (idx === index) {
+                                    return {
+                                        ...value,
+                                        closeTime: `${dateString}`,
+                                    };
+                                }
+                                return value;
+                            })
+                        );
+                    }}
+                />
+            </div>
         </div>
     );
 };

@@ -2,11 +2,11 @@ import { GeneralLayout } from "@/components/shared/GeneralLayout";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import { adminLogout } from "@/roles/admin/redux/auth/actions";
 import {
-    CarOutlined,
     HomeOutlined,
     LogoutOutlined,
     ProfileOutlined,
     SettingOutlined,
+    ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import { FC, useEffect, useState } from "react";
@@ -22,7 +22,7 @@ const items: MenuProps["items"] = [
     {
         label: <Link to={"/admin/orders"}>Заказы</Link>,
         key: "orders",
-        icon: <CarOutlined />,
+        icon: <ShoppingCartOutlined />,
     },
     {
         label: <Link to={"/admin/settings"}>Настройки</Link>,

@@ -151,12 +151,14 @@ const ChangeEmployeePasswordModal = ({ id }: { id: number }) => {
                         label="Старый пароль"
                         required
                         name={"oldPassword"}
+                        className="!mb-4"
                     >
                         <Input.Password />
                     </Form.Item>
                     <Form.Item
                         label="Новый пароль"
                         required
+                        className="!mb-4"
                         name={"newPassword"}
                         rules={[{ min: 6, max: 20 }]}
                     >
@@ -166,6 +168,7 @@ const ChangeEmployeePasswordModal = ({ id }: { id: number }) => {
                         <Button
                             htmlType="submit"
                             type="primary"
+                            className="!mb-4"
                             loading={loading}
                         >
                             Изменить

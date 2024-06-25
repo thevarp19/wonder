@@ -1,102 +1,93 @@
-import { boxIcon, boxOpenIcon, scanIcon, tengeIcon } from "@/assets";
+import { arrowFall, arrowRise } from "@/assets";
 import DurationSwitch from "@/components/ui/DurationSwitch";
 import { Image } from "@/components/ui/Image";
 import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
 import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable";
-import {
-    useGetAdminDailyInfo,
-    useGetAdminSalesInfo,
-    useGetAdminTopSeller,
-} from "@/modules/statistics/queries";
 import { DurationType, StatisticsInfo } from "@/modules/statistics/types";
-import { getColorByStatisticsName } from "@/modules/statistics/utils";
 import { cn } from "@/utils/shared.util";
-import { Card, Spin } from "antd";
 import { FC, useState } from "react";
 
 interface AdminHomePageProps {}
 
 export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     const [duration, setDuration] = useState<DurationType>("MONTH");
-    const { data: statistics, isPending } = useGetAdminSalesInfo(duration);
-    const { data: dailyInfo, isPending: getDailyLoading } =
-        useGetAdminDailyInfo(duration);
-    const { data: topSellers, isPending: topSellersLoading } =
-        useGetAdminTopSeller();
-    const sortedTopSellers = topSellers?.content
-        ? topSellers.content
-              .sort((a, b) => b.totalIncome - a.totalIncome)
-              .slice(0, 4)
-        : [];
-    if (isPending) {
-        return (
-            <div className="flex items-center justify-center h-[500px]">
-                <Spin size="large" />
-            </div>
-        );
-    }
+    // const { data: statistics, isPending } = useGetAdminSalesInfo(duration);
+    // const { data: dailyInfo, isPending: getDailyLoading } =
+    const statistics = {
+        ordersInfo: { count: 140, percent: 48 },
+        sellersInfo: { count: 52, percent: -18 },
+        suppliesInfo: { count: 42, percent: 18 },
+        incomeInfo: { count: 80, percent: 50 },
+    };
+    const topSellers = [
+        { place: 1, name: "ИП QIT" },
+        { place: 2, name: "ИП Techai" },
+        { place: 3, name: "ИП Arena" },
+        { place: 4, name: "ИП Orda" },
+        { place: 5, name: "АО Arena" },
+        { place: 6, name: "АО Technodom" },
+        { place: 7, name: "ИП Techai" },
+        { place: 8, name: "ИП Arena" },
+        { place: 9, name: "ИП Orda" },
+        { place: 10, name: "ИП Akhmediyarova" },
+    ];
+    //     useGetAdminDailyInfo(duration);
+    // const { data: topSellers, isPending: topSellersLoading } =
+    //     useGetAdminTopSeller();
+    // const sortedTopSellers = topSellers?.content
+    //     ? topSellers.content
+    //           .sort((a, b) => b.totalIncome - a.totalIncome)
+    //           .slice(0, 4)
+    //     : [];
+    // if (isPending) {
+    //     return (
+    //         <div className="flex items-center justify-center h-[500px]">
+    //             <Spin size="large" />
+    //         </div>
+    //     );
+    // }
     return (
-        <div className="flex flex-col p-5 from-orange-500 to-white bg-gradient-to-r">
-            <div className="p-2 bg-white rounded-md w-max">
-                <DurationSwitch duration={duration} setDuration={setDuration} />
-            </div>
-            <div className="flex gap-6">
-                <div className="flex flex-col gap-4">
+        <div className="flex flex-col bg-white p-7">
+            <div className="flex flex-col gap-7">
+                <div className="bg-white rounded-md w-max">
+                    <DurationSwitch
+                        duration={duration}
+                        setDuration={setDuration}
+                    />
+                </div>
+                <div className="flex justify-between gap-6">
                     <ResultsCard
                         statisticsName="Заказы"
-                        iconSrc={boxOpenIcon}
                         statistics={statistics?.ordersInfo}
+                        bgColor="blue"
                     />
                     <ResultsCard
-                        statisticsName="Продавцов"
-                        iconSrc={boxIcon}
+                        statisticsName="Продавцы"
                         statistics={statistics?.sellersInfo}
+                        bgColor="orange"
                     />
                     <ResultsCard
-                        statisticsName="Поставок"
-                        iconSrc={scanIcon}
+                        statisticsName="Поставки"
                         statistics={statistics?.suppliesInfo}
+                        bgColor="blue"
                     />
                     <ResultsCard
-                        statisticsName="Чек"
-                        iconSrc={tengeIcon}
+                        statisticsName="Продажа"
                         statistics={statistics?.incomeInfo}
+                        bgColor="orange"
                     />
                 </div>
                 <div className="flex flex-col gap-5">
-                    <AreaCharts
-                        data={dailyInfo || []}
-                        duration={duration}
-                        loading={getDailyLoading}
-                    />
+                    <AreaCharts data={[]} duration={duration} loading={true} />
                     <div className="flex gap-5">
-                        <div className="w-[65%] p-2 bg-[#fcdfc9] rounded-xl h-max">
-                            <div className="bg-white rounded-xl">
-                                <LastOrdersTable />
-                            </div>
+                        <div className="min-w-[825px] h-[525px] p-8 bg-[#F7F9FB] flex flex-col gap-6 rounded-[34px]">
+                            <h2 className="text-xl font-semibold">
+                                Таблица заказов
+                            </h2>
+                            <LastOrdersTable />
                         </div>
-                        <div className="w-[35%] p-1 bg-orange-100 shadow-2xl rounded-xl">
-                            <div className="bg-white rounded-[10px] h-full flex flex-col gap-4 p-2">
-                                <div className="bg-[#EF7214] rounded-md text-white font-semibold text-center">
-                                    ТОП Продавцы
-                                </div>
-                                {topSellersLoading ? (
-                                    <Spin />
-                                ) : (
-                                    <div className="grid grid-cols-2 gap-2 place-items-center">
-                                        {sortedTopSellers?.map(
-                                            (item, index) => (
-                                                <TopSellerCard
-                                                    key={index}
-                                                    place={index + 1}
-                                                    name={item.shopName}
-                                                    sum={item.totalIncome}
-                                                />
-                                            )
-                                        )}
-                                    </div>
-                                )}
-                            </div>
+                        <div className="w-full h-[525px] bg-[#F7F9FB] rounded-[34px]">
+                            <TopSellersList topSellers={topSellers} />
                         </div>
                     </div>
                 </div>
@@ -107,80 +98,110 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
 
 type ResultsCardProps = {
     statisticsName: string;
-    iconSrc: string;
     statistics: StatisticsInfo | undefined;
+    bgColor?: string;
 };
 const ResultsCard = ({
     statisticsName,
-    iconSrc,
     statistics,
+    bgColor,
 }: ResultsCardProps) => {
-    const bgColor = getColorByStatisticsName(statisticsName);
-    const percentBgColor =
+    const percentColor =
         statistics?.percent != null
             ? statistics.percent > 0
-                ? "bg-[#7DF1B2]"
-                : "bg-[#ff0e0e]"
+                ? "text-[#28A745]"
+                : "text-[#F43749]"
             : "";
 
     return (
-        <Card className="max-h-[155px] ">
-            <div className="flex items-center justify-between text-3xl">
+        <div
+            className={`h-[150px] min-w-[265px] p-8 flex flex-col gap-[10px] rounded-[20px] ${
+                bgColor === "blue" ? "bg-[#E7F6FF]" : "bg-[#FFDBC0]"
+            }`}
+        >
+            <div className="flex items-center justify-between text-[18px]">
                 {statisticsName}{" "}
-                <ResultIcon src={iconSrc} color={bgColor ? `${bgColor}` : ""} />
             </div>
-            <div className="flex gap-5 whitespace-nowrap">
-                <div className="text-4xl">{`${statistics?.count} ${
-                    statisticsName === "Чек" ? "₸" : ""
-                }`}</div>
+            <div className="flex justify-between gap-5">
+                <div className="text-[32px] whitespace-nowrap">{`${
+                    statistics?.count
+                } ${statisticsName === "Продажа" ? "₸" : ""}`}</div>
                 {statistics?.percent !== null && (
                     <div
-                        className={`text-sm rounded-xl flex justify-center items-center p-2  ${percentBgColor}`}
+                        className={`flex justify-center items-center p-2 ${percentColor}`}
                     >
-                        {statistics?.percent != null && statistics?.percent > 0
-                            ? `+${statistics?.percent}%`
-                            : `${statistics?.percent}%`}
+                        {statistics?.percent != null &&
+                        statistics?.percent > 0 ? (
+                            <span className="flex items-center gap-[5px]">
+                                +{statistics?.percent}%
+                                <Image
+                                    src={arrowRise}
+                                    alt="searchIcon"
+                                    className={cn("w-5 h-5 ")}
+                                />
+                            </span>
+                        ) : (
+                            <span className="flex items-center gap-[5px]">
+                                {statistics?.percent}%
+                                <Image
+                                    src={arrowFall}
+                                    alt="searchIcon"
+                                    className={cn("w-5 h-5 ")}
+                                />
+                            </span>
+                        )}
                     </div>
                 )}
             </div>
-        </Card>
-    );
-};
-
-const ResultIcon = ({ src, color }: { src: string; color: string }) => {
-    return (
-        <div
-            className={cn(
-                "rounded-md aspect-square justify-center w-16 h-16 flex items-center",
-                color
-            )}
-        >
-            <Image className="w-[50px] h-[50px]" src={src} alt="icon" />
         </div>
     );
 };
-const TopSellerCard = ({
-    place,
-    name,
-    sum,
-}: {
-    place: number;
-    name: string;
-    sum: number;
-}) => {
+
+interface TopSellersListProps {
+    topSellers: { place: number; name: string }[];
+}
+
+const TopSellersList: FC<TopSellersListProps> = ({ topSellers }) => {
     return (
-        <div className="p-2 border-2 border-[#EF7214] rounded-xl w-full max-w-full flex flex-col items-center">
-            <div className="flex items-center justify-start w-full gap-2">
-                <div className="bg-[#EF7214] w-8 h-8 rounded-full text-white p-2 text-lg flex justify-center items-center shadow-xl font-bold">
-                    {place}
-                </div>
-                <div className="text-sm font-bold text-[#EF7214] text-">
-                    {name}
-                </div>
+        <div className="p-8 bg-[#F7F9FB] flex flex-col items-center gap-5 rounded-[34px] h-max">
+            <h2 className="text-xl font-semibold">ТОП Магазины</h2>
+            <div className="grid grid-cols-1 gap-[5px]">
+                {topSellers.map((seller) => (
+                    <TopSellerCard
+                        key={seller.place}
+                        place={seller.place}
+                        name={seller.name}
+                    />
+                ))}
             </div>
-            <div className="text-2xl font-semibold text-[#EF7214]">
-                {sum.toLocaleString("ru")}₸
+        </div>
+    );
+};
+
+const TopSellerCard = ({ place, name }: { place: number; name: string }) => {
+    const getPlaceColor = (place: number) => {
+        switch (place) {
+            case 1:
+                return "bg-yellow-400";
+            case 2:
+                return "bg-gray-400";
+            case 3:
+                return "bg-orange-400";
+            default:
+                return "bg-none border-[1px] border-[#EF7214] text-black";
+        }
+    };
+
+    return (
+        <div className="flex items-center gap-4 p-[5px] rounded-xl">
+            <div
+                className={`${getPlaceColor(
+                    place
+                )} w-[26px] h-[26px] rounded-full text-white flex justify-center items-center shadow-xl font-bold`}
+            >
+                {place}
             </div>
+            <div className="text-sm ">{name}</div>
         </div>
     );
 };

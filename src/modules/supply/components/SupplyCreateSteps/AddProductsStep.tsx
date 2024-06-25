@@ -48,7 +48,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
             title: "Количество",
             render: (_, record) => (
                 <span>
-                    <Form.Item label="Количество">
+                    <Form.Item label="Количество" className="!mb-4">
                         <InputNumber
                             name="quantity"
                             value={record.quantity}
@@ -111,7 +111,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                     />
                 </Modal>
             </div>
-            <Form.Item className="w-full">
+            <Form.Item className="w-full !mb-4">
                 <Select
                     className="w-full"
                     mode="multiple"
