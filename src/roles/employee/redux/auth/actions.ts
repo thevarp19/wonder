@@ -1,5 +1,4 @@
 import jwtService from "@/lib/jwt";
-import { getRoles } from "@/lib/jwt/decode";
 import { LoginResponse } from "@/modules/auth/types";
 import { LOGIN_SUCCESS, LoginSuccessAction, LogoutAction } from "./types";
 
@@ -10,9 +9,9 @@ export const employeeLoginSuccess = (
         access: data.accessToken,
         refresh: data.refreshToken,
     });
-    if (!getRoles()?.includes("STORE_EMPLOYEE")) {
-        throw new Error("Invalid role");
-    }
+    // if (!getRoles()?.includes("STORE_EMPLOYEE")) {
+    //     throw new Error("Invalid role");
+    // }
     return {
         type: LOGIN_SUCCESS,
     };

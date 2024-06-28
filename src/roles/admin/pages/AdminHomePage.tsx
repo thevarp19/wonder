@@ -47,7 +47,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     //     );
     // }
     return (
-        <div className="flex flex-col bg-white p-7">
+        <div className="flex flex-col">
             <div className="flex flex-col gap-7">
                 <div className="bg-white rounded-md w-max">
                     <DurationSwitch
@@ -188,16 +188,18 @@ const TopSellerCard = ({ place, name }: { place: number; name: string }) => {
             case 3:
                 return "bg-orange-400";
             default:
-                return "bg-none border-[1px] border-[#EF7214] text-black";
+                return "bg-none border-[1px] border-[#EF7214] !text-black";
         }
     };
 
     return (
         <div className="flex items-center gap-4 p-[5px] rounded-xl">
             <div
-                className={`${getPlaceColor(
-                    place
-                )} w-[26px] h-[26px] rounded-full text-white flex justify-center items-center shadow-xl font-bold`}
+                className={cn(
+                    `${getPlaceColor(
+                        place
+                    )} w-[26px] h-[26px] rounded-full text-white flex justify-center items-center shadow-xl font-bold`
+                )}
             >
                 {place}
             </div>

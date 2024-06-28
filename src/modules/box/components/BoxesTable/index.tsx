@@ -1,11 +1,13 @@
 import { ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC } from "react";
+import { useGetAllBoxes } from "../../queries";
+import { GetBoxResponse } from "../../types";
 import { DeleteBoxCell } from "./DeleteBoxCell";
 
 interface BoxesTableProps {
     // id: number;
 }
-const columns: TableColumnsType<any> = [
+const columns: TableColumnsType<GetBoxResponse> = [
     {
         title: "ID коробки",
         dataIndex: "id",
@@ -25,24 +27,7 @@ const columns: TableColumnsType<any> = [
 ];
 
 export const BoxesTable: FC<BoxesTableProps> = ({}) => {
-    // const { data: boxes, isPending } = useGetAllBoxes();
-    const mockData = [
-        {
-            id: 1,
-            name: "Box 1",
-            description: "10x10x10",
-        },
-        {
-            id: 2,
-            name: "Box 2",
-            description: "20x20x20",
-        },
-        {
-            id: 3,
-            name: "Box 3",
-            description: "30x30x30",
-        },
-    ];
+    const { data: boxes, isPending } = useGetAllBoxes();
 
     return (
         <ConfigProvider
@@ -61,9 +46,9 @@ export const BoxesTable: FC<BoxesTableProps> = ({}) => {
         >
             <Table
                 columns={columns}
-                dataSource={mockData}
+                dataSource={boxes}
                 rowKey={"id"}
-                loading={false}
+                loading={isPending}
                 locale={{
                     emptyText: "Нет данных",
                 }}

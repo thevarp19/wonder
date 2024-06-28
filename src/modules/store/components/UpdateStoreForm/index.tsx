@@ -4,7 +4,7 @@ import { CitiesInput } from "@/modules/store/components/shared/CitiesInput";
 import { useUpdateStore } from "@/modules/store/forms";
 import { useGetStore } from "@/modules/store/queries";
 import { cn } from "@/utils/shared.util";
-import { Button, Form, Switch } from "antd";
+import { Button, Form, Spin, Switch } from "antd";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 
@@ -12,8 +12,11 @@ interface UpdateStoreFormProps {}
 
 export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
     const { storeId } = useParams();
-    const { data: storeDetails } = useGetStore(Number(storeId));
+    const { data: storeDetails, isPending } = useGetStore(Number(storeId));
     const { formik, mutation } = useUpdateStore(Number(storeId), storeDetails);
+    if (isPending) {
+        return <Spin />;
+    }
     return (
         <Form
             onFinish={formik.submitForm}

@@ -5,7 +5,7 @@ interface CreateBoxPageProps {}
 
 export const CreateBoxPage: FC<CreateBoxPageProps> = ({}) => {
     return (
-        <div className="flex flex-col items-center h-full pt-5 bg-white">
+        <div className="flex flex-col items-center h-full">
             <CreateBoxForm />
         </div>
     );

@@ -25,7 +25,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="row"
                     formik={formik}
                     formItemProps={{
-                        label: "Строка",
+                        label: "Ряд",
                         required: true,
                     }}
                     inputProps={{
@@ -37,7 +37,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="col"
                     formik={formik}
                     formItemProps={{
-                        label: "Столбец",
+                        label: "Этаж",
                         required: true,
                     }}
                     inputProps={{
@@ -49,7 +49,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="cell"
                     formik={formik}
                     formItemProps={{
-                        label: "Номер",
+                        label: "Колона",
                         required: true,
                     }}
                     inputProps={{
@@ -63,7 +63,8 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="width"
                     formik={formik}
                     formItemProps={{
-                        label: "Ширина",
+                        label: "Ширина (мм)",
+                        required: true,
                     }}
                     inputProps={{
                         size: "large",
@@ -74,7 +75,8 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="height"
                     formik={formik}
                     formItemProps={{
-                        label: "Высота",
+                        label: "Высота (мм)",
+                        required: true,
                     }}
                     inputProps={{
                         size: "large",
@@ -85,7 +87,8 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="depth"
                     formik={formik}
                     formItemProps={{
-                        label: "Глубина",
+                        label: "Глубина (мм)",
+                        required: true,
                     }}
                     inputProps={{
                         size: "large",

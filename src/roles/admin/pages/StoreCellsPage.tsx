@@ -18,11 +18,12 @@ export const StoreCellsPage: FC<StoreCellsPageProps> = ({}) => {
     if (isNaN(storeId)) {
         return <div>Неверный идентификатор склада</div>;
     }
-    const { data: cells, isPending } = useGetCells(storeId);
     const { data: store, isPending: isStorePending } = useGetStore(storeId);
+
+    const { data: cells, isPending } = useGetCells(storeId);
     return (
-        <div>
-            <h1 className="mb-4 text-2xl font-semibold">Склад: {storeId}</h1>
+        <div className="flex flex-col h-full">
+            <h1 className="mb-4 text-[18px] font-semibold">Склад {storeId}</h1>
             <div className="flex gap-4 mb-4">
                 <CreateCellModal storeId={storeId} />
                 <PrintAllCellsButton store={store} cells={cells} />
@@ -45,6 +46,8 @@ const CreateCellModal = ({ storeId }: { storeId: number }) => {
                 title="Создать ячейку"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
+                cancelText="Назад"
+                cancelButtonProps={{ style: { width: "100%", height: "100%" } }}
                 okButtonProps={{ style: { display: "none" } }}
                 destroyOnClose
             >
@@ -55,7 +58,12 @@ const CreateCellModal = ({ storeId }: { storeId: number }) => {
                     }}
                 />
             </Modal>
-            <Button type="primary" onClick={() => setIsModalOpen(true)}>
+            <Button
+                size="large"
+                className="min-w-[180px] text-xs"
+                type="primary"
+                onClick={() => setIsModalOpen(true)}
+            >
                 Создать ячейку
             </Button>
         </>

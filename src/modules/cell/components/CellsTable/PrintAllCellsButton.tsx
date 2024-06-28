@@ -1,5 +1,4 @@
 import { GetStoreResponse } from "@/modules/store/types";
-import { PrinterOutlined } from "@ant-design/icons";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "antd";
 import { FC, useState } from "react";
@@ -18,7 +17,12 @@ export const PrintAllCellsButton: FC<PrintAllCellsButtonProps> = ({
     const [isModalOpen, setIsModalOpen] = useState(false);
     if (!store || !cells) {
         return (
-            <Button icon={<PrinterOutlined />} loading disabled>
+            <Button
+                size="large"
+                className="min-w-[180px] text-xs"
+                loading
+                disabled
+            >
                 Печать всех ячеек
             </Button>
         );
@@ -35,7 +39,8 @@ export const PrintAllCellsButton: FC<PrintAllCellsButtonProps> = ({
                 onClick={() => {
                     setIsModalOpen(true);
                 }}
-                icon={<PrinterOutlined />}
+                size="large"
+                className="min-w-[180px] text-xs"
             >
                 Печать всех ячеек
             </Button>

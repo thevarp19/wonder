@@ -92,8 +92,8 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
         setDeliveryMode(deliveryModes[e.key]);
     };
     return (
-        <div className="h-full bg-white p-7">
-            <h1 className="px-2 py-1 pb-4 text-sm font-semibold">Заказы</h1>
+        <div className="h-full">
+            <h1 className="pb-5 text-[18px] font-semibold">Заказы</h1>
             <div className="flex items-center justify-between mb-4">
                 <div className="flex w-full max-w-sm gap-4">
                     {/* <SearchInput

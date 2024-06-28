@@ -17,8 +17,8 @@ export const StoreEmployeesPage: FC<StoreEmployeesPageProps> = ({}) => {
     }
 
     return (
-        <div>
-            <h1 className="mb-4 text-2xl font-semibold">Склад: {storeId}</h1>
+        <div className="flex flex-col h-full">
+            <h1 className="mb-4 text-[18px] font-semibold">Склад: {storeId}</h1>
             <div className="flex gap-4 mb-4">
                 <CreateEmployeeModal storeId={storeId} />
             </div>
@@ -45,7 +45,11 @@ const CreateEmployeeModal = ({ storeId }: { storeId: number }) => {
                     }}
                 />
             </Modal>
-            <Button type="primary" onClick={() => setIsModalOpen(true)}>
+            <Button
+                type="primary"
+                size="large"
+                onClick={() => setIsModalOpen(true)}
+            >
                 Создать сотрудника
             </Button>
         </>

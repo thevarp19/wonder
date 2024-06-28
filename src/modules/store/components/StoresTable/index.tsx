@@ -4,6 +4,7 @@ import { cn } from "@/utils/shared.util";
 import { Button, ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
+import { useGetStores } from "../../queries";
 import { StoreAddressCell } from "./StoreAddressCell";
 import { StoreBoxesModal } from "./StoreBoxesModal";
 import { StoreSwitch } from "./StoreSwitch";
@@ -59,7 +60,10 @@ const columns: TableColumnsType<any> = [
     {
         title: "Сотрудники",
         render: (_, record) => (
-            <Link to={`/admin/settings/employees/${record.id}`} className="">
+            <Link
+                to={`/admin/settings/employees/${record.id}`}
+                className="cursor-pointer"
+            >
                 <Image
                     src={employeesIcon}
                     alt="employeesIcon"
@@ -80,36 +84,36 @@ const columns: TableColumnsType<any> = [
 ];
 
 export const StoresTable: FC<StoresTableProps> = ({}) => {
-    const mockData = [
-        {
-            id: 1,
-            kaspiId: "KASPI123",
-            streetName: "Main Street",
-            streetNumber: "123",
-            formattedAddress: "123 Main Street",
-            city: { id: 1, name: "City" },
-            availableWorkTimes: [
-                { dayOfWeek: "Monday", startTime: "09:00", endTime: "18:00" },
-                { dayOfWeek: "Tuesday", startTime: "09:00", endTime: "18:00" },
-                {
-                    dayOfWeek: "Wednesday",
-                    startTime: "09:00",
-                    endTime: "18:00",
-                },
-                { dayOfWeek: "Thursday", startTime: "09:00", endTime: "18:00" },
-                { dayOfWeek: "Friday", startTime: "09:00", endTime: "18:00" },
-            ],
-            availableBoxTypes: [
-                { id: 1, name: "Box 1" },
-                { id: 2, name: "Box 2" },
-                { id: 3, name: "Box 3" },
-            ],
-            enabled: true,
-            userId: 1,
-        },
-    ];
+    // const mockData = [
+    //     {
+    //         id: 1,
+    //         kaspiId: "KASPI123",
+    //         streetName: "Main Street",
+    //         streetNumber: "123",
+    //         formattedAddress: "123 Main Street",
+    //         city: { id: 1, name: "City" },
+    //         availableWorkTimes: [
+    //             { dayOfWeek: "Monday", startTime: "09:00", endTime: "18:00" },
+    //             { dayOfWeek: "Tuesday", startTime: "09:00", endTime: "18:00" },
+    //             {
+    //                 dayOfWeek: "Wednesday",
+    //                 startTime: "09:00",
+    //                 endTime: "18:00",
+    //             },
+    //             { dayOfWeek: "Thursday", startTime: "09:00", endTime: "18:00" },
+    //             { dayOfWeek: "Friday", startTime: "09:00", endTime: "18:00" },
+    //         ],
+    //         availableBoxTypes: [
+    //             { id: 1, name: "Box 1" },
+    //             { id: 2, name: "Box 2" },
+    //             { id: 3, name: "Box 3" },
+    //         ],
+    //         enabled: true,
+    //         userId: 1,
+    //     },
+    // ];
 
-    // const { data: stores, isPending } = useGetStores();
+    const { data: stores, isPending } = useGetStores();
 
     return (
         <ConfigProvider
@@ -120,21 +124,15 @@ export const StoresTable: FC<StoresTableProps> = ({}) => {
                         headerColor: "#1C1C1C66",
                         headerBorderRadius: 10,
                         headerSplitColor: "#fff",
-                        // colorBgContainer: "#F7F9FB",
-                        // borderColor: "#F7F9FB",
                     },
                 },
             }}
         >
             <Table
                 columns={columns}
-                // bordered
-                dataSource={
-                    // stores?.sort((a, b) => a.id - b.id) ||
-                    mockData
-                }
+                dataSource={stores?.sort((a, b) => a.id - b.id) || []}
                 rowKey={"id"}
-                loading={false}
+                loading={isPending}
             />
         </ConfigProvider>
     );

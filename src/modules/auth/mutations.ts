@@ -1,3 +1,4 @@
+import { isJwtExpired } from "@/lib/jwt/decode";
 import { useMutation } from "@tanstack/react-query";
 import { App } from "antd";
 import { AxiosError } from "axios";
@@ -19,7 +20,7 @@ export const loginMutation = (success: (data: LoginResponse) => void) => {
         },
         onSuccess(data) {
             success(data);
-            // console.log("role", getRoles());
+            console.log("isJwtExpired:", !isJwtExpired());
             message.success("Успешно!");
         },
         onError(error) {

@@ -38,10 +38,10 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
         setSearchParams({ menu_x: e.key });
     };
     return (
-        <div className="h-full bg-white rounded-t-lg p-7">
+        <div className="h-full">
             {current === "stores" && (
                 <div className="flex flex-col gap-5 w-max">
-                    <h1 className="px-2 py-1 text-xl font-semibold">Склады</h1>
+                    <h1 className="text-[18px] font-semibold">Склады</h1>
                     <Button
                         size="large"
                         type="primary"
@@ -54,7 +54,7 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
             )}
             {current === "boxes" && (
                 <div className="flex flex-col gap-5 w-max">
-                    <h1 className="px-2 py-1 text-xl font-semibold">Коробки</h1>
+                    <h1 className="text-[18px] font-semibold">Коробки</h1>
                     <Button
                         size="large"
                         type="primary"

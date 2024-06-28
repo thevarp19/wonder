@@ -12,7 +12,7 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
     const { formik, mutation } = useCreateStore();
     return (
         <div className="flex flex-col gap-10 items-center border border-[#D9D9D9] rounded-[28px] px-[126px] py-[34px]">
-            <h2 className="text-sm font-semibold">Создать новый склад</h2>
+            <h2 className="text-[18px] font-semibold">Создать новый склад</h2>
 
             <Form
                 onFinish={formik.submitForm}

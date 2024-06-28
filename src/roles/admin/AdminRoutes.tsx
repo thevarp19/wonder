@@ -1,4 +1,5 @@
 import { Protected } from "@/context/Protected";
+import { useAppSelector } from "@/redux/utils";
 import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { AdminLayout } from "./AdminLayout";
@@ -22,7 +23,7 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
     const navigateToAdminLogin = () => {
         navigate("/admin/login", { replace: true });
     };
-    // const adminAuth = useAppSelector((state) => state.admin.auth);
+    const adminAuth = useAppSelector((state) => state.admin.auth);
     return (
         <Routes>
             <Route
@@ -30,7 +31,7 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                 element={
                     <Protected
                         checkAction={async () => {
-                            return true;
+                            return adminAuth.isLoggedIn;
                         }}
                         navigate={navigateToAdminLogin}
                     />

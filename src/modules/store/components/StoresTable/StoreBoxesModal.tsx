@@ -31,7 +31,11 @@ const DeleteBoxCell: FC<{ boxId: string; storeId: string }> = ({
                 await mutateAsync({ storeId, boxId });
             }}
         >
-            <Button danger icon={<DeleteOutlined />}>
+            <Button
+                className="!rounded-[16px]"
+                danger
+                icon={<DeleteOutlined />}
+            >
                 Удалить
             </Button>
         </Popconfirm>
@@ -80,6 +84,9 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                 onCancel={() => {
                     setIsModalOpen(false);
                 }}
+                cancelButtonProps={{ style: { width: 100 } }}
+                cancelText="Назад"
+                okButtonProps={{ style: { width: 100 } }}
                 onOk={() => {
                     setIsModalOpen(false);
                 }}
@@ -88,6 +95,11 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                     <Select
                         placeholder={"Добавить новую коробку"}
                         className="w-80"
+                        notFoundContent={
+                            <div className="flex items-center justify-center min-h-[85px]">
+                                Нет данных
+                            </div>
+                        }
                         value={formik.values.boxId}
                         onChange={(value) => {
                             formik.setFieldValue("boxId", value);
@@ -104,6 +116,7 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                             }))}
                     />
                     <Button
+                        type="primary"
                         loading={mutation.isPending}
                         onClick={() => {
                             formik.handleSubmit();
@@ -114,6 +127,7 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                 </div>
                 <Table
                     className="mt-4"
+                    size="small"
                     rowKey={(record) => `${record.id}`}
                     dataSource={boxTypes}
                     loading={isPending}

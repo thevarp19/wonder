@@ -137,7 +137,7 @@ export const FilterMenu: React.FC<FilterMenuProps> = ({
                 icon={<FilterOutlined />}
                 className="flex items-center justify-center"
             >
-                Filter
+                Поиск по
             </Button>
         </Dropdown>
     );
