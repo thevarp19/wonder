@@ -2,23 +2,31 @@ import { arrowFall, arrowRise } from "@/assets";
 import DurationSwitch from "@/components/ui/DurationSwitch";
 import { Image } from "@/components/ui/Image";
 import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
+import { BarCharts } from "@/modules/statistics/components/BarCharts";
 import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable";
+import { PieCharts } from "@/modules/statistics/components/PieCharts";
+import {
+    useGetAdminDailyInfo,
+    useGetAdminSalesInfo,
+} from "@/modules/statistics/queries";
 import { DurationType, StatisticsInfo } from "@/modules/statistics/types";
 import { cn } from "@/utils/shared.util";
+import { Spin } from "antd";
 import { FC, useState } from "react";
 
 interface AdminHomePageProps {}
 
 export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     const [duration, setDuration] = useState<DurationType>("MONTH");
-    // const { data: statistics, isPending } = useGetAdminSalesInfo(duration);
-    // const { data: dailyInfo, isPending: getDailyLoading } =
-    const statistics = {
-        ordersInfo: { count: 140, percent: 48 },
-        sellersInfo: { count: 52, percent: -18 },
-        suppliesInfo: { count: 42, percent: 18 },
-        incomeInfo: { count: 80, percent: 50 },
-    };
+    const { data: statistics, isPending } = useGetAdminSalesInfo(duration);
+    const { data: dailyInfo, isPending: getDailyLoading } =
+        useGetAdminDailyInfo(duration);
+    // const statistics = {
+    //     ordersInfo: { count: 140, percent: 48 },
+    //     sellersInfo: { count: 52, percent: -18 },
+    //     suppliesInfo: { count: 42, percent: 18 },
+    //     incomeInfo: { count: 80, percent: 50 },
+    // };
     const topSellers = [
         { place: 1, name: "ИП QIT" },
         { place: 2, name: "ИП Techai" },
@@ -39,13 +47,13 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     //           .sort((a, b) => b.totalIncome - a.totalIncome)
     //           .slice(0, 4)
     //     : [];
-    // if (isPending) {
-    //     return (
-    //         <div className="flex items-center justify-center h-[500px]">
-    //             <Spin size="large" />
-    //         </div>
-    //     );
-    // }
+    if (isPending) {
+        return (
+            <div className="flex items-center justify-center h-[500px]">
+                <Spin size="large" />
+            </div>
+        );
+    }
     return (
         <div className="flex flex-col">
             <div className="flex flex-col gap-7">
@@ -78,7 +86,15 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                     />
                 </div>
                 <div className="flex flex-col gap-5">
-                    <AreaCharts data={[]} duration={duration} loading={true} />
+                    <AreaCharts
+                        data={dailyInfo || []}
+                        duration={duration}
+                        loading={getDailyLoading}
+                    />
+                    <div className="flex items-center justify-between gap-10 mt-10">
+                        <BarCharts duration={duration} />
+                        <PieCharts />
+                    </div>
                     <div className="flex gap-5">
                         <div className="min-w-[825px] h-[525px] p-8 bg-[#F7F9FB] flex flex-col gap-6 rounded-[34px]">
                             <h2 className="text-xl font-semibold">

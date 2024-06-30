@@ -34,6 +34,7 @@ const CreateEmployeeModal = ({ storeId }: { storeId: number }) => {
             <Modal
                 title="Создать сотрудника"
                 open={isModalOpen}
+                cancelButtonProps={{ style: { width: "100%" } }}
                 onCancel={() => setIsModalOpen(false)}
                 okButtonProps={{ style: { display: "none" } }}
                 destroyOnClose

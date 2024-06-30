@@ -1,13 +1,24 @@
+import { scan } from "@/assets";
+import { Title } from "@/components/shared/Title";
+import { Image } from "@/components/ui/Image";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { UpdateSizesForm } from "@/modules/product/components/UpdateSizesForm";
 import { useUpdateProductSize } from "@/modules/product/forms";
 import { useGetProductsWithSizes } from "@/modules/product/queries";
 import { useScannerResults } from "@/modules/scan/hooks";
 import { toScanProductsSizes } from "@/modules/scan/utils";
+import { cn } from "@/utils/shared.util";
 import { EditOutlined } from "@ant-design/icons";
-import { Button, Menu, MenuProps, Modal, Table, TableColumnsType } from "antd";
+import {
+    Button,
+    ConfigProvider,
+    Menu,
+    MenuProps,
+    Modal,
+    Table,
+    TableColumnsType,
+} from "antd";
 import { FC, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 interface EmployeeProductSizesPageProps {}
 
@@ -60,37 +71,48 @@ export const EmployeeProductSizesPage: FC<
     }, [scanSearchValue]);
 
     return (
-        <div>
-            <div className="flex items-center justify-between gap-20 mb-4">
-                <div className="flex items-center justify-between max-w-md gap-8 grow">
-                    <div className="w-full max-w-sm">
+        <div className="flex flex-col gap-5">
+            <Title text="Размеры" />
+
+            <div className="bg-[#F7F9FB] px-2 rounded-lg">
+                <div className="flex items-center gap-4 ">
+                    <div className="flex items-center justify-between w-full max-w-md">
                         <SearchInput
                             searchValue={searchValue}
                             setSearchValue={setSearchValue}
                             onSearch={handleSearch}
                         />
                     </div>
-                    {/* <div>
-                        <FilterButton />
-                    </div> */}
-                </div>
-                <div>
-                    <Button
-                        size="large"
-                        type="primary"
+                    <div
                         onClick={toScanProductsSizes}
-                        className="uppercase"
+                        className="flex items-center justify-center bg-[#EF7214]  rounded-md cursor-pointer py-[14px] w-[130px] max-h-[32px] gap-2"
                     >
-                        СКАНИРОВАТЬ
-                    </Button>
+                        <Image
+                            src={scan}
+                            alt="scan"
+                            className={cn("w-4 h-4")}
+                        />
+                        <h2 className="text-xs text-white">CКАНИРОВАТЬ</h2>
+                    </div>
                 </div>
+                <ConfigProvider
+                    theme={{
+                        components: {
+                            Menu: {
+                                itemBg: "#F7F9FB",
+                                colorSplit: "#F7F9FB",
+                            },
+                        },
+                    }}
+                >
+                    <Menu
+                        items={items}
+                        mode="horizontal"
+                        onClick={onClick}
+                        selectedKeys={[current]}
+                    />
+                </ConfigProvider>
             </div>
-            <Menu
-                items={items}
-                mode="horizontal"
-                onClick={onClick}
-                selectedKeys={[current]}
-            />
             <EmployeeSearchResultsTable
                 searchValue={searchQuery}
                 filterKey={current}
@@ -107,11 +129,7 @@ const columns: TableColumnsType<any> = [
     },
     {
         title: "Наименование",
-        render: (_, record) => (
-            <Link to={`/product/${record.productArticle}`}>
-                {record.productName}
-            </Link>
-        ),
+        dataIndex: "productName",
     },
     {
         title: "Длина",
@@ -160,26 +178,41 @@ const UpdateSizesModal = ({
             <Modal
                 open={isModalOpen}
                 confirmLoading={formik.isSubmitting}
+                okButtonProps={{
+                    style: { width: "100%", height: 36, margin: 0 },
+                }}
+                cancelButtonProps={{
+                    style: { width: "100%", height: 36, marginBottom: 10 },
+                }}
                 onCancel={() => setIsModalOpen(false)}
+                cancelText="Назад"
                 onOk={() => {
                     formik.submitForm();
                     setIsModalOpen(false);
                 }}
                 destroyOnClose
             >
-                <div className="flex flex-col gap-2">
-                    <div className="py-2"> Артикул: {vendorCode}</div>
-                    <div className="py-2">
-                        Наименование:{" "}
-                        <span className="underline">{productName}</span>
+                <div className="flex flex-col gap-9">
+                    <div className="flex flex-col gap-[10px]">
+                        <div className="flex gap-[66px]">
+                            Артикул:{" "}
+                            <span className="font-bold">{vendorCode}</span>
+                        </div>
+                        <div className="flex gap-5">
+                            Наименование:
+                            <span className="font-bold">{productName}</span>
+                        </div>
                     </div>
                     <UpdateSizesForm formik={formik} />
                 </div>
             </Modal>
-            <EditOutlined
+            <Button
                 onClick={() => setIsModalOpen(true)}
-                style={{ fontSize: "24px" }}
-            />
+                icon={<EditOutlined style={{ fontSize: "15px" }} />}
+                className="!rounded-[16px]"
+            >
+                Редактировать
+            </Button>
         </>
     );
 };
@@ -224,22 +257,59 @@ export const EmployeeSearchResultsTable: FC<{
             setFilteredData(filtered);
         }
     }, [data, filterKey]);
+    // const mockData = [
+    //     {
+    //         productName: "Product 1",
+    //         productArticle: "123456",
+    //         vendorCode: "VENDOR_1",
+    //         width: 10,
+    //         length: 20,
+    //         weight: 5,
+    //         height: 15,
+    //         comment: "Comment 1",
+    //         state: "scanned",
+    //     },
+    //     {
+    //         productName: "Product 2",
+    //         productArticle: "789012",
+    //         vendorCode: "VENDOR_2",
+    //         width: null,
+    //         length: null,
+    //         weight: null,
+    //         height: null,
+    //         comment: null,
+    //         state: "non-scanned",
+    //     },
+    // ];
 
     return (
-        <Table
-            columns={columns}
-            loading={isPending}
-            dataSource={filteredData}
-            rowKey={(record) => record.vendorCode}
-            pagination={{
-                pageSize: 10,
-                total: data?.totalElements,
-                showSizeChanger: false,
-                onChange(page) {
-                    setPage(page - 1);
+        <ConfigProvider
+            theme={{
+                components: {
+                    Table: {
+                        headerBg: "#fff",
+                        headerColor: "#1C1C1C66",
+                        headerBorderRadius: 10,
+                        headerSplitColor: "#fff",
+                    },
                 },
-                current: page + 1,
             }}
-        />
+        >
+            <Table
+                columns={columns}
+                loading={isPending}
+                dataSource={filteredData}
+                rowKey={(record) => record.vendorCode}
+                pagination={{
+                    pageSize: 10,
+                    total: data?.totalElements,
+                    showSizeChanger: false,
+                    onChange(page) {
+                        setPage(page - 1);
+                    },
+                    current: page + 1,
+                }}
+            />
+        </ConfigProvider>
     );
 };

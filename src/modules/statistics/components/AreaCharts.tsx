@@ -16,57 +16,57 @@ interface AreaChartsProps {
     loading: boolean;
 }
 export const AreaCharts: FC<AreaChartsProps> = ({
-    // data,
+    data,
     duration,
     loading,
 }) => {
-    const data = [
-        {
-            count: 1400,
-            income: 1300,
-            localDate: "2024-06-07T00:00",
-        },
-        {
-            count: 15000,
-            income: 1400,
-            localDate: "2024-06-07T02:00",
-        },
-        {
-            count: 16900,
-            income: 1500,
-            localDate: "2024-06-07T04:00",
-        },
-        {
-            count: 17000,
-            income: 1600,
-            localDate: "2024-06-07T06:00",
-        },
-        {
-            count: 1800,
-            income: 1700,
-            localDate: "2024-06-07T08:00",
-        },
-        {
-            count: 1900,
-            income: 1800,
-            localDate: "2024-06-07T10:00",
-        },
-        {
-            count: 2000,
-            income: 900,
-            localDate: "2024-06-07T12:00",
-        },
-        {
-            count: 2100,
-            income: 1200,
-            localDate: "2024-06-07T14:00",
-        },
-        {
-            count: 2300,
-            income: 1100,
-            localDate: "2024-06-07T16:00",
-        },
-    ];
+    // const data = [
+    //     {
+    //         count: 1400,
+    //         income: 1300,
+    //         localDate: "2024-06-07T00:00",
+    //     },
+    //     {
+    //         count: 15000,
+    //         income: 1400,
+    //         localDate: "2024-06-07T02:00",
+    //     },
+    //     {
+    //         count: 16900,
+    //         income: 1500,
+    //         localDate: "2024-06-07T04:00",
+    //     },
+    //     {
+    //         count: 17000,
+    //         income: 1600,
+    //         localDate: "2024-06-07T06:00",
+    //     },
+    //     {
+    //         count: 1800,
+    //         income: 1700,
+    //         localDate: "2024-06-07T08:00",
+    //     },
+    //     {
+    //         count: 1900,
+    //         income: 1800,
+    //         localDate: "2024-06-07T10:00",
+    //     },
+    //     {
+    //         count: 2000,
+    //         income: 900,
+    //         localDate: "2024-06-07T12:00",
+    //     },
+    //     {
+    //         count: 2100,
+    //         income: 1200,
+    //         localDate: "2024-06-07T14:00",
+    //     },
+    //     {
+    //         count: 2300,
+    //         income: 1100,
+    //         localDate: "2024-06-07T16:00",
+    //     },
+    // ];
 
     const formattedData = (data ?? []).map((item: any) => ({
         ...item,

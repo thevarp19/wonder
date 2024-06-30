@@ -7,6 +7,7 @@ import loginAdminBanner from "./img/loginAdminBanner.png";
 import loginSellerBanner from "./img/loginSellerBanner.png";
 import logo from "./img/logo.svg";
 import pencilIcon from "./img/pencil.svg";
+import scan from "./img/scan.svg";
 import searchIcon from "./img/search.svg";
 import sidebarIcon from "./img/sidebar.svg";
 export {
@@ -19,6 +20,7 @@ export {
     loginSellerBanner,
     logo,
     pencilIcon,
+    scan,
     searchIcon,
     sidebarIcon,
 };

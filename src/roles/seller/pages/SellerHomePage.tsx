@@ -1,35 +1,51 @@
 import { arrowFall, arrowRise } from "@/assets";
 import DurationSwitch from "@/components/ui/DurationSwitch";
 import { Image } from "@/components/ui/Image";
+import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
+import { BarCharts } from "@/modules/statistics/components/BarCharts";
+import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable";
+import { PieCharts } from "@/modules/statistics/components/PieCharts";
+import {
+    useGetSellerDailyInfo,
+    useGetSellerSalesInfo,
+} from "@/modules/statistics/queries";
 import { DurationType, StatisticsInfo } from "@/modules/statistics/types";
 import { cn } from "@/utils/shared.util";
+import { Spin } from "antd";
 import { FC, useState } from "react";
 
 interface SellerHomePageProps {}
 
 export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
     const [duration, setDuration] = useState<DurationType>("MONTH");
-    // const { data: statistics, isPending } = useGetSellerSalesInfo(duration);
-    // const { data: dailyInfo, isPending: getDailyLoading } =
-    //     useGetSellerDailyInfo(duration);
+    const { data: statistics, isPending } = useGetSellerSalesInfo(duration);
+    const { data: dailyInfo, isPending: getDailyLoading } =
+        useGetSellerDailyInfo(duration);
     // const { data: topProducts, isPending: topProductsLoading } =
     //     useGetSellerTopProducts();
     // const sortedTopProducts = topProducts?.content
     //     ? topProducts.content.sort((a, b) => b.count - a.count).slice(0, 4)
     //     : [];
-    // if (isPending) {
-    //     return (
-    //         <div className="flex items-center justify-center h-[500px]">
-    //             <Spin size="large" />
-    //         </div>
-    //     );
-    // }
-    const statistics = {
-        ordersInfo: { count: 140, percent: 48 },
-        sellersInfo: { count: 52, percent: -18 },
-        suppliesInfo: { count: 42, percent: 18 },
-        incomeInfo: { count: 80, percent: 50 },
-    };
+    if (getDailyLoading) {
+        return (
+            <div className="flex items-center justify-center h-[500px]">
+                <Spin size="large" />
+            </div>
+        );
+    }
+    // const statistics = {
+    //     ordersInfo: { count: 140, percent: 48 },
+    //     sellersInfo: { count: 52, percent: -18 },
+    //     suppliesInfo: { count: 42, percent: 18 },
+    //     incomeInfo: { count: 80, percent: 50 },
+    // };
+    if (isPending || getDailyLoading) {
+        return (
+            <div className="flex items-center justify-center h-[500px]">
+                <Spin size="large" />
+            </div>
+        );
+    }
     return (
         <div className="flex flex-col bg-white p-7">
             <div className="flex flex-col gap-7">
@@ -61,43 +77,28 @@ export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
                         bgColor="orange"
                     />
                 </div>
-                {/* <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-5">
                     <AreaCharts
                         data={dailyInfo || []}
                         duration={duration}
                         loading={getDailyLoading}
                     />
+                    <div className="flex items-center justify-between gap-10 mt-10">
+                        <BarCharts duration={duration} />
+                        <PieCharts />
+                    </div>
                     <div className="flex gap-5">
-                        <div className="w-[65%] p-2 bg-[#fcdfc9] rounded-xl h-max">
-                            <div className="bg-white rounded-xl ">
-                                <ProductsCountTable />
-                            </div>
+                        <div className="min-w-[825px] h-[525px] p-8 bg-[#F7F9FB] flex flex-col gap-6 rounded-[34px]">
+                            <h2 className="text-xl font-semibold">
+                                Таблица заказов
+                            </h2>
+                            <LastOrdersTable />
                         </div>
-                        <div className="w-[35%] p-2 bg-orange-100 shadow-2xl rounded-xl">
-                            <div className="bg-white rounded-[10px] h-full flex flex-col gap-2">
-                                <div className="bg-[#EF7214] rounded-md text-white font-semibold text-center">
-                                    ТОП Продукты
-                                </div>
-                                {topProductsLoading ? (
-                                    <Spin />
-                                ) : (
-                                    <div className="flex flex-col justify-center gap-2">
-                                        {sortedTopProducts?.map(
-                                            (item, index) => (
-                                                <TopProductsCard
-                                                    key={item.productId}
-                                                    place={index + 1}
-                                                    name={item.productName}
-                                                    sum={item.productPrice}
-                                                />
-                                            )
-                                        )}
-                                    </div>
-                                )}
-                            </div>
+                        <div className="w-full h-[525px] bg-[#F7F9FB] rounded-[34px]">
+                            {/* <TopSellersList topSellers={topSellers} /> */}
                         </div>
                     </div>
-                </div> */}
+                </div>
             </div>
         </div>
     );

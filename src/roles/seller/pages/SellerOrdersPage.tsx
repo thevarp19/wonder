@@ -47,12 +47,12 @@ export const SellerOrdersPage: FC<SellerOrdersPageProps> = ({}) => {
     const [current, setCurrent] = useState("all");
     const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("");
     const [checkedItems, setCheckedItems] = useState({
-        byOrderCode: false,
-        byShopName: false,
-        byStoreAddress: false,
-        byProductName: false,
-        byProductArticle: false,
-        byProductVendorCode: false,
+        byOrderCode: true,
+        byShopName: true,
+        byStoreAddress: true,
+        byProductName: true,
+        byProductArticle: true,
+        byProductVendorCode: true,
     });
 
     const handleSearch = () => {

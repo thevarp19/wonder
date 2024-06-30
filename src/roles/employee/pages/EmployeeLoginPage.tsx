@@ -1,4 +1,4 @@
-import { Logo } from "@/components/shared/Logo";
+import { HeaderLogo } from "@/components/shared/HeaderLogo";
 import { LoginForm } from "@/modules/auth/components/LoginForm";
 import { LoginResponse } from "@/modules/auth/types";
 import { useAppDispatch } from "@/redux/utils";
@@ -18,10 +18,18 @@ export const EmployeeLoginPage: FC<EmployeeLoginPageProps> = ({}) => {
         navigateToHome();
     };
     return (
-        <div className="flex flex-col items-center mt-[10vh]">
-            <Logo />
-            <h1 className="py-5 text-2xl font-semibold">Войти как сотрудник</h1>
-            <LoginForm success={success} />
+        <div className="flex flex-col items-center h-screen bg-[#F7F9FB]">
+            <HeaderLogo />
+            <div className="flex items-center justify-center w-full h-full gap-10">
+                <div className="flex flex-col min-w-[450px] ">
+                    <h1 className="py-5 text-2xl font-semibold">
+                        Войти как сотрудник
+                    </h1>
+                    <div className="w-full max-w-md">
+                        <LoginForm success={success} />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

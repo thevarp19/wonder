@@ -1,14 +1,14 @@
+import { SizesIcon } from "@/assets/custom-icon/CustomIcon";
 import { GeneralLayout } from "@/components/shared/GeneralLayout";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import { employeeLogout } from "@/roles/employee/redux/auth/actions";
 import {
-    CarOutlined,
     HomeOutlined,
-    LineHeightOutlined,
     LogoutOutlined,
     ProfileOutlined,
     SearchOutlined,
-    SettingOutlined,
+    ShoppingCartOutlined,
+    VerticalAlignTopOutlined,
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import { FC, useEffect, useState } from "react";
@@ -22,15 +22,16 @@ const items: MenuProps["items"] = [
         icon: <HomeOutlined />,
     },
     {
-        label: <Link to={"/employee/supplies"}>Поставки</Link>,
-        key: "supplies",
-        icon: <SettingOutlined />,
-    },
-    {
         label: <Link to={"/employee/orders"}>Заказы</Link>,
         key: "orders",
-        icon: <CarOutlined />,
+        icon: <ShoppingCartOutlined />,
     },
+    {
+        label: <Link to={"/employee/supplies"}>Поставки</Link>,
+        key: "supplies",
+        icon: <VerticalAlignTopOutlined />,
+    },
+
     {
         label: <Link to={"/employee/search"}>Поиск</Link>,
         key: "search",
@@ -39,7 +40,7 @@ const items: MenuProps["items"] = [
     {
         label: <Link to={"/employee/sizes"}>Размеры</Link>,
         key: "sizes",
-        icon: <LineHeightOutlined />,
+        icon: <SizesIcon />,
     },
 ];
 

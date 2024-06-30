@@ -1,5 +1,5 @@
-import { Switch, Table, TableColumnsType } from "antd";
-import { FC, useState } from "react";
+import { ConfigProvider, Switch, Table, TableColumnsType } from "antd";
+import { FC, useEffect, useState } from "react";
 import { changeProductsVisibilityMutation } from "../../mutations";
 import { useGetProducts } from "../../queries";
 import { GetProductContent } from "../../types";
@@ -33,11 +33,6 @@ const columns: TableColumnsType<GetProductContent> = [
         title: "Количество в Астане",
         render: (_, record) => <span>{record.counts[1].count}</span>,
     },
-
-    {
-        title: "Количество в Шымкенте",
-        render: (_, record) => <span>{record.counts[2].count}</span>,
-    },
 ];
 
 export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
@@ -49,6 +44,9 @@ export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
     //     searchValue,
     //     isPublished
     // );
+    useEffect(() => {
+        setPage(0);
+    }, [searchValue]);
     const { data: products, isPending } = useGetProducts(
         page,
         undefined,
@@ -62,21 +60,35 @@ export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
                 setIsPublished={setIsPublished}
                 isPublished={isPublished}
             />
-            <Table
-                columns={columns}
-                loading={isPending}
-                dataSource={products?.content}
-                rowKey={(record) => record.vendorCode}
-                pagination={{
-                    pageSize: 10,
-                    total: products?.totalElements,
-                    showSizeChanger: false,
-                    onChange(page) {
-                        setPage(page - 1);
+            <ConfigProvider
+                theme={{
+                    components: {
+                        Table: {
+                            headerBg: "#fff",
+                            headerColor: "#1C1C1C66",
+                            headerBorderRadius: 10,
+                            headerSplitColor: "#fff",
+                        },
                     },
-                    current: page + 1,
                 }}
-            />
+            >
+                <Table
+                    columns={columns}
+                    loading={isPending}
+                    size="small"
+                    dataSource={products?.content}
+                    rowKey={(record) => record.vendorCode}
+                    pagination={{
+                        pageSize: 10,
+                        total: products?.totalElements,
+                        showSizeChanger: false,
+                        onChange(page) {
+                            setPage(page - 1);
+                        },
+                        current: page + 1,
+                    }}
+                />
+            </ConfigProvider>
         </div>
     );
 };

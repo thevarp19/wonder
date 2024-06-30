@@ -1,4 +1,5 @@
 import { searchIcon } from "@/assets";
+import { Title } from "@/components/shared/Title";
 import { FilterMenu } from "@/components/ui/FilterMenu";
 import { Image } from "@/components/ui/Image";
 import { AdminOrdersTable } from "@/modules/order/components/OrdersTable/AdminOrdersTable";
@@ -59,12 +60,12 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
     const [current, setCurrent] = useState("all");
     const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("");
     const [checkedItems, setCheckedItems] = useState({
-        byOrderCode: false,
-        byShopName: false,
-        byStoreAddress: false,
-        byProductName: false,
-        byProductArticle: false,
-        byProductVendorCode: false,
+        byOrderCode: true,
+        byShopName: true,
+        byStoreAddress: true,
+        byProductName: true,
+        byProductArticle: true,
+        byProductVendorCode: true,
     });
     const [dateRange, setDateRange] = useState<
         [dayjs.Dayjs | null, dayjs.Dayjs | null]
@@ -93,14 +94,9 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
     };
     return (
         <div className="h-full">
-            <h1 className="pb-5 text-[18px] font-semibold">Заказы</h1>
+            <Title text="Заказы" />
             <div className="flex items-center justify-between mb-4">
                 <div className="flex w-full max-w-sm gap-4">
-                    {/* <SearchInput
-                        searchValue={searchValue}
-                        setSearchValue={setSearchValue}
-                        onSearch={handleSearch}
-                    /> */}
                     <RangePicker
                         className="ml-2"
                         placeholder={["Дата от", "Дата до"]}

@@ -1,8 +1,12 @@
+import { scan } from "@/assets";
+import { Title } from "@/components/shared/Title";
+import { Image } from "@/components/ui/Image";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { useGetProductsByParams } from "@/modules/product/queries";
 import { useScannerResults } from "@/modules/scan/hooks";
 import { toScanProductsSearch } from "@/modules/scan/utils";
-import { Button, Table, TableColumnsType } from "antd";
+import { cn } from "@/utils/shared.util";
+import { ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC, useEffect, useState } from "react";
 
 interface EmployeeSearchPageProps {}
@@ -32,29 +36,23 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
         }
     }, [scanSearchValue]);
     return (
-        <div>
-            <div className="flex items-center justify-between gap-20 mb-4">
-                <div className="flex items-center justify-between max-w-md gap-8 grow">
-                    <div className="w-full max-w-sm">
-                        <SearchInput
-                            searchValue={searchValue}
-                            setSearchValue={setSearchValue}
-                            onSearch={handleSearch}
-                        />
-                    </div>
-                    {/* <div>
-                        <FilterButton />
-                    </div> */}
+        <div className="flex flex-col gap-5">
+            <Title text="Поиск" />
+
+            <div className="flex items-center gap-4 bg-[#F7F9FB] px-2 rounded-lg">
+                <div className="flex items-center justify-between w-full max-w-md">
+                    <SearchInput
+                        searchValue={searchValue}
+                        setSearchValue={setSearchValue}
+                        onSearch={handleSearch}
+                    />
                 </div>
-                <div>
-                    <Button
-                        size="large"
-                        type="primary"
-                        onClick={toScanProductsSearch}
-                        className="uppercase"
-                    >
-                        CКАНИРОВАТЬ
-                    </Button>
+                <div
+                    onClick={toScanProductsSearch}
+                    className="flex items-center justify-center bg-[#EF7214]  rounded-md cursor-pointer py-[14px] w-[130px] max-h-[32px] gap-2"
+                >
+                    <Image src={scan} alt="scan" className={cn("w-4 h-4")} />
+                    <h2 className="text-xs text-white">CКАНИРОВАТЬ</h2>
                 </div>
             </div>
             <EmployeeSearchResultsTable searchValue={searchQuery} />
@@ -107,20 +105,33 @@ export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
         true
     );
     return (
-        <Table
-            columns={columns}
-            loading={isPending}
-            dataSource={data?.content}
-            rowKey={(record) => record.vendorCode}
-            pagination={{
-                pageSize: 10,
-                total: data?.totalElements,
-                showSizeChanger: false,
-                onChange(page) {
-                    setPage(page - 1);
+        <ConfigProvider
+            theme={{
+                components: {
+                    Table: {
+                        headerBg: "#fff",
+                        headerColor: "#1C1C1C66",
+                        headerBorderRadius: 10,
+                        headerSplitColor: "#fff",
+                    },
                 },
-                current: page + 1,
             }}
-        />
+        >
+            <Table
+                columns={columns}
+                loading={isPending}
+                dataSource={data?.content}
+                rowKey={(record) => record.vendorCode}
+                pagination={{
+                    pageSize: 10,
+                    total: data?.totalElements,
+                    showSizeChanger: false,
+                    onChange(page) {
+                        setPage(page - 1);
+                    },
+                    current: page + 1,
+                }}
+            />
+        </ConfigProvider>
     );
 };
