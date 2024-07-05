@@ -134,10 +134,11 @@ export const FilterMenu: React.FC<FilterMenuProps> = ({
         >
             <Button
                 type="primary"
+                // size="small"
                 icon={<FilterOutlined />}
-                className="flex items-center justify-center"
+                className="flex items-center justify-center cursor-pointer"
             >
-                Поиск по
+                {/* <Image src={funnelIcon} alt="logo" className={cn("w-5 h-5")} /> */}
             </Button>
         </Dropdown>
     );

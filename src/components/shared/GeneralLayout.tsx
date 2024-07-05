@@ -16,6 +16,7 @@ import {
 import { FC, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { CustomMenu } from "../ui/CustomMenu";
+import { BottomNav } from "./BottomNav";
 const { Content, Sider } = Layout;
 
 interface GeneralLayoutProps {
@@ -23,6 +24,9 @@ interface GeneralLayoutProps {
     profileItems: MenuProps["items"];
     logoLink: string;
     userEmail: string;
+    breadcrumbItems: {
+        [key: string]: { title: string | JSX.Element }[];
+    };
     role: "Администратор" | "Продавец" | "Сотрудник";
     selectedKeys: string[];
 }
@@ -31,6 +35,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
     menuItems,
     profileItems,
     logoLink,
+    breadcrumbItems,
     // userEmail,
     // role,
     selectedKeys,
@@ -39,29 +44,20 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
     const {
         token: { colorBgContainer },
     } = theme.useToken();
-    const breadcrumbMapping: {
-        [key: string]: { title: string | JSX.Element }[];
-    } = {
-        "/admin": [{ title: "Меню" }, { title: <a href="">Главная</a> }],
-        "/admin/orders": [{ title: "Меню" }, { title: <a href="">Заказы</a> }],
-        "/admin/settings": [
-            { title: "Меню" },
-            { title: <a href="">Настройки</a> },
-        ],
-    };
+
     const location = useLocation();
 
     const getBreadcrumbItems = () => {
-        return breadcrumbMapping[location.pathname] || [];
+        return breadcrumbItems[location.pathname] || [];
     };
 
     return (
-        <Layout>
+        <Layout className="h-[calc(100vh+68px)] sm:h-auto">
             <Sider
                 theme="light"
                 collapsible
                 className={cn(
-                    "px-4 py-5 flex flex-col justify-center border-r-[1px] border-[#1C1C1C1A] relative"
+                    "hidden sm:flex px-4 py-5 flex-col justify-center border-r-[1px] border-[#1C1C1C1A] relative"
                 )}
                 collapsed={collapsed}
                 trigger={null}
@@ -115,7 +111,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
             </Sider>
             <Layout className="flex flex-col h-screen">
                 <header
-                    className="flex items-center justify-between py-5 px-[28px] border-b-[1px] border-[#1C1C1C1A]"
+                    className="hidden sm:flex items-center justify-between py-5 px-[28px] border-b-[1px] border-[#1C1C1C1A]"
                     style={{ background: colorBgContainer }}
                 >
                     <div className="flex items-center gap-3">
@@ -170,6 +166,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                     <Outlet />
                 </Content>
             </Layout>
+            <BottomNav />
         </Layout>
     );
 };

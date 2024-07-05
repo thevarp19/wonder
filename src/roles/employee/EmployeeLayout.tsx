@@ -62,7 +62,18 @@ function pathToKey(key: string) {
             return "home";
     }
 }
-
+const breadcrumbMapping: {
+    [key: string]: { title: string | JSX.Element }[];
+} = {
+    "/employee": [{ title: "Меню" }, { title: <a href="">Главная</a> }],
+    "/employee/orders": [{ title: "Меню" }, { title: <a href="">Заказы</a> }],
+    "/employee/supplies": [
+        { title: "Меню" },
+        { title: <a href="">Поставки</a> },
+    ],
+    "/employee/search": [{ title: "Меню" }, { title: <a href="">Поиск</a> }],
+    "/employee/sizes": [{ title: "Меню" }, { title: <a href="">Размеры</a> }],
+};
 export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
     const { pathname } = useLocation();
     const [selectedKeys, setSelectedKeys] = useState([pathToKey(pathname)]);
@@ -99,6 +110,7 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
         <GeneralLayout
             menuItems={items}
             profileItems={profileItems}
+            breadcrumbItems={breadcrumbMapping}
             logoLink="/employee"
             role="Сотрудник"
             userEmail={employeeAuth.userData?.email || "email@gmail.com"}

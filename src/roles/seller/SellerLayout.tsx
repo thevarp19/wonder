@@ -2,13 +2,13 @@ import { GeneralLayout } from "@/components/shared/GeneralLayout";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import { sellerLogout } from "@/roles/seller/redux/auth/actions";
 import {
-    CarOutlined,
     HomeOutlined,
     LogoutOutlined,
-    NodeCollapseOutlined,
     ProductOutlined,
     ProfileOutlined,
     SettingOutlined,
+    ShoppingCartOutlined,
+    VerticalAlignTopOutlined,
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import { FC, useEffect, useState } from "react";
@@ -29,7 +29,7 @@ const items: MenuProps["items"] = [
     {
         label: <Link to={"/seller/orders"}>Заказы</Link>,
         key: "orders",
-        icon: <CarOutlined />,
+        icon: <ShoppingCartOutlined />,
     },
     {
         label: <Link to={"/seller/products"}>Продукты</Link>,
@@ -39,7 +39,7 @@ const items: MenuProps["items"] = [
     {
         label: <Link to={"/seller/supply"}>Поставки</Link>,
         key: "supply",
-        icon: <NodeCollapseOutlined />,
+        icon: <VerticalAlignTopOutlined />,
     },
 ];
 
@@ -61,7 +61,27 @@ function pathToKey(key: string) {
             return "home";
     }
 }
-
+const breadcrumbMapping: {
+    [key: string]: { title: string | JSX.Element }[];
+} = {
+    "/seller": [{ title: "Меню" }, { title: <a href="/seller">Главная</a> }],
+    "/seller/settings": [
+        { title: "Меню" },
+        { title: <a href="/seller/settings">Настройки</a> },
+    ],
+    "/seller/orders": [
+        { title: "Меню" },
+        { title: <a href="/seller/orders">Заказы</a> },
+    ],
+    "/seller/products": [
+        { title: "Меню" },
+        { title: <a href="/seller/products">Продукты</a> },
+    ],
+    "/seller/supply": [
+        { title: "Меню" },
+        { title: <a href="/seller/supply">Поставки</a> },
+    ],
+};
 export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
     const { pathname } = useLocation();
     const [selectedKeys, setSelectedKeys] = useState([pathToKey(pathname)]);
@@ -96,6 +116,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
 
     return (
         <GeneralLayout
+            breadcrumbItems={breadcrumbMapping}
             menuItems={items}
             profileItems={profileItems}
             logoLink="/seller"

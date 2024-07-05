@@ -3,6 +3,7 @@ import { Title } from "@/components/shared/Title";
 import { FilterMenu } from "@/components/ui/FilterMenu";
 import { Image } from "@/components/ui/Image";
 import { AdminOrdersTable } from "@/modules/order/components/OrdersTable/AdminOrdersTable";
+import { items } from "@/modules/order/const";
 import { DeliveryMode } from "@/modules/order/types";
 import { cn } from "@/utils/shared.util";
 import {
@@ -19,32 +20,7 @@ import { FC, useState } from "react";
 interface AdminOrdersPageProps {}
 
 const { RangePicker } = DatePicker;
-const items: MenuProps["items"] = [
-    {
-        label: "Все",
-        key: "all",
-    },
-    {
-        label: "Kaspi доставка",
-        key: "kaspi",
-    },
-    {
-        label: "Kaspi Postomat",
-        key: "kaspiPostomat",
-    },
-    {
-        label: "Express",
-        key: "express",
-    },
-    {
-        label: "Самовывоз",
-        key: "pickup",
-    },
-    {
-        label: "Kaspi Доставка в Postomat",
-        key: "kaspiDelivery",
-    },
-];
+
 const deliveryModes: { [key: string]: DeliveryMode } = {
     all: "",
     kaspi: "DELIVERY_REGIONAL_TODOOR",
@@ -113,13 +89,6 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
                     >
                         Применить
                     </Button>
-                    {/* Add there this component */}
-                </div>
-                <div>
-                    <FilterMenu
-                        checkedItems={checkedItems}
-                        setCheckedItems={setCheckedItems}
-                    />
                 </div>
             </div>
             <div className="flex flex-col gap-5">
@@ -144,7 +113,7 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
                             ></Menu>
                         </ConfigProvider>
                     </div>
-                    <div className="bg-[#F7F9FB] flex items-center px-2 rounded-lg">
+                    <div className="bg-[#F7F9FB] flex items-center px-2 rounded-lg gap-4">
                         <Input
                             prefix={
                                 <Image
@@ -158,6 +127,12 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
                             className="!min-w-[217px]"
                             onChange={() => {}}
                         />
+                        <div className="flex w-[30px]">
+                            <FilterMenu
+                                checkedItems={checkedItems}
+                                setCheckedItems={setCheckedItems}
+                            />
+                        </div>
                     </div>
                 </div>
                 <AdminOrdersTable

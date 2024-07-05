@@ -30,7 +30,13 @@ const items: MenuProps["items"] = [
         icon: <SettingOutlined />,
     },
 ];
-
+const breadcrumbMapping: {
+    [key: string]: { title: string | JSX.Element }[];
+} = {
+    "/admin": [{ title: "Меню" }, { title: <a href="">Главная</a> }],
+    "/admin/orders": [{ title: "Меню" }, { title: <a href="">Заказы</a> }],
+    "/admin/settings": [{ title: "Меню" }, { title: <a href="">Настройки</a> }],
+};
 function pathToKey(key: string) {
     switch (key) {
         case "/admin":
@@ -79,6 +85,7 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
     return (
         <GeneralLayout
             menuItems={items}
+            breadcrumbItems={breadcrumbMapping}
             profileItems={profileItems}
             logoLink="/admin"
             role="Администратор"

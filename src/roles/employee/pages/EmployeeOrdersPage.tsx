@@ -2,6 +2,7 @@ import { searchIcon } from "@/assets";
 import { FilterMenu } from "@/components/ui/FilterMenu";
 import { Image } from "@/components/ui/Image";
 import { EmployeeOrdersTable } from "@/modules/order/components/OrdersTable/EmployeeOrdersTable";
+import { items } from "@/modules/order/const";
 import { DeliveryMode } from "@/modules/order/types";
 import { cn } from "@/utils/shared.util";
 import {
@@ -17,32 +18,7 @@ import { FC, useState } from "react";
 
 interface EmployeeOrdersPageProps {}
 const { RangePicker } = DatePicker;
-const items: MenuProps["items"] = [
-    {
-        label: "Все",
-        key: "all",
-    },
-    {
-        label: "Kaspi доставка",
-        key: "kaspi",
-    },
-    {
-        label: "Kaspi Postomat",
-        key: "kaspiPostomat",
-    },
-    {
-        label: "Express",
-        key: "express",
-    },
-    {
-        label: "Самовывоз",
-        key: "pickup",
-    },
-    {
-        label: "Kaspi Доставка в Postomat",
-        key: "kaspiDelivery",
-    },
-];
+
 const deliveryModes: { [key: string]: DeliveryMode } = {
     all: "",
     kaspi: "DELIVERY_REGIONAL_TODOOR",
@@ -111,12 +87,6 @@ export const EmployeeOrdersPage: FC<EmployeeOrdersPageProps> = ({}) => {
                         Применить
                     </Button>
                 </div>
-                <div>
-                    <FilterMenu
-                        checkedItems={checkedItems}
-                        setCheckedItems={setCheckedItems}
-                    />
-                </div>
             </div>
             <div className="flex flex-col gap-5">
                 <div className="flex justify-between bg-[#F7F9FB] p-1 rounded-lg">
@@ -140,7 +110,7 @@ export const EmployeeOrdersPage: FC<EmployeeOrdersPageProps> = ({}) => {
                             ></Menu>
                         </ConfigProvider>
                     </div>
-                    <div className="bg-[#F7F9FB] flex items-center px-2 rounded-lg">
+                    <div className="bg-[#F7F9FB] flex items-center px-2 rounded-lg gap-4">
                         <Input
                             prefix={
                                 <Image
@@ -156,6 +126,12 @@ export const EmployeeOrdersPage: FC<EmployeeOrdersPageProps> = ({}) => {
                                 setSearchValue(e.target.value);
                             }}
                         />
+                        <div className="flex w-[30px]">
+                            <FilterMenu
+                                checkedItems={checkedItems}
+                                setCheckedItems={setCheckedItems}
+                            />
+                        </div>
                     </div>
                 </div>
                 <EmployeeOrdersTable

@@ -1,8 +1,9 @@
+import { Title } from "@/components/shared/Title";
 import { LinkCopyInput } from "@/components/ui/LinkCopyInput";
 import { useGetSellerProfile } from "@/modules/seller/queries";
 import { SellerStoresTable } from "@/modules/store/components/StoresTable/SellerStoresTable";
 import { FileMarkdownOutlined, ShopOutlined } from "@ant-design/icons";
-import { Menu, MenuProps } from "antd";
+import { ConfigProvider, Menu, MenuProps } from "antd";
 import { FC, useState } from "react";
 
 const items: MenuProps["items"] = [
@@ -27,29 +28,46 @@ export const SellerSettingsPage: FC<SellerSettingsPageProps> = ({}) => {
         setCurrent(e.key);
     };
     return (
-        <div className="h-full bg-white rounded-t-lg">
-            <Menu
-                items={items}
-                mode="horizontal"
-                onClick={onClick}
-                selectedKeys={[
-                    ["stores", "xml"].includes(current) ? current : "stores",
-                ]}
-            />
+        <div className="h-full rounded-t-lg ">
+            {current === "xml" && <Title text="XML ссылка" />}
+            {current === "stores" && <Title text="Склады" />}
+            <ConfigProvider
+                theme={{
+                    components: {
+                        Menu: {
+                            itemBg: "#F7F9FB",
+                            colorSplit: "#F7F9FB",
+                            borderRadius: 8,
+                        },
+                    },
+                }}
+            >
+                <Menu
+                    items={items}
+                    mode="horizontal"
+                    onClick={onClick}
+                    className="rounded-t-lg"
+                    selectedKeys={[
+                        ["stores", "xml"].includes(current)
+                            ? current
+                            : "stores",
+                    ]}
+                />
+            </ConfigProvider>
+
             {current === "stores" && (
                 <div className="p-4">
-                    <h1 className="pb-4 text-2xl font-semibold">Склады</h1>
                     <SellerStoresTable />
                 </div>
             )}
             {current === "xml" && (
-                <div className="p-4">
-                    <h1 className="p-4 text-2xl font-semibold">XML ссылка</h1>
-                    <h2 className="px-4 text-xl">Скопируйте ссылку</h2>
-                    <h2 className="px-4 text-xl">
+                <div className="p-4 bg-[#F7F9FB] rounded-b-lg">
+                    {/* <h1 className="text-2xl font-semibold ">XML ссылка</h1> */}
+                    <h2 className="font-semibold">Скопируйте ссылку</h2>
+                    <h2 className="font-semibold">
                         Добавьте на каспи сайт для привязки данных
                     </h2>
-                    <div className="max-w-lg p-4">
+                    <div className="max-w-lg py-4">
                         <LinkCopyInput link={sellerInfo?.pathToXml ?? ""} />
                     </div>
                 </div>
