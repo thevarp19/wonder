@@ -9,6 +9,7 @@ import logo from "./img/logo.svg";
 import pencilIcon from "./img/pencil.svg";
 import searchIcon from "./img/search.svg";
 import sidebarIcon from "./img/sidebar.svg";
+import profileImage from "./img/profile.svg";
 export {
     arrowFall,
     arrowRise,
@@ -21,4 +22,5 @@ export {
     pencilIcon,
     searchIcon,
     sidebarIcon,
+    profileImage
 };
