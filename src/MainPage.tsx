@@ -17,7 +17,7 @@ export const MainPage: FC<MainPageProps> = ({}) => {
                         </p>
                         <p className="text-2xl">Войти как</p>
                     </div>
-                    <div className={cn("flex items-center gap-5")}>
+                    <div className={cn("flex md:flex-row flex-col items-center md:gap-5 gap-10")}>
                         <Button
                             type="primary"
                             size="large"
