@@ -4,15 +4,21 @@ import { Button } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Image } from "../ui/Image";
+import { LeftOutlined } from "@ant-design/icons";
+import { Avatar } from "antd/lib";
+import { useMediaQuery } from 'react-responsive';
 
 interface LogoProps {
     link?: string;
 }
 
 export const HeaderLogo: FC<LogoProps> = ({ link }) => {
+
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 768px' })
+
     return (
-        <div className="flex bg-white justify-between w-full py-[15px] px-6 rounded-b-[32px]">
-            <Link to={link || "/"}>
+        <div className="flex bg-white justify-between items-center md:flex-row flex-row-reverse w-full py-[15px] md:px-6 px-1 rounded-b-[32px]">
+            <Link to={link || "/"} className="flex flex-1 md:justify-start justify-center">
                 <Image
                     src={logo}
                     alt="logo"
@@ -20,9 +26,20 @@ export const HeaderLogo: FC<LogoProps> = ({ link }) => {
                 />
             </Link>
             <Link to={"https://wonderff.tilda.ws/"}>
-                <Button type="primary" size="large">
-                    На главную страницу
-                </Button>
+                { isSmallScreen ? (
+                    <Avatar 
+                        size={40} 
+                        icon={<LeftOutlined/>} 
+                        style={{
+                            backgroundColor: 'inherit', 
+                            color: '#000'
+                        }}
+                    />
+                ) : (
+                    <Button type="primary" size="large">
+                        На главную страницу
+                    </Button>
+                ) }
             </Link>
         </div>
     );
