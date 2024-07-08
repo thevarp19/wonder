@@ -17,7 +17,7 @@ interface AdminHomePageProps {}
 
 export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     const [duration, setDuration] = useState<DurationType>("MONTH");
-    const { data: statistics, isPending } = useGetAdminSalesInfo(duration);
+    const { data: statistics } = useGetAdminSalesInfo(duration);
     const { data: dailyInfo, isPending: getDailyLoading } =
         useGetAdminDailyInfo(duration);
     // const statistics = {
