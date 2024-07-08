@@ -14,7 +14,9 @@ import {
     Menu,
     MenuProps,
 } from "antd";
+import ruRU from "antd/lib/locale/ru_RU";
 import dayjs from "dayjs";
+import "dayjs/locale/ru";
 import { FC, useState } from "react";
 
 interface AdminOrdersPageProps {}
@@ -73,15 +75,18 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
             <Title text="Заказы" />
             <div className="flex items-center justify-between mb-4">
                 <div className="flex w-full max-w-sm gap-4">
-                    <RangePicker
-                        className="ml-2"
-                        placeholder={["Дата от", "Дата до"]}
-                        value={dateRange}
-                        onChange={handleDateChange}
-                        disabledDate={(currentDate) =>
-                            currentDate && currentDate > dayjs().add(90, "day")
-                        }
-                    />
+                    <ConfigProvider locale={ruRU}>
+                        <RangePicker
+                            className="ml-2"
+                            placeholder={["Дата от", "Дата до"]}
+                            value={dateRange}
+                            onChange={handleDateChange}
+                            disabledDate={(currentDate) =>
+                                currentDate &&
+                                currentDate > dayjs().add(90, "day")
+                            }
+                        />
+                    </ConfigProvider>
                     <Button
                         className="ml-2"
                         type="primary"

@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useMediaQuery } from "react-responsive";
 import {
     Bar,
     BarChart,
@@ -67,24 +68,29 @@ interface BarChartsProps {
 }
 
 export const BarCharts: FC<BarChartsProps> = () => {
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
+
     return (
-        <div className="w-[50%] h-full p-10 flex flex-col justify-center bg-[#F7F9FB] rounded-[32px]">
-            <h2 className="text-[24px] font-[500] ml-7 mb-5">Заказы</h2>
+        <div className="w-full sm:w-[50%] h-full p-6 sm:p-10 flex flex-col justify-center bg-[#F7F9FB] rounded-[32px]">
+            <h2 className="text-base sm:text-[24px] font-[500] ml-7 mb-5">
+                Заказы
+            </h2>
             <ResponsiveContainer height={300}>
-                <BarChart
-                    data={data}
-                    margin={{
-                        top: 5,
-                        right: 30,
-                        // left: 20,
-                        bottom: 5,
-                    }}
-                >
+                <BarChart data={data}>
                     <CartesianGrid strokeDasharray="0" strokeWidth={0} />
                     <XAxis dataKey="day" padding={{ left: 30, right: 30 }} />
-                    <YAxis dataKey="income" />
+                    <YAxis
+                        dataKey="income"
+                        tickSize={10}
+                        axisLine={false}
+                        tick={{ fontSize: isSmallScreen ? 10 : 14 }}
+                    />
                     <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="income" fill="#C6EAFF" barSize={30} />
+                    <Bar
+                        dataKey="income"
+                        fill="#C6EAFF"
+                        barSize={isSmallScreen ? 16 : 24}
+                    />
                 </BarChart>
             </ResponsiveContainer>
         </div>

@@ -166,7 +166,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                             </div>
                         </div>
                     </header>
-                    <Content className="h-full mb-0 overflow-y-scroll bg-white grow p-7">
+                    <Content className="h-full p-4 mb-0 overflow-y-scroll bg-white grow sm:p-7">
                         <Outlet />
                     </Content>
                 </Layout>

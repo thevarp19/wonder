@@ -1,5 +1,6 @@
 import { Spin } from "antd";
 import { FC } from "react";
+import { useMediaQuery } from "react-responsive";
 import {
     Area,
     AreaChart,
@@ -20,6 +21,7 @@ export const AreaCharts: FC<AreaChartsProps> = ({
     duration,
     loading,
 }) => {
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
     const data = [
         {
             count: 1400,
@@ -89,11 +91,14 @@ export const AreaCharts: FC<AreaChartsProps> = ({
         return null;
     };
     return (
-        <div className="h-full bg-[#F7F9FB] rounded-xl">
+        <div className="h-full bg-[#F7F9FB] rounded-xl overflow-x-scroll">
             <div className="flex flex-col gap-10 py-8 rounded-md">
                 <h2 className="text-xl ps-6">Чек</h2>
-
-                <AreaChart width={1150} height={310} data={formattedData}>
+                <AreaChart
+                    width={isSmallScreen ? 640 : 1150}
+                    height={isSmallScreen ? 260 : 310}
+                    data={formattedData}
+                >
                     <defs>
                         <linearGradient
                             id="colorIncome"
