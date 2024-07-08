@@ -52,8 +52,10 @@ export const PieCharts = () => {
                         ))}
                     </div>
                     <div className="flex flex-col items-end justify-center gap-5">
-                        {data.map((item) => (
-                            <p className="text-[18px]">{item.value}%</p>
+                        {data.map((item, index) => (
+                            <p key={index} className="text-[18px]">
+                                {item.value}%
+                            </p>
                         ))}
                     </div>
                 </div>

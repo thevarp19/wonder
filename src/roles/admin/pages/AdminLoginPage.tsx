@@ -20,7 +20,7 @@ export const AdminLoginPage: FC<AdminLoginPageProps> = ({}) => {
         navigateToHome();
     };
     return (
-        <div className="flex flex-col items-center h-screen bg-[#F7F9FB]">
+        <div className="flex flex-col items-center h-screen bg-white sm:bg-[#F7F9FB]">
             <HeaderLogo />
             <div className="flex w-full gap-10">
                 <div className="relative w-full">

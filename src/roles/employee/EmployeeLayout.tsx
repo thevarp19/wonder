@@ -2,6 +2,7 @@ import { SizesIcon } from "@/assets/custom-icon/CustomIcon";
 import { GeneralLayout } from "@/components/shared/GeneralLayout";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import { employeeLogout } from "@/roles/employee/redux/auth/actions";
+import { MenuItemType } from "@/types";
 import {
     HomeOutlined,
     LogoutOutlined,
@@ -12,37 +13,10 @@ import {
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import { FC, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Link, useLocation } from "react-router-dom";
 
 interface EmployeeLayoutProps {}
-const items: MenuProps["items"] = [
-    {
-        label: <Link to={"/employee"}>Главная</Link>,
-        key: "home",
-        icon: <HomeOutlined />,
-    },
-    {
-        label: <Link to={"/employee/orders"}>Заказы</Link>,
-        key: "orders",
-        icon: <ShoppingCartOutlined />,
-    },
-    {
-        label: <Link to={"/employee/supplies"}>Поставки</Link>,
-        key: "supplies",
-        icon: <VerticalAlignTopOutlined />,
-    },
-
-    {
-        label: <Link to={"/employee/search"}>Поиск</Link>,
-        key: "search",
-        icon: <SearchOutlined />,
-    },
-    {
-        label: <Link to={"/employee/sizes"}>Размеры</Link>,
-        key: "sizes",
-        icon: <SizesIcon />,
-    },
-];
 
 function pathToKey(key: string) {
     switch (key) {
@@ -75,6 +49,91 @@ const breadcrumbMapping: {
     "/employee/sizes": [{ title: "Меню" }, { title: <a href="">Размеры</a> }],
 };
 export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
+
+    const items: MenuItemType[] = [
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee"}
+                >
+                    Главная
+                </Link>
+            ),
+            key: "home",
+            icon: (
+                <HomeOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/orders"}
+                >
+                    Заказы
+                </Link>
+            ),
+            key: "orders",
+            icon: (
+                <ShoppingCartOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/supplies"}
+                >
+                    Поставки
+                </Link>
+            ),
+            key: "supplies",
+            icon: (
+                <VerticalAlignTopOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/search"}
+                >
+                    Поиск
+                </Link>
+            ),
+            key: "search",
+            icon: (
+                <SearchOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/sizes"}
+                >
+                    Размеры
+                </Link>
+            ),
+            key: "sizes",
+            icon: (
+                <SizesIcon
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+    ];
     const { pathname } = useLocation();
     const [selectedKeys, setSelectedKeys] = useState([pathToKey(pathname)]);
     useEffect(() => {

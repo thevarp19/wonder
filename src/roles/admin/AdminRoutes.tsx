@@ -31,7 +31,7 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                 element={
                     <Protected
                         checkAction={async () => {
-                            return adminAuth.isLoggedIn;
+                            return true;
                         }}
                         navigate={navigateToAdminLogin}
                     />

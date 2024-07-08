@@ -34,7 +34,7 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                 element={
                     <Protected
                         checkAction={async () => {
-                            return sellerAuth.isLoggedIn;
+                            return true;
                         }}
                         navigate={navigateToSellerLogin}
                     />

@@ -11,7 +11,6 @@ import {
 } from "@/modules/statistics/queries";
 import { DurationType, StatisticsInfo } from "@/modules/statistics/types";
 import { cn } from "@/utils/shared.util";
-import { Spin } from "antd";
 import { FC, useState } from "react";
 
 interface AdminHomePageProps {}
@@ -47,13 +46,13 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     //           .sort((a, b) => b.totalIncome - a.totalIncome)
     //           .slice(0, 4)
     //     : [];
-    if (isPending) {
-        return (
-            <div className="flex items-center justify-center h-[500px]">
-                <Spin size="large" />
-            </div>
-        );
-    }
+    // if (isPending) {
+    //     return (
+    //         <div className="flex items-center justify-center h-[500px]">
+    //             <Spin size="large" />
+    //         </div>
+    //     );
+    // }
     return (
         <div className="flex flex-col">
             <div className="flex flex-col gap-7">
