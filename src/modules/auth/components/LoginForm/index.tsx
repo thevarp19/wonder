@@ -15,7 +15,7 @@ export const LoginForm: FC<LoginFormProps> = ({ success, role }) => {
     return (
         <Form
             onFinish={formik.submitForm}
-            className="flex flex-col items-center w-full gap-2 px-10"
+            className="flex flex-col items-center w-full px-10"
         >
             <div className="flex flex-col gap-[10px] text-[#4B4B4B] w-full">
                 E-mail

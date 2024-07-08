@@ -22,13 +22,13 @@ export const AdminLoginPage: FC<AdminLoginPageProps> = ({}) => {
     return (
         <div className="flex flex-col items-center h-screen bg-white sm:bg-[#F7F9FB]">
             <HeaderLogo />
-            <div className="flex w-full gap-10">
+            <div className="flex flex-col w-full mt-10 md:flex-row md:mt-0">
                 <div className="relative w-full">
                     <img
                         loading="lazy"
                         onLoadStart={() => setLoading(true)}
                         onLoad={() => setLoading(false)}
-                        className="object-cover object-center w-full h-[calc(100vh-70px)]"
+                        className="object-cover object-center md:block hidden w-full h-[100vh] rounded-br-[46px]"
                         src={loginAdminBanner}
                         alt="Banner"
                     />
@@ -36,10 +36,10 @@ export const AdminLoginPage: FC<AdminLoginPageProps> = ({}) => {
                         <div className="absolute top-0 left-0 z-10 w-full h-full bg-gray-500 animate-pulse" />
                     )}
                 </div>
-                <div className="flex items-center justify-center w-full">
-                    <div className="flex flex-col min-w-[450px]">
+                <div className="flex items-center justify-center w-full px-5 md:pt-[70px] pt-0">
+                    <div className="flex flex-col sm:min-w-[450px]">
                         <div className="pb-10">
-                            <h1 className="text-4xl font-semibold">
+                            <h1 className="text-2xl font-semibold lg:text-4xl md:text-3xl">
                                 Добро пожаловать!
                             </h1>
                         </div>
