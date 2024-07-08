@@ -9,10 +9,10 @@ export const MainPage: FC<MainPageProps> = ({}) => {
     return (
         <div className="flex flex-col justify-center w-screen h-screen bg-[#F7F9FB]">
             <HeaderLogo />
-            <div className="flex justify-center w-full h-full">
+            <div className="flex justify-center w-full h-full md:pt-[70px] pt-0">
                 <section className="flex flex-col items-center gap-10 pt-10">
                     <div className="flex flex-col items-center gap-[80px]">
-                        <p className="text-[30px] font-semibold">
+                        <p className="text-[30px] font-semibold text-center">
                             Добро пожаловать!
                         </p>
                         <p className="text-2xl">Войти как</p>

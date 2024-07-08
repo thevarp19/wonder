@@ -17,7 +17,7 @@ export const HeaderLogo: FC<LogoProps> = ({ link }) => {
     const isSmallScreen = useMediaQuery({ query: '(max-width: 768px' })
 
     return (
-        <div className="flex bg-white justify-between items-center md:flex-row flex-row-reverse w-full py-[15px] md:px-6 px-1 rounded-b-[32px]">
+        <div className="md:fixed static top-0 z-10 flex bg-white justify-between items-center md:flex-row flex-row-reverse w-full py-[15px] md:px-6 px-1 md:rounded-b-[32px] rounded-b-0">
             <Link to={link || "/"} className="flex flex-1 md:justify-start justify-center">
                 <Image
                     src={logo}
