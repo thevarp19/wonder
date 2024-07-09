@@ -20,9 +20,9 @@ export const AdminLoginPage: FC<AdminLoginPageProps> = ({}) => {
         navigateToHome();
     };
     return (
-        <div className="flex flex-col items-center h-screen bg-[#F7F9FB]">
+        <div className="flex flex-col items-center h-screen bg-white sm:bg-[#F7F9FB]">
             <HeaderLogo />
-            <div className="flex md:flex-row flex-col w-full md:mt-0 mt-10">
+            <div className="flex flex-col w-full mt-10 md:flex-row md:mt-0">
                 <div className="relative w-full">
                     <img
                         loading="lazy"
@@ -37,9 +37,11 @@ export const AdminLoginPage: FC<AdminLoginPageProps> = ({}) => {
                     )}
                 </div>
                 <div className="flex items-center justify-center w-full px-5 md:pt-[70px] pt-0">
+
                     <div className="flex flex-col sm:min-w-[450px] min-w-[350px]">
                         <div className="pb-10">
                             <h1 className="lg:text-4xl sm:text-3xl text-2xl font-semibold md:text-left text-center">
+
                                 Добро пожаловать!
                             </h1>
                         </div>

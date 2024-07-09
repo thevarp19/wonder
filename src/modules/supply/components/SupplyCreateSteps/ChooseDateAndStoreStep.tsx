@@ -92,9 +92,9 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
                 <div className="h-96 max-w-72 w-72 min-w-72">
                     <DatePicker
                         className="w-full"
-                        open
                         minDate={dayjs()}
                         format={"DD-MM-YYYY"}
+                        placeholder="Выберите дату"
                         value={date ? dayjs(date, "DD-MM-YYYY") : undefined}
                         onChange={onDateChange}
                     />

@@ -2,7 +2,10 @@ import { arrowFall, arrowRise } from "@/assets";
 import DurationSwitch from "@/components/ui/DurationSwitch";
 import { Image } from "@/components/ui/Image";
 import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
+import { BarCharts } from "@/modules/statistics/components/BarCharts";
 import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable";
+import { PieCharts } from "@/modules/statistics/components/PieCharts";
+import { useGetAdminDailyInfo } from "@/modules/statistics/queries";
 import { DurationType, StatisticsInfo } from "@/modules/statistics/types";
 import { cn } from "@/utils/shared.util";
 import { FC, useState } from "react";
@@ -11,8 +14,9 @@ interface AdminHomePageProps {}
 
 export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     const [duration, setDuration] = useState<DurationType>("MONTH");
-    // const { data: statistics, isPending } = useGetAdminSalesInfo(duration);
-    // const { data: dailyInfo, isPending: getDailyLoading } =
+    // const { data: statistics } = useGetAdminSalesInfo(duration);
+    const { data: dailyInfo, isPending: getDailyLoading } =
+        useGetAdminDailyInfo(duration);
     const statistics = {
         ordersInfo: { count: 140, percent: 48 },
         sellersInfo: { count: 52, percent: -18 },
@@ -47,7 +51,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     //     );
     // }
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col sm:pb-0 pb-[68px]">
             <div className="flex flex-col gap-7">
                 <div className="bg-white rounded-md w-max">
                     <DurationSwitch
@@ -55,7 +59,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                         setDuration={setDuration}
                     />
                 </div>
-                <div className="flex justify-between gap-6">
+                <div className="grid grid-cols-2 gap-[10px] sm:gap-6 sm:flex sm:justify-between">
                     <ResultsCard
                         statisticsName="Заказы"
                         statistics={statistics?.ordersInfo}
@@ -78,15 +82,23 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                     />
                 </div>
                 <div className="flex flex-col gap-5">
-                    <AreaCharts data={[]} duration={duration} loading={true} />
-                    <div className="flex gap-5">
-                        <div className="min-w-[825px] h-[525px] p-8 bg-[#F7F9FB] flex flex-col gap-6 rounded-[34px]">
-                            <h2 className="text-xl font-semibold">
+                    <AreaCharts
+                        data={dailyInfo || []}
+                        duration={duration}
+                        loading={getDailyLoading}
+                    />
+                    <div className="flex flex-col items-center justify-between w-full gap-5 sm:mt-10 sm:gap-10 sm:flex-row">
+                        <BarCharts duration={duration} />
+                        <PieCharts />
+                    </div>
+                    <div className="flex flex-col gap-5 sm:flex-row">
+                        <div className="sm:min-w-[825px] h-max sm:h-[525px] p-5 sm:p-8 bg-[#F7F9FB] flex flex-col gap-6 rounded-[34px]">
+                            <h2 className="text-xs font-semibold sm:text-xl">
                                 Таблица заказов
                             </h2>
                             <LastOrdersTable />
                         </div>
-                        <div className="w-full h-[525px] bg-[#F7F9FB] rounded-[34px]">
+                        <div className="w-full h-[525px] bg-[#F7F9FB] rounded-[34px] ">
                             <TopSellersList topSellers={topSellers} />
                         </div>
                     </div>
@@ -115,15 +127,15 @@ const ResultsCard = ({
 
     return (
         <div
-            className={`h-[150px] min-w-[265px] p-8 flex flex-col gap-[10px] rounded-[20px] ${
+            className={`h-[98px] sm:h-[150px] sm:min-w-[265px] p-5 sm:p-8 flex flex-col gap-[10px] rounded-xl sm:rounded-[20px] ${
                 bgColor === "blue" ? "bg-[#E7F6FF]" : "bg-[#FFDBC0]"
             }`}
         >
-            <div className="flex items-center justify-between text-[18px]">
+            <div className="flex items-center justify-between text-[12px] sm:text-[18px]">
                 {statisticsName}{" "}
             </div>
-            <div className="flex justify-between gap-5">
-                <div className="text-[32px] whitespace-nowrap">{`${
+            <div className="flex justify-between gap-[6px] sm:gap-5">
+                <div className="text-xl sm:text-[32px] whitespace-nowrap">{`${
                     statistics?.count
                 } ${statisticsName === "Продажа" ? "₸" : ""}`}</div>
                 {statistics?.percent !== null && (
@@ -132,21 +144,25 @@ const ResultsCard = ({
                     >
                         {statistics?.percent != null &&
                         statistics?.percent > 0 ? (
-                            <span className="flex items-center gap-[5px]">
+                            <span className="flex items-center gap-[3px] sm:gap-[5px] text-[10px] sm:text-base">
                                 +{statistics?.percent}%
                                 <Image
                                     src={arrowRise}
-                                    alt="searchIcon"
-                                    className={cn("w-5 h-5 ")}
+                                    alt="arrowRise"
+                                    className={cn(
+                                        "sm:w-5 sm:h-5 w-[14px] h-[14px]"
+                                    )}
                                 />
                             </span>
                         ) : (
-                            <span className="flex items-center gap-[5px]">
+                            <span className="flex items-center gap-[3px] sm:gap-[5px] text-[10px] sm:text-base">
                                 {statistics?.percent}%
                                 <Image
                                     src={arrowFall}
-                                    alt="searchIcon"
-                                    className={cn("w-5 h-5 ")}
+                                    alt="arrowFall"
+                                    className={cn(
+                                        "sm:w-5 sm:h-5 w-[14px] h-[14px]"
+                                    )}
                                 />
                             </span>
                         )}
@@ -203,7 +219,7 @@ const TopSellerCard = ({ place, name }: { place: number; name: string }) => {
             >
                 {place}
             </div>
-            <div className="text-sm ">{name}</div>
+            <div className="">{name}</div>
         </div>
     );
 };

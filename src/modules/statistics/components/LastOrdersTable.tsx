@@ -1,5 +1,6 @@
 import { ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { GetLastOrders } from "../types";
 
 interface ProductsCountTableProps {
@@ -22,6 +23,8 @@ const columns: TableColumnsType<GetLastOrders> = [
 ];
 
 export const LastOrdersTable: FC<ProductsCountTableProps> = ({}) => {
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
+
     const [page, setPage] = useState(0);
     const isPending = false;
     // const { data: lastOrders, isPending } = useGetAdminLastOrders(
@@ -82,14 +85,14 @@ export const LastOrdersTable: FC<ProductsCountTableProps> = ({}) => {
                         headerSplitColor: "#F78936",
                         colorBgContainer: "#F7F9FB",
                         borderColor: "#F7F9FB",
-                        cellPaddingBlock: 20,
+                        cellPaddingBlock: isSmallScreen ? 10 : 20,
                     },
                 },
             }}
         >
             <Table
                 className="h-full"
-                // size="small"
+                size={isSmallScreen ? "small" : "large"}
                 columns={columns}
                 loading={isPending}
                 dataSource={content}

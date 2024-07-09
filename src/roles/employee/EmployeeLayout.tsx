@@ -1,47 +1,22 @@
+import { SizesIcon } from "@/assets/custom-icon/CustomIcon";
 import { GeneralLayout } from "@/components/shared/GeneralLayout";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import { employeeLogout } from "@/roles/employee/redux/auth/actions";
+import { MenuItemType } from "@/types";
 import {
-    CarOutlined,
     HomeOutlined,
-    LineHeightOutlined,
     LogoutOutlined,
     ProfileOutlined,
     SearchOutlined,
-    SettingOutlined,
+    ShoppingCartOutlined,
+    VerticalAlignTopOutlined,
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import { FC, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Link, useLocation } from "react-router-dom";
 
 interface EmployeeLayoutProps {}
-const items: MenuProps["items"] = [
-    {
-        label: <Link to={"/employee"}>Главная</Link>,
-        key: "home",
-        icon: <HomeOutlined />,
-    },
-    {
-        label: <Link to={"/employee/supplies"}>Поставки</Link>,
-        key: "supplies",
-        icon: <SettingOutlined />,
-    },
-    {
-        label: <Link to={"/employee/orders"}>Заказы</Link>,
-        key: "orders",
-        icon: <CarOutlined />,
-    },
-    {
-        label: <Link to={"/employee/search"}>Поиск</Link>,
-        key: "search",
-        icon: <SearchOutlined />,
-    },
-    {
-        label: <Link to={"/employee/sizes"}>Размеры</Link>,
-        key: "sizes",
-        icon: <LineHeightOutlined />,
-    },
-];
 
 function pathToKey(key: string) {
     switch (key) {
@@ -61,8 +36,104 @@ function pathToKey(key: string) {
             return "home";
     }
 }
-
+const breadcrumbMapping: {
+    [key: string]: { title: string | JSX.Element }[];
+} = {
+    "/employee": [{ title: "Меню" }, { title: <a href="">Главная</a> }],
+    "/employee/orders": [{ title: "Меню" }, { title: <a href="">Заказы</a> }],
+    "/employee/supplies": [
+        { title: "Меню" },
+        { title: <a href="">Поставки</a> },
+    ],
+    "/employee/search": [{ title: "Меню" }, { title: <a href="">Поиск</a> }],
+    "/employee/sizes": [{ title: "Меню" }, { title: <a href="">Размеры</a> }],
+};
 export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
+
+    const items: MenuItemType[] = [
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee"}
+                >
+                    Главная
+                </Link>
+            ),
+            key: "home",
+            icon: (
+                <HomeOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/orders"}
+                >
+                    Заказы
+                </Link>
+            ),
+            key: "orders",
+            icon: (
+                <ShoppingCartOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/supplies"}
+                >
+                    Поставки
+                </Link>
+            ),
+            key: "supplies",
+            icon: (
+                <VerticalAlignTopOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/search"}
+                >
+                    Поиск
+                </Link>
+            ),
+            key: "search",
+            icon: (
+                <SearchOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/sizes"}
+                >
+                    Размеры
+                </Link>
+            ),
+            key: "sizes",
+            icon: (
+                <SizesIcon
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+    ];
     const { pathname } = useLocation();
     const [selectedKeys, setSelectedKeys] = useState([pathToKey(pathname)]);
     useEffect(() => {
@@ -98,6 +169,7 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
         <GeneralLayout
             menuItems={items}
             profileItems={profileItems}
+            breadcrumbItems={breadcrumbMapping}
             logoLink="/employee"
             role="Сотрудник"
             userEmail={employeeAuth.userData?.email || "email@gmail.com"}

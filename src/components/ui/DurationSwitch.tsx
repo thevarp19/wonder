@@ -24,9 +24,12 @@ const DurationSwitch: FC<DurationSwitchProps> = ({ duration, setDuration }) => {
         <Dropdown
             trigger={["click"]}
             menu={{ items, onClick: handleMenuClick }}
-            className="text-[18px] font-semibold"
+            className="text-[14px] sm:text-[18px] font-semibold"
         >
-            <div className="cursor-pointer" onClick={(e) => e.preventDefault()}>
+            <div
+                className="cursor-pointer "
+                onClick={(e) => e.preventDefault()}
+            >
                 <Space>
                     {duration === "DAY" && "За день"}
                     {duration === "WEEK" && "За неделю"}

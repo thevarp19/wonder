@@ -1,7 +1,9 @@
 import { searchIcon } from "@/assets";
+import { Title } from "@/components/shared/Title";
 import { FilterMenu } from "@/components/ui/FilterMenu";
 import { Image } from "@/components/ui/Image";
 import { AdminOrdersTable } from "@/modules/order/components/OrdersTable/AdminOrdersTable";
+import { items } from "@/modules/order/const";
 import { DeliveryMode } from "@/modules/order/types";
 import { cn } from "@/utils/shared.util";
 import {
@@ -12,38 +14,15 @@ import {
     Menu,
     MenuProps,
 } from "antd";
+import ruRU from "antd/lib/locale/ru_RU";
 import dayjs from "dayjs";
+import "dayjs/locale/ru";
 import { FC, useState } from "react";
 
 interface AdminOrdersPageProps {}
 
 const { RangePicker } = DatePicker;
-const items: MenuProps["items"] = [
-    {
-        label: "Все",
-        key: "all",
-    },
-    {
-        label: "Kaspi доставка",
-        key: "kaspi",
-    },
-    {
-        label: "Kaspi Postomat",
-        key: "kaspiPostomat",
-    },
-    {
-        label: "Express",
-        key: "express",
-    },
-    {
-        label: "Самовывоз",
-        key: "pickup",
-    },
-    {
-        label: "Kaspi Доставка в Postomat",
-        key: "kaspiDelivery",
-    },
-];
+
 const deliveryModes: { [key: string]: DeliveryMode } = {
     all: "",
     kaspi: "DELIVERY_REGIONAL_TODOOR",
@@ -59,12 +38,12 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
     const [current, setCurrent] = useState("all");
     const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("");
     const [checkedItems, setCheckedItems] = useState({
-        byOrderCode: false,
-        byShopName: false,
-        byStoreAddress: false,
-        byProductName: false,
-        byProductArticle: false,
-        byProductVendorCode: false,
+        byOrderCode: true,
+        byShopName: true,
+        byStoreAddress: true,
+        byProductName: true,
+        byProductArticle: true,
+        byProductVendorCode: true,
     });
     const [dateRange, setDateRange] = useState<
         [dayjs.Dayjs | null, dayjs.Dayjs | null]
@@ -93,23 +72,21 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
     };
     return (
         <div className="h-full">
-            <h1 className="pb-5 text-[18px] font-semibold">Заказы</h1>
+            <Title text="Заказы" />
             <div className="flex items-center justify-between mb-4">
                 <div className="flex w-full max-w-sm gap-4">
-                    {/* <SearchInput
-                        searchValue={searchValue}
-                        setSearchValue={setSearchValue}
-                        onSearch={handleSearch}
-                    /> */}
-                    <RangePicker
-                        className="ml-2"
-                        placeholder={["Дата от", "Дата до"]}
-                        value={dateRange}
-                        onChange={handleDateChange}
-                        disabledDate={(currentDate) =>
-                            currentDate && currentDate > dayjs().add(90, "day")
-                        }
-                    />
+                    <ConfigProvider locale={ruRU}>
+                        <RangePicker
+                            className="ml-2"
+                            placeholder={["Дата от", "Дата до"]}
+                            value={dateRange}
+                            onChange={handleDateChange}
+                            disabledDate={(currentDate) =>
+                                currentDate &&
+                                currentDate > dayjs().add(90, "day")
+                            }
+                        />
+                    </ConfigProvider>
                     <Button
                         className="ml-2"
                         type="primary"
@@ -117,13 +94,6 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
                     >
                         Применить
                     </Button>
-                    {/* Add there this component */}
-                </div>
-                <div>
-                    <FilterMenu
-                        checkedItems={checkedItems}
-                        setCheckedItems={setCheckedItems}
-                    />
                 </div>
             </div>
             <div className="flex flex-col gap-5">
@@ -148,7 +118,7 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
                             ></Menu>
                         </ConfigProvider>
                     </div>
-                    <div className="bg-[#F7F9FB] flex items-center px-2 rounded-lg">
+                    <div className="bg-[#F7F9FB] flex items-center px-2 rounded-lg gap-4">
                         <Input
                             prefix={
                                 <Image
@@ -162,6 +132,12 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
                             className="!min-w-[217px]"
                             onChange={() => {}}
                         />
+                        <div className="flex w-[30px]">
+                            <FilterMenu
+                                checkedItems={checkedItems}
+                                setCheckedItems={setCheckedItems}
+                            />
+                        </div>
                     </div>
                 </div>
                 <AdminOrdersTable

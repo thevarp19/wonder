@@ -3,6 +3,7 @@ import { useDebounce } from "@/utils/shared.util";
 import {
     Button,
     Checkbox,
+    ConfigProvider,
     InputNumber,
     Modal,
     Select,
@@ -168,15 +169,19 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
     const [searchValue, setSearchValue] = useState("");
     const [isEditable, setIsEditable] = useState(false);
     const debouncedSearchValue = useDebounce(searchValue, 500);
-    const { data: products } = useGetProductsPrices(
+    const { data: products, isPending } = useGetProductsPrices(
         page,
         undefined,
         debouncedSearchValue,
         isPublished
     );
     useEffect(() => {
+        setPage(0);
+    }, [debouncedSearchValue]);
+    useEffect(() => {
         myLocalStorage?.set("activeStores", activeStores);
     }, [activeStores]);
+
     const uniqueStores = [];
     for (const store of new Set(activeStores)) {
         if (products?.content.cities.length) {
@@ -274,42 +279,56 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                     Склады
                 </Button>
             </div>
-            <Table
-                // @ts-ignore
-                columns={newColumns}
-                dataSource={products?.content?.products || []}
-                rowKey={(r) => r.vendorCode}
-                scroll={{ x: 1200 }}
-                footer={() => (
-                    <div className="flex justify-end">
-                        {isEditable ? (
-                            <SavePriceEditButton
-                                state={state}
-                                onClick={async () => {
-                                    await mutateAsync(
-                                        getPriceChangeRequest(state)
-                                    );
-                                    setIsEditable(false);
-                                }}
-                                clearChanges={clearChanges}
-                            />
-                        ) : (
-                            <Button onClick={() => setIsEditable(true)}>
-                                Редактировать
-                            </Button>
-                        )}
-                    </div>
-                )}
-                pagination={{
-                    pageSize: 10,
-                    total: products?.totalElements,
-                    showSizeChanger: false,
-                    onChange(page) {
-                        setPage(page - 1);
+            <ConfigProvider
+                theme={{
+                    components: {
+                        Table: {
+                            headerBg: "#fff",
+                            headerColor: "#1C1C1C66",
+                            headerBorderRadius: 10,
+                            headerSplitColor: "#fff",
+                        },
                     },
-                    current: page + 1,
                 }}
-            />
+            >
+                <Table
+                    // @ts-ignore
+                    columns={newColumns}
+                    dataSource={products?.content?.products || []}
+                    rowKey={(r) => r.vendorCode}
+                    loading={isPending}
+                    scroll={{ x: 1200 }}
+                    footer={() => (
+                        <div className="flex justify-end">
+                            {isEditable ? (
+                                <SavePriceEditButton
+                                    state={state}
+                                    onClick={async () => {
+                                        await mutateAsync(
+                                            getPriceChangeRequest(state)
+                                        );
+                                        setIsEditable(false);
+                                    }}
+                                    clearChanges={clearChanges}
+                                />
+                            ) : (
+                                <Button onClick={() => setIsEditable(true)}>
+                                    Редактировать
+                                </Button>
+                            )}
+                        </div>
+                    )}
+                    pagination={{
+                        pageSize: 10,
+                        total: products?.totalElements,
+                        showSizeChanger: false,
+                        onChange(page) {
+                            setPage(page - 1);
+                        },
+                        current: page + 1,
+                    }}
+                />
+            </ConfigProvider>
         </div>
     );
 };

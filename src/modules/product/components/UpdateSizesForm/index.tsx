@@ -1,4 +1,4 @@
-import { FormikInput } from "@/components/ui/FormikInput";
+import { FormikInput, FormikNumberInput } from "@/components/ui/FormikInput";
 import { Form } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { FC, useRef } from "react";
@@ -26,75 +26,65 @@ export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({ formik }) => {
 
     return (
         <>
-            <Form className="">
-                <FormikInput
-                    name="length"
-                    formik={formik}
-                    formItemProps={{
-                        label: (
-                            <div>
-                                <p className="w-20 text-left">Длина: </p>
-                            </div>
-                        ),
-                        className: "custom-no-after",
-                        required: true,
-                    }}
-                    inputProps={{
-                        style: { width: "100%" },
-                        onKeyDown: (e) => handleKeyDown(e, heightRef),
-                    }}
-                    inputRef={lengthRef}
-                />
-                <FormikInput
-                    name="height"
-                    formik={formik}
-                    formItemProps={{
-                        label: (
-                            <div>
-                                <p className="w-20 text-left">Высота: </p>
-                            </div>
-                        ),
-                        className: "custom-no-after",
-                        required: true,
-                    }}
-                    inputProps={{
-                        style: { width: "100%" },
-                        onKeyDown: (e) => handleKeyDown(e, widthRef),
-                    }}
-                    inputRef={heightRef}
-                />
-                <FormikInput
-                    name="width"
-                    formik={formik}
-                    formItemProps={{
-                        label: (
-                            <div>
-                                <p className="w-20 text-left">Ширина: </p>
-                            </div>
-                        ),
-                        className: "custom-no-after",
-                        required: true,
-                    }}
-                    inputProps={{
-                        style: { width: "100%" },
-                        onKeyDown: (e) => handleKeyDown(e, weightRef),
-                    }}
-                    inputRef={widthRef}
-                />
+            <Form className="" layout="vertical">
+                <div className="flex items-center gap-5">
+                    <FormikNumberInput
+                        name="length"
+                        formik={formik}
+                        formItemProps={{
+                            label: "Ширина (мм)",
+                            className: "custom-no-after",
+                            required: true,
+                        }}
+                        inputProps={{
+                            size: "large",
+                            style: { width: "100%" },
+                            onKeyDown: (e) => handleKeyDown(e, heightRef),
+                        }}
+                        inputRef={lengthRef}
+                    />
+                    <FormikNumberInput
+                        name="height"
+                        formik={formik}
+                        formItemProps={{
+                            label: "Высота (мм)",
+                            className: "custom-no-after",
+                            required: true,
+                        }}
+                        inputProps={{
+                            size: "large",
+                            style: { width: "100%" },
+                            onKeyDown: (e) => handleKeyDown(e, widthRef),
+                        }}
+                        inputRef={heightRef}
+                    />
+                    <FormikNumberInput
+                        name="width"
+                        formik={formik}
+                        inputProps={{
+                            size: "large",
+                            style: { width: "100%" },
+                            onKeyDown: (e) => handleKeyDown(e, weightRef),
+                        }}
+                        inputRef={widthRef}
+                        formItemProps={{
+                            label: "Ширина (мм)",
+                            className: "custom-no-after",
+                            required: true,
+                        }}
+                    />
+                </div>
                 <FormikInput
                     name="weight"
                     formik={formik}
                     formItemProps={{
-                        label: (
-                            <div>
-                                <p className="w-20 text-left">Вес: </p>
-                            </div>
-                        ),
+                        label: "Вес",
                         className: "custom-no-after",
                         required: true,
                     }}
                     inputProps={{
-                        style: { width: "100%" },
+                        size: "large",
+                        style: { width: "30%" },
                         onKeyDown: (e) => handleKeyDown(e, commentRef),
                     }}
                     inputRef={weightRef}

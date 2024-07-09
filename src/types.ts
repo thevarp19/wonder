@@ -15,3 +15,8 @@ export interface BasePaginationProductsSizesResponse<T> {
     last: boolean;
     content: T;
 }
+export type MenuItemType = {
+    label: JSX.Element;
+    key: string;
+    icon: JSX.Element;
+};

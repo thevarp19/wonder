@@ -1,6 +1,7 @@
 import { GeneralLayout } from "@/components/shared/GeneralLayout";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import { adminLogout } from "@/roles/admin/redux/auth/actions";
+import { MenuItemType } from "@/types";
 import {
     HomeOutlined,
     LogoutOutlined,
@@ -10,27 +11,18 @@ import {
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import { FC, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Link, useLocation } from "react-router-dom";
 
 interface AdminLayoutProps {}
-const items: MenuProps["items"] = [
-    {
-        label: <Link to={"/admin"}>Главная</Link>,
-        key: "home",
-        icon: <HomeOutlined />,
-    },
-    {
-        label: <Link to={"/admin/orders"}>Заказы</Link>,
-        key: "orders",
-        icon: <ShoppingCartOutlined />,
-    },
-    {
-        label: <Link to={"/admin/settings"}>Настройки</Link>,
-        key: "settings",
-        icon: <SettingOutlined />,
-    },
-];
 
+const breadcrumbMapping: {
+    [key: string]: { title: string | JSX.Element }[];
+} = {
+    "/admin": [{ title: "Меню" }, { title: <a href="">Главная</a> }],
+    "/admin/orders": [{ title: "Меню" }, { title: <a href="">Заказы</a> }],
+    "/admin/settings": [{ title: "Меню" }, { title: <a href="">Настройки</a> }],
+};
 function pathToKey(key: string) {
     switch (key) {
         case "/admin":
@@ -45,6 +37,57 @@ function pathToKey(key: string) {
 }
 
 export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
+    const items: MenuItemType[] = [
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/admin"}
+                >
+                    Главная
+                </Link>
+            ),
+            key: "home",
+            icon: (
+                <HomeOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/admin/orders"}
+                >
+                    Заказы
+                </Link>
+            ),
+            key: "orders",
+            icon: (
+                <ShoppingCartOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/admin/settings"}
+                >
+                    Настройки
+                </Link>
+            ),
+            key: "settings",
+            icon: (
+                <SettingOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+    ];
     const { pathname } = useLocation();
     const [selectedKeys, setSelectedKeys] = useState([pathToKey(pathname)]);
     useEffect(() => {
@@ -79,6 +122,7 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
     return (
         <GeneralLayout
             menuItems={items}
+            breadcrumbItems={breadcrumbMapping}
             profileItems={profileItems}
             logoLink="/admin"
             role="Администратор"

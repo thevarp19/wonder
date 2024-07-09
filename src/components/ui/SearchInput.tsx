@@ -30,9 +30,14 @@ export const SearchInput: FC<SearchInputProps> = ({
                 onChange={(e) => {
                     setSearchValue(e.target.value);
                 }}
+                className="w-full"
             />
-            <Button type="primary" onClick={onSearch}>
-                Поиск
+            <Button
+                type="primary"
+                className="w-[130px] h-[28px] text-sm"
+                onClick={onSearch}
+            >
+                Найти
             </Button>
         </div>
     );
