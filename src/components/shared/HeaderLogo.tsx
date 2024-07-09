@@ -32,7 +32,10 @@ export const HeaderLogo: FC<LogoProps> = ({ link }) => {
                         icon={<LeftOutlined/>} 
                         style={{
                             backgroundColor: 'inherit', 
-                            color: '#000'
+                            color: '#000',
+                            position: 'absolute',
+                            top: 15,
+                            left: 16
                         }}
                     />
                 ) : (
