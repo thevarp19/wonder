@@ -11,7 +11,18 @@
     width: 0px;
     height: 0px;
 }
+/* Mobile styles */
+@media (max-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
 
+    .scroll-hidden::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
+}
 .week-calendar table tr td:first-child,
 .week-calendar table tr th:first-child {
     background-color: #fafafa;

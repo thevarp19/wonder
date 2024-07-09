@@ -1,8 +1,6 @@
-import { logo } from "@/assets";
+import { arrowLeftIcon, logo } from "@/assets";
 import { cn } from "@/utils/shared.util";
-import { LeftOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import { Avatar } from "antd/lib";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -16,7 +14,7 @@ export const HeaderLogo: FC<LogoProps> = ({ link }) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px" });
 
     return (
-        <div className="md:fixed static top-0 z-10 flex bg-white justify-between items-center md:flex-row flex-row-reverse w-full py-[15px] md:px-6 px-1 md:rounded-b-[32px] rounded-b-0">
+        <div className="md:fixed static top-0 z-10 flex bg-white justify-between items-center md:flex-row flex-row-reverse w-full py-[10px] md:px-6 px-4 md:rounded-b-[32px] rounded-b-0">
             <Link
                 to={link || "/"}
                 className="flex justify-center flex-1 md:justify-start"
@@ -29,21 +27,18 @@ export const HeaderLogo: FC<LogoProps> = ({ link }) => {
                     )}
                 />
             </Link>
-            <Link to={"https://wonderff.tilda.ws/"}>
+            <Link
+                to={"/"}
+                className="relative flex items-center justify-center"
+            >
                 {isSmallScreen ? (
-                    <Avatar
-                        size={40}
-                        icon={<LeftOutlined />}
-                        style={{
-
-                            backgroundColor: 'inherit', 
-                            color: '#000',
-                            position: 'absolute',
-                            top: 15,
-                            left: 16
-
-                        }}
-                    />
+                    <div className="absolute left-0 w-[32px]">
+                        <Image
+                            src={arrowLeftIcon}
+                            alt="arrowLeftIcon"
+                            className={cn("w-[32px] h-[32px]")}
+                        />
+                    </div>
                 ) : (
                     <Button type="primary" size="large">
                         На главную страницу

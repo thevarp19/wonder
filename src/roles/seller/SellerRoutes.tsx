@@ -1,4 +1,5 @@
 import { Protected } from "@/context/Protected";
+import { useAppSelector } from "@/redux/utils";
 import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { SellerLayout } from "./SellerLayout";
@@ -25,7 +26,7 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
     const navigateToSellerLogin = () => {
         navigate("/seller/login", { replace: true });
     };
-    // const sellerAuth = useAppSelector((state) => state.seller.auth);
+    const sellerAuth = useAppSelector((state) => state.seller.auth);
     return (
         <Routes>
             <Route
@@ -33,7 +34,7 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                 element={
                     <Protected
                         checkAction={async () => {
-                            return true;
+                            return sellerAuth.isLoggedIn;
                         }}
                         navigate={navigateToSellerLogin}
                     />

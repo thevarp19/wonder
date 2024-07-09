@@ -96,7 +96,7 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
                     </Button>
                 </div>
             </div>
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 overflow-x-scroll">
                 <div className="flex justify-between bg-[#F7F9FB] p-1 rounded-lg">
                     <div className="w-full bg-[#F7F9FB]">
                         <ConfigProvider

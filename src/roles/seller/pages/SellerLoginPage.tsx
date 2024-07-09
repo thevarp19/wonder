@@ -20,9 +20,9 @@ export const SellerLoginPage: FC<SellerLoginPageProps> = () => {
         navigateToHome();
     };
     return (
-        <div className="flex flex-col items-center h-screen bg-[#F7F9FB]">
+        <div className="flex flex-col items-center h-screen bg-white sm:bg-[#F7F9FB]">
             <HeaderLogo />
-            <div className="flex md:flex-row flex-col w-full justify-center items-center md:mt-0 mt-10">
+            <div className="flex flex-col items-center justify-center w-full mt-10 md:flex-row md:mt-0">
                 <div className="relative w-full">
                     <img
                         loading="lazy"
@@ -38,8 +38,8 @@ export const SellerLoginPage: FC<SellerLoginPageProps> = () => {
                 </div>
                 <div className="flex items-center justify-center w-full px-5 md:pt-[70px] pt-0">
                     <div className="flex flex-col md:items-start items-center md:min-w-[450px] min-w-[350px]">
-                        <div className="w-full pb-5 md:text-left text-center">
-                            <h1 className="lg:text-4xl sm:text-3xl text-2xl font-semibold">
+                        <div className="w-full pb-5 text-center md:text-left">
+                            <h1 className="text-2xl font-semibold lg:text-4xl sm:text-3xl">
                                 Добро пожаловать!
                             </h1>
                             <h2 className="lg:text-2xl sm:text-xl text-lg text-[#6A6A6A]">
