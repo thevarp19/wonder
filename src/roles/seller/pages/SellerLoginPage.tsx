@@ -37,12 +37,12 @@ export const SellerLoginPage: FC<SellerLoginPageProps> = () => {
                     )}
                 </div>
                 <div className="flex items-center justify-center w-full px-5 md:pt-[70px] pt-0">
-                    <div className="flex flex-col md:items-start items-center xs:min-w-[450px] min-w-0">
+                    <div className="flex flex-col md:items-start items-center md:min-w-[450px] min-w-[350px]">
                         <div className="w-full pb-5 md:text-left text-center">
-                            <h1 className="lg:text-4xl md:text-3xl text-2xl font-semibold">
+                            <h1 className="lg:text-4xl sm:text-3xl text-2xl font-semibold">
                                 Добро пожаловать!
                             </h1>
-                            <h2 className="lg:text-2xl md:text-xl text-lg text-[#6A6A6A]">
+                            <h2 className="lg:text-2xl sm:text-xl text-lg text-[#6A6A6A]">
                                 Повышайте продажи и успех станет ближе!
                             </h2>
                         </div>

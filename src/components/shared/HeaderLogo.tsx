@@ -35,8 +35,13 @@ export const HeaderLogo: FC<LogoProps> = ({ link }) => {
                         size={40}
                         icon={<LeftOutlined />}
                         style={{
-                            backgroundColor: "inherit",
-                            color: "#000",
+
+                            backgroundColor: 'inherit', 
+                            color: '#000',
+                            position: 'absolute',
+                            top: 15,
+                            left: 16
+
                         }}
                     />
                 ) : (

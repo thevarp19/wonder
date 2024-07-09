@@ -37,9 +37,11 @@ export const AdminLoginPage: FC<AdminLoginPageProps> = ({}) => {
                     )}
                 </div>
                 <div className="flex items-center justify-center w-full px-5 md:pt-[70px] pt-0">
-                    <div className="flex flex-col sm:min-w-[450px]">
+
+                    <div className="flex flex-col sm:min-w-[450px] min-w-[350px]">
                         <div className="pb-10">
-                            <h1 className="text-2xl font-semibold lg:text-4xl md:text-3xl">
+                            <h1 className="lg:text-4xl sm:text-3xl text-2xl font-semibold md:text-left text-center">
+
                                 Добро пожаловать!
                             </h1>
                         </div>
