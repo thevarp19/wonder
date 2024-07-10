@@ -8,6 +8,7 @@ import { toScanProductsSearch } from "@/modules/scan/utils";
 import { cn } from "@/utils/shared.util";
 import { ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 interface EmployeeSearchPageProps {}
 
@@ -34,13 +35,14 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
             }?${newSearchParams.toString()}`;
             window.history.replaceState(null, "", newUrl);
         }
+
     }, [scanSearchValue]);
     return (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col">
             <Title text="Поиск" />
 
-            <div className="flex items-center gap-4 bg-[#F7F9FB] px-2 rounded-lg">
-                <div className="flex items-center justify-between w-full max-w-md">
+            <div className="flex md:flex-row flex-col items-center md:gap-4 gap-2 md:bg-[#F7F9FB] bg-[#fff] px-2 rounded-lg mb-5">
+                <div className="flex items-center justify-between w-full md:max-w-md max-w">
                     <SearchInput
                         searchValue={searchValue}
                         setSearchValue={setSearchValue}
@@ -49,13 +51,15 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
                 </div>
                 <div
                     onClick={toScanProductsSearch}
-                    className="flex items-center justify-center bg-[#EF7214]  rounded-md cursor-pointer py-[14px] w-[130px] max-h-[32px] gap-2"
+                    className="flex items-center justify-center bg-[#EF7214]  rounded-md cursor-pointer py-[14px] md:w-[130px] w-full md:max-h-[32px] max-h-[47px] gap-2 px-2"
                 >
-                    <Image src={scan} alt="scan" className={cn("w-4 h-4")} />
-                    <h2 className="text-xs text-white">CКАНИРОВАТЬ</h2>
+                    <Image src={scan} alt="scan" className={cn("min-w-4 h-4")} />
+                    <h2 className="md:text-[12px] text-[16px] text-white">CКАНИРОВАТЬ</h2>
                 </div>
+            </div>  
+            <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
+                <EmployeeSearchResultsTable searchValue={searchQuery} />
             </div>
-            <EmployeeSearchResultsTable searchValue={searchQuery} />
         </div>
     );
 };
@@ -93,6 +97,7 @@ const columns: TableColumnsType<any> = [
     },
 ];
 
+
 export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
     searchValue,
 }) => {
@@ -104,16 +109,20 @@ export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
         true,
         true
     );
+
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
+
     return (
         <ConfigProvider
             theme={{
                 components: {
                     Table: {
-                        headerBg: "#fff",
+                        headerBg: "#fff",   
                         headerColor: "#1C1C1C66",
                         headerBorderRadius: 10,
                         headerSplitColor: "#fff",
                     },
+                    
                 },
             }}
         >
@@ -130,7 +139,9 @@ export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
                         setPage(page - 1);
                     },
                     current: page + 1,
+                    position: isSmallScreen ? ["bottomCenter"] : undefined
                 }}
+                scroll={{ x: "max-content" }}
             />
         </ConfigProvider>
     );
