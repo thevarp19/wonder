@@ -15,8 +15,9 @@ export const SearchInput: FC<SearchInputProps> = ({
     setSearchValue,
     onSearch,
 }) => {
+
     return (
-        <div className="flex items-end w-full gap-4 my-2">
+        <div className="flex md:flex-row flex-col items-end w-full md:gap-4 gap-2 md:my-2 my-0">
             <Input
                 prefix={
                     <Image
@@ -30,11 +31,12 @@ export const SearchInput: FC<SearchInputProps> = ({
                 onChange={(e) => {
                     setSearchValue(e.target.value);
                 }}
-                className="w-full"
+                className="w-full md:!h-[32px] !h-[47px] md:!text-[14px] !text-[16px]"
+                style={{}}
             />
             <Button
                 type="primary"
-                className="w-[130px] h-[28px] text-sm"
+                className="md:w-[130px] w-full md:!h-[32px] !h-[47px] md:!text-[13px] !text-[16px]"
                 onClick={onSearch}
             >
                 Найти
