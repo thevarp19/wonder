@@ -6,7 +6,6 @@ import { UpdateSizesForm } from "@/modules/product/components/UpdateSizesForm";
 import { useUpdateProductSize } from "@/modules/product/forms";
 import { useGetProductsWithSizes } from "@/modules/product/queries";
 import { useScannerResults } from "@/modules/scan/hooks";
-import { toScanProductsSizes } from "@/modules/scan/utils";
 import { cn } from "@/utils/shared.util";
 import { EditOutlined } from "@ant-design/icons";
 import {
@@ -92,23 +91,26 @@ export const EmployeeProductSizesPage: FC<
                         <h2 className="md:text-[12px] text-[16px] text-white">CКАНИРОВАТЬ</h2>
                     </div>
                 </div>
-                <ConfigProvider
-                    theme={{
-                        components: {
-                            Menu: {
-                                itemBg: "#F7F9FB",
-                                colorSplit: "#F7F9FB",
+                <div className="bg-[#F7F9FB] p-2 rounded-lg">
+                    <ConfigProvider
+                        theme={{
+                            components: {
+                                Menu: {
+                                    itemBg: "#F7F9FB",
+                                    colorSplit: "#F7F9FB",
+                                },
                             },
-                        },
-                    }}
-                >
-                    <Menu
-                        items={items}
-                        mode="horizontal"
-                        onClick={onClick}
-                        selectedKeys={[current]}
-                    />
-                </ConfigProvider>
+                        }}
+                    >
+                        <Menu
+                            items={items}
+                            mode="horizontal"
+                            className="w-full !font-bold"
+                            onClick={onClick}
+                            selectedKeys={[current]}
+                        />
+                    </ConfigProvider>
+                </div>
             </div>
             <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
                 <EmployeeSearchResultsTable
