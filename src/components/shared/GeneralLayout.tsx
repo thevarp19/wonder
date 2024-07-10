@@ -56,12 +56,12 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
     return (
         <>
             <HamburgerMenu menuItems={menuItems} />
-            <Layout className="pt-[45px] sm:h-auto sm:pt-0">
+            <Layout className="pt-[45px] md:h-auto md:pt-0">
                 <Sider
                     theme="light"
                     collapsible
                     className={cn(
-                        "hidden sm:flex px-4 py-5 flex-col justify-center border-r-[1px] border-[#1C1C1C1A] relative"
+                        "hidden md:flex px-4 py-5 flex-col justify-center border-r-[1px] border-[#1C1C1C1A] relative"
                     )}
                     collapsed={collapsed}
                     trigger={null}
@@ -115,7 +115,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                 </Sider>
                 <Layout className="flex flex-col h-screen">
                     <header
-                        className="hidden sm:flex items-center justify-between py-5 px-[28px] border-b-[1px] border-[#1C1C1C1A]"
+                        className="hidden md:flex items-center justify-between py-5 px-[28px] border-b-[1px] border-[#1C1C1C1A]"
                         style={{ background: colorBgContainer }}
                     >
                         <div className="flex items-center gap-3">
@@ -166,7 +166,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                             </div>
                         </div>
                     </header>
-                    <Content className="h-full p-4 mb-0 overflow-y-scroll bg-white grow sm:p-7">
+                    <Content className="h-full p-4 mb-0 overflow-y-scroll bg-white grow md:p-7">
                         <Outlet />
                     </Content>
                 </Layout>
