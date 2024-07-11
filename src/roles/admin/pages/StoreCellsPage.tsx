@@ -46,6 +46,7 @@ const CreateCellModal = ({ storeId }: { storeId: number }) => {
                 title="Создать ячейку"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
+                width={473}
                 cancelText="Назад"
                 cancelButtonProps={{ style: { width: "100%", height: "100%" } }}
                 okButtonProps={{ style: { display: "none" } }}

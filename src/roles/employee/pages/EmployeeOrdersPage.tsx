@@ -1,4 +1,5 @@
 import { searchIcon } from "@/assets";
+import { Title } from "@/components/shared/Title";
 import { FilterMenu } from "@/components/ui/FilterMenu";
 import { Image } from "@/components/ui/Image";
 import { EmployeeOrdersTable } from "@/modules/order/components/OrdersTable/EmployeeOrdersTable";
@@ -69,9 +70,9 @@ export const EmployeeOrdersPage: FC<EmployeeOrdersPageProps> = ({}) => {
     };
     return (
         <div className="h-full">
-            <h1 className="text-[18px] font-semibold pb-5">Заказы</h1>
+            <Title text="Заказы" />
             <div className="flex items-center justify-between mb-4">
-                <div className="flex md:flex-row flex-col items-center w-full max-w-sm gap-4">
+                <div className="flex flex-col items-center w-full gap-4 md:flex-row md:max-w-sm">
                     <ConfigProvider locale={ruRU}>
                         <RangePicker
                             className="w-full md:w-auto md:h-[32px] h-[40px]"
@@ -114,7 +115,7 @@ export const EmployeeOrdersPage: FC<EmployeeOrdersPageProps> = ({}) => {
                                 selectedKeys={[current]}
                             />
                         </ConfigProvider>
-                        <div className="flex items-center px-2 rounded-lg gap-4">
+                        <div className="flex items-center gap-4 px-2 rounded-lg">
                             <Input
                                 prefix={
                                     <Image

@@ -34,3 +34,9 @@
         @apply hidden;
     }
 }
+
+@media (max-width: 576px) {
+    .ant-picker-panels {
+        flex-direction: column;
+    }
+}

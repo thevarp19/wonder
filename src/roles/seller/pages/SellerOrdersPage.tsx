@@ -68,13 +68,13 @@ export const SellerOrdersPage: FC<SellerOrdersPageProps> = ({}) => {
         setDeliveryMode(deliveryModes[e.key]);
     };
     return (
-        <div>
+        <div className="h-full">
             <Title text="Заказы" />
             <div className="flex items-center justify-between mb-4">
-                <div className="flex w-full max-w-sm gap-4">
+                <div className="flex flex-col items-center w-full gap-4 md:flex-row md:max-w-sm">
                     <ConfigProvider locale={ruRU}>
                         <RangePicker
-                            className="ml-2"
+                            className="w-full md:w-auto md:h-[32px] h-[40px]"
                             placeholder={["Дата от", "Дата до"]}
                             value={dateRange}
                             onChange={handleDateChange}
@@ -85,7 +85,7 @@ export const SellerOrdersPage: FC<SellerOrdersPageProps> = ({}) => {
                         />
                     </ConfigProvider>
                     <Button
-                        className="ml-2"
+                        className="md:w-[130px] w-full md:!h-[32px] !h-[42px] md:!text-[13px] !text-[16px]"
                         type="primary"
                         onClick={handleSearch}
                     >
@@ -94,8 +94,8 @@ export const SellerOrdersPage: FC<SellerOrdersPageProps> = ({}) => {
                 </div>
             </div>
             <div className="flex flex-col gap-5">
-                <div className="flex justify-between bg-[#F7F9FB] p-1 rounded-lg">
-                    <div className="w-full bg-[#F7F9FB]">
+                <div className="overflow-x-auto bg-[#F7F9FB] md:pt-0 pt-2 rounded-lg">
+                    <div className="min-w-[600px] flex justify-between">
                         <ConfigProvider
                             theme={{
                                 components: {
@@ -114,39 +114,41 @@ export const SellerOrdersPage: FC<SellerOrdersPageProps> = ({}) => {
                                 selectedKeys={[current]}
                             ></Menu>
                         </ConfigProvider>
-                    </div>
-                    <div className="bg-[#F7F9FB] flex items-center px-2 rounded-lg gap-4">
-                        <Input
-                            prefix={
-                                <Image
-                                    src={searchIcon}
-                                    alt="searchIcon"
-                                    className={"w-5 h-5"}
-                                />
-                            }
-                            placeholder="Поиск"
-                            // value={""}
-                            className="!min-w-[217px]"
-                            onChange={() => {}}
-                        />
-                        <div className="flex w-[30px]">
-                            <FilterMenu
-                                checkedItems={checkedItems}
-                                setCheckedItems={setCheckedItems}
+                        <div className="flex items-center gap-4 px-2 rounded-lg">
+                            <Input
+                                prefix={
+                                    <Image
+                                        src={searchIcon}
+                                        alt="searchIcon"
+                                        className={"w-5 h-5"}
+                                    />
+                                }
+                                placeholder="Поиск"
+                                // value={""}
+                                className="!min-w-[217px]"
+                                onChange={() => {}}
                             />
+                            <div className="flex w-[30px]">
+                                <FilterMenu
+                                    checkedItems={checkedItems}
+                                    setCheckedItems={setCheckedItems}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
-                <SellerOrdersTable
-                    searchValue={searchQuery}
-                    deliveryMode={deliveryMode}
-                    byOrderCode={checkedItems.byOrderCode}
-                    byShopName={checkedItems.byShopName}
-                    byStoreAddress={checkedItems.byStoreAddress}
-                    byProductName={checkedItems.byProductName}
-                    byProductArticle={checkedItems.byProductArticle}
-                    byProductVendorCode={checkedItems.byProductVendorCode}
-                />
+                <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
+                    <SellerOrdersTable
+                        searchValue={searchQuery}
+                        deliveryMode={deliveryMode}
+                        byOrderCode={checkedItems.byOrderCode}
+                        byShopName={checkedItems.byShopName}
+                        byStoreAddress={checkedItems.byStoreAddress}
+                        byProductName={checkedItems.byProductName}
+                        byProductArticle={checkedItems.byProductArticle}
+                        byProductVendorCode={checkedItems.byProductVendorCode}
+                    />
+                </div>
             </div>
         </div>
     );

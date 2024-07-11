@@ -56,7 +56,7 @@ export const SellerSettingsPage: FC<SellerSettingsPageProps> = ({}) => {
             </ConfigProvider>
 
             {current === "stores" && (
-                <div className="p-4">
+                <div className="py-4">
                     <SellerStoresTable />
                 </div>
             )}

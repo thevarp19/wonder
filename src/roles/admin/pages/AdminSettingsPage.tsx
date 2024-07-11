@@ -39,35 +39,37 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
     };
     return (
         <div className="h-full">
-            {current === "stores" && (
-                <div className="flex flex-col gap-5 w-max">
-                    <h1 className="text-[18px] font-semibold">Склады</h1>
-                    <Button
-                        size="large"
-                        type="primary"
-                        className="mb-4"
-                        href="/admin/settings/create-store"
-                    >
-                        Создать новый склад
-                    </Button>
-                </div>
-            )}
-            {current === "boxes" && (
-                <div className="flex flex-col gap-5 w-max">
-                    <h1 className="text-[18px] font-semibold">Коробки</h1>
-                    <Button
-                        size="large"
-                        type="primary"
-                        className="mb-4"
-                        href="/admin/settings/create-box"
-                    >
-                        Создать новую коробку
-                    </Button>
-                </div>
-            )}
+            <div className="flex items-center justify-between mb-4">
+                {current === "stores" && (
+                    <div className="flex flex-col w-full gap-4 md:max-w-sm">
+                        <h1 className="text-[18px] font-semibold">Склады</h1>
+                        <Button
+                            size="large"
+                            type="primary"
+                            className="w-full md:w-max !rounded-md"
+                            href="/admin/settings/create-store"
+                        >
+                            Создать новый склад
+                        </Button>
+                    </div>
+                )}
+                {current === "boxes" && (
+                    <div className="flex flex-col w-full gap-4 md:max-w-sm">
+                        <h1 className="text-[18px] font-semibold">Коробки</h1>
+                        <Button
+                            size="large"
+                            type="primary"
+                            className="w-full md:w-max !rounded-md"
+                            href="/admin/settings/create-box"
+                        >
+                            Создать новую коробку
+                        </Button>
+                    </div>
+                )}
+            </div>
             <div className="flex flex-col gap-5">
-                <div className="flex justify-between bg-[#F7F9FB] p-1 rounded-lg">
-                    <div className="w-full bg-[#F7F9FB]">
+                <div className="overflow-x-auto bg-[#F7F9FB] md:pt-0 pt-2 rounded-lg ">
+                    <div className="min-w-[600px] flex justify-between">
                         <ConfigProvider
                             theme={{
                                 components: {
@@ -86,21 +88,21 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
                                 selectedKeys={[current]}
                             ></Menu>
                         </ConfigProvider>
-                    </div>
-                    <div className="bg-[#F7F9FB] flex items-center px-2 rounded-lg">
-                        <Input
-                            prefix={
-                                <Image
-                                    src={searchIcon}
-                                    alt="searchIcon"
-                                    className={cn("w-5 h-5 ")}
-                                />
-                            }
-                            placeholder="Поиск"
-                            // value={""}
-                            className="!min-w-[217px]"
-                            onChange={() => {}}
-                        />
+                        <div className="flex items-center px-2 rounded-lg">
+                            <Input
+                                prefix={
+                                    <Image
+                                        src={searchIcon}
+                                        alt="searchIcon"
+                                        className={cn("w-5 h-5 ")}
+                                    />
+                                }
+                                placeholder="Поиск"
+                                // value={""}
+                                className="!min-w-[217px]"
+                                onChange={() => {}}
+                            />
+                        </div>
                     </div>
                 </div>
 

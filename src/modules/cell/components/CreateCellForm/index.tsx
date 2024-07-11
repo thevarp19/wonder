@@ -18,7 +18,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
         <Form
             onFinish={formik.submitForm}
             layout="vertical"
-            className="flex flex-col w-full max-w-lg gap-2 px-10"
+            className="flex flex-col flex-wrap w-full max-w-lg gap-2 px-10"
         >
             <div className="flex items-center gap-4">
                 <FormikNumberInput

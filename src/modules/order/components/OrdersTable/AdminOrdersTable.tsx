@@ -1,6 +1,7 @@
 import { DateCell } from "@/components/ui/DateCell";
 import { Table, TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersAdmin } from "../../queries";
 import { DeliveryMode, GetOrdersByDate } from "../../types";
@@ -92,6 +93,8 @@ export const AdminOrdersTable: FC<OrdersTableProps> = ({
     byProductArticle,
     byProductVendorCode,
 }) => {
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
+
     const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetOrdersAdmin(
         "2000-12-02",
@@ -121,7 +124,9 @@ export const AdminOrdersTable: FC<OrdersTableProps> = ({
                     setPage(page - 1);
                 },
                 current: page + 1,
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
             }}
+            scroll={{ x: "max-content" }}
         />
     );
 };

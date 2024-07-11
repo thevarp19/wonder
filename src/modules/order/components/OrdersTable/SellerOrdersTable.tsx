@@ -1,6 +1,7 @@
 import { DateCell } from "@/components/ui/DateCell";
 import { Table, TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersSeller } from "../../queries";
 import { DeliveryMode, GetOrdersByDate } from "../../types";
@@ -97,6 +98,8 @@ export const SellerOrdersTable: FC<SellerOrdersTableProps> = ({
         byProductArticle,
         byProductVendorCode
     );
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
+
     return (
         <Table
             columns={columns}
@@ -111,7 +114,9 @@ export const SellerOrdersTable: FC<SellerOrdersTableProps> = ({
                     setPage(page - 1);
                 },
                 current: page + 1,
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
             }}
+            scroll={{ x: "max-content" }}
         />
     );
 };

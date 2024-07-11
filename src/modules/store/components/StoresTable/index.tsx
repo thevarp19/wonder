@@ -3,6 +3,7 @@ import { Image } from "@/components/ui/Image";
 import { cn } from "@/utils/shared.util";
 import { Button, ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetStores } from "../../queries";
 import { StoreAddressCell } from "./StoreAddressCell";
@@ -84,6 +85,7 @@ const columns: TableColumnsType<any> = [
 ];
 
 export const StoresTable: FC<StoresTableProps> = ({}) => {
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
     // const mockData = [
     //     {
     //         id: 1,
@@ -133,6 +135,13 @@ export const StoresTable: FC<StoresTableProps> = ({}) => {
                 dataSource={stores?.sort((a, b) => a.id - b.id) || []}
                 rowKey={"id"}
                 loading={isPending}
+                locale={{
+                    emptyText: "Нет данных",
+                }}
+                pagination={{
+                    position: isSmallScreen ? ["bottomCenter"] : undefined,
+                }}
+                scroll={{ x: "max-content" }}
             />
         </ConfigProvider>
     );

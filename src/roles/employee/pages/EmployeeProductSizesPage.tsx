@@ -6,6 +6,7 @@ import { UpdateSizesForm } from "@/modules/product/components/UpdateSizesForm";
 import { useUpdateProductSize } from "@/modules/product/forms";
 import { useGetProductsWithSizes } from "@/modules/product/queries";
 import { useScannerResults } from "@/modules/scan/hooks";
+import { toScanProductsSizes } from "@/modules/scan/utils";
 import { cn } from "@/utils/shared.util";
 import { EditOutlined } from "@ant-design/icons";
 import {
@@ -74,8 +75,8 @@ export const EmployeeProductSizesPage: FC<
         <div className="flex flex-col">
             <Title text="Размеры" />
 
-            <div className="md:bg-[#F7F9FB] bg-[#fff] px-2 rounded-lg mb-5 flex flex-col gap-10">
-                <div className="flex md:flex-row flex-col items-center md:gap-4 gap-2">
+            <div className="md:bg-[#F7F9FB] bg-[#fff] px-2 rounded-lg mb-5 flex flex-col gap-10 md:gap-0">
+                <div className="flex flex-col items-center gap-2 md:flex-row md:gap-4">
                     <div className="flex items-center justify-between w-full md:max-w-md max-w">
                         <SearchInput
                             searchValue={searchValue}
@@ -84,14 +85,22 @@ export const EmployeeProductSizesPage: FC<
                         />
                     </div>
                     <div
-                        onClick={() => {}}
+                        onClick={() => {
+                            toScanProductsSizes;
+                        }}
                         className="flex items-center justify-center bg-[#EF7214] rounded-md cursor-pointer py-[14px] md:w-[130px] w-full md:max-h-[32px] max-h-[47px] gap-2 px-2"
                     >
-                        <Image src={scan} alt="scan" className={cn("min-w-4 h-4")} />
-                        <h2 className="md:text-[12px] text-[16px] text-white">CКАНИРОВАТЬ</h2>
+                        <Image
+                            src={scan}
+                            alt="scan"
+                            className={cn("min-w-4 h-4")}
+                        />
+                        <h2 className="md:text-[12px] text-[16px] text-white">
+                            CКАНИРОВАТЬ
+                        </h2>
                     </div>
                 </div>
-                <div className="bg-[#F7F9FB] p-2 rounded-lg">
+                <div className="bg-[#F7F9FB] p-2 md:p-0 rounded-lg">
                     <ConfigProvider
                         theme={{
                             components: {
@@ -116,7 +125,7 @@ export const EmployeeProductSizesPage: FC<
                 <EmployeeSearchResultsTable
                     searchValue={searchQuery}
                     filterKey={current}
-                    />
+                />
             </div>
         </div>
     );
@@ -311,7 +320,7 @@ export const EmployeeSearchResultsTable: FC<{
                         setPage(page - 1);
                     },
                     current: page + 1,
-                    position: isSmallScreen ? ["bottomCenter"] : undefined
+                    position: isSmallScreen ? ["bottomCenter"] : undefined,
                 }}
                 scroll={{ x: "max-content" }}
             />

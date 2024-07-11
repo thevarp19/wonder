@@ -1,6 +1,5 @@
 import { Protected } from "@/context/Protected";
 import { ScanLayout } from "@/modules/scan/components/ScanLayout.tsx";
-import { useAppSelector } from "@/redux/utils";
 import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { EmployeeLayout } from "./EmployeeLayout";
@@ -23,7 +22,7 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
         navigate("/employee/login", { replace: true });
     };
 
-    const employeeAuth = useAppSelector((state) => state.employee.auth);
+    // const employeeAuth = useAppSelector((state) => state.employee.auth);
 
     return (
         <Routes>
@@ -32,7 +31,7 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                 element={
                     <Protected
                         checkAction={async () => {
-                            return employeeAuth.isLoggedIn;
+                            return true;
                         }}
                         navigate={navigateToEmployeeLogin}
                     />
