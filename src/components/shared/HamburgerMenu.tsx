@@ -26,7 +26,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({ menuItems }) => {
     };
     return (
         <>
-            <div className="sm:hidden fixed w-full h-[45px] px-4 py-[6px] bg-white z-50">
+            <div className="md:hidden fixed w-full h-[45px] px-4 py-[6px] bg-white z-50">
                 <div className="relative flex items-center justify-center w-full h-full">
                     <div className="absolute top-0 left-0">
                         <Image
@@ -50,13 +50,13 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({ menuItems }) => {
             </div>
             {isSidebarOpen && (
                 <div
-                    className="fixed inset-0 z-40 bg-black bg-opacity-50 sm:hidden"
+                    className="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"
                     onClick={toggleSidebar}
                 ></div>
             )}
 
             <div
-                className={`fixed top-0 left-0 h-full w-full sm:hidden flex flex-col gap-4 bg-white px-4 py-[6px] shadow-md z-50 transform transition-transform duration-300 ease-in-out ${
+                className={`fixed top-0 left-0 h-full w-full md:hidden flex flex-col gap-4 bg-white px-4 py-[6px] shadow-md z-50 transform transition-transform duration-300 ease-in-out ${
                     isSidebarOpen ? "translate-x-0" : "-translate-x-full"
                 }`}
             >

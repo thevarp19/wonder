@@ -5,6 +5,7 @@ import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetOrdersEmployee } from "../../queries";
 import { DeliveryMode, GetOrdersEmployeeContent } from "../../types";
+import { useMediaQuery } from "react-responsive";
 
 const columns: TableColumnsType<GetOrdersEmployeeContent> = [
     {
@@ -95,6 +96,9 @@ export const EmployeeOrdersTable: FC<EmployeeOrdersTableProps> = ({
         byProductArticle,
         byProductVendorCode
     );
+
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
+    
     return (
         <Table
             columns={columns}
@@ -109,7 +113,9 @@ export const EmployeeOrdersTable: FC<EmployeeOrdersTableProps> = ({
                     setPage(page - 1);
                 },
                 current: page + 1,
+                position: isSmallScreen ? ["bottomCenter"] : undefined
             }}
+            scroll={{ x: "max-content" }}
         />
     );
 };

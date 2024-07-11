@@ -71,10 +71,10 @@ export const EmployeeOrdersPage: FC<EmployeeOrdersPageProps> = ({}) => {
         <div className="h-full">
             <h1 className="text-[18px] font-semibold pb-5">Заказы</h1>
             <div className="flex items-center justify-between mb-4">
-                <div className="flex w-full max-w-sm gap-4">
+                <div className="flex md:flex-row flex-col items-center w-full max-w-sm gap-4">
                     <ConfigProvider locale={ruRU}>
                         <RangePicker
-                            className="ml-2"
+                            className="w-full md:w-auto md:h-[32px] h-[40px]"
                             placeholder={["Дата от", "Дата до"]}
                             value={dateRange}
                             onChange={handleDateChange}
@@ -85,7 +85,7 @@ export const EmployeeOrdersPage: FC<EmployeeOrdersPageProps> = ({}) => {
                         />
                     </ConfigProvider>
                     <Button
-                        className="ml-2"
+                        className="md:w-[130px] w-full md:!h-[32px] !h-[42px] md:!text-[13px] !text-[16px]"
                         type="primary"
                         onClick={handleSearch}
                     >
@@ -94,8 +94,8 @@ export const EmployeeOrdersPage: FC<EmployeeOrdersPageProps> = ({}) => {
                 </div>
             </div>
             <div className="flex flex-col gap-5">
-                <div className="flex justify-between bg-[#F7F9FB] p-1 rounded-lg">
-                    <div className="w-full bg-[#F7F9FB]">
+                <div className="overflow-x-auto bg-[#F7F9FB] md:pt-0 pt-2 rounded-lg">
+                    <div className="min-w-[600px] flex justify-between">
                         <ConfigProvider
                             theme={{
                                 components: {
@@ -112,43 +112,45 @@ export const EmployeeOrdersPage: FC<EmployeeOrdersPageProps> = ({}) => {
                                 className="w-full !font-bold"
                                 onClick={onClick}
                                 selectedKeys={[current]}
-                            ></Menu>
-                        </ConfigProvider>
-                    </div>
-                    <div className="bg-[#F7F9FB] flex items-center px-2 rounded-lg gap-4">
-                        <Input
-                            prefix={
-                                <Image
-                                    src={searchIcon}
-                                    alt="searchIcon"
-                                    className={cn("w-5 h-5 ")}
-                                />
-                            }
-                            placeholder="Поиск"
-                            value={searchValue}
-                            className="!min-w-[217px]"
-                            onChange={(e) => {
-                                setSearchValue(e.target.value);
-                            }}
-                        />
-                        <div className="flex w-[30px]">
-                            <FilterMenu
-                                checkedItems={checkedItems}
-                                setCheckedItems={setCheckedItems}
                             />
+                        </ConfigProvider>
+                        <div className="flex items-center px-2 rounded-lg gap-4">
+                            <Input
+                                prefix={
+                                    <Image
+                                        src={searchIcon}
+                                        alt="searchIcon"
+                                        className={cn("w-5 h-5")}
+                                    />
+                                }
+                                placeholder="Поиск"
+                                value={searchValue}
+                                className="!min-w-[217px]"
+                                onChange={(e) => {
+                                    setSearchValue(e.target.value);
+                                }}
+                            />
+                            <div className="flex w-[30px]">
+                                <FilterMenu
+                                    checkedItems={checkedItems}
+                                    setCheckedItems={setCheckedItems}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
-                <EmployeeOrdersTable
-                    searchValue={searchQuery}
-                    deliveryMode={deliveryMode}
-                    byOrderCode={checkedItems.byOrderCode}
-                    byShopName={checkedItems.byShopName}
-                    byStoreAddress={checkedItems.byStoreAddress}
-                    byProductName={checkedItems.byProductName}
-                    byProductArticle={checkedItems.byProductArticle}
-                    byProductVendorCode={checkedItems.byProductVendorCode}
-                />
+                <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
+                    <EmployeeOrdersTable
+                        searchValue={searchQuery}
+                        deliveryMode={deliveryMode}
+                        byOrderCode={checkedItems.byOrderCode}
+                        byShopName={checkedItems.byShopName}
+                        byStoreAddress={checkedItems.byStoreAddress}
+                        byProductName={checkedItems.byProductName}
+                        byProductArticle={checkedItems.byProductArticle}
+                        byProductVendorCode={checkedItems.byProductVendorCode}
+                    />
+                </div>
             </div>
         </div>
     );

@@ -6,7 +6,6 @@ import { UpdateSizesForm } from "@/modules/product/components/UpdateSizesForm";
 import { useUpdateProductSize } from "@/modules/product/forms";
 import { useGetProductsWithSizes } from "@/modules/product/queries";
 import { useScannerResults } from "@/modules/scan/hooks";
-import { toScanProductsSizes } from "@/modules/scan/utils";
 import { cn } from "@/utils/shared.util";
 import { EditOutlined } from "@ant-design/icons";
 import {
@@ -19,6 +18,7 @@ import {
     TableColumnsType,
 } from "antd";
 import { FC, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 interface EmployeeProductSizesPageProps {}
 
@@ -71,12 +71,12 @@ export const EmployeeProductSizesPage: FC<
     }, [scanSearchValue]);
 
     return (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col">
             <Title text="Размеры" />
 
-            <div className="bg-[#F7F9FB] px-2 rounded-lg">
-                <div className="flex items-center gap-4 ">
-                    <div className="flex items-center justify-between w-full max-w-md">
+            <div className="md:bg-[#F7F9FB] bg-[#fff] px-2 rounded-lg mb-5 flex flex-col gap-10">
+                <div className="flex md:flex-row flex-col items-center md:gap-4 gap-2">
+                    <div className="flex items-center justify-between w-full md:max-w-md max-w">
                         <SearchInput
                             searchValue={searchValue}
                             setSearchValue={setSearchValue}
@@ -84,39 +84,40 @@ export const EmployeeProductSizesPage: FC<
                         />
                     </div>
                     <div
-                        onClick={toScanProductsSizes}
-                        className="flex items-center justify-center bg-[#EF7214]  rounded-md cursor-pointer py-[14px] w-[130px] max-h-[32px] gap-2"
+                        onClick={() => {}}
+                        className="flex items-center justify-center bg-[#EF7214] rounded-md cursor-pointer py-[14px] md:w-[130px] w-full md:max-h-[32px] max-h-[47px] gap-2 px-2"
                     >
-                        <Image
-                            src={scan}
-                            alt="scan"
-                            className={cn("w-4 h-4")}
-                        />
-                        <h2 className="text-xs text-white">CКАНИРОВАТЬ</h2>
+                        <Image src={scan} alt="scan" className={cn("min-w-4 h-4")} />
+                        <h2 className="md:text-[12px] text-[16px] text-white">CКАНИРОВАТЬ</h2>
                     </div>
                 </div>
-                <ConfigProvider
-                    theme={{
-                        components: {
-                            Menu: {
-                                itemBg: "#F7F9FB",
-                                colorSplit: "#F7F9FB",
+                <div className="bg-[#F7F9FB] p-2 rounded-lg">
+                    <ConfigProvider
+                        theme={{
+                            components: {
+                                Menu: {
+                                    itemBg: "#F7F9FB",
+                                    colorSplit: "#F7F9FB",
+                                },
                             },
-                        },
-                    }}
-                >
-                    <Menu
-                        items={items}
-                        mode="horizontal"
-                        onClick={onClick}
-                        selectedKeys={[current]}
-                    />
-                </ConfigProvider>
+                        }}
+                    >
+                        <Menu
+                            items={items}
+                            mode="horizontal"
+                            className="w-full !font-bold"
+                            onClick={onClick}
+                            selectedKeys={[current]}
+                        />
+                    </ConfigProvider>
+                </div>
             </div>
-            <EmployeeSearchResultsTable
-                searchValue={searchQuery}
-                filterKey={current}
-            />
+            <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
+                <EmployeeSearchResultsTable
+                    searchValue={searchQuery}
+                    filterKey={current}
+                    />
+            </div>
         </div>
     );
 };
@@ -282,6 +283,8 @@ export const EmployeeSearchResultsTable: FC<{
     //     },
     // ];
 
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
+
     return (
         <ConfigProvider
             theme={{
@@ -308,7 +311,9 @@ export const EmployeeSearchResultsTable: FC<{
                         setPage(page - 1);
                     },
                     current: page + 1,
+                    position: isSmallScreen ? ["bottomCenter"] : undefined
                 }}
+                scroll={{ x: "max-content" }}
             />
         </ConfigProvider>
     );
