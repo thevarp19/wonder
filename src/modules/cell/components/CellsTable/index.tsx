@@ -1,6 +1,7 @@
 import { GetStoreResponse } from "@/modules/store/types";
 import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
+import { useMediaQuery } from "react-responsive";
 import { GetCellResponse } from "../../types";
 import { UpdateCellButton } from "../UpdateCellForm/UpdateCellButton";
 import { DeleteCellCell } from "./DeleteCell";
@@ -83,6 +84,8 @@ export const CellsTable: FC<CellsTableProps> = ({
     cells,
 }) => {
     const groupedCells = groupCellsBySize(cells || []);
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
+
     return (
         <Table
             columns={columns}
@@ -93,6 +96,10 @@ export const CellsTable: FC<CellsTableProps> = ({
                     groupedCells[`${cell.width}x${cell.height}x${cell.depth}`]
                         ?.length || 0,
             }))}
+            pagination={{
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
+            }}
+            scroll={{ x: "max-content" }}
             rowKey={"id"}
             loading={isPending || isStorePending}
         />

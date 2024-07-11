@@ -62,7 +62,7 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
             // Use formattedDates as needed
             // Example: setSearchQuery({ ...searchValue, dates: formattedDates });
         }
-        setSearchQuery("searchValue");
+        setSearchQuery("");
     };
 
     const onClick: MenuProps["onClick"] = (e) => {

@@ -21,7 +21,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
         <Form
             onFinish={formik.submitForm}
             layout="vertical"
-            className="flex flex-col w-full max-w-[291px]"
+            className="flex flex-col w-full md:max-w-[291px]"
         >
             <FormikInput
                 name="kaspiId"
@@ -96,7 +96,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                     size: "large",
                 }}
             />
-            <Form.Item label={"Рабочее время"} className={cn("w-max !mb-4")}>
+            <Form.Item label={"Рабочее время"} className={cn("w-full !mb-4")}>
                 <UpdateWorkingTimeInput
                     initialValues={storeDetails?.availableWorkTimes}
                     onChange={(values) => {
@@ -109,10 +109,10 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 htmlType="submit"
                 type="primary"
                 size={"large"}
-                className={cn("w-full")}
+                className={cn("w-full mt-6")}
                 loading={mutation.isPending}
             >
-                {"Обновить"}
+                Сохранить
             </Button>
         </Form>
     );

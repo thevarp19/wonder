@@ -22,18 +22,24 @@ export const StoreCellsPage: FC<StoreCellsPageProps> = ({}) => {
 
     const { data: cells, isPending } = useGetCells(storeId);
     return (
-        <div className="flex flex-col h-full">
-            <h1 className="mb-4 text-[18px] font-semibold">Склад {storeId}</h1>
-            <div className="flex gap-4 mb-4">
-                <CreateCellModal storeId={storeId} />
-                <PrintAllCellsButton store={store} cells={cells} />
+        <div className="h-full">
+            <div className="flex flex-col mb-4">
+                <h1 className="mb-4 text-[18px] font-semibold">
+                    Склад {storeId}
+                </h1>
+                <div className="flex flex-col items-center w-full gap-4 md:flex-row md:max-w-sm">
+                    <CreateCellModal storeId={storeId} />
+                    <PrintAllCellsButton store={store} cells={cells} />
+                </div>
             </div>
-            <CellsTable
-                store={store}
-                isPending={isPending}
-                isStorePending={isStorePending}
-                cells={cells}
-            />
+            <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
+                <CellsTable
+                    store={store}
+                    isPending={isPending}
+                    isStorePending={isStorePending}
+                    cells={cells}
+                />
+            </div>
         </div>
     );
 };
@@ -61,7 +67,7 @@ const CreateCellModal = ({ storeId }: { storeId: number }) => {
             </Modal>
             <Button
                 size="large"
-                className="min-w-[180px] text-xs"
+                className="w-full md:min-w-[180px] !rounded-md text-xs "
                 type="primary"
                 onClick={() => setIsModalOpen(true)}
             >

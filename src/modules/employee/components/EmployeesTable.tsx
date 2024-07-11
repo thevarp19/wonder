@@ -11,6 +11,7 @@ import {
     TableColumnsType,
 } from "antd";
 import { FC, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { changeEmployeePassword } from "../api";
 import { deleteEmployeeMutation } from "../mutations";
 import { useGetEmployeeById, useGetEmployees } from "../queries";
@@ -71,6 +72,8 @@ function DeleteEmployeeCell({ id, storeId }: { id: number; storeId: number }) {
 
 export const EmployeesTable: FC<EmployeesTableProps> = ({ storeId }) => {
     const { data: employees, isPending } = useGetEmployees(storeId);
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
+
     return (
         <Table
             columns={columns}
@@ -79,6 +82,10 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({ storeId }) => {
             }
             rowKey={"id"}
             loading={isPending}
+            pagination={{
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
+            }}
+            scroll={{ x: "max-content" }}
         />
     );
 };
@@ -99,6 +106,8 @@ const UpdateEmployeeModal = ({
                 title="Обновить информацию о сотруднике"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
+                cancelText="Назад"
+                cancelButtonProps={{ style: { width: "100%" } }}
                 okButtonProps={{ style: { display: "none" } }}
                 destroyOnClose
             >
@@ -143,6 +152,8 @@ const ChangeEmployeePasswordModal = ({ id }: { id: number }) => {
                 title="Изменить пароль сотрудника"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
+                cancelText="Назад"
+                cancelButtonProps={{ style: { width: "100%" } }}
                 okButtonProps={{ style: { display: "none" } }}
                 destroyOnClose
             >
@@ -168,7 +179,7 @@ const ChangeEmployeePasswordModal = ({ id }: { id: number }) => {
                         <Button
                             htmlType="submit"
                             type="primary"
-                            className="!mb-4"
+                            className="!mb-4 !w-full"
                             loading={loading}
                         >
                             Изменить

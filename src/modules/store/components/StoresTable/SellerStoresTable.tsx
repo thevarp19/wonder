@@ -1,5 +1,6 @@
 import { Switch, Table, TableColumnsType } from "antd";
 import { FC } from "react";
+import { useMediaQuery } from "react-responsive";
 import { useGetStores } from "../../queries";
 import { GetStoreResponse } from "../../types";
 import { StoreAddressCell } from "./StoreAddressCell";
@@ -35,12 +36,18 @@ const columns: TableColumnsType<GetStoreResponse> = [
 
 export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
     const { data: stores, isPending } = useGetStores();
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
+
     return (
         <Table
             columns={columns}
             dataSource={stores?.sort((a, b) => a.id - b.id)}
             rowKey={"id"}
             loading={isPending}
+            pagination={{
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
+            }}
+            scroll={{ x: "max-content" }}
         />
     );
 };

@@ -13,10 +13,12 @@ import { GetEmployee } from "./types";
 const createEmployeeSchema = Yup.object().shape({
     firstName: requiredStringSchema(),
     lastName: requiredStringSchema(),
-    email: emailSchema().required(),
-    password: passwordSchemas().self.required(),
-    repeatPassword: passwordSchemas().repeat.required(),
-    phoneNumber: KzPhoneNumberSchema().required(),
+    email: emailSchema().required("Почта обязательна для заполнения"),
+    password: passwordSchemas().self.required(
+        "Пароль обязателен для заполнения"
+    ),
+    repeatPassword: passwordSchemas().repeat.required("Повторите пароль"),
+    phoneNumber: KzPhoneNumberSchema().required("Номер телефона обязателен"),
 });
 
 const updateEmployeeSchema = Yup.object().shape({

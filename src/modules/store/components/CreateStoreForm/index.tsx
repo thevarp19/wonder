@@ -11,13 +11,13 @@ interface CreateStoreFormProps {}
 export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
     const { formik, mutation } = useCreateStore();
     return (
-        <div className="flex flex-col gap-10 items-center border border-[#D9D9D9] rounded-[28px] px-[126px] py-[34px]">
+        <div className="flex flex-col gap-10 items-center md:border border-[#D9D9D9] rounded-[28px] md:px-[126px] px-4 md:py-[34px] pb-[68px] w-full md:w-auto">
             <h2 className="text-[18px] font-semibold">Создать новый склад</h2>
 
             <Form
                 onFinish={formik.submitForm}
                 layout="vertical"
-                className="flex flex-col w-full max-w-[291px] gap-2"
+                className="flex flex-col w-full md:max-w-[291px] gap-2"
             >
                 <FormikInput
                     name="kaspiId"
@@ -81,7 +81,7 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
 
                 <Form.Item
                     label={"Рабочее время"}
-                    className={cn("w-max !mb-4")}
+                    className={cn("w-full !mb-4")}
                 >
                     <WorkingTimeInput
                         onChange={(values) => {

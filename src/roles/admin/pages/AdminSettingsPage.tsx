@@ -1,9 +1,10 @@
 import { searchIcon } from "@/assets";
+import { Image } from "@/components/ui/Image";
 import { BoxesTable } from "@/modules/box/components/BoxesTable";
 import { StoresTable } from "@/modules/store/components/StoresTable";
 import { cn } from "@/utils/shared.util";
 import { DropboxOutlined, ShopOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Image, Input, Menu, MenuProps } from "antd";
+import { Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 

@@ -86,17 +86,18 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                 }}
                 cancelButtonProps={{ style: { width: 100 } }}
                 cancelText="Назад"
+                // className="flex flex-col md:flex-row"
                 okButtonProps={{ style: { width: 100 } }}
                 onOk={() => {
                     setIsModalOpen(false);
                 }}
             >
-                <div className="space-x-4">
+                <div className="flex flex-col items-start justify-center gap-4 md:gap-0 md:space-x-4 md:flex-row">
                     <Select
                         placeholder={"Добавить новую коробку"}
-                        className="w-80"
+                        className="w-64 md:w-80"
                         notFoundContent={
-                            <div className="flex items-center justify-center min-h-[85px]">
+                            <div className="flex items-center justify-center min-h-[85px] w-full md:w-auto">
                                 Нет данных
                             </div>
                         }
@@ -118,6 +119,7 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                     <Button
                         type="primary"
                         loading={mutation.isPending}
+                        className="w-full md:w-auto"
                         onClick={() => {
                             formik.handleSubmit();
                         }}
@@ -126,13 +128,14 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                     </Button>
                 </div>
                 <Table
-                    className="mt-4"
+                    className="mt-14 md:mt-4"
                     size="small"
                     rowKey={(record) => `${record.id}`}
                     dataSource={boxTypes}
                     loading={isPending}
                     columns={columns}
                     pagination={false}
+                    scroll={{ x: "max-content" }}
                 />
             </Modal>
         </div>

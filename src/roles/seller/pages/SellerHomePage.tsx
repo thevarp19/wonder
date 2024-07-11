@@ -5,16 +5,20 @@ import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
 import { BarCharts } from "@/modules/statistics/components/BarCharts";
 import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable";
 import { PieCharts } from "@/modules/statistics/components/PieCharts";
-import { useGetSellerDailyInfo } from "@/modules/statistics/queries";
+import {
+    useGetSellerDailyInfo,
+    useGetSellerSalesInfo,
+} from "@/modules/statistics/queries";
 import { DurationType, StatisticsInfo } from "@/modules/statistics/types";
 import { cn } from "@/utils/shared.util";
+import { Spin } from "antd";
 import { FC, useState } from "react";
 
 interface SellerHomePageProps {}
 
 export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
     const [duration, setDuration] = useState<DurationType>("MONTH");
-    // const { data: statistics, isPending } = useGetSellerSalesInfo(duration);
+    const { data: statistics, isPending } = useGetSellerSalesInfo(duration);
     const { data: dailyInfo, isPending: getDailyLoading } =
         useGetSellerDailyInfo(duration);
     // const { data: topProducts, isPending: topProductsLoading } =
@@ -22,26 +26,20 @@ export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
     // const sortedTopProducts = topProducts?.content
     //     ? topProducts.content.sort((a, b) => b.count - a.count).slice(0, 4)
     //     : [];
-    // if (getDailyLoading) {
-    //     return (
-    //         <div className="flex items-center justify-center h-[500px]">
-    //             <Spin size="large" />
-    //         </div>
-    //     );
-    // }
-    const statistics = {
-        ordersInfo: { count: 140, percent: 48 },
-        sellersInfo: { count: 52, percent: -18 },
-        suppliesInfo: { count: 42, percent: 18 },
-        incomeInfo: { count: 80, percent: 50 },
-    };
-    // if (isPending || getDailyLoading) {
-    //     return (
-    //         <div className="flex items-center justify-center h-[500px]">
-    //             <Spin size="large" />
-    //         </div>
-    //     );
-    // }
+
+    // const statistics = {
+    //     ordersInfo: { count: 140, percent: 48 },
+    //     sellersInfo: { count: 52, percent: -18 },
+    //     suppliesInfo: { count: 42, percent: 18 },
+    //     incomeInfo: { count: 80, percent: 50 },
+    // };
+    if (isPending || getDailyLoading) {
+        return (
+            <div className="flex items-center justify-center h-[500px]">
+                <Spin size="large" />
+            </div>
+        );
+    }
     return (
         <div className="flex flex-col bg-white sm:pb-0 pb-[68px]">
             <div className="flex flex-col gap-7">

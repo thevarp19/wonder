@@ -43,7 +43,7 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                 selectedKeys={[current]}
             />
             {current === "products" && (
-                <div className="p-4">
+                <div className="">
                     <h1 className="pb-4 text-2xl font-semibold">
                         Количество продуктов
                     </h1>
@@ -55,7 +55,7 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                 </div>
             )}
             {current === "prices" && (
-                <div className="p-4 space-y-4">
+                <div className="space-y-4">
                     <h1 className="text-2xl font-semibold">Цены на продукты</h1>
                     <Button
                         size="large"

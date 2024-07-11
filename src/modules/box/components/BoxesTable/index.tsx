@@ -1,5 +1,6 @@
 import { ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC } from "react";
+import { useMediaQuery } from "react-responsive";
 import { useGetAllBoxes } from "../../queries";
 import { GetBoxResponse } from "../../types";
 import { DeleteBoxCell } from "./DeleteBoxCell";
@@ -28,6 +29,7 @@ const columns: TableColumnsType<GetBoxResponse> = [
 
 export const BoxesTable: FC<BoxesTableProps> = ({}) => {
     const { data: boxes, isPending } = useGetAllBoxes();
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
         <ConfigProvider
@@ -52,6 +54,10 @@ export const BoxesTable: FC<BoxesTableProps> = ({}) => {
                 locale={{
                     emptyText: "Нет данных",
                 }}
+                pagination={{
+                    position: isSmallScreen ? ["bottomCenter"] : undefined,
+                }}
+                scroll={{ x: "max-content" }}
             />
         </ConfigProvider>
     );

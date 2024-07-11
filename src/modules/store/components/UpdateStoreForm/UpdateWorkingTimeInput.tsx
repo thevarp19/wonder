@@ -77,7 +77,7 @@ export const UpdateWorkingTimeInput: FC<UpdateWorkingTimeInputProps> = ({
                 })}
             >
                 <span className="w-28">Пн-Вс: </span>
-                <div className="flex items-center gap-[10px]">
+                <div className="flex items-center justify-between md:justify-normal gap-[10px]">
                     <TimePicker
                         format="HH:mm"
                         needConfirm={false}
@@ -198,7 +198,7 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                 />
                 <span>{name}</span>
             </div>
-            <div className="flex items-center gap-[10px]">
+            <div className="flex items-center justify-between md:justify-normal gap-[10px]">
                 <TimePicker
                     format="HH:mm"
                     defaultValue={dayjs(openTime, "HH:mm")}

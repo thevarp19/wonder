@@ -65,14 +65,14 @@ export const WorkingTimeInput: FC<WorkingTimeInputProps> = ({ onChange }) => {
     }, [values]);
 
     return (
-        <div className={cn("flex flex-col gap-8")}>
+        <div className={cn("flex flex-col gap-8 w-full")}>
             <div
                 className={cn("flex flex-col gap-[10px]", {
                     "text-gray-400": detailed,
                 })}
             >
                 <span className="w-28">Пн-Вс: </span>
-                <div className="flex items-center gap-[10px]">
+                <div className="flex items-center justify-between md:justify-normal gap-[10px]">
                     <TimePicker
                         format="HH:mm"
                         needConfirm={false}
@@ -194,7 +194,7 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                 />
                 <span>{days[index]}</span>
             </div>
-            <div className="flex items-center gap-[10px]">
+            <div className="flex items-center justify-between md:justify-normal gap-[10px]">
                 <TimePicker
                     format="HH:mm"
                     defaultValue={dayjs(day.openTime, "HH:mm")}

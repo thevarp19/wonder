@@ -19,7 +19,7 @@ export const PrintAllCellsButton: FC<PrintAllCellsButtonProps> = ({
         return (
             <Button
                 size="large"
-                className="min-w-[180px] text-xs"
+                className="w-full md:min-w-[180px] !rounded-md text-xs"
                 loading
                 disabled
             >
@@ -40,7 +40,7 @@ export const PrintAllCellsButton: FC<PrintAllCellsButtonProps> = ({
                     setIsModalOpen(true);
                 }}
                 size="large"
-                className="min-w-[180px] text-xs"
+                className="w-full md:min-w-[180px] !rounded-md text-xs"
             >
                 Печать всех ячеек
             </Button>

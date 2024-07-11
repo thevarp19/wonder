@@ -32,6 +32,8 @@ export const UpdateCellButton: FC<UpdateCellButtonProps> = ({
                 title="Обновить ячейку"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
+                cancelText="Назад"
+                cancelButtonProps={{ style: { width: "100%" } }}
                 okButtonProps={{ style: { display: "none" } }}
                 destroyOnClose
             >
