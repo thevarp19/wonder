@@ -107,14 +107,18 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({ menuItems }) => {
                             {menuItems?.map((item, index) => (
                                 <div
                                     key={item?.key}
-                                    onClick={closeSidebar}
                                     className={`flex items-center gap-4 p-4 ${
                                         menuItems.length - 1 !== index &&
                                         "border-b border-[#0000001A]"
                                     }`}
                                 >
                                     {item?.icon}
-                                    <div className="text-lg">{item?.label}</div>
+                                    <div
+                                        className="text-lg"
+                                        onClick={closeSidebar}
+                                    >
+                                        {item?.label}
+                                    </div>
                                 </div>
                             ))}
                         </div>
