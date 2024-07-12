@@ -1,5 +1,4 @@
 import { myLocalStorage } from "@/lib/storage/browserStorage";
-import { useDebounce } from "@/utils/shared.util";
 import {
     Button,
     Checkbox,
@@ -10,8 +9,8 @@ import {
     Table,
     TableColumnsType,
 } from "antd";
-import clsx from "clsx";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import {
     ProductCityPriceChangeState,
     ProductPriceChangeState,
@@ -22,18 +21,19 @@ import {
 import { changeProductPriceMutation } from "../../mutations";
 import { useGetProductsPrices } from "../../queries";
 import { ProductPriceCity, ProductWithPrices } from "../../types";
-import { ProductsSearch } from "../ProductSearch";
 import { ProductPublishedFilter } from "../ProductsFilter/ProductPublishedFilter";
 import { ProductEnableSwitch } from "../ProductsTable";
 
-interface ProductPriceTableProps {}
+interface ProductPriceTableProps {
+    debouncedSearchValue: string;
+}
 
 const columns: TableColumnsType<ProductWithPrices> = [
     {
         title: "Артикул",
         dataIndex: "vendorCode",
-        fixed: "left",
-        width: 150,
+        // fixed: "left",
+        // width: 150,
     },
     {
         title: "Название",
@@ -42,8 +42,9 @@ const columns: TableColumnsType<ProductWithPrices> = [
                 {record.name}
             </a>
         ),
-        fixed: "left",
-        width: 150,
+        width: 200,
+        // fixed: "left",
+        // width: 150,
     },
     {
         title: "Опубликовано",
@@ -51,13 +52,13 @@ const columns: TableColumnsType<ProductWithPrices> = [
         render: (_, record) => (
             <ProductEnableSwitch enabled={record.published} id={record.id} />
         ),
-        width: 100,
+        // width: 100,
     },
     {
-        title: "Количество",
+        title: "Кол-во",
         render: (_, record) => <div className="">{record.count}</div>,
-        width: 70,
-        fixed: "left",
+        width: 100,
+        sorter: (a, b) => a.count - b.count,
     },
 ];
 
@@ -77,7 +78,7 @@ function MainPriceCitySelect({
     return (
         <Select
             disabled={!isEditable}
-            style={{ width: 150 }}
+            style={{ width: "100%", borderRadius: 24 }}
             defaultValue={selectedCity ? selectedCity.id.toString() : "-1"}
             onChange={(_, option) =>
                 // @ts-ignore
@@ -158,7 +159,9 @@ function findProductPriceAndCountInCity(
     return result;
 }
 
-export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
+export const ProductPriceTable: FC<ProductPriceTableProps> = ({
+    debouncedSearchValue,
+}) => {
     const [page, setPage] = useState(0);
 
     const [activeStores, setActiveStores] = useState<string[]>(
@@ -166,9 +169,8 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
     );
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
-    const [searchValue, setSearchValue] = useState("");
     const [isEditable, setIsEditable] = useState(false);
-    const debouncedSearchValue = useDebounce(searchValue, 500);
+
     const { data: products, isPending } = useGetProductsPrices(
         page,
         undefined,
@@ -218,7 +220,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                 />
             ),
             width: 150,
-            fixed: "left",
+            // fixed: "left",
         },
         ...uniqueStores
             .sort((a, b) => a.localeCompare(b))
@@ -238,9 +240,10 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
     ];
 
     const { mutateAsync } = changeProductPriceMutation();
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
-        <div>
+        <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
             <Modal
                 title="Склады"
                 open={isModalOpen}
@@ -257,14 +260,14 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                     stores={products?.content?.cities || []}
                 />
             </Modal>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between px-2 mb-4 md:px-4">
                 <div className="flex items-center w-full gap-4">
-                    <div className="w-full max-w-sm">
+                    {/* <div className="w-full max-w-sm">
                         <ProductsSearch
                             searchValue={searchValue}
                             setSearchValue={setSearchValue}
                         />
-                    </div>
+                    </div> */}
                     <ProductPublishedFilter
                         isPublished={isPublished}
                         setIsPublished={setIsPublished}
@@ -293,16 +296,23 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
             >
                 <Table
                     // @ts-ignore
+                    showSorterTooltip={{ target: "sorter-icon" }}
                     columns={newColumns}
+                    locale={{
+                        triggerDesc: "Нажмите для сортировки по убыванию",
+                        triggerAsc: "Нажмите для сортировки по возрастанию",
+                        cancelSort: "Нажмите для отмены сортировки",
+                    }}
                     dataSource={products?.content?.products || []}
                     rowKey={(r) => r.vendorCode}
                     loading={isPending}
-                    scroll={{ x: 1200 }}
+                    // scroll={{ x: 1200 }}
                     footer={() => (
                         <div className="flex justify-end">
                             {isEditable ? (
                                 <SavePriceEditButton
                                     state={state}
+                                    setIsEditable={setIsEditable}
                                     onClick={async () => {
                                         await mutateAsync(
                                             getPriceChangeRequest(state)
@@ -312,7 +322,11 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                                     clearChanges={clearChanges}
                                 />
                             ) : (
-                                <Button onClick={() => setIsEditable(true)}>
+                                <Button
+                                    size="large"
+                                    className="md:min-w-[200px] md:w-auto w-full mt-4 md:mt-0 !text-[#EF7214] !border-[#EF7214] cursor-pointer"
+                                    onClick={() => setIsEditable(true)}
+                                >
                                     Редактировать
                                 </Button>
                             )}
@@ -326,7 +340,9 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({}) => {
                             setPage(page - 1);
                         },
                         current: page + 1,
+                        position: isSmallScreen ? ["bottomCenter"] : undefined,
                     }}
+                    scroll={{ x: "max-content" }}
                 />
             </ConfigProvider>
         </div>
@@ -336,10 +352,12 @@ function SavePriceEditButton({
     onClick,
     state,
     clearChanges,
+    setIsEditable,
 }: {
     onClick: () => Promise<void>;
     state: ProductPriceChangeState;
     clearChanges: () => void;
+    setIsEditable: Dispatch<SetStateAction<boolean>>;
 }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     return (
@@ -348,6 +366,10 @@ function SavePriceEditButton({
                 open={isModalOpen}
                 width={800}
                 title="Хотите сохранить изменения?"
+                okButtonProps={{ size: "large" }}
+                okText="Подтвердить"
+                cancelButtonProps={{ size: "large" }}
+                cancelText="Назад"
                 onOk={async () => {
                     await onClick();
                     setIsModalOpen(false);
@@ -358,17 +380,25 @@ function SavePriceEditButton({
             >
                 {isModalOpen && <PriceChanges {...state} />}
             </Modal>
-            <div className="flex gap-3">
+            <div className="flex justify-end w-full gap-3">
                 <Button
                     key="clear"
+                    size="large"
+                    className="md:min-w-[200px] md:w-auto w-full mt-4 md:mt-0"
                     onClick={() => {
                         clearChanges();
                         setIsModalOpen(false);
+                        setIsEditable(false);
                     }}
                 >
                     Очистить
                 </Button>
-                <Button type="primary" onClick={() => setIsModalOpen(true)}>
+                <Button
+                    size="large"
+                    className="md:min-w-[200px] md:w-auto w-full mt-4 md:mt-0"
+                    type="primary"
+                    onClick={() => setIsModalOpen(true)}
+                >
                     Сохранить
                 </Button>
             </div>
@@ -380,7 +410,9 @@ function PriceChanges(state: ProductPriceChangeState) {
     return (
         <div>
             {getPriceChanges(state).map((change, index) => (
-                <div key={index}>{change}</div>
+                <p key={index} className="text-[12px] md:text-base">
+                    {change}
+                </p>
             ))}
         </div>
     );
@@ -405,23 +437,20 @@ function ProductPriceCell({
     );
     return (
         <div className="relative w-full h-full ">
-            <div
+            {/* <div
                 style={{
                     backgroundColor: getColorFromCount(count),
                 }}
-                className={clsx(
-                    "absolute -top-[16px] -left-[16px] h-[55px] w-full"
-                )}
-            ></div>
+            ></div> */}
             {isEditable ? (
                 <InputNumber
                     defaultValue={price}
+                    inputMode="numeric"
                     style={{
                         backgroundColor: getColorFromCount(count),
                         fontWeight: 600,
-                        position: "relative",
-                        top: -4,
-                        left: -7,
+                        paddingLeft: 10,
+                        borderRadius: 16,
                     }}
                     value={
                         state.cityPrices.find(
@@ -438,14 +467,19 @@ function ProductPriceCell({
                                 cityId: storeId,
                                 cityName: store,
                                 prevPrice: price,
-                                newPrice: value,
+                                newPrice: Number(value),
                             });
                         }
                     }}
                 />
             ) : (
-                <div className="relative flex items-center gap-2 font-semibold">
-                    {price} KZT
+                <div
+                    style={{
+                        backgroundColor: getColorFromCount(count),
+                    }}
+                    className="flex items-center justify-center gap-2 py-1 font-semibold border rounded-2xl"
+                >
+                    {price} ₸
                 </div>
             )}
         </div>

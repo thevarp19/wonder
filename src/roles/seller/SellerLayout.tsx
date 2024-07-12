@@ -81,22 +81,6 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller/settings"}
-                >
-                    Настройки
-                </Link>
-            ),
-            key: "settings",
-            icon: (
-                <SettingOutlined
-                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
-                />
-            ),
-        },
-        {
-            label: (
-                <Link
-                    style={{ color: "inherit", textDecoration: "inherit" }}
                     to={"/seller/orders"}
                 >
                     Заказы
@@ -109,13 +93,14 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                 />
             ),
         },
+
         {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
                     to={"/seller/products"}
                 >
-                    Продукты
+                    Товары
                 </Link>
             ),
             key: "products",
@@ -137,6 +122,22 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             key: "supply",
             icon: (
                 <VerticalAlignTopOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/seller/settings"}
+                >
+                    Настройки
+                </Link>
+            ),
+            key: "settings",
+            icon: (
+                <SettingOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

@@ -82,7 +82,7 @@ export function getPriceChanges(state: ProductPriceChangeState): string[] {
 
     const mainPriceChanges: string[] = state.mainPrices.map(
         (mainPrice) =>
-            `${mainPrice.productName}:  Цена в основном городе -> ${mainPrice.mainCityName}`
+            `${mainPrice.productName}: Основной город -> ${mainPrice.mainCityName}`
     );
 
     return [...cityPriceChanges, ...mainPriceChanges];

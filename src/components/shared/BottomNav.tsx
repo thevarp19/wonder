@@ -5,7 +5,7 @@ import { Image } from "../ui/Image";
 
 export const BottomNav: FC = () => {
     return (
-        <div className="fixed bottom-0 flex justify-around w-full py-5 bg-white sm:hidden ">
+        <div className="fixed bottom-0 z-50 flex justify-around w-full py-5 bg-white sm:hidden ">
             <Link to={""}>
                 <Image
                     src={houseIcon}

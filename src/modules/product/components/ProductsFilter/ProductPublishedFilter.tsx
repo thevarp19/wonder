@@ -1,4 +1,5 @@
 import { Checkbox } from "antd";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { FC, useEffect, useState } from "react";
 
 interface ProductPublishedFilterProps {
@@ -9,43 +10,47 @@ interface ProductPublishedFilterProps {
 export const ProductPublishedFilter: FC<ProductPublishedFilterProps> = ({
     setIsPublished,
 }) => {
-    const [checked, setChecked] = useState<("published" | "unpublished")[]>([]);
+    const [checked, setChecked] = useState<"published" | "unpublished" | null>(
+        null
+    );
+
     useEffect(() => {
-        if (checked.includes("published") && checked.includes("unpublished")) {
-            setIsPublished(null);
-        } else if (checked.includes("published")) {
+        if (checked === "published") {
             setIsPublished(true);
-        } else if (checked.includes("unpublished")) {
+        } else if (checked === "unpublished") {
             setIsPublished(false);
         } else {
             setIsPublished(null);
         }
-    }, [checked]);
+    }, [checked, setIsPublished]);
+
+    const handlePublishedChange = (e: CheckboxChangeEvent) => {
+        if (e.target.checked) {
+            setChecked("published");
+        } else {
+            setChecked(null);
+        }
+    };
+
+    const handleUnpublishedChange = (e: CheckboxChangeEvent) => {
+        if (e.target.checked) {
+            setChecked("unpublished");
+        } else {
+            setChecked(null);
+        }
+    };
+
     return (
-        <div className="flex my-4">
+        <div className="flex flex-col my-4 md:flex-row">
             <Checkbox
-                onChange={(e) => {
-                    if (e.target.checked) {
-                        setChecked((prev) => [...prev, "published"]);
-                    } else {
-                        setChecked((prev) =>
-                            prev.filter((item) => item !== "published")
-                        );
-                    }
-                }}
+                checked={checked === "published"}
+                onChange={handlePublishedChange}
             >
                 Опубликованные
             </Checkbox>
             <Checkbox
-                onChange={(e) => {
-                    if (e.target.checked) {
-                        setChecked((prev) => [...prev, "unpublished"]);
-                    } else {
-                        setChecked((prev) =>
-                            prev.filter((item) => item !== "unpublished")
-                        );
-                    }
-                }}
+                checked={checked === "unpublished"}
+                onChange={handleUnpublishedChange}
             >
                 Неопубликованные
             </Checkbox>

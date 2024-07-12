@@ -1,5 +1,6 @@
 import { ConfigProvider, Switch, Table, TableColumnsType } from "antd";
 import { FC, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { changeProductsVisibilityMutation } from "../../mutations";
 import { useGetProducts } from "../../queries";
 import { GetProductContent } from "../../types";
@@ -53,13 +54,16 @@ export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
         searchValue,
         isPublished
     );
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
         <div>
-            <ProductPublishedFilter
-                setIsPublished={setIsPublished}
-                isPublished={isPublished}
-            />
+            <div className="px-2">
+                <ProductPublishedFilter
+                    setIsPublished={setIsPublished}
+                    isPublished={isPublished}
+                />
+            </div>
             <ConfigProvider
                 theme={{
                     components: {
@@ -86,7 +90,9 @@ export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
                             setPage(page - 1);
                         },
                         current: page + 1,
+                        position: isSmallScreen ? ["bottomCenter"] : undefined,
                     }}
+                    scroll={{ x: "max-content" }}
                 />
             </ConfigProvider>
         </div>

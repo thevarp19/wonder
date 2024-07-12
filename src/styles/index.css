@@ -40,3 +40,6 @@
         flex-direction: column;
     }
 }
+.ant-input-number-handler-wrap {
+    visibility: hidden;
+}

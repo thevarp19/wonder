@@ -19,9 +19,11 @@ export const ProductsUploadFromFile: FC<ProductsUploadFromFileProps> = ({
     }, [data]);
     return (
         <div className="p-4">
-            <h1 className="pb-4 text-2xl font-semibold">Загрузка продуктов</h1>
+            <h1 className="pb-4 text-base font-semibold md:text-2xl">
+                Загрузка продуктов
+            </h1>
             <a
-                className=""
+                className="text-sm md:text-base"
                 href="https://file-manager-of5r5e4d7a-lm.a.run.app/docs/retrieve/files/%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%B8%D0%BC%D0%BF%D0%BE%D1%80%D1%82%D0%B0.xlsx"
             >
                 Скачать пример файла
