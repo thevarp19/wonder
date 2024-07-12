@@ -38,8 +38,8 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
     profileItems,
     logoLink,
     breadcrumbItems,
-    // userEmail,
-    // role,
+    userEmail,
+    role,
     selectedKeys,
 }) => {
     const [collapsed, setCollapsed] = useState(false);
@@ -55,7 +55,11 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
 
     return (
         <>
-            <HamburgerMenu menuItems={menuItems} />
+            <HamburgerMenu
+                menuItems={menuItems}
+                role={role}
+                userEmail={userEmail}
+            />
             <Layout className="pt-[45px] md:h-auto md:pt-0">
                 <Sider
                     theme="light"
@@ -72,7 +76,11 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                                 "justify-center": collapsed,
                             })}
                         >
-                            <div className={cn("flex justify-start gap-2 p-2")}>
+                            <div
+                                className={cn(
+                                    "flex justify-start items-center gap-2 p-2"
+                                )}
+                            >
                                 <Dropdown menu={{ items: profileItems }}>
                                     <Avatar
                                         size={24}
@@ -80,14 +88,15 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                                         shape="circle"
                                     />
                                 </Dropdown>
-
-                                <h2 className={cn({ hidden: collapsed })}>
-                                    {"Samayryn"}
-                                </h2>
-                                {/* <p>{userEmail}</p> */}
-                                {/* <p>{role}</p> */}
+                                <div className="overflow-hidden text-sm max-w-28">
+                                    <h2 className={cn({ hidden: collapsed })}>
+                                        {userEmail}
+                                    </h2>
+                                    <h2 className={cn({ hidden: collapsed })}>
+                                        {role}
+                                    </h2>
+                                </div>
                             </div>
-                            {/* <Dropdown menu={{ items: profileItems }}></Dropdown> */}
                         </div>
                         <CustomMenu
                             menuItems={menuItems}

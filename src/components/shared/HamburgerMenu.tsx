@@ -14,8 +14,14 @@ import { Image } from "../ui/Image";
 
 interface HamburgerMenuProps {
     menuItems: MenuItemType[];
+    userEmail: string;
+    role?: "Администратор" | "Продавец" | "Сотрудник";
 }
-export const HamburgerMenu: FC<HamburgerMenuProps> = ({ menuItems }) => {
+export const HamburgerMenu: FC<HamburgerMenuProps> = ({
+    menuItems,
+    userEmail,
+    role,
+}) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
@@ -88,24 +94,31 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({ menuItems }) => {
                         onChange={() => {}}
                     />
                     <div className="bg-[#F7F9FB] w-full rounded-md">
-                        <div
+                        <Link
+                            to={role === "Продавец" ? "profile" : "#"}
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }}
                             className="flex items-center gap-4 p-4 mb-1 border-b border-[#0000001A]"
                             onClick={closeSidebar}
                         >
-                            <Link to={"profile"}>
-                                <Image
-                                    src={defaultAvatar}
-                                    alt="logo"
-                                    className="w-[28px] h-[28px] rounded-full"
-                                />
-                            </Link>
-                            <span className="text-lg font-medium ">
-                                Samayryn
-                            </span>
-                        </div>
+                            <Image
+                                src={defaultAvatar}
+                                alt="logo"
+                                className="w-[28px] h-[28px] rounded-full"
+                            />
+                            <span className="text-lg ">{userEmail}</span>
+                        </Link>
                         <div className="flex flex-col space-y-1">
                             {menuItems?.map((item, index) => (
-                                <div
+                                <Link
+                                    style={{
+                                        color: "inherit",
+                                        textDecoration: "inherit",
+                                    }}
+                                    onClick={closeSidebar}
+                                    to={item.label.props.to}
                                     key={item?.key}
                                     className={`flex items-center gap-4 p-4 ${
                                         menuItems.length - 1 !== index &&
@@ -113,13 +126,10 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({ menuItems }) => {
                                     }`}
                                 >
                                     {item?.icon}
-                                    <div
-                                        className="text-lg"
-                                        onClick={closeSidebar}
-                                    >
-                                        {item?.label}
+                                    <div className="text-lg">
+                                        {item?.label.props.children}
                                     </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     </div>
