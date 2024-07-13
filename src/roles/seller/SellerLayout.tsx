@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import { sellerLogout } from "@/roles/seller/redux/auth/actions";
 import { MenuItemType } from "@/types";
 import {
+    CalculatorOutlined,
     HomeOutlined,
     LogoutOutlined,
     ProductOutlined,
@@ -55,6 +56,10 @@ const breadcrumbMapping: {
     "/seller/supply": [
         { title: "Меню" },
         { title: <a href="/seller/supply">Поставки</a> },
+    ],
+    "/seller/calculator": [
+        { title: "Меню" },
+        { title: <a href="/seller/calculator">Калькулятор</a> },
     ],
 };
 export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
@@ -122,6 +127,22 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             key: "supply",
             icon: (
                 <VerticalAlignTopOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"calculator"}
+                >
+                    Калькулятор
+                </Link>
+            ),
+            key: "/seller/calculator",
+            icon: (
+                <CalculatorOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),
