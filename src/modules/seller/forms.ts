@@ -34,12 +34,15 @@ export const useUpdateSellerProfile = (
             firstName: "",
             lastName: "",
             email: "",
+            login: "",
+            password: ""
         },
         validationSchema: updateSellerProfileSchema,
         validateOnBlur: true,
         validateOnChange: true,
         onSubmit: handleSubmit,
     });
+
 
     useEffect(() => {
         if (initialValues) {
