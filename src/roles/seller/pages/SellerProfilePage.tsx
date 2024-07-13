@@ -12,6 +12,7 @@ export const SellerProfilePage: FC<SellerProfilePageProps> = ({}) => {
     const { data, isLoading, isError } = useGetSellerProfile();
     // const { message } = App.useApp();
 
+    
     if (isLoading) {
         return <Loading/>
     }

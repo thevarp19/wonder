@@ -126,4 +126,5 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
             )}
         </Form>
     );
+    
 };

@@ -13,3 +13,4 @@ export interface GetSellerProfile {
     password: string;
 }
 
+
