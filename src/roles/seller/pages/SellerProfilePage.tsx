@@ -3,7 +3,7 @@ import { Image } from "@/components/ui/Image";
 import { Loading } from "@/components/ui/Loading";
 import { useGetSellerProfile } from "@/modules/seller/queries";
 import { SellerProfileEdit } from "@/modules/seller/SellerProfileEditForm";
-import { Button} from "antd";
+import { Button } from "antd";
 import { FC } from "react";
 
 interface SellerProfilePageProps {}
@@ -12,13 +12,12 @@ export const SellerProfilePage: FC<SellerProfilePageProps> = ({}) => {
     const { data, isLoading, isError } = useGetSellerProfile();
     // const { message } = App.useApp();
 
-    
     if (isLoading) {
-        return <Loading/>
+        return <Loading />;
     }
 
     if (isError || !data) {
-         return <div>Ошибка при загрузке данных профиля</div>;
+        return <div>Ошибка при загрузке данных профиля</div>;
     }
 
     return (
@@ -31,9 +30,11 @@ export const SellerProfilePage: FC<SellerProfilePageProps> = ({}) => {
                     alt="profile"
                 />
                 <div className="flex flex-col justify-center h-auto">
-                    <h2 className="text-[20px] font-[600]">QIT</h2>
+                    <h2 className="text-[20px] font-[600]">
+                        {data.sellerName}
+                    </h2>
                     <p className="text-[16px] font-[500] text-[#4B4B4B]">
-                        ID:00101299323
+                        ID: {data.sellerId}
                     </p>
                 </div>
             </div>
@@ -51,7 +52,7 @@ export const SellerProfilePage: FC<SellerProfilePageProps> = ({}) => {
                     Поменять фото
                 </span>
             </Button>
-            <SellerProfileEdit data={data}/>
+            <SellerProfileEdit data={data} />
         </div>
     );
 };

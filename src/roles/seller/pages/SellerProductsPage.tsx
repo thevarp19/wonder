@@ -91,15 +91,15 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                     </div>
                 </div>
 
-                {current === "products" && (
-                    <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
-                        <ProductsTable searchValue={debouncedSearchValue} />
-                    </div>
-                )}
                 {current === "prices" && (
                     <ProductPriceTable
                         debouncedSearchValue={debouncedSearchValue}
                     />
+                )}
+                {current === "products" && (
+                    <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
+                        <ProductsTable searchValue={debouncedSearchValue} />
+                    </div>
                 )}
                 {current === "upload" && (
                     <div className="h-full bg-white rounded-t-lg">

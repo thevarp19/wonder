@@ -4,6 +4,7 @@ import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { SellerLayout } from "./SellerLayout";
 import {
+    SellerCalculatorPage,
     SellerHomePage,
     SellerLoginPage,
     SellerOrderPage,
@@ -56,6 +57,10 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                     <Route
                         path="/supply/create"
                         element={<SellerSupplyCreatePage />}
+                    />
+                    <Route
+                        path="/calculator"
+                        element={<SellerCalculatorPage />}
                     />
                     <Route path="/orders" element={<SellerOrdersPage />} />
                     <Route

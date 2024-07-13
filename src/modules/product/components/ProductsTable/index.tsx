@@ -17,7 +17,7 @@ const columns: TableColumnsType<GetProductContent> = [
     },
     {
         title: "Название",
-        render: (_, record) => <a href={record.vendorCode}>{record.name}</a>,
+        dataIndex: "name",
     },
     {
         title: "Опубликовано",
