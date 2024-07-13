@@ -1,4 +1,4 @@
-import { bellIcon, defaultAvatar, houseIcon } from "@/assets";
+import { bellIcon, houseIcon, searchToolbar } from "@/assets";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Image } from "../ui/Image";
@@ -20,9 +20,9 @@ export const BottomNav: FC = () => {
                     className="w-[28px] h-[28px]"
                 />
             </Link>
-            <Link to={"profile"}>
+            <Link to={"#"}>
                 <Image
-                    src={defaultAvatar}
+                    src={searchToolbar}
                     alt="logo"
                     className="w-[28px] h-[28px] rounded-full"
                 />

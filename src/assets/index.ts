@@ -15,6 +15,7 @@ import pencilIcon from "./img/pencil.svg";
 import profileImage from "./img/profile.svg";
 import scan from "./img/scan.svg";
 import searchIcon from "./img/search.svg";
+import searchToolbar from "./img/searchToolbar.svg";
 import sidebarIcon from "./img/sidebar.svg";
 import upDownIcon from "./img/upDown.svg";
 export {
@@ -35,6 +36,7 @@ export {
     profileImage,
     scan,
     searchIcon,
+    searchToolbar,
     sidebarIcon,
     upDownIcon,
 };
