@@ -46,7 +46,13 @@ export const sellerRegisterMutation = () => {
             navigate("/seller/login");
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            const errorMessage =
+                error?.response?.data?.message ||
+                Object.values(error?.response?.data || {})
+                    .flat()
+                    .join(", ") ||
+                "Произошла ошибка";
+            message.error(errorMessage);
         },
     });
 };
