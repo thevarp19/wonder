@@ -7,12 +7,12 @@ import {
 } from "./types";
 
 export function login(values: LoginRequest) {
-    return axios.post<LoginResponse>("/api/auth/login", values);
+    return axios.post<LoginResponse>("/api/login/", values);
 }
 
 export function sellerRegister(values: SellerRegisterRequest) {
     return axios.post<SellerRegisterResponse>(
-        "/api/sellers/registration",
+        "/api/sellers/registration/",
         values
     );
 }

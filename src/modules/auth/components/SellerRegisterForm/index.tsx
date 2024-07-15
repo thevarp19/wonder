@@ -18,25 +18,25 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
 
     const next = () => {
         if (
-            (formik.values.phoneNumber == "" ||
-                formik.values.firstName == "" ||
-                formik.values.lastName == "") &&
+            (formik.values.phone_number == "" ||
+                formik.values.first_name == "" ||
+                formik.values.last_name == "") &&
             current == 1
         ) {
-            formik.setFieldTouched("phoneNumber");
-            formik.setFieldTouched("firstName");
-            formik.setFieldTouched("lastName");
+            formik.setFieldTouched("phone_number");
+            formik.setFieldTouched("first_name");
+            formik.setFieldTouched("last_name");
             return;
         }
         if (
-            (formik.values.sellerName == "" ||
-                formik.values.sellerId == "" ||
-                formik.values.tokenKaspi == "") &&
+            (formik.values.kaspi_store_name == "" ||
+                formik.values.kaspi_seller_id == "" ||
+                formik.values.kaspi_token == "") &&
             current == 2
         ) {
-            formik.setFieldTouched("sellerName");
-            formik.setFieldTouched("sellerId");
-            formik.setFieldTouched("tokenKaspi");
+            formik.setFieldTouched("kaspi_store_name");
+            formik.setFieldTouched("kaspi_seller_id");
+            formik.setFieldTouched("kaspi_token");
             return;
         }
         setCurrent(current + 1);
@@ -89,7 +89,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                     <div className="flex flex-col gap-[10px] text-[#4B4B4B]">
                         Имя
                         <FormikInput
-                            name="firstName"
+                            name="first_name"
                             formik={formik}
                             formItemProps={{ className: cn("w-full") }}
                             inputProps={{
@@ -101,7 +101,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                     <div className="flex flex-col gap-[10px] text-[#4B4B4B]">
                         Фамилия
                         <FormikInput
-                            name="lastName"
+                            name="last_name"
                             formik={formik}
                             formItemProps={{ className: cn("w-full") }}
                             inputProps={{
@@ -113,7 +113,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                     <div className="flex flex-col gap-[10px] text-[#4B4B4B]">
                         Номер телефона
                         <FormikInput
-                            name="phoneNumber"
+                            name="phone_number"
                             formik={formik}
                             formItemProps={{ className: cn("w-full") }}
                             inputProps={{
@@ -145,7 +145,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                     <div className="flex flex-col gap-[10px] text-[#4B4B4B]">
                         Название магазина Kaspi
                         <FormikInput
-                            name="sellerName"
+                            name="kaspi_store_name"
                             formik={formik}
                             formItemProps={{ className: cn("w-full") }}
                             inputProps={{
@@ -157,7 +157,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                     <div className="flex flex-col gap-[10px] text-[#4B4B4B]">
                         ID продавца
                         <FormikInput
-                            name="sellerId"
+                            name="kaspi_seller_id"
                             formik={formik}
                             formItemProps={{ className: cn("w-full") }}
                             inputProps={{
@@ -169,7 +169,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                     <div className="flex flex-col gap-[10px] text-[#4B4B4B]">
                         Токен Kaspi API
                         <FormikInput
-                            name="tokenKaspi"
+                            name="kaspi_token"
                             formik={formik}
                             formItemProps={{ className: cn("w-full") }}
                             inputProps={{
@@ -232,7 +232,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                     <div className="flex flex-col gap-[10px] text-[#4B4B4B]">
                         Повторите пароль
                         <FormikPasswordInput
-                            name="repeatPassword"
+                            name="repeat_password"
                             formik={formik}
                             formItemProps={{ className: cn("w-full") }}
                             inputProps={{

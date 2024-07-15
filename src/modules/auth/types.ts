@@ -1,5 +1,5 @@
 export interface LoginRequest {
-    email: string;
+    username: string;
     password: string;
 }
 
@@ -9,14 +9,14 @@ export interface LoginResponse {
 }
 
 export interface SellerRegisterRequest {
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     email: string;
-    phoneNumber: string;
+    phone_number: string;
     password: string;
-    sellerName: string;
-    sellerId: string;
-    tokenKaspi: string;
+    kaspi_store_name: string;
+    kaspi_seller_id: string;
+    kaspi_token: string;
 }
 
 export interface SellerRegisterResponse {

@@ -20,7 +20,7 @@ export const LoginForm: FC<LoginFormProps> = ({ success, role }) => {
             <div className="flex flex-col gap-[10px] text-[#4B4B4B] w-full">
                 E-mail
                 <FormikInput
-                    name="email"
+                    name="username"
                     formik={formik}
                     formItemProps={{ className: cn("w-full") }}
                     inputProps={{

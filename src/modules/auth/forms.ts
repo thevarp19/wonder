@@ -11,7 +11,7 @@ import * as Yup from "yup";
 import { loginMutation, sellerRegisterMutation } from "./mutations";
 
 const loginSchema = Yup.object().shape({
-    email: emailSchema().required("Это обязательное поле"),
+    // email: emailSchema().required("Это обязательное поле"),
     password: passwordSchemas("password").self.required(
         "Это обязательное поле"
     ),
@@ -22,7 +22,7 @@ export const useLogin = (success: (loginData: LoginResponse) => void) => {
 
     const formik = useFormik<LoginRequest>({
         initialValues: {
-            email: "",
+            username: "",
             password: "",
         },
         validationSchema: loginSchema,
@@ -38,19 +38,16 @@ export const useLogin = (success: (loginData: LoginResponse) => void) => {
 };
 
 const sellerRegisterSchema = Yup.object().shape({
-    firstName: requiredStringSchema("Имя"),
-    lastName: requiredStringSchema("Фамилия"),
+    first_name: requiredStringSchema("Имя"),
+    last_name: requiredStringSchema("Фамилия"),
     email: emailSchema().required("Это обязательное поле"),
-    phoneNumber: KzPhoneNumberSchema().required("Это обязательное поле"),
+    phone_number: KzPhoneNumberSchema().required("Это обязательное поле"),
     password: passwordSchemas("password").self.required(
         "Это обязательное поле"
     ),
-    repeatPassword: passwordSchemas("password").repeat.required(
-        "Это обязательное поле"
-    ),
-    sellerName: requiredStringSchema("Название магазина"),
-    sellerId: requiredStringSchema("ID продавца"),
-    tokenKaspi: requiredStringSchema("Токен Каспи API"),
+    kaspi_store_name: requiredStringSchema("Название магазина"),
+    kaspi_seller_id: requiredStringSchema("ID продавца"),
+    kaspi_token: requiredStringSchema("Токен Каспи API"),
 });
 
 export const useSellerRegister = () => {
@@ -58,15 +55,14 @@ export const useSellerRegister = () => {
 
     const formik = useFormik({
         initialValues: {
-            firstName: "",
-            lastName: "",
+            first_name: "",
+            last_name: "",
             email: "",
-            phoneNumber: "",
+            phone_number: "",
             password: "",
-            repeatPassword: "",
-            sellerName: "",
-            sellerId: "",
-            tokenKaspi: "",
+            kaspi_store_name: "",
+            kaspi_seller_id: "",
+            kaspi_token: "",
         },
         validationSchema: sellerRegisterSchema,
         validateOnChange: true,
@@ -76,7 +72,7 @@ export const useSellerRegister = () => {
     async function handleSubmit() {
         await mutation.mutateAsync({
             ...formik.values,
-            phoneNumber: formik.values.phoneNumber
+            phone_number: formik.values.phone_number
                 .replace(/\s/g, "")
                 .substring(1),
         });
