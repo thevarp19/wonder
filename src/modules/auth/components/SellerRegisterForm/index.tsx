@@ -15,7 +15,11 @@ interface SellerRegisterFormProps {}
 export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
     const { formik, mutation } = useSellerRegister();
     const [current, setCurrent] = useState(1);
+    const [agreement, setAgreement] = useState(false);
 
+    const toggleChecked = () => {
+        setAgreement(!agreement);
+    };
     const next = () => {
         if (
             (formik.values.phone_number == "" ||
@@ -244,7 +248,10 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                     </div>
                     <div className="flex gap-[15px] pb-8">
                         <div className="flex flex-col items-start">
-                            <Checkbox />
+                            <Checkbox
+                                value={agreement}
+                                onChange={toggleChecked}
+                            />
                         </div>
                         <h2 className="text-xs">
                             Создавая учетную запись, вы соглашаетесь с нашими{" "}
@@ -259,6 +266,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             htmlType="submit"
                             type="primary"
                             size={"large"}
+                            disabled={!agreement}
                             loading={mutation.isPending}
                             className={cn("w-full")}
                         >

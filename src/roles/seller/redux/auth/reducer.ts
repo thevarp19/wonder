@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     isLoggedIn: !!(
         jwtService.getAccessToken() &&
         !isJwtExpired() &&
-        getRoles()?.includes("SELLER")
+        getRoles()?.includes("seller")
     ),
     userData: getUserData(),
 };

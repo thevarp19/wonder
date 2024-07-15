@@ -6,8 +6,8 @@ export const employeeLoginSuccess = (
     data: LoginResponse
 ): LoginSuccessAction => {
     jwtService.saveJwt({
-        access: data.accessToken,
-        refresh: data.refreshToken,
+        access: data.access,
+        refresh: data.refresh,
     });
     // if (!getRoles()?.includes("STORE_EMPLOYEE")) {
     //     throw new Error("Invalid role");

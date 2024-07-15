@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     isLoggedIn: !!(
         jwtService.getAccessToken() &&
         !isJwtExpired() &&
-        getRoles()?.includes("SUPER_ADMIN")
+        getRoles()?.includes("admin")
     ),
     userData: getUserData(),
 };

@@ -5,10 +5,12 @@ import { LOGIN_SUCCESS, LoginSuccessAction, LogoutAction } from "./types";
 
 export const adminLoginSuccess = (data: LoginResponse): LoginSuccessAction => {
     jwtService.saveJwt({
-        access: data.accessToken,
-        refresh: data.refreshToken,
+        access: data.access,
+        refresh: data.refresh,
     });
-    if (!getRoles()?.includes("SUPER_ADMIN")) {
+    if (!getRoles()?.includes("admin")) {
+        console.log(getRoles());
+
         throw new Error("Invalid role");
     }
     return {

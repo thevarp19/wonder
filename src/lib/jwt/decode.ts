@@ -12,17 +12,7 @@ interface DecodedJwt {
     azp: string;
     session_state: string;
     acr: string;
-    realm_access: {
-        roles: string[];
-    };
-    resource_access: {
-        wonder: {
-            roles: string[];
-        };
-        account: {
-            roles: string[];
-        };
-    };
+    role: string;
     scope: string;
     sid: string;
     email_verified: boolean;
@@ -43,6 +33,7 @@ interface DecodedRefreshJwt {
     sub: string;
     typ: string;
     azp: string;
+    role: string;
     session_state: string;
     scope: string;
     sid: string;
@@ -73,7 +64,7 @@ export const getRoles = () => {
     if (!decodedJwt) {
         return null;
     }
-    return decodedJwt.resource_access.wonder.roles;
+    return decodedJwt.role;
 };
 
 export const getUserData = () => {

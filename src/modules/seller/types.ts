@@ -1,16 +1,13 @@
 export interface GetSellerProfile {
-    id: number;
-    phoneNumber: string;
-    sellerName: string;
-    sellerId: string;
-    tokenKaspi: string;
-    xmlUpdatedAt?: string;
-    pathToXml?: string;
-    firstName: string;
-    lastName: string;
+    // id: number;
+    phone_number: string;
+    kaspi_store_name: string;
+    kaspi_seller_id: string;
+    kaspi_token: string;
+
+    first_name: string;
+    last_name: string;
     email: string;
-    login: string;
-    password: string;
+    // login: string;
+    // password: string;
 }
-
-

@@ -9,7 +9,7 @@ export const sellerUpdateMutation = () => {
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>, GetSellerProfile>({
         async mutationFn(values) {
-            await updateSellerProfile(values.id, values);
+            await updateSellerProfile(values);
         },
         onSuccess() {
             message.success("Успешно!");

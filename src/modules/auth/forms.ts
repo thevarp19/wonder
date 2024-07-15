@@ -52,7 +52,7 @@ const sellerRegisterSchema = Yup.object().shape({
 
 export const useSellerRegister = () => {
     const mutation = sellerRegisterMutation();
-
+    // const { message } = App.useApp();
     const formik = useFormik({
         initialValues: {
             first_name: "",
@@ -70,6 +70,13 @@ export const useSellerRegister = () => {
     });
 
     async function handleSubmit() {
+        // if (!agreement) {
+        //     message.error(
+        //         "Пожалуйста, согласитесь с условиями и конфиденциальностью"
+        //     );
+        //     return;
+        // }
+
         await mutation.mutateAsync({
             ...formik.values,
             phone_number: formik.values.phone_number

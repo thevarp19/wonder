@@ -11,10 +11,10 @@ import {
 
 export const sellerLoginSuccess = (data: LoginResponse): LoginSuccessAction => {
     jwtService.saveJwt({
-        access: data.accessToken,
-        refresh: data.refreshToken,
+        access: data.access,
+        refresh: data.refresh,
     });
-    if (!getRoles()?.includes("SELLER")) {
+    if (!getRoles()?.includes("seller")) {
         throw new Error("Invalid role");
     }
     return {

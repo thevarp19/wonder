@@ -20,6 +20,10 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
     const handleCancelClick = () => {
         setIsEditing(false);
     };
+    const handleSave = () => {
+        formik.handleSubmit();
+        setIsEditing(false);
+    };
 
     return (
         <Form layout="vertical" className="w-full">
@@ -31,9 +35,9 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
                             label: "Имя",
                             required: true,
                         }}
-                        name="firstName"
+                        name="first_name"
                         inputProps={{
-                            disabled: !isEditing
+                            disabled: !isEditing,
                         }}
                     />
                     <FormikInput
@@ -42,28 +46,35 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
                             label: "Фамилия",
                             required: true,
                         }}
-                        name="lastName"
+                        name="last_name"
                         inputProps={{
-                            disabled: !isEditing
+                            disabled: !isEditing,
                         }}
                     />
                     <FormikInput
-                        name="phoneNumber"
+                        name="phone_number"
                         formik={formik}
-                        formItemProps={{ label: "Номер телефон", required: true }}
+                        formItemProps={{
+                            label: "Номер телефон",
+                            required: true,
+                        }}
                         inputProps={{
+                            type: "tel",
                             onChange: (e) => {
-                                phoneNumberChangeHandler(e, formik.handleChange);
+                                phoneNumberChangeHandler(
+                                    e,
+                                    formik.handleChange
+                                );
                             },
-                            disabled: !isEditing
+                            disabled: !isEditing,
                         }}
                     />
                     <FormikInput
-                        name="tokenKaspi"
+                        name="kaspi_token"
                         formik={formik}
                         formItemProps={{ label: "Kaspi API", required: true }}
                         inputProps={{
-                            disabled: !isEditing
+                            disabled: !isEditing,
                         }}
                     />
                 </div>
@@ -73,7 +84,7 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
                         formik={formik}
                         formItemProps={{ label: "Логин", required: true }}
                         inputProps={{
-                            disabled: !isEditing
+                            disabled: !isEditing,
                         }}
                     />
                     <FormikInput
@@ -81,7 +92,7 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
                         formik={formik}
                         formItemProps={{ label: "Пароль", required: true }}
                         inputProps={{
-                            disabled: !isEditing
+                            disabled: !isEditing,
                         }}
                     />
                     <FormikInput
@@ -89,12 +100,12 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
                         formik={formik}
                         formItemProps={{ label: "E-mail", required: true }}
                         inputProps={{
-                            disabled: !isEditing
+                            disabled: !isEditing,
                         }}
                     />
                 </div>
             </div>
-      
+
             {!isEditing ? (
                 <Button
                     className="md:w-[200px] w-full h-[50px] mt-12"
@@ -108,11 +119,9 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
                     <Button
                         className="w-full md:w-[200px]"
                         type="primary"
-                        onClick={() => {
-                            formik.handleSubmit();
-                            setIsEditing(false);
-                        }}
+                        onClick={handleSave}
                         loading={mutation.isPending}
+                        disabled={!formik.isValid}
                     >
                         Сохранить
                     </Button>
@@ -126,5 +135,4 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
             )}
         </Form>
     );
-    
 };
