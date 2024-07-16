@@ -1,4 +1,4 @@
-import { useGetAllBoxes } from "@/modules/box/queries";
+import { useGetAllBoxes, useGetStoreBoxes } from "@/modules/box/queries";
 import { GetBoxResponse } from "@/modules/box/types";
 import { DeleteOutlined } from "@ant-design/icons";
 import {
@@ -12,13 +12,11 @@ import {
 import { FC, useState } from "react";
 import { useBindBoxToStore } from "../../forms";
 import { removeBoxFromStoreMutation } from "../../mutations";
-
 interface StoreBoxesModalProps {
-    boxTypes: GetBoxResponse[];
-    storeId: string;
+    storeId: number;
 }
 
-const DeleteBoxCell: FC<{ boxId: string; storeId: string }> = ({
+const DeleteBoxCell: FC<{ boxId: number; storeId: number }> = ({
     boxId,
     storeId,
 }) => {
@@ -42,10 +40,7 @@ const DeleteBoxCell: FC<{ boxId: string; storeId: string }> = ({
     );
 };
 
-export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
-    boxTypes,
-    storeId,
-}) => {
+export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({ storeId }) => {
     const columns: TableColumnsType<GetBoxResponse> = [
         {
             title: "ID коробки",
@@ -53,20 +48,23 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
         },
         {
             title: "Название",
-            dataIndex: "name",
+            dataIndex: "title",
         },
         {
             title: "Размеры",
-            dataIndex: "description",
+            render: (_, record) =>
+                `${record.length}x${record.width}x${record.height}`,
         },
         {
             title: "Удалить",
             render: (_, record) => (
-                <DeleteBoxCell boxId={`${record.id}`} storeId={storeId} />
+                <DeleteBoxCell boxId={record.id} storeId={storeId} />
             ),
         },
     ];
     const { data: boxes, isPending } = useGetAllBoxes();
+    const { data: storeBoxes, isPending: storeBoxesLoading } =
+        useGetStoreBoxes(storeId);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { formik, mutation } = useBindBoxToStore(storeId);
     return (
@@ -86,7 +84,6 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                 }}
                 cancelButtonProps={{ style: { width: 100 } }}
                 cancelText="Назад"
-                // className="flex flex-col md:flex-row"
                 okButtonProps={{ style: { width: 100 } }}
                 onOk={() => {
                     setIsModalOpen(false);
@@ -101,18 +98,22 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                                 Нет данных
                             </div>
                         }
-                        value={formik.values.boxId}
+                        value={
+                            formik.values.boxId === 0
+                                ? undefined
+                                : formik.values.boxId
+                        }
                         onChange={(value) => {
                             formik.setFieldValue("boxId", value);
                         }}
                         options={boxes
                             ?.filter((box) => {
-                                return !boxTypes.find(
-                                    (type) => type.id === box.id
+                                return !storeBoxes?.find(
+                                    (type: { id: number }) => type.id === box.id
                                 );
                             })
                             .map((box) => ({
-                                label: box.name,
+                                label: box.title,
                                 value: box.id,
                             }))}
                     />
@@ -131,8 +132,8 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({
                     className="mt-14 md:mt-4"
                     size="small"
                     rowKey={(record) => `${record.id}`}
-                    dataSource={boxTypes}
-                    loading={isPending}
+                    dataSource={storeBoxes}
+                    loading={storeBoxesLoading || isPending}
                     columns={columns}
                     pagination={false}
                     scroll={{ x: "max-content" }}

@@ -23,9 +23,7 @@ export const useUpdateSellerProfile = (
     initialValues: GetSellerProfile | undefined
 ) => {
     const mutation = sellerUpdateMutation();
-    const cleanPhoneNumber = (phoneNumber: string) => {
-        return phoneNumber.replace(/[^0-9]/g, "");
-    };
+
     const formik = useFormik<GetSellerProfile>({
         initialValues: {
             phone_number: "",
@@ -46,20 +44,8 @@ export const useUpdateSellerProfile = (
 
     useEffect(() => {
         if (initialValues) {
-            let cleanedValues = { ...initialValues };
-            const isValidPhoneNumber = KzPhoneNumberSchema().isValidSync(
-                initialValues.phone_number
-            );
-
-            if (!isValidPhoneNumber) {
-                cleanedValues = {
-                    ...cleanedValues,
-                    phone_number: cleanPhoneNumber(initialValues.phone_number),
-                };
-            }
-
             formik.resetForm({
-                values: cleanedValues,
+                values: initialValues,
             });
         }
     }, [initialValues]);

@@ -9,10 +9,10 @@ export const createCellMutation = (storeId: number, onSuccess?: () => void) => {
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>, CreateCellRequest>({
         async mutationFn(values) {
-            await createCell(values);
+            await createCell(values, storeId);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
 
             queryClient.invalidateQueries({
                 queryKey: [`cells`, storeId],
@@ -37,7 +37,7 @@ export const updateCellMutation = (
             await updateCell(id, values);
         },
         onSuccess() {
-            message.success("Success!");
+            message.success("Успешно!");
 
             queryClient.invalidateQueries({
                 queryKey: [`cells`, storeId],

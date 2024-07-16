@@ -1,29 +1,33 @@
-import {
-    requiredBooleanSchema,
-    requiredNumberSchema,
-    requiredStringSchema,
-} from "@/lib/validations/shared";
+import { requiredStringSchema } from "@/lib/validations/shared";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import * as Yup from "yup";
 import {
+    activateStoreSellerMutation,
     bindBoxToStoreMutation,
     createStoreMutation,
+    createStoreSellerMutation,
     removeBoxFromStoreMutation,
     updateStoreMutation,
 } from "./mutations";
 import {
+    ActivateStoreSellerRequest,
     CreateStoreRequest,
-    GetStoreResponse,
+    CreateStoreSellerRequest,
+    GetDetailStoreResponse,
     UpdateStoreRequest,
 } from "./types";
 import { mapGetStoreToUpdate } from "./utils";
 
 const createStoreSchema = Yup.object().shape({
-    kaspiId: requiredStringSchema(),
-    cityId: requiredNumberSchema(),
-    streetName: requiredStringSchema(),
-    apartment: requiredStringSchema(),
+    warehouse: Yup.object().shape({
+        street_number: requiredStringSchema(),
+        street_name: requiredStringSchema(),
+
+        city: Yup.string().required(),
+    }),
+    volume: requiredStringSchema(),
+    rental_price: requiredStringSchema(),
 });
 
 export const useCreateStore = () => {
@@ -31,13 +35,45 @@ export const useCreateStore = () => {
 
     const formik = useFormik<CreateStoreRequest>({
         initialValues: {
-            kaspiId: "",
-            cityId: -1,
-            streetName: "",
-            streetNumber: "",
-            latitude: 0,
-            longitude: 0,
-            dayOfWeekWorks: [],
+            warehouse: {
+                operating_modes: [],
+                street_name: "",
+                street_number: "",
+                is_warehouse: false,
+                additional_information: "",
+                city: 1,
+            },
+            volume: "",
+            rental_price: "",
+            enabled: false,
+        },
+        validationSchema: createStoreSchema,
+        validateOnBlur: true,
+        validateOnChange: true,
+        onSubmit: handleSubmit,
+    });
+
+    async function handleSubmit() {
+        await mutation.mutateAsync(formik.values);
+    }
+
+    return { formik, mutation };
+};
+export const useCreateStoreSeller = () => {
+    const mutation = createStoreSellerMutation();
+
+    const formik = useFormik<CreateStoreSellerRequest>({
+        initialValues: {
+            warehouse: {
+                operating_modes: [],
+                street_name: "",
+                street_number: "",
+                is_warehouse: false,
+                additional_information: "",
+                city: 1,
+            },
+            enabled: false,
+            kaspi_warehouse_id: "",
         },
         validationSchema: createStoreSchema,
         validateOnBlur: true,
@@ -52,29 +88,57 @@ export const useCreateStore = () => {
     return { formik, mutation };
 };
 
+export const useActivateStoreSeller = (wonder_id: number) => {
+    const mutation = activateStoreSellerMutation(wonder_id);
+
+    const formik = useFormik<ActivateStoreSellerRequest>({
+        initialValues: {
+            kaspi_warehouse_id: "",
+            enabled: true,
+        },
+        // validationSchema: createStoreSchema,
+        // validateOnBlur: true,
+        // validateOnChange: true,
+        onSubmit: handleSubmit,
+    });
+
+    async function handleSubmit() {
+        await mutation.mutateAsync(formik.values);
+    }
+
+    return { formik, mutation };
+};
+
 const updateStoreSchema = Yup.object().shape({
-    kaspiId: requiredStringSchema(),
-    cityId: requiredNumberSchema(),
-    streetName: requiredStringSchema(),
-    enabled: requiredBooleanSchema(),
+    warehouse: Yup.object().shape({
+        street_number: requiredStringSchema(),
+        street_name: requiredStringSchema(),
+        // additional_information: Yup.string(),
+        city: Yup.string().required(),
+    }),
+    volume: requiredStringSchema(),
+    rental_price: requiredStringSchema(),
 });
 
 export const useUpdateStore = (
     storeId: number,
-    initialValues: GetStoreResponse | undefined
+    initialValues: GetDetailStoreResponse | undefined
 ) => {
     const mutation = updateStoreMutation(storeId);
 
     const formik = useFormik<UpdateStoreRequest>({
         initialValues: {
-            kaspiId: "",
-            cityId: -1,
-            streetName: "",
-            streetNumber: "",
-            latitude: 0,
-            longitude: 0,
+            volume: "",
+            rental_price: "",
             enabled: false,
-            dayOfWeekWorks: [],
+            warehouse: {
+                operating_modes: [],
+                street_name: "",
+                street_number: "",
+                is_warehouse: false,
+                additional_information: "",
+                city: 0,
+            },
         },
         validationSchema: updateStoreSchema,
         validateOnBlur: true,
@@ -101,12 +165,12 @@ const boxToStoreSchema = Yup.object().shape({
     boxId: requiredStringSchema(),
 });
 
-export const useBindBoxToStore = (storeId: string) => {
+export const useBindBoxToStore = (storeId: number) => {
     const mutation = bindBoxToStoreMutation();
 
     const formik = useFormik({
         initialValues: {
-            boxId: "",
+            boxId: 0,
         },
         validationSchema: boxToStoreSchema,
         validateOnBlur: true,
@@ -122,12 +186,12 @@ export const useBindBoxToStore = (storeId: string) => {
     return { formik, mutation };
 };
 
-export const useRemoveBoxFromStore = (storeId: string) => {
+export const useRemoveBoxFromStore = (storeId: number) => {
     const mutation = removeBoxFromStoreMutation();
 
     const formik = useFormik({
         initialValues: {
-            boxId: "",
+            boxId: 0,
         },
         validationSchema: boxToStoreSchema,
         validateOnBlur: true,

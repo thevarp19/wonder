@@ -1,10 +1,12 @@
 import { Protected } from "@/context/Protected";
+import { StoreActivationForm } from "@/modules/store/components/CreateStoreForm/StoreActivationForm";
 import { useAppSelector } from "@/redux/utils";
 import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { SellerLayout } from "./SellerLayout";
 import {
     SellerCalculatorPage,
+    SellerCreateStorePage,
     SellerHomePage,
     SellerLoginPage,
     SellerOrderPage,
@@ -14,7 +16,6 @@ import {
     SellerProfilePage,
     SellerRegisterPage,
     SellerSettingsPage,
-    SellerSupplyCreatePage,
     SellerSupplyDetailsPage,
     SellerSupplyPage,
 } from "./pages";
@@ -43,6 +44,18 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                 <Route path="/" element={<SellerLayout />}>
                     <Route index path="/" element={<SellerHomePage />} />
                     <Route path="/settings" element={<SellerSettingsPage />} />
+                    <Route
+                        path="/settings/create-store"
+                        element={<SellerCreateStorePage />}
+                    />
+                    <Route
+                        path="/settings/update-store/:storeId/activate"
+                        element={<StoreActivationForm />}
+                    />
+                    <Route
+                        path="/settings/update-store/:storeId"
+                        element={<div>update</div>}
+                    />
                     <Route path="/profile" element={<SellerProfilePage />} />
                     <Route path="/products" element={<SellerProductsPage />} />
                     {/* <Route
@@ -56,7 +69,7 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                     />
                     <Route
                         path="/supply/create"
-                        element={<SellerSupplyCreatePage />}
+                        // element={<SellerSupplyCreatePage />}
                     />
                     <Route
                         path="/calculator"

@@ -31,7 +31,7 @@ export const SellerProfilePage: FC<SellerProfilePageProps> = ({}) => {
                 />
                 <div className="flex flex-col justify-center h-auto">
                     <h2 className="text-[20px] font-[600]">
-                        {data.kaspi_store_name}
+                        {data.first_name} {data.last_name}
                     </h2>
                     <p className="text-[16px] font-[500] text-[#4B4B4B]">
                         ID: {data.kaspi_seller_id}

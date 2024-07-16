@@ -1,29 +1,30 @@
-import { requiredNumberSchema } from "@/lib/validations/shared";
 import { useFormik } from "formik";
 import { useEffect } from "react";
-import * as Yup from "yup";
 import { createCellMutation, updateCellMutation } from "./mutations";
 import { GetCellResponse } from "./types";
 import { mapCreateCellToUpdate } from "./utils";
 
-const createCellSchema = Yup.object().shape({
-    row: requiredNumberSchema(),
-    col: requiredNumberSchema(),
-    cell: requiredNumberSchema(),
-});
+// const createCellSchema = Yup.object().shape({
+//     row: requiredNumberSchema(),
+//     col: requiredNumberSchema(),
+//     cell: requiredNumberSchema(),
+// });
 
 export const useCreateCell = (storeId: number, onSuccess?: () => void) => {
     const mutation = createCellMutation(storeId, onSuccess);
 
     const formik = useFormik({
         initialValues: {
-            storeId,
+            line: 0,
             row: 0,
             col: 0,
-            cell: 0,
+            length: 0,
+            width: 0,
+            height: 0,
+            comment: "",
         },
-        validationSchema: createCellSchema,
-        validateOnChange: true,
+        // validationSchema: createCellSchema,
+        // validateOnChange: true,
         onSubmit: handleSubmit,
     });
 
@@ -45,8 +46,8 @@ export const useUpdateCell = (
     const formik = useFormik<{
         row: number;
         col: number;
-        cell: number;
-        depth?: number;
+        line: number;
+        length?: number;
         height?: number;
         width?: number;
         comment?: string;
@@ -54,14 +55,14 @@ export const useUpdateCell = (
         initialValues: {
             row: 0,
             col: 0,
-            cell: 0,
-            depth: 0,
+            line: 0,
+            length: 0,
             height: 0,
             width: 0,
             comment: "",
         },
-        validationSchema: createCellSchema,
-        validateOnChange: true,
+        // validationSchema: createCellSchema,
+        // validateOnChange: true,
         onSubmit: handleSubmit,
     });
 

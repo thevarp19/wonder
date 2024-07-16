@@ -1,7 +1,6 @@
 import { FormikInput, FormikNumberInput } from "@/components/ui/FormikInput";
 import { cn } from "@/utils/shared.util";
-import { UploadOutlined } from "@ant-design/icons";
-import { Button, Form, Upload } from "antd";
+import { Button, Form } from "antd";
 import { FC } from "react";
 import { useCreateBox } from "../../forms";
 
@@ -19,7 +18,7 @@ export const CreateBoxForm: FC<CreateBoxFormProps> = ({}) => {
                 className="flex flex-col w-full min-w-[291px] gap-2"
             >
                 <FormikInput
-                    name="name"
+                    name="title"
                     formik={formik}
                     formItemProps={{
                         label: "Имя",
@@ -61,7 +60,7 @@ export const CreateBoxForm: FC<CreateBoxFormProps> = ({}) => {
                         style: { width: "100%" },
                     }}
                 />
-                <Upload
+                {/* <Upload
                     accept=".jpg,.jpeg,.png"
                     beforeUpload={(file) => {
                         formik.setFieldValue("files", [
@@ -84,7 +83,7 @@ export const CreateBoxForm: FC<CreateBoxFormProps> = ({}) => {
                     <Button size="large" icon={<UploadOutlined />}>
                         Загрузить файл
                     </Button>
-                </Upload>
+                </Upload> */}
                 <Button
                     htmlType="submit"
                     type="primary"

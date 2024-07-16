@@ -23,19 +23,19 @@ const mapResponseToRequest = (initialValues?: WorkDayOfWeekResponse[]) => {
         const res = {
             name: day.name,
             index: day.index,
-            numericDayOfWeek: -1,
-            openTime: "09:00",
-            closeTime: "18:00",
+            day: -1,
+            opened_at: "09:00",
+            closed_at: "18:00",
         };
 
         const initialValue = initialValues?.find(
-            (value) => value.dayOfWeek === day.index
+            (value) => value.day === day.index
         );
 
         if (initialValue) {
-            res.numericDayOfWeek = initialValue.dayOfWeek;
-            res.openTime = initialValue.openTime;
-            res.closeTime = initialValue.closeTime;
+            res.day = initialValue.day;
+            res.opened_at = initialValue.opened_at;
+            res.closed_at = initialValue.closed_at;
         }
 
         return res;
@@ -45,9 +45,9 @@ const mapResponseToRequest = (initialValues?: WorkDayOfWeekResponse[]) => {
 interface WorkingTimeFormValue {
     name: string;
     index: number;
-    numericDayOfWeek: number;
-    openTime: string;
-    closeTime: string;
+    day: number;
+    opened_at: string;
+    closed_at: string;
 }
 
 export const UpdateWorkingTimeInput: FC<UpdateWorkingTimeInputProps> = ({
@@ -87,7 +87,7 @@ export const UpdateWorkingTimeInput: FC<UpdateWorkingTimeInputProps> = ({
                             setValues((prev) =>
                                 prev?.map((value) => ({
                                     ...value,
-                                    openTime: `${dateString}`,
+                                    opened_at: `${dateString}`,
                                 }))
                             );
                             setMainOpenTime(`${dateString}`);
@@ -103,7 +103,7 @@ export const UpdateWorkingTimeInput: FC<UpdateWorkingTimeInputProps> = ({
                             setValues((prev) =>
                                 prev?.map((value) => ({
                                     ...value,
-                                    closeTime: `${dateString}`,
+                                    closed_at: `${dateString}`,
                                 }))
                             );
                             setMainCloseTime(`${dateString}`);
@@ -117,9 +117,9 @@ export const UpdateWorkingTimeInput: FC<UpdateWorkingTimeInputProps> = ({
                             setValues((prev) =>
                                 prev?.map((value) => ({
                                     ...value,
-                                    numericDayOfWeek: value.index,
-                                    openTime: mainOpenTime,
-                                    closeTime: mainCloseTime,
+                                    day: value.index,
+                                    opened_at: mainOpenTime,
+                                    closed_at: mainCloseTime,
                                 }))
                             );
                         }
@@ -149,13 +149,13 @@ interface WorkingTimeUnitProps extends WorkingTimeFormValue {
 
 const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
     name,
-    openTime,
-    closeTime,
-    numericDayOfWeek,
+    opened_at,
+    closed_at,
+    day,
     setValues,
     index,
 }) => {
-    const [active, setActive] = useState(numericDayOfWeek !== -1);
+    const [active, setActive] = useState(day !== -1);
     return (
         <div
             className={cn(
@@ -174,7 +174,7 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                                     if (value.index === index) {
                                         return {
                                             ...value,
-                                            numericDayOfWeek: -1,
+                                            day: -1,
                                         };
                                     }
                                     return value;
@@ -186,7 +186,7 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                                     if (value.index === index) {
                                         return {
                                             ...value,
-                                            numericDayOfWeek: index,
+                                            day: index,
                                         };
                                     }
                                     return value;
@@ -201,7 +201,7 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
             <div className="flex items-center justify-between md:justify-normal gap-[10px]">
                 <TimePicker
                     format="HH:mm"
-                    defaultValue={dayjs(openTime, "HH:mm")}
+                    defaultValue={dayjs(opened_at, "HH:mm")}
                     needConfirm={false}
                     disabled={!active}
                     onChange={(_, dateString) => {
@@ -210,7 +210,7 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                                 if (value.index === index) {
                                     return {
                                         ...value,
-                                        openTime: `${dateString}`,
+                                        opened_at: `${dateString}`,
                                     };
                                 }
                                 return value;
@@ -223,14 +223,14 @@ const WorkingTimeUnit: FC<WorkingTimeUnitProps> = ({
                     format="HH:mm"
                     needConfirm={false}
                     disabled={!active}
-                    defaultValue={dayjs(closeTime, "HH:mm")}
+                    defaultValue={dayjs(closed_at, "HH:mm")}
                     onChange={(_, dateString) => {
                         setValues((prev) =>
                             prev.map((value) => {
                                 if (value.index === index) {
                                     return {
                                         ...value,
-                                        closeTime: `${dateString}`,
+                                        closed_at: `${dateString}`,
                                     };
                                 }
                                 return value;

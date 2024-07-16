@@ -39,6 +39,7 @@ export const FormikItem: FC<FormikItemProps> = ({
 interface FormikInputProps {
     formik: FormikProps<any>;
     name: string;
+    value?: any;
     inputProps?: InputProps;
     formItemProps?: FormItemProps;
     inputRef?: React.RefObject<any>;
@@ -48,6 +49,7 @@ export const FormikInput: FC<FormikInputProps> = ({
     formik,
     name,
     formItemProps,
+    value,
     inputProps,
     inputRef,
 }) => {
@@ -59,7 +61,7 @@ export const FormikInput: FC<FormikInputProps> = ({
                 onBlur={formik.handleBlur}
                 name={name}
                 required={false}
-                value={formik.values[name]}
+                value={formik.values[name] || value}
                 {...inputProps}
             />
         </FormikItem>

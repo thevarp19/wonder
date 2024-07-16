@@ -55,7 +55,7 @@ export const UpdateCellForm: FC<UpdateCellFormProps> = ({
                     }}
                 />
                 <FormikNumberInput
-                    name="cell"
+                    name="line"
                     formik={formik}
                     formItemProps={{
                         label: "Номер",
@@ -91,7 +91,7 @@ export const UpdateCellForm: FC<UpdateCellFormProps> = ({
                     }}
                 />
                 <FormikNumberInput
-                    name="depth"
+                    name="length"
                     formik={formik}
                     formItemProps={{
                         label: "Глубина",

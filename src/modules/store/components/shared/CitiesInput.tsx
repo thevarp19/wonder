@@ -14,7 +14,7 @@ export const CitiesInput: FC<CitiesInputProps> = ({ ...props }) => {
                     id: string;
                     name: string;
                 }[]
-            >("/api/cities");
+            >("/api/city/");
             return data.map((city) => ({ label: city.name, value: city.id }));
         },
     });

@@ -8,38 +8,36 @@ import { useFormik } from "formik";
 import { useEffect } from "react";
 import * as Yup from "yup";
 import { createEmployeeMutation, updateEmployeeMutation } from "./mutations";
-import { GetEmployee } from "./types";
+import { CreateEmployeeRequest, GetEmployee } from "./types";
 
 const createEmployeeSchema = Yup.object().shape({
-    firstName: requiredStringSchema(),
-    lastName: requiredStringSchema(),
+    first_name: requiredStringSchema(),
+    last_name: requiredStringSchema(),
     email: emailSchema().required("Почта обязательна для заполнения"),
     password: passwordSchemas().self.required(
         "Пароль обязателен для заполнения"
     ),
     repeatPassword: passwordSchemas().repeat.required("Повторите пароль"),
-    phoneNumber: KzPhoneNumberSchema().required("Номер телефона обязателен"),
+    phone_number: KzPhoneNumberSchema().required("Номер телефона обязателен"),
 });
 
 const updateEmployeeSchema = Yup.object().shape({
-    firstName: requiredStringSchema(),
-    lastName: requiredStringSchema(),
+    first_name: requiredStringSchema(),
+    last_name: requiredStringSchema(),
     email: emailSchema().required(),
-    phoneNumber: KzPhoneNumberSchema().required(),
+    phone_number: KzPhoneNumberSchema().required(),
 });
 
 export const useCreateEmployee = (storeId: number, onSuccess?: () => void) => {
     const mutation = createEmployeeMutation(storeId, onSuccess);
 
-    const formik = useFormik({
+    const formik = useFormik<CreateEmployeeRequest>({
         initialValues: {
-            firstName: "",
-            lastName: "",
+            first_name: "",
+            last_name: "",
             email: "",
             password: "",
-            repeatPassword: "",
-            phoneNumber: "",
-            storeId,
+            phone_number: "",
         },
         validationSchema: createEmployeeSchema,
         validateOnChange: true,
@@ -64,11 +62,10 @@ export const useUpdateEmployee = (
     const formik = useFormik({
         initialValues: {
             id,
-            firstName: "",
-            lastName: "",
+            first_name: "",
+            last_name: "",
             email: "",
-            phoneNumber: "",
-            storeId: storeId,
+            phone_number: "",
         },
         validationSchema: updateEmployeeSchema,
         validateOnChange: true,

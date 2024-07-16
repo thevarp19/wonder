@@ -1,6 +1,14 @@
 export interface GetBoxResponse {
     id: number;
-    name: string;
-    description: string;
-    imageUrls: string[];
+    title: string;
+    length: number;
+    width: number;
+    height: number;
+}
+
+export interface CreateBoxRequest {
+    title: string;
+    length: number;
+    width: number;
+    height: number;
 }

@@ -2,7 +2,6 @@ import { CellsTable } from "@/modules/cell/components/CellsTable";
 import { PrintAllCellsButton } from "@/modules/cell/components/CellsTable/PrintAllCellsButton";
 import { CreateCellForm } from "@/modules/cell/components/CreateCellForm";
 import { useGetCells } from "@/modules/cell/queries";
-import { useGetStore } from "@/modules/store/queries";
 import { Button, Modal } from "antd";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -18,8 +17,6 @@ export const StoreCellsPage: FC<StoreCellsPageProps> = ({}) => {
     if (isNaN(storeId)) {
         return <div>Неверный идентификатор склада</div>;
     }
-    const { data: store, isPending: isStorePending } = useGetStore(storeId);
-
     const { data: cells, isPending } = useGetCells(storeId);
     return (
         <div className="h-full">
@@ -29,14 +26,14 @@ export const StoreCellsPage: FC<StoreCellsPageProps> = ({}) => {
                 </h1>
                 <div className="flex flex-col items-center w-full gap-4 md:flex-row md:max-w-sm">
                     <CreateCellModal storeId={storeId} />
-                    <PrintAllCellsButton store={store} cells={cells} />
+                    <PrintAllCellsButton cells={cells} />
                 </div>
             </div>
             <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
                 <CellsTable
-                    store={store}
+                    storeId={storeId}
                     isPending={isPending}
-                    isStorePending={isStorePending}
+                    isStorePending={false}
                     cells={cells}
                 />
             </div>

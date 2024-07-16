@@ -2,14 +2,14 @@ import { FormikInput } from "@/components/ui/FormikInput";
 import { cn } from "@/utils/shared.util";
 import { Button, Checkbox, Form } from "antd";
 import { FC } from "react";
-import { useCreateStore } from "../../forms";
+import { useCreateStoreSeller } from "../../forms";
 import { CitiesInput } from "../shared/CitiesInput";
 import { WorkingTimeInput } from "./WorkingTimeInput";
 
-interface CreateStoreFormProps {}
+interface CreateStoreSellerFormProps {}
 
-export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
-    const { formik, mutation } = useCreateStore();
+export const CreateStoreSellerForm: FC<CreateStoreSellerFormProps> = () => {
+    const { formik, mutation } = useCreateStoreSeller();
     return (
         <div className="flex flex-col gap-10 items-center md:border border-[#D9D9D9] rounded-[28px] md:px-[126px] px-4 md:py-[34px] pb-[68px] w-full md:w-auto">
             <h2 className="text-[18px] font-semibold">Создать новый склад</h2>
@@ -19,6 +19,16 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                 layout="vertical"
                 className="flex flex-col w-full md:max-w-[291px] gap-2"
             >
+                <FormikInput
+                    name="kaspi_warehouse_id"
+                    formik={formik}
+                    formItemProps={{
+                        label: "Kaspi ID (Идентификатор Kaspi)",
+                    }}
+                    inputProps={{
+                        size: "large",
+                    }}
+                />
                 <Form.Item label="Город" className="w-full !mb-4">
                     <CitiesInput
                         className=""
@@ -43,26 +53,6 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                     formik={formik}
                     formItemProps={{
                         label: "Номер здания",
-                    }}
-                    inputProps={{
-                        size: "large",
-                    }}
-                />
-                <FormikInput
-                    name="volume"
-                    formik={formik}
-                    formItemProps={{
-                        label: "Объем склада",
-                    }}
-                    inputProps={{
-                        size: "large",
-                    }}
-                />
-                <FormikInput
-                    name="rental_price"
-                    formik={formik}
-                    formItemProps={{
-                        label: "Аренда склада",
                     }}
                     inputProps={{
                         size: "large",

@@ -23,7 +23,7 @@ export const CreateEmployeeForm: FC<CreateEmployeeFormProps> = ({
         >
             <div className="flex items-center justify-between gap-4">
                 <FormikInput
-                    name="firstName"
+                    name="first_name"
                     formik={formik}
                     formItemProps={{
                         label: "Имя",
@@ -35,7 +35,7 @@ export const CreateEmployeeForm: FC<CreateEmployeeFormProps> = ({
                     }}
                 />
                 <FormikInput
-                    name="lastName"
+                    name="last_name"
                     formik={formik}
                     formItemProps={{
                         label: "Фамилия",
@@ -49,7 +49,7 @@ export const CreateEmployeeForm: FC<CreateEmployeeFormProps> = ({
             </div>
             <div className="flex items-center justify-between gap-4">
                 <FormikInput
-                    name="phoneNumber"
+                    name="phone_number"
                     formik={formik}
                     formItemProps={{ label: "Номер телефона", required: true }}
                     inputProps={{

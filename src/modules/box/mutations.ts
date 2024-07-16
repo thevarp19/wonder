@@ -2,31 +2,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { App } from "antd";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { createBox, deleteBox } from "./api";
+import { createBox } from "./api";
+import { CreateBoxRequest } from "./types";
 
 export const createBoxMutation = () => {
     const { message } = App.useApp();
     const navigate = useNavigate();
-    return useMutation<
-        void,
-        AxiosError<any>,
-        {
-            name: string;
-            height: number;
-            width: number;
-            length: number;
-            files: any[];
-        }
-    >({
+    return useMutation<void, AxiosError<any>, CreateBoxRequest>({
         async mutationFn(values) {
-            const formData = new FormData();
-            formData.append("name", values.name);
-            const { height, width, length } = values;
-            formData.append("description", `${height}x${width}x${length}`);
-            values.files.forEach((file) => {
-                formData.append("images", file);
-            });
-            await createBox(formData);
+            await createBox(values);
         },
         onSuccess() {
             message.success("Успешно!");
@@ -38,13 +22,13 @@ export const createBoxMutation = () => {
     });
 };
 
-export const deleteBoxMutation = (id: number) => {
+export const deleteBoxMutation = () => {
     const { message } = App.useApp();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>>({
         async mutationFn() {
-            await deleteBox(id);
+            // await deleteBox(id);
         },
         onSuccess() {
             message.success("Успешно!");

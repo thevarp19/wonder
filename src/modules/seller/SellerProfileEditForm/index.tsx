@@ -1,6 +1,7 @@
 import { FormikInput } from "@/components/ui/FormikInput";
 import { phoneNumberChangeHandler } from "@/utils/form.util";
-import { Button, Form } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Button, Form, Popconfirm } from "antd";
 import { FC, useState } from "react";
 import { useUpdateSellerProfile } from "../forms";
 import { GetSellerProfile } from "../types";
@@ -70,32 +71,6 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
                         }}
                     />
                     <FormikInput
-                        name="kaspi_token"
-                        formik={formik}
-                        formItemProps={{ label: "Kaspi API", required: true }}
-                        inputProps={{
-                            disabled: !isEditing,
-                        }}
-                    />
-                </div>
-                <div className="flex flex-col w-full gap-5 md:w-1/3">
-                    <FormikInput
-                        name="login"
-                        formik={formik}
-                        formItemProps={{ label: "Логин", required: true }}
-                        inputProps={{
-                            disabled: !isEditing,
-                        }}
-                    />
-                    <FormikInput
-                        name="password"
-                        formik={formik}
-                        formItemProps={{ label: "Пароль", required: true }}
-                        inputProps={{
-                            disabled: !isEditing,
-                        }}
-                    />
-                    <FormikInput
                         name="email"
                         formik={formik}
                         formItemProps={{ label: "E-mail", required: true }}
@@ -104,16 +79,63 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
                         }}
                     />
                 </div>
+                <div className="flex flex-col w-full gap-5 md:w-1/3">
+                    <FormikInput
+                        name="kaspi_store_name"
+                        formik={formik}
+                        formItemProps={{
+                            label: "Название магазина",
+                            required: true,
+                        }}
+                        inputProps={{
+                            disabled: !isEditing,
+                        }}
+                    />
+                    <FormikInput
+                        name="kaspi_seller_id"
+                        formik={formik}
+                        formItemProps={{ label: "ID Магазина", required: true }}
+                        inputProps={{
+                            disabled: !isEditing,
+                        }}
+                    />
+                    <FormikInput
+                        name="kaspi_token"
+                        formik={formik}
+                        formItemProps={{ label: "Kaspi API", required: true }}
+                        inputProps={{
+                            disabled: !isEditing,
+                        }}
+                    />
+                </div>
             </div>
 
             {!isEditing ? (
-                <Button
-                    className="md:w-[200px] w-full h-[50px] mt-12"
-                    type="primary"
-                    onClick={handleEditClick}
-                >
-                    Редактировать
-                </Button>
+                <div className="flex flex-col gap-4 mt-12 md:flex-row">
+                    <Button
+                        className="md:w-[200px] w-full h-[50px]"
+                        type="primary"
+                        onClick={handleEditClick}
+                    >
+                        Редактировать
+                    </Button>
+                    <Popconfirm
+                        title="Удалить аккаунт"
+                        cancelText="Отмена"
+                        description="Вы уверены, что хотите удалить аккаунт?"
+                        onConfirm={() => {}}
+                    >
+                        <Button danger icon={<DeleteOutlined />}>
+                            Удалить аккаунт
+                        </Button>
+                    </Popconfirm>
+                    <Button
+                        className="w-full md:w-[200px] h-[50px] !border-[#EF7214] !text-[#EF7214] cursor-pointer"
+                        // onClick={handleCancelClick}
+                    >
+                        Сбросить пароль
+                    </Button>
+                </div>
             ) : (
                 <div className="flex flex-col gap-4 mt-12 md:flex-row">
                     <Button

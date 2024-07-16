@@ -1,25 +1,27 @@
-import { GetStoreResponse, UpdateStoreRequest } from "./types";
+import {
+    GetDetailStoreResponse,
+    GetStoreResponse,
+    UpdateStoreRequest,
+} from "./types";
 
 export function mapGetStoreToUpdate(
-    response: GetStoreResponse
+    response: GetDetailStoreResponse
 ): UpdateStoreRequest {
     return {
-        kaspiId: response.kaspiId,
-        cityId: response.city.id,
-        streetName: response.streetName,
-        streetNumber: response.streetNumber,
-
-        latitude: 0,
-        longitude: 0,
+        volume: response.volume,
+        rental_price: response.rental_price,
         enabled: response.enabled,
-        dayOfWeekWorks: response.availableWorkTimes.map((item) => ({
-            numericDayOfWeek: item.dayOfWeek,
-            openTime: item.openTime,
-            closeTime: item.closeTime,
-        })),
+        warehouse: {
+            operating_modes: response.warehouse.operating_modes,
+            street_name: response.warehouse.street_name,
+            street_number: response.warehouse.street_number,
+            is_warehouse: response.warehouse.is_warehouse,
+            additional_information: response.warehouse.additional_information,
+            city: response.warehouse.city.id,
+        },
     };
 }
 
 export function getStoreFullAddress(store: GetStoreResponse): string {
-    return `${store.formattedAddress}`;
+    return `${store.warehouse.formatted_address}`;
 }

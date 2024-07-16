@@ -12,7 +12,7 @@ export const createEmployeeMutation = (
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>, CreateEmployeeRequest>({
         async mutationFn(values) {
-            await createEmployee(values);
+            await createEmployee(values, storeId);
         },
         onSuccess() {
             message.success("Успешно!");

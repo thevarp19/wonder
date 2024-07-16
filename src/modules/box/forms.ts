@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { createBoxMutation } from "./mutations";
 
 const createBoxSchema = Yup.object().shape({
-    name: requiredStringSchema(),
+    title: requiredStringSchema(),
     height: requiredNumberSchema().min(10),
     width: requiredNumberSchema().min(10),
     length: requiredNumberSchema().min(10),
@@ -18,11 +18,11 @@ export const useCreateBox = () => {
 
     const formik = useFormik({
         initialValues: {
-            name: "",
+            title: "",
             height: 0,
             length: 0,
             width: 0,
-            files: [],
+            // files: [],
         },
         validationSchema: createBoxSchema,
         validateOnChange: true,

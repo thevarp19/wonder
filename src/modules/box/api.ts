@@ -1,8 +1,8 @@
 import { axiosAuthorized } from "@/lib/axios";
 import { GetBoxResponse } from "./types";
 
-export function createBox(formData: FormData) {
-    return axiosAuthorized.post(`/api/box-types`, formData);
+export function createBox(values: any) {
+    return axiosAuthorized.post(`/api/box/`, values);
 }
 
 export function getBoxes(id: number) {
@@ -11,9 +11,11 @@ export function getBoxes(id: number) {
     );
 }
 export function getAllBoxes() {
-    return axiosAuthorized.get<GetBoxResponse[]>(`/api/box-types/all`);
+    return axiosAuthorized.get<GetBoxResponse[]>(`/api/box/`);
 }
-
-export function deleteBox(id: number) {
-    return axiosAuthorized.delete(`/api/box-types/${id}`);
+export function getStoreBoxes(storeId: number) {
+    return axiosAuthorized.get<GetBoxResponse[]>(`/api/box/${storeId}/`);
+}
+export function deleteBox(storeId: number, boxId: number) {
+    return axiosAuthorized.delete(`/api/box/${storeId}/${boxId}`);
 }

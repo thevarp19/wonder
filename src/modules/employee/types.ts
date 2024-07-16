@@ -1,27 +1,24 @@
 export interface GetEmployee {
     id: number;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     email: string;
-    phoneNumber: string;
-    storeId: number;
+    phone_number: string;
 }
 
 export interface CreateEmployeeRequest {
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     email: string;
     password: string;
-    phoneNumber: string;
-    storeId: number;
+    phone_number: string;
 }
 
 export interface UpdateEmployeeRequest {
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     email: string;
-    phoneNumber: string;
-    storeId: number;
+    phone_number: string;
 }
 
 export interface CreateEmployeeResponse {
@@ -30,6 +27,5 @@ export interface CreateEmployeeResponse {
 }
 
 export interface UpdateEmployeePassword {
-    oldPassword: string;
-    newPassword: string;
+    password: string;
 }

@@ -1,20 +1,11 @@
 import { DeleteButton } from "@/components/ui/DeleteButton";
 import { EditOutlined, LockOutlined } from "@ant-design/icons";
-import {
-    App,
-    Button,
-    Form,
-    Input,
-    Modal,
-    Spin,
-    Table,
-    TableColumnsType,
-} from "antd";
+import { App, Button, Form, Input, Modal, Table, TableColumnsType } from "antd";
 import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { changeEmployeePassword } from "../api";
 import { deleteEmployeeMutation } from "../mutations";
-import { useGetEmployeeById, useGetEmployees } from "../queries";
+import { useGetEmployees } from "../queries";
 import { GetEmployee } from "../types";
 import { UpdateEmployeeForm } from "./UpdateEmployeeForm";
 
@@ -35,13 +26,13 @@ const columns: TableColumnsType<EmployeesTableColumns> = [
         title: "Имя",
         render: (_, record) => (
             <span>
-                {record.firstName} {record.lastName}
+                {record.first_name} {record.last_name}
             </span>
         ),
     },
     {
         title: "Номер телефона",
-        dataIndex: "phoneNumber",
+        dataIndex: "phone_number",
     },
     {
         title: "Электронная почта",
@@ -50,7 +41,11 @@ const columns: TableColumnsType<EmployeesTableColumns> = [
     {
         title: "Редактировать",
         render: (_, record) => (
-            <UpdateEmployeeModal storeId={record.storeId} id={record.id} />
+            <UpdateEmployeeModal
+                storeId={record.storeId}
+                id={record.id}
+                initialValues={record}
+            />
         ),
     },
     {
@@ -93,12 +88,14 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({ storeId }) => {
 const UpdateEmployeeModal = ({
     storeId,
     id,
+    initialValues,
 }: {
     storeId: number;
     id: number;
+    initialValues?: GetEmployee;
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { data, isPending } = useGetEmployeeById(id);
+    // const { data, isPending } = useGetEmployeeById(id);
 
     return (
         <>
@@ -111,15 +108,15 @@ const UpdateEmployeeModal = ({
                 okButtonProps={{ style: { display: "none" } }}
                 destroyOnClose
             >
-                {isPending && <Spin size="large" />}
-                {data && (
+                {/* {isPending && <Spin size="large" />} */}
+                {initialValues && (
                     <UpdateEmployeeForm
                         storeId={storeId}
                         id={id}
                         onSuccess={() => {
                             setIsModalOpen(false);
                         }}
-                        initialValues={data}
+                        initialValues={initialValues}
                     />
                 )}
             </Modal>
@@ -159,18 +156,10 @@ const ChangeEmployeePasswordModal = ({ id }: { id: number }) => {
             >
                 <Form onFinish={onFinish} layout="vertical">
                     <Form.Item
-                        label="Старый пароль"
-                        required
-                        name={"oldPassword"}
-                        className="!mb-4"
-                    >
-                        <Input.Password />
-                    </Form.Item>
-                    <Form.Item
                         label="Новый пароль"
                         required
                         className="!mb-4"
-                        name={"newPassword"}
+                        name={"password"}
                         rules={[{ min: 6, max: 20 }]}
                     >
                         <Input.Password />

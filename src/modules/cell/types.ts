@@ -2,30 +2,29 @@ export interface GetCellResponse {
     id: number;
     row: number;
     col: number;
-    cell: number;
-    comment?: string;
+    line: number;
+    length?: number;
     width?: number;
     height?: number;
-    depth?: number;
+    comment?: string;
 }
 
 export interface CreateCellRequest {
-    storeId: number;
     row: number;
     col: number;
-    cell: number;
-    comment?: string;
+    line: number;
+    length?: number;
     width?: number;
     height?: number;
-    depth?: number;
+    comment?: string;
 }
 
 export interface UpdateCellRequest {
     row: number;
     col: number;
-    cell: number;
-    comment?: string;
+    line: number;
+    length?: number;
     width?: number;
     height?: number;
-    depth?: number;
+    comment?: string;
 }

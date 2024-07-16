@@ -1,7 +1,5 @@
-import { useGetStore } from "@/modules/store/queries";
 import { useAppDispatch } from "@/redux/utils";
 import {
-    useSupply,
     useSupplyPacks,
     useSupplyProducts,
 } from "@/roles/seller/redux/supply/selectors";
@@ -41,18 +39,18 @@ export const PackProductsStep: FC<PackProductsStepProps> = ({}) => {
 };
 
 const BoxSelect: FC<{ pack: SupplyPack }> = ({ pack }) => {
-    const storeId = Number(`${useSupply().store}`);
-    const { data: store, isPending } = useGetStore(storeId);
+    // const storeId = Number(`${useSupply().store}`);
+    // const { data: store, isPending } = useGetStore(storeId);
     const dispatch = useAppDispatch();
     return (
         <Select
-            loading={isPending}
+            loading={true}
             placeholder={"Выберите коробку"}
             className="w-80"
-            options={store?.availableBoxTypes?.map((box) => ({
-                label: `${box.name} ${box.description}`,
-                value: box.id,
-            }))}
+            // options={store?.availableBoxTypes?.map((box) => ({
+            //     label: `${box.name} ${box.description}`,
+            //     value: box.id,
+            // }))}
             value={pack.box}
             onChange={(value) => {
                 dispatch(actions.updatePack({ ...pack, box: value }));

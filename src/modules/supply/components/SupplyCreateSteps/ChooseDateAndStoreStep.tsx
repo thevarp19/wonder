@@ -45,8 +45,8 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
         //     dayNumber++;
         // }
         if (
-            !selectedStore.availableWorkTimes.find(
-                (time) => time.dayOfWeek === dayNumber
+            !selectedStore.warehouse.operating_modes.find(
+                (time) => time.day === dayNumber
             )
         ) {
             message.error("Склад не работает в этот день");
@@ -76,7 +76,7 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
                     className="w-80"
                     options={stores?.map((store) => ({
                         label: getStoreFullAddress(store),
-                        value: store.id,
+                        value: store.warehouse.id,
                     }))}
                     value={store}
                     onChange={onStoreChange}

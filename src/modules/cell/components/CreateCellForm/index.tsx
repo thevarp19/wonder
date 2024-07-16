@@ -46,7 +46,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     }}
                 />
                 <FormikNumberInput
-                    name="cell"
+                    name="line"
                     formik={formik}
                     formItemProps={{
                         label: "Колона",
@@ -84,7 +84,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     }}
                 />
                 <FormikNumberInput
-                    name="depth"
+                    name="length"
                     formik={formik}
                     formItemProps={{
                         label: "Глубина (мм)",

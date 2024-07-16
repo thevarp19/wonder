@@ -1,10 +1,3 @@
-import { useGetBoxes } from "@/modules/box/queries";
-import { StoreAddressCell } from "@/modules/store/components/StoresTable/StoreAddressCell";
-import { useGetStore } from "@/modules/store/queries";
-import {
-    useSupply,
-    useSupplyPacks,
-} from "@/roles/seller/redux/supply/selectors";
 import { SupplyPack } from "@/roles/seller/types/supply";
 import { Card } from "antd";
 import { FC } from "react";
@@ -12,25 +5,25 @@ import { FC } from "react";
 interface PrintStepProps {}
 
 export const PrintStep: FC<PrintStepProps> = ({}) => {
-    const packs = useSupplyPacks();
-    const supply = useSupply();
-    // @ts-ignore
-    const { data: store } = useGetStore(supply?.store || -1);
-    const handledPacks = packs
-        .filter(
-            (pack) =>
-                pack.products.reduce(
-                    (acum, current) => acum + current.quantity,
-                    0
-                ) > 0
-        )
-        .map((pack) => ({
-            ...pack,
-            products: pack.products.filter((product) => product.quantity > 0),
-        }));
+    // const packs = useSupplyPacks();
+    // const supply = useSupply();
+    // // @ts-ignore
+    // // const { data: store } = useGetStore(supply?.store || -1);
+    // const handledPacks = packs
+    //     .filter(
+    //         (pack) =>
+    //             pack.products.reduce(
+    //                 (acum, current) => acum + current.quantity,
+    //                 0
+    //             ) > 0
+    //     )
+    //     .map((pack) => ({
+    //         ...pack,
+    //         products: pack.products.filter((product) => product.quantity > 0),
+    //     }));
     return (
         <div className="mb-4">
-            <h1 className="mb-4 text-2xl font-semibold">Печать</h1>
+            {/* <h1 className="mb-4 text-2xl font-semibold">Печать</h1>
             <h2 className="flex items-center gap-1 mb-4 text-xl font-medium">
                 Склад: {store && <StoreAddressCell {...store} />}
             </h2>
@@ -39,15 +32,17 @@ export const PrintStep: FC<PrintStepProps> = ({}) => {
                 {handledPacks.map((pack, index) => (
                     <PackItem key={pack.id} pack={pack} index={index} />
                 ))}
-            </div>
+            </div> */}
         </div>
     );
 };
 
-const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
-    const supply = useSupply();
-    const { data: boxes } = useGetBoxes(Number(supply?.store) || -1);
-    const box = boxes?.find((box) => `${box.id}` == `${pack.box}`);
+export const PackItem: FC<{ pack: SupplyPack; index: number }> = ({
+    index,
+}) => {
+    // const supply = useSupply();
+    // const { data: boxes } = useGetBoxes(Number(supply?.store) || -1);
+    // const box = boxes?.find((box) => `${box.id}` == `${pack.box}`);
     return (
         <Card
             title={
@@ -56,7 +51,7 @@ const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
                 </div>
             }
         >
-            <div className="flex flex-col gap-4">
+            {/* <div className="flex flex-col gap-4">
                 <h3>
                     Тип коробки: {box?.name}
                     {", "}
@@ -73,7 +68,7 @@ const PackItem: FC<{ pack: SupplyPack; index: number }> = ({ pack, index }) => {
                         ))}
                     </ol>
                 </div>
-            </div>
+            </div> */}
         </Card>
     );
 };

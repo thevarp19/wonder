@@ -6,37 +6,46 @@ import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetStores } from "../../queries";
-import { StoreAddressCell } from "./StoreAddressCell";
+import { GetStoreResponse } from "../../types";
 import { StoreBoxesModal } from "./StoreBoxesModal";
 import { StoreSwitch } from "./StoreSwitch";
 import { StoreWorkingTimeCell } from "./StoreWorkingTimeCell";
 
 interface StoresTableProps {}
 
-const columns: TableColumnsType<any> = [
+const columns: TableColumnsType<GetStoreResponse> = [
     {
         title: "ID",
-        dataIndex: "kaspiId",
+        render: (_, record) => `${record.warehouse.id}`,
     },
     {
         title: "Адрес",
-        render: (_, record) => <StoreAddressCell {...record} />,
+        render: (_, record) => (
+            <div>{record.warehouse.formatted_address || ""}</div>
+        ),
     },
     {
         title: "Рабочее время",
         render: (_, record) => (
-            <StoreWorkingTimeCell dayOfWeeks={record.availableWorkTimes} />
+            <StoreWorkingTimeCell
+                dayOfWeeks={record.warehouse.operating_modes}
+            />
         ),
     },
+
     {
         title: "Статус",
         render: (_, record) => <StoreSwitch record={record} />,
     },
     {
+        title: "Склад",
+        render: (_, record) => (record.warehouse.is_warehouse ? "Да" : "Нет"),
+    },
+    {
         title: "Ячейки",
         render: (_, record) => (
             <Link
-                to={`/admin/settings/cells/${record.id}`}
+                to={`/admin/settings/cells/${record.warehouse.id}`}
                 className="cursor-pointer"
             >
                 <Button className="!rounded-[16px]">Ячейки</Button>
@@ -47,7 +56,7 @@ const columns: TableColumnsType<any> = [
         title: "Редактировать",
         render: (_, record) => (
             <Link
-                to={`/admin/settings/update-store/${record.id}`}
+                to={`/admin/settings/update-store/${record.warehouse.id}`}
                 className="cursor-pointer"
             >
                 <Image
@@ -62,7 +71,7 @@ const columns: TableColumnsType<any> = [
         title: "Сотрудники",
         render: (_, record) => (
             <Link
-                to={`/admin/settings/employees/${record.id}`}
+                to={`/admin/settings/employees/${record.warehouse.id}`}
                 className="cursor-pointer"
             >
                 <Image
@@ -76,45 +85,13 @@ const columns: TableColumnsType<any> = [
     {
         title: "Типы коробок",
         render: (_, record) => (
-            <StoreBoxesModal
-                storeId={`${record.id}`}
-                boxTypes={record.availableBoxTypes}
-            />
+            <StoreBoxesModal storeId={record.warehouse.id} />
         ),
     },
 ];
 
 export const StoresTable: FC<StoresTableProps> = ({}) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
-    // const mockData = [
-    //     {
-    //         id: 1,
-    //         kaspiId: "KASPI123",
-    //         streetName: "Main Street",
-    //         streetNumber: "123",
-    //         formattedAddress: "123 Main Street",
-    //         city: { id: 1, name: "City" },
-    //         availableWorkTimes: [
-    //             { dayOfWeek: "Monday", startTime: "09:00", endTime: "18:00" },
-    //             { dayOfWeek: "Tuesday", startTime: "09:00", endTime: "18:00" },
-    //             {
-    //                 dayOfWeek: "Wednesday",
-    //                 startTime: "09:00",
-    //                 endTime: "18:00",
-    //             },
-    //             { dayOfWeek: "Thursday", startTime: "09:00", endTime: "18:00" },
-    //             { dayOfWeek: "Friday", startTime: "09:00", endTime: "18:00" },
-    //         ],
-    //         availableBoxTypes: [
-    //             { id: 1, name: "Box 1" },
-    //             { id: 2, name: "Box 2" },
-    //             { id: 3, name: "Box 3" },
-    //         ],
-    //         enabled: true,
-    //         userId: 1,
-    //     },
-    // ];
-
     const { data: stores, isPending } = useGetStores();
 
     return (
@@ -132,8 +109,11 @@ export const StoresTable: FC<StoresTableProps> = ({}) => {
         >
             <Table
                 columns={columns}
-                dataSource={stores?.sort((a, b) => a.id - b.id) || []}
-                rowKey={"id"}
+                dataSource={
+                    stores?.sort((a, b) => a.warehouse.id - b.warehouse.id) ||
+                    []
+                }
+                rowKey={(record) => record.warehouse.id}
                 loading={isPending}
                 locale={{
                     emptyText: "Нет данных",

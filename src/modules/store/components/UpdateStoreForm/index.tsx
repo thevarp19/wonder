@@ -1,12 +1,13 @@
 import { FormikInput } from "@/components/ui/FormikInput";
 import { UpdateWorkingTimeInput } from "@/modules/store/components/UpdateStoreForm/UpdateWorkingTimeInput";
 import { CitiesInput } from "@/modules/store/components/shared/CitiesInput";
-import { useUpdateStore } from "@/modules/store/forms";
-import { useGetStore } from "@/modules/store/queries";
+// import { useGetStore } from "@/modules/store/queries";
 import { cn } from "@/utils/shared.util";
-import { Button, Form, Spin, Switch } from "antd";
+import { Button, Checkbox, Form, Spin, Switch } from "antd";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
+import { useUpdateStore } from "../../forms";
+import { useGetStore } from "../../queries";
 
 interface UpdateStoreFormProps {}
 
@@ -23,23 +24,13 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
             layout="vertical"
             className="flex flex-col w-full md:max-w-[291px]"
         >
-            <FormikInput
-                name="kaspiId"
-                formik={formik}
-                formItemProps={{
-                    label: "Kaspi ID (Идентификатор Kaspi)",
-                }}
-                inputProps={{
-                    size: "large",
-                }}
-            />
             <Form.Item label="Город" className="w-full !mb-4">
                 <CitiesInput
                     className=""
                     size="large"
-                    value={formik.values.cityId}
+                    value={formik.values.warehouse.city}
                     onSelect={(_, option) => {
-                        formik.setFieldValue("cityId", option.value);
+                        formik.setFieldValue("warehouse.city", option.value);
                     }}
                 />
             </Form.Item>
@@ -57,8 +48,9 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 </div>
             </Form.Item>
             <FormikInput
-                name="streetName"
+                name="warehouse.street_name"
                 formik={formik}
+                value={formik.values.warehouse.street_name}
                 formItemProps={{
                     label: "Название улицы",
                 }}
@@ -67,8 +59,9 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 }}
             />
             <FormikInput
-                name="streetNumber"
+                name="warehouse.street_number"
                 formik={formik}
+                value={formik.values.warehouse.street_number}
                 formItemProps={{
                     label: "Номер здания",
                 }}
@@ -77,7 +70,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 }}
             />
             <FormikInput
-                name="warehouseVolume"
+                name="volume"
                 formik={formik}
                 formItemProps={{
                     label: "Объем склада",
@@ -87,7 +80,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                 }}
             />
             <FormikInput
-                name="rentPrice"
+                name="rental_price"
                 formik={formik}
                 formItemProps={{
                     label: "Аренда склада",
@@ -96,11 +89,33 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                     size: "large",
                 }}
             />
+            <FormikInput
+                name="warehouse.additional_information"
+                formik={formik}
+                value={formik.values.warehouse.additional_information}
+                formItemProps={{
+                    label: "Дополнительная информация",
+                }}
+                inputProps={{
+                    size: "large",
+                }}
+            />
+            <div className="flex gap-2 py-5">
+                <Checkbox
+                    value={formik.values.warehouse.is_warehouse}
+                    onChange={formik.handleChange}
+                    name="warehouse.is_warehouse"
+                />
+                Склад
+            </div>
             <Form.Item label={"Рабочее время"} className={cn("w-full !mb-4")}>
                 <UpdateWorkingTimeInput
-                    initialValues={storeDetails?.availableWorkTimes}
+                    initialValues={storeDetails?.warehouse.operating_modes}
                     onChange={(values) => {
-                        formik.setFieldValue("dayOfWeekWorks", values);
+                        formik.setFieldValue(
+                            "warehouse.operating_modes",
+                            values
+                        );
                     }}
                 />
             </Form.Item>

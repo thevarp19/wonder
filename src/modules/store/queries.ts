@@ -1,6 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { getStoreById, getStores } from "./api";
-import { GetStoreResponse } from "./types";
+import {
+    getSellerStores,
+    getStoreById,
+    getStores,
+    getStoreSellerById,
+} from "./api";
+import {
+    GetDetailSellerStoreResponse,
+    GetDetailStoreResponse,
+    GetStoreResponse,
+    GetStoreSellerResponse,
+} from "./types";
 
 export const useGetStores = () => {
     return useQuery<GetStoreResponse[]>({
@@ -11,9 +21,27 @@ export const useGetStores = () => {
         },
     });
 };
+export const useGetDetailedSellerStores = (id: number) => {
+    return useQuery<GetDetailSellerStoreResponse>({
+        queryKey: ["store-seller", id],
+        queryFn: async () => {
+            const { data } = await getStoreSellerById(id);
+            return data;
+        },
+    });
+};
+export const useGetSellerStores = () => {
+    return useQuery<GetStoreSellerResponse[]>({
+        queryKey: ["stores-seller"],
+        queryFn: async () => {
+            const { data } = await getSellerStores();
+            return data;
+        },
+    });
+};
 
 export const useGetStore = (id: number | null) => {
-    return useQuery<GetStoreResponse>({
+    return useQuery<GetDetailStoreResponse>({
         queryKey: [`store`, id],
 
         queryFn: async () => {

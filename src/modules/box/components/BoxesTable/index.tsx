@@ -15,11 +15,12 @@ const columns: TableColumnsType<GetBoxResponse> = [
     },
     {
         title: "Название",
-        dataIndex: "name",
+        dataIndex: "title",
     },
     {
         title: "Размеры",
-        dataIndex: "description",
+        render: (_, record) =>
+            `${record.length}x${record.width}x${record.height}`,
     },
     {
         title: "Удалить",
