@@ -51,3 +51,15 @@ export const useGetStore = (id: number | null) => {
         enabled: id !== null,
     });
 };
+
+export const useGetSellerStore = (id: number | null) => {
+    return useQuery<GetDetailSellerStoreResponse>({
+        queryKey: [`store`, id],
+
+        queryFn: async () => {
+            const { data } = await getStoreSellerById(id || -1);
+            return data;
+        },
+        enabled: id !== null,
+    });
+};

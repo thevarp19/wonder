@@ -43,7 +43,9 @@ export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
         },
         {
             title: "Адрес",
-            render: (_, record) => <div>{record.warehouse.street_name}</div>,
+            render: (_, record) => (
+                <div>{record.warehouse.formatted_address}</div>
+            ),
         },
         {
             title: "Рабочее время",
@@ -55,9 +57,7 @@ export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
         },
         {
             title: "Статус",
-            render: (_, record) => (
-                <StoreSellerSwitch record={record.seller_warehouse || null} />
-            ),
+            render: (_, record) => <StoreSellerSwitch record={record} />,
         },
         {
             title: "Склад",
@@ -71,7 +71,7 @@ export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
                     to={
                         warehouseStates[record.warehouse.id] === "Seller"
                             ? `/seller/settings/update-store/${record.seller_warehouse.id}`
-                            : `/seller/settings/update-store/${record.warehouse.id}/activate`
+                            : `/seller/settings/update-store/${record?.warehouse?.id}/activate`
                     }
                     className="cursor-pointer"
                 >

@@ -18,6 +18,7 @@ import {
     SellerSettingsPage,
     SellerSupplyDetailsPage,
     SellerSupplyPage,
+    SellerUpdateStorePage,
 } from "./pages";
 
 interface SellerRoutesProps {}
@@ -54,14 +55,10 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                     />
                     <Route
                         path="/settings/update-store/:storeId"
-                        element={<div>update</div>}
+                        element={<SellerUpdateStorePage />}
                     />
                     <Route path="/profile" element={<SellerProfilePage />} />
                     <Route path="/products" element={<SellerProductsPage />} />
-                    {/* <Route
-                        path="/products/upload"
-                        element={<SellerProductsUploadPage />}
-                    /> */}
                     <Route path="/supply" element={<SellerSupplyPage />} />
                     <Route
                         path="/supply/:supplyId"

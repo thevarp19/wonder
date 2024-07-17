@@ -1,5 +1,12 @@
 export interface CreateStoreRequest {
-    warehouse: Warehouse;
+    warehouse: {
+        operating_modes: WorkDayOfWeekRequest[];
+        street_name: string;
+        street_number: string;
+        is_warehouse: boolean;
+        additional_information: string;
+        city: number;
+    };
     volume: string;
     rental_price: string;
     enabled?: boolean;
@@ -9,7 +16,14 @@ export interface ActivateStoreSellerRequest {
     enabled: boolean;
 }
 export interface CreateStoreSellerRequest {
-    warehouse: Warehouse;
+    warehouse: {
+        operating_modes: WorkDayOfWeekRequest[];
+        street_name: string;
+        street_number: string;
+        is_warehouse: boolean;
+        additional_information: string;
+        city: number;
+    };
     kaspi_warehouse_id: string;
     enabled: boolean;
 }
@@ -25,25 +39,74 @@ export interface GetStoreResponse {
 export interface GetStoreSellerResponse {
     seller_warehouse: SellerWarehouse;
     wonder_warehouse: WonderWarehouse;
-    warehouse: WarehouseDetails;
+    warehouse: {
+        id: number;
+        operating_modes: WorkDayOfWeekResponse[];
+        formatted_address: string;
+        is_warehouse: boolean;
+    };
 }
+
 export interface UpdateStoreRequest {
     volume: string;
     rental_price: string;
     enabled: boolean;
-    warehouse: Warehouse;
+    warehouse: {
+        operating_modes: WorkDayOfWeekRequest[];
+        street_name: string;
+        street_number: string;
+        is_warehouse: boolean;
+        additional_information: string;
+        city: number;
+    };
+}
+export interface UpdateStoreSellerRequest {
+    kaspi_warehouse_id: string;
+    enabled: boolean;
+    warehouse: {
+        operating_modes: WorkDayOfWeekRequest[];
+        street_name: string;
+        street_number: string;
+        is_warehouse: boolean;
+        additional_information: string;
+        city: number;
+    };
 }
 export interface GetDetailSellerStoreResponse {
     id: number;
     enabled: boolean;
     kaspi_warehouse_id: string;
-    warehouse: WarehouseDetails;
+    warehouse: {
+        id: number;
+        operating_modes: WorkDayOfWeekResponse[];
+        street_name: string;
+        street_number: string;
+        is_warehouse: boolean;
+        additional_information: string;
+        city: {
+            id: number;
+            name: string;
+            code: string;
+        };
+    };
 }
 export interface GetDetailStoreResponse {
     volume: string;
     rental_price: string;
     enabled: boolean;
-    warehouse: WarehouseDetails;
+    warehouse: {
+        id: number;
+        operating_modes: WorkDayOfWeekResponse[];
+        street_name: string;
+        street_number: string;
+        is_warehouse: boolean;
+        additional_information: string;
+        city: {
+            id: number;
+            name: string;
+            code: string;
+        };
+    };
 }
 
 export interface WorkDayOfWeekResponse {
@@ -59,28 +122,26 @@ export interface WorkDayOfWeekRequest {
     closed_at: string;
 }
 
-export interface WarehouseDetails {
-    id: number;
-    operating_modes: WorkDayOfWeekResponse[];
-    street_name: string;
-    street_number: string;
-    is_warehouse: boolean;
-    additional_information: string;
-    city: {
-        id: number;
-        name: string;
-        code: string;
-    };
-}
+// export interface GetWarehouseDetails {
+//     id: number;
+//     operating_modes: WorkDayOfWeekResponse[];
+//     street_name: string;
+//     street_number: string;
+//     is_warehouse: boolean;
+//     additional_information: string;
+//     city: {
+//         id: number;
+//         name: string;
+//         code: string;
+//     };
+// }
+// export interface WarehouseDetails {
+//     id: number;
+//     operating_modes: WorkDayOfWeekResponse[];
+//     formatted_address: string;
+//     is_warehouse: boolean;
+// }
 
-export interface Warehouse {
-    operating_modes: WorkDayOfWeekRequest[];
-    street_name: string;
-    street_number: string;
-    is_warehouse: boolean;
-    additional_information: string;
-    city: number;
-}
 export interface UpdateProductSizeRequest {
     weight: number;
     height: number;
@@ -100,6 +161,7 @@ export interface WonderWarehouse {
     rental_price: string;
     enabled: boolean;
 }
+
 // export interface GetStoreResponse {
 //     id: number;
 //     kaspiId: string;

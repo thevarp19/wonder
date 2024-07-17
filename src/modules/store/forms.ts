@@ -9,22 +9,24 @@ import {
     createStoreSellerMutation,
     removeBoxFromStoreMutation,
     updateStoreMutation,
+    updateStoreSellerMutation,
 } from "./mutations";
 import {
     ActivateStoreSellerRequest,
     CreateStoreRequest,
     CreateStoreSellerRequest,
+    GetDetailSellerStoreResponse,
     GetDetailStoreResponse,
     UpdateStoreRequest,
+    UpdateStoreSellerRequest,
 } from "./types";
-import { mapGetStoreToUpdate } from "./utils";
+import { mapGetSellerStoreToUpdate, mapGetStoreToUpdate } from "./utils";
 
 const createStoreSchema = Yup.object().shape({
     warehouse: Yup.object().shape({
         street_number: requiredStringSchema(),
         street_name: requiredStringSchema(),
-
-        city: Yup.string().required(),
+        city: Yup.number().required(),
     }),
     volume: requiredStringSchema(),
     rental_price: requiredStringSchema(),
@@ -75,9 +77,9 @@ export const useCreateStoreSeller = () => {
             enabled: false,
             kaspi_warehouse_id: "",
         },
-        validationSchema: createStoreSchema,
-        validateOnBlur: true,
-        validateOnChange: true,
+        // validationSchema: createStoreSchema,
+        // validateOnBlur: true,
+        // validateOnChange: true,
         onSubmit: handleSubmit,
     });
 
@@ -96,9 +98,11 @@ export const useActivateStoreSeller = (wonder_id: number) => {
             kaspi_warehouse_id: "",
             enabled: true,
         },
-        // validationSchema: createStoreSchema,
-        // validateOnBlur: true,
-        // validateOnChange: true,
+        validationSchema: Yup.object().shape({
+            kaspi_warehouse_id: requiredStringSchema(),
+        }),
+        validateOnBlur: true,
+        validateOnChange: true,
         onSubmit: handleSubmit,
     });
 
@@ -150,6 +154,46 @@ export const useUpdateStore = (
         if (initialValues) {
             formik.resetForm({
                 values: mapGetStoreToUpdate(initialValues),
+            });
+        }
+    }, [initialValues]);
+
+    async function handleSubmit() {
+        await mutation.mutateAsync(formik.values);
+    }
+
+    return { formik, mutation };
+};
+
+export const useUpdateStoreSeller = (
+    storeId: number,
+    initialValues: GetDetailSellerStoreResponse | undefined
+) => {
+    const mutation = updateStoreSellerMutation(storeId);
+
+    const formik = useFormik<UpdateStoreSellerRequest>({
+        initialValues: {
+            kaspi_warehouse_id: "",
+            enabled: false,
+            warehouse: {
+                operating_modes: [],
+                street_name: "",
+                street_number: "",
+                is_warehouse: false,
+                additional_information: "",
+                city: 0,
+            },
+        },
+        // validationSchema: updateStoreSchema,
+        // validateOnBlur: true,
+        // validateOnChange: true,
+        onSubmit: handleSubmit,
+    });
+
+    useEffect(() => {
+        if (initialValues) {
+            formik.resetForm({
+                values: mapGetSellerStoreToUpdate(initialValues),
             });
         }
     }, [initialValues]);

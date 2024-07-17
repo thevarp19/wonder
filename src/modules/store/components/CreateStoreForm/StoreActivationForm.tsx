@@ -4,7 +4,7 @@ import { cn } from "@/utils/shared.util";
 import { CopyOutlined } from "@ant-design/icons";
 import { App, Button, Form, Input } from "antd";
 import { FC } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useActivateStoreSeller } from "../../forms";
 import { useGetDetailedSellerStores } from "../../queries";
 
@@ -127,15 +127,20 @@ export const StoreActivationForm: FC = () => {
                         />
                     </div>
                     <div className="flex gap-2 pt-5">
-                        <Button
-                            // htmlType="submit"
-                            // type="primary"
-                            size={"large"}
-                            className={cn("w-full !rounded-md")}
-                            // loading={mutation.isPending}
+                        <Link
+                            to="/seller/settings"
+                            className="w-full cursor-pointer"
                         >
-                            Отмена
-                        </Button>
+                            <Button
+                                // htmlType="submit"
+                                // type="primary"
+                                size={"large"}
+                                className={cn("w-full !rounded-md")}
+                                // loading={mutation.isPending}
+                            >
+                                Отмена
+                            </Button>
+                        </Link>
                         <Button
                             htmlType="submit"
                             type="primary"

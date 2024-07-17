@@ -9,6 +9,7 @@ import { SellerProductsPage } from "./SellerProductsPage";
 import { SellerProfilePage } from "./SellerProfilePage";
 import { SellerRegisterPage } from "./SellerRegisterPage";
 import { SellerSettingsPage } from "./SellerSettingsPage";
+import { SellerUpdateStorePage } from "./SellerUpdateStorePage";
 
 // import { SellerSupplyCreatePage } from "./SellerSupplyCreatePage";
 import { SellerSupplyDetailsPage } from "./SellerSupplyDetailsPage";
@@ -29,4 +30,5 @@ export {
     // SellerSupplyCreatePage,
     SellerSupplyDetailsPage,
     SellerSupplyPage,
+    SellerUpdateStorePage,
 };
