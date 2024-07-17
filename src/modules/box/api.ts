@@ -16,6 +16,6 @@ export function getAllBoxes() {
 export function getStoreBoxes(storeId: number) {
     return axiosAuthorized.get<GetBoxResponse[]>(`/api/box/${storeId}/`);
 }
-export function deleteBox(storeId: number, boxId: number) {
-    return axiosAuthorized.delete(`/api/box/${storeId}/${boxId}`);
+export function deleteBox(boxId: number) {
+    return axiosAuthorized.delete(`/api/box/${boxId}/`);
 }

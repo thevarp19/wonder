@@ -9,6 +9,7 @@ import {
     createStoreSeller,
     removeBoxFromStore,
     updateStore,
+    updateStoreStatus,
 } from "./api";
 import {
     ActivateStoreSellerRequest,
@@ -76,6 +77,27 @@ export const activateStoreSellerMutation = (wonder_id: number) => {
         onSuccess() {
             message.success("Успешно!");
             navigate("/seller/settings/");
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
+        },
+    });
+};
+
+export const updateStoreStatusMutation = (id: number) => {
+    const { message } = App.useApp();
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    return useMutation<void, AxiosError<any>, { enabled: boolean }>({
+        async mutationFn(values) {
+            await updateStoreStatus(id, values);
+        },
+        onSuccess() {
+            message.success("Успешно!");
+            navigate("/admin/settings/");
+            queryClient.invalidateQueries({
+                queryKey: ["stores"],
+            });
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);

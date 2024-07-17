@@ -63,7 +63,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="width"
                     formik={formik}
                     formItemProps={{
-                        label: "Ширина (мм)",
+                        label: "Ширина (см)",
                         required: true,
                     }}
                     inputProps={{
@@ -75,7 +75,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="height"
                     formik={formik}
                     formItemProps={{
-                        label: "Высота (мм)",
+                        label: "Высота (см)",
                         required: true,
                     }}
                     inputProps={{
@@ -87,7 +87,7 @@ export const CreateCellForm: FC<CreateCellFormProps> = ({
                     name="length"
                     formik={formik}
                     formItemProps={{
-                        label: "Глубина (мм)",
+                        label: "Глубина (см)",
                         required: true,
                     }}
                     inputProps={{

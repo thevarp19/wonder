@@ -1,5 +1,6 @@
 import { Switch } from "antd";
 import { FC } from "react";
+import { updateStoreStatusMutation } from "../../mutations";
 import { GetStoreResponse } from "../../types";
 
 interface StoreSwitchProps {
@@ -7,18 +8,18 @@ interface StoreSwitchProps {
 }
 
 export const StoreSwitch: FC<StoreSwitchProps> = ({ record }) => {
-    // const { isPending, mutateAsync } = updateStoreMutation(record.warehouse.id);
+    const { isPending, mutateAsync } = updateStoreStatusMutation(
+        record.warehouse.id
+    );
     return (
         <div className="flex items-center gap-2">
             <Switch
                 checked={record.enabled}
-                disabled={false}
-                loading={false}
-                // onChange={async (checked) => {
-                //     await mutateAsync(
-                //         mapGetStoreToUpdate({ ...record, enabled: checked })
-                //     );
-                // }}
+                disabled={isPending}
+                loading={isPending}
+                onChange={async (checked) => {
+                    await mutateAsync({ enabled: checked });
+                }}
             />
             <span>{record.enabled ? "Активно" : "Неактивно"}</span>
         </div>

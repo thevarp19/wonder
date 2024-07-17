@@ -19,16 +19,16 @@ interface CellsTableColumn extends GetCellResponse {
 
 const columns: TableColumnsType<CellsTableColumn> = [
     {
-        title: "Номер ячейки",
-        dataIndex: "line",
-    },
-    {
         title: "Строка",
         dataIndex: "row",
     },
     {
         title: "Столбец",
         dataIndex: "col",
+    },
+    {
+        title: "Номер ячейки",
+        dataIndex: "line",
     },
     {
         title: "Печать",

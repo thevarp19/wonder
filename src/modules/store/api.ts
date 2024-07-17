@@ -49,6 +49,9 @@ export function getSellerStores() {
 export function updateStore(id: number, values: UpdateStoreRequest) {
     return axiosAuthorized.patch(`/api/warehouse/wonder/${id}/`, values);
 }
+export function updateStoreStatus(id: number, values: { enabled: boolean }) {
+    return axiosAuthorized.patch(`/api/warehouse/wonder/${id}/`, values);
+}
 
 export function deleteStore(id: string) {
     return axiosAuthorized.delete(`/api/stores/${id}`);
