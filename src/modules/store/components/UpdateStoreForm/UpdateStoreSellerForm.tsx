@@ -2,10 +2,12 @@ import { FormikInput } from "@/components/ui/FormikInput";
 import { CitiesInput } from "@/modules/store/components/shared/CitiesInput";
 // import { useGetStore } from "@/modules/store/queries";
 import { cn } from "@/utils/shared.util";
-import { Button, Checkbox, Form, Spin } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Popconfirm, Spin } from "antd";
 import { FC } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useUpdateStoreSeller } from "../../forms";
+import { deleteStoreSellerMutation } from "../../mutations";
 import { useGetSellerStore } from "../../queries";
 import { UpdateWorkingTimeInput } from "./UpdateWorkingTimeInput";
 
@@ -19,6 +21,9 @@ export const UpdateStoreSellerForm: FC<UpdateStoreSellerFormProps> = ({}) => {
     const { formik, mutation } = useUpdateStoreSeller(
         Number(storeId),
         storeDetails
+    );
+    const { mutateAsync, isPending: deleteLoading } = deleteStoreSellerMutation(
+        Number(storeId)
     );
     if (isPending) {
         return <Spin />;
@@ -102,7 +107,7 @@ export const UpdateStoreSellerForm: FC<UpdateStoreSellerFormProps> = ({}) => {
                     }}
                 />
             </Form.Item>
-            <div className="flex gap-2 pt-5">
+            <div className="flex flex-col gap-2">
                 <Button
                     htmlType="submit"
                     type="primary"
@@ -117,6 +122,23 @@ export const UpdateStoreSellerForm: FC<UpdateStoreSellerFormProps> = ({}) => {
                         Отмена
                     </Button>
                 </Link>
+                <Popconfirm
+                    title="Удалить этот элемент"
+                    description="Вы уверены, что хотите удалить этот элемент?"
+                    onConfirm={async () => {
+                        mutateAsync();
+                    }}
+                    okButtonProps={{ loading: deleteLoading }}
+                >
+                    <Button
+                        danger
+                        size="large"
+                        loading={deleteLoading}
+                        icon={<DeleteOutlined />}
+                    >
+                        Удалить склад
+                    </Button>
+                </Popconfirm>
             </div>
         </Form>
     );

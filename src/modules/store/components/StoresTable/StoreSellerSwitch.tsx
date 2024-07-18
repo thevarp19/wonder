@@ -1,5 +1,5 @@
 import { App, Switch } from "antd";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { updateStoreStatusSellerMutation } from "../../mutations";
 import { GetStoreSellerResponse } from "../../types";
 
@@ -13,6 +13,9 @@ export const StoreSellerSwitch: FC<StoreSwitchProps> = ({ record }) => {
     );
     const { message } = App.useApp();
     const [checked, setChecked] = useState(record?.seller_warehouse?.enabled);
+    useEffect(() => {
+        setChecked(record?.seller_warehouse?.enabled);
+    }, [record.seller_warehouse.enabled]);
     const handleChange = async (checked: boolean) => {
         setChecked(checked);
 

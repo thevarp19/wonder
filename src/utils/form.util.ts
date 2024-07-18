@@ -83,3 +83,35 @@ export const phoneNumberChange = (phone: string) => {
         return value;
     }
 };
+
+export const formatPhoneNumber = (value: string) => {
+    let formattedValue = value.replace(/\D/g, ""); // Удаляем все нецифровые символы
+
+    if (formattedValue.startsWith("7")) {
+        formattedValue = "+" + formattedValue; // Убедимся, что номер начинается с '+7'
+    } else if (!formattedValue.startsWith("+7")) {
+        formattedValue = "+7" + formattedValue; // Добавляем '+7', если он не присутствует
+    }
+
+    if (formattedValue.length > 2) {
+        formattedValue =
+            formattedValue.slice(0, 2) + " " + formattedValue.slice(2);
+    }
+    if (formattedValue.length > 6) {
+        formattedValue =
+            formattedValue.slice(0, 6) + " " + formattedValue.slice(6);
+    }
+    if (formattedValue.length > 10) {
+        formattedValue =
+            formattedValue.slice(0, 10) + " " + formattedValue.slice(10);
+    }
+    if (formattedValue.length > 13) {
+        formattedValue =
+            formattedValue.slice(0, 13) + " " + formattedValue.slice(13);
+    }
+    if (formattedValue.length > 16) {
+        formattedValue = formattedValue.slice(0, 16);
+    }
+
+    return formattedValue;
+};

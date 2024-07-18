@@ -34,7 +34,7 @@ export const deleteBoxMutation = (id: number) => {
             message.success("Успешно!");
             navigate("/admin/settings/?menu_x=boxes");
             queryClient.invalidateQueries({
-                queryKey: ["boxes"],
+                queryKey: ["allBoxes"],
             });
         },
         onError(error) {

@@ -1,5 +1,6 @@
 import { FormikInput } from "@/components/ui/FormikInput";
-import { phoneNumberChangeHandler } from "@/utils/form.util";
+import { PhoneNumberInput } from "@/components/ui/PhoneInput";
+import { formatPhoneNumber } from "@/utils/form.util";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Form, Popconfirm } from "antd";
 import { FC, useState } from "react";
@@ -9,12 +10,16 @@ import { GetSellerProfile } from "../types";
 interface SellerProfileEditProps {
     data: GetSellerProfile;
 }
-
+const removeSpaces = (value: string) => value.replace(/\s/g, "");
 export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
     const { formik, mutation } = useUpdateSellerProfile(data);
     const [isEditing, setIsEditing] = useState(false);
 
     const handleEditClick = () => {
+        formik.setFieldValue(
+            "phone_number",
+            formatPhoneNumber(formik.values.phone_number)
+        );
         setIsEditing(true);
     };
 
@@ -22,10 +27,13 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
         setIsEditing(false);
     };
     const handleSave = () => {
+        formik.setFieldValue(
+            "phone_number",
+            removeSpaces(formik.values.phone_number)
+        );
         formik.handleSubmit();
         setIsEditing(false);
     };
-
     return (
         <Form layout="vertical" className="w-full">
             <div className="flex flex-col gap-5 mt-10 md:flex-row md:gap-10">
@@ -52,22 +60,10 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
                             disabled: !isEditing,
                         }}
                     />
-                    <FormikInput
-                        name="phone_number"
+                    <PhoneNumberInput
                         formik={formik}
-                        formItemProps={{
-                            label: "Номер телефон",
-                            required: true,
-                        }}
-                        inputProps={{
-                            onChange: (e) => {
-                                phoneNumberChangeHandler(
-                                    e,
-                                    formik.handleChange
-                                );
-                            },
-                            disabled: !isEditing,
-                        }}
+                        name="phone_number"
+                        disabled={!isEditing}
                     />
                     <FormikInput
                         name="email"

@@ -7,6 +7,8 @@ import {
     bindBoxToStore,
     createStore,
     createStoreSeller,
+    deleteStore,
+    deleteStoreSeller,
     removeBoxFromStore,
     updateStore,
     updateStoreSeller,
@@ -38,7 +40,7 @@ export const createStoreMutation = () => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/admin/settings/");
+            navigate("/admin/settings/?menu_x=stores");
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);
@@ -62,7 +64,7 @@ export const createStoreSellerMutation = () => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/seller/settings/");
+            navigate("/seller/settings/?menu_x=stores");
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);
@@ -80,7 +82,7 @@ export const activateStoreSellerMutation = (wonder_id: number) => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/seller/settings/");
+            navigate("/seller/settings/?menu_x=stores");
             queryClient.invalidateQueries({
                 queryKey: ["stores-seller"],
             });
@@ -93,7 +95,7 @@ export const activateStoreSellerMutation = (wonder_id: number) => {
 
 export const updateStoreStatusMutation = (id: number) => {
     const { message } = App.useApp();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>, { enabled: boolean }>({
         async mutationFn(values) {
@@ -101,7 +103,7 @@ export const updateStoreStatusMutation = (id: number) => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/admin/settings/");
+            // navigate("/admin/settings/?menu_x=stores");
             queryClient.invalidateQueries({
                 queryKey: ["stores"],
             });
@@ -116,7 +118,7 @@ export const updateStoreStatusMutation = (id: number) => {
 };
 export const updateStoreStatusSellerMutation = (id: number) => {
     const { message } = App.useApp();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>, { enabled: boolean }>({
         async mutationFn(values) {
@@ -124,7 +126,47 @@ export const updateStoreStatusSellerMutation = (id: number) => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/seller/settings/");
+            // navigate("/seller/settings/?menu_x=stores");
+            queryClient.invalidateQueries({
+                queryKey: ["stores-seller"],
+            });
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
+        },
+    });
+};
+export const deleteStoreMutation = (id: number) => {
+    const { message } = App.useApp();
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    return useMutation<void, AxiosError<any>, void>({
+        async mutationFn() {
+            await deleteStore(id);
+        },
+        onSuccess() {
+            message.success("Успешно!");
+            navigate("/admin/settings/?menu_x=stores");
+            queryClient.invalidateQueries({
+                queryKey: ["stores"],
+            });
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
+        },
+    });
+};
+export const deleteStoreSellerMutation = (id: number) => {
+    const { message } = App.useApp();
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    return useMutation<void, AxiosError<any>, void>({
+        async mutationFn() {
+            await deleteStoreSeller(id);
+        },
+        onSuccess() {
+            message.success("Успешно!");
+            navigate("/seller/settings/?menu_x=stores");
             queryClient.invalidateQueries({
                 queryKey: ["stores-seller"],
             });
@@ -152,7 +194,7 @@ export const updateStoreMutation = (id: number) => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/admin/settings/");
+            navigate("/admin/settings/?menu_x=stores");
             queryClient.invalidateQueries({
                 queryKey: ["stores-seller"],
             });
@@ -180,7 +222,7 @@ export const updateStoreSellerMutation = (id: number) => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/seller/settings/");
+            navigate("/seller/settings/?menu_x=stores");
             queryClient.invalidateQueries({
                 queryKey: ["stores"],
             });

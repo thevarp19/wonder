@@ -91,7 +91,7 @@ export const CreateStoreSellerForm: FC<CreateStoreSellerFormProps> = () => {
                         }}
                     />
                 </Form.Item>
-                <div className="flex gap-2 pt-5">
+                <div className="flex flex-col gap-2">
                     <Button
                         htmlType="submit"
                         type="primary"

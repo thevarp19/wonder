@@ -3,10 +3,12 @@ import { UpdateWorkingTimeInput } from "@/modules/store/components/UpdateStoreFo
 import { CitiesInput } from "@/modules/store/components/shared/CitiesInput";
 // import { useGetStore } from "@/modules/store/queries";
 import { cn } from "@/utils/shared.util";
-import { Button, Checkbox, Form, Spin, Switch } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Popconfirm, Spin, Switch } from "antd";
 import { FC } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useUpdateStore } from "../../forms";
+import { deleteStoreMutation } from "../../mutations";
 import { useGetStore } from "../../queries";
 
 interface UpdateStoreFormProps {}
@@ -15,6 +17,11 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
     const { storeId } = useParams();
     const { data: storeDetails, isPending } = useGetStore(Number(storeId));
     const { formik, mutation } = useUpdateStore(Number(storeId), storeDetails);
+
+    const { mutateAsync, isPending: deleteLoading } = deleteStoreMutation(
+        Number(storeId)
+    );
+
     if (isPending) {
         return <Spin />;
     }
@@ -119,7 +126,7 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                     }}
                 />
             </Form.Item>
-            <div className="flex gap-2 pt-5">
+            <div className="flex flex-col gap-2 ">
                 <Button
                     htmlType="submit"
                     type="primary"
@@ -134,6 +141,19 @@ export const UpdateStoreForm: FC<UpdateStoreFormProps> = ({}) => {
                         Отмена
                     </Button>
                 </Link>
+                <Popconfirm
+                    title="Удалить этот элемент"
+                    description="Вы уверены, что хотите удалить этот элемент?"
+                    cancelText="Отмена"
+                    okButtonProps={{ loading: deleteLoading }}
+                    onConfirm={async () => {
+                        mutateAsync();
+                    }}
+                >
+                    <Button danger size="large" icon={<DeleteOutlined />}>
+                        Удалить склад
+                    </Button>
+                </Popconfirm>
             </div>
         </Form>
     );

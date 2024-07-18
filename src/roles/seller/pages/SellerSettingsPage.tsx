@@ -4,6 +4,7 @@ import { SellerStoresTable } from "@/modules/store/components/StoresTable/Seller
 import { FileMarkdownOutlined, ShopOutlined } from "@ant-design/icons";
 import { ConfigProvider, Menu, MenuProps } from "antd";
 import { FC, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const items: MenuProps["items"] = [
     {
@@ -21,10 +22,14 @@ const items: MenuProps["items"] = [
 interface SellerSettingsPageProps {}
 
 export const SellerSettingsPage: FC<SellerSettingsPageProps> = ({}) => {
-    const [current, setCurrent] = useState("stores");
-    // const { data: sellerInfo } = useGetSellerProfile();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [current, setCurrent] = useState(
+        searchParams.get("menu_x") || "stores"
+    );
+
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
+        setSearchParams({ menu_x: e.key });
     };
     return (
         <div className="h-full rounded-t-lg ">

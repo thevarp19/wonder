@@ -77,10 +77,12 @@ export function updateStoreStatusSeller(
     return axiosAuthorized.patch(`/api/warehouse/seller/${id}/`, values);
 }
 
-export function deleteStore(id: string) {
-    return axiosAuthorized.delete(`/api/stores/${id}`);
+export function deleteStore(id: number) {
+    return axiosAuthorized.delete(`/api/warehouse/wonder/${id}/`);
 }
-
+export function deleteStoreSeller(id: number) {
+    return axiosAuthorized.delete(`/api/warehouse/seller/${id}/`);
+}
 export function bindBoxToStore(storeId: number, boxId: number) {
     return axiosAuthorized.post(`/api/box/warehouse/${storeId}/${boxId}/`);
 }
