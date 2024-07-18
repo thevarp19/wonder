@@ -72,6 +72,7 @@ export const createStoreSellerMutation = () => {
 export const activateStoreSellerMutation = (wonder_id: number) => {
     const { message } = App.useApp();
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     return useMutation<void, AxiosError<any>, ActivateStoreSellerRequest>({
         async mutationFn(values) {
@@ -80,6 +81,9 @@ export const activateStoreSellerMutation = (wonder_id: number) => {
         onSuccess() {
             message.success("Успешно!");
             navigate("/seller/settings/");
+            queryClient.invalidateQueries({
+                queryKey: ["stores-seller"],
+            });
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);
@@ -100,6 +104,9 @@ export const updateStoreStatusMutation = (id: number) => {
             navigate("/admin/settings/");
             queryClient.invalidateQueries({
                 queryKey: ["stores"],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["stores-seller"],
             });
         },
         onError(error) {
@@ -217,7 +224,7 @@ export const removeBoxFromStoreMutation = () => {
         async mutationFn(values) {
             await removeBoxFromStore(values.storeId, values.boxId);
             queryClient.invalidateQueries({
-                queryKey: ["stores"],
+                queryKey: ["storeBox", values.storeId],
             });
         },
         onSuccess() {

@@ -1,8 +1,4 @@
-import {
-    emailSchema,
-    KzPhoneNumberSchema,
-    requiredStringSchema,
-} from "@/lib/validations/shared";
+import { emailSchema, requiredStringSchema } from "@/lib/validations/shared";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import * as Yup from "yup";
@@ -10,7 +6,7 @@ import { sellerUpdateMutation } from "./mutations";
 import { GetSellerProfile } from "./types";
 
 const updateSellerProfileSchema = Yup.object().shape({
-    phone_number: KzPhoneNumberSchema().required(),
+    // phone_number: KzPhoneNumberSchema().required(),
     kaspi_store_name: requiredStringSchema(),
     kaspi_seller_id: requiredStringSchema(),
     kaspi_token: requiredStringSchema(),

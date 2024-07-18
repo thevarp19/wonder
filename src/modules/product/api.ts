@@ -2,7 +2,6 @@ import { axiosAuthorized } from "@/lib/axios";
 import { UpdateProductSizeRequest } from "../store/types";
 import {
     ChangeProductPriceRequest,
-    GetProductContent,
     GetProductPricesResponse,
     GetProductResponse,
     GetProductsByParamsResponse,
@@ -10,7 +9,7 @@ import {
 } from "./types";
 
 export function createProductsFromFile(formData: FormData) {
-    return axiosAuthorized.post<GetProductContent[]>("/api/products", formData);
+    return axiosAuthorized.post("/api/product/create-by-file/", formData);
 }
 
 export function getProducts(
@@ -41,7 +40,7 @@ export function getProductsPrices(
     searchValue: string = "",
     isPublished: boolean | null = null
 ) {
-    let url = `/api/products/prices?page=${page}&size=${size}&searchValue=${searchValue}&sortBy=id`;
+    let url = `/api/seller-product/prices?page=${page}&size=${size}&searchValue=${searchValue}&sortBy=id/`;
     if (isPublished !== null) {
         url += `&isPublished=${isPublished}`;
     }

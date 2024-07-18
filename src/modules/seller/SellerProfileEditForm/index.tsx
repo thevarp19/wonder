@@ -60,7 +60,6 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
                             required: true,
                         }}
                         inputProps={{
-                            type: "tel",
                             onChange: (e) => {
                                 phoneNumberChangeHandler(
                                     e,

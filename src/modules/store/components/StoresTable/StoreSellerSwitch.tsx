@@ -1,5 +1,5 @@
 import { App, Switch } from "antd";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { updateStoreStatusSellerMutation } from "../../mutations";
 import { GetStoreSellerResponse } from "../../types";
 
@@ -12,22 +12,35 @@ export const StoreSellerSwitch: FC<StoreSwitchProps> = ({ record }) => {
         record?.seller_warehouse?.id
     );
     const { message } = App.useApp();
+    const [checked, setChecked] = useState(record?.seller_warehouse?.enabled);
     const handleChange = async (checked: boolean) => {
+        setChecked(checked);
+
+        if (record.seller_warehouse === null) {
+            message.error(
+                "Активируйте склад. Зайдите в редактирование и напишите Kaspi ID из кабинета продавца."
+            );
+            setChecked(false);
+            return;
+        }
         if (record.wonder_warehouse === null) {
-            // Seller warehouse without admin warehouse
             await mutateAsync({ enabled: checked });
-        } else if (record.wonder_warehouse.enabled === false) {
-            // Admin warehouse is disabled, show message
-            message.error("Склад отключен. Невозможно изменить статус.");
-        } else if (record.wonder_warehouse.enabled === true) {
-            // Admin warehouse is enabled, allow status change
+            return;
+        }
+        if (record.wonder_warehouse.enabled === false) {
+            message.error("Склад не активен. Невозможно изменить статус.");
+            setChecked(record?.seller_warehouse?.enabled);
+            return;
+        }
+        if (record.wonder_warehouse.enabled === true) {
             await mutateAsync({ enabled: checked });
         }
     };
+
     return (
         <div className="flex items-center gap-2">
             <Switch
-                checked={record?.seller_warehouse?.enabled}
+                checked={checked}
                 disabled={isPending}
                 loading={isPending}
                 onChange={handleChange}

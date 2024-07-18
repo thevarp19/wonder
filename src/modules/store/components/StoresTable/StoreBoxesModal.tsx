@@ -1,4 +1,4 @@
-import { useGetAllBoxes, useGetStoreBoxes } from "@/modules/box/queries";
+import { useGetAllBoxes } from "@/modules/box/queries";
 import { GetBoxResponse } from "@/modules/box/types";
 import { DeleteOutlined } from "@ant-design/icons";
 import {
@@ -12,6 +12,7 @@ import {
 import { FC, useState } from "react";
 import { useBindBoxToStore } from "../../forms";
 import { removeBoxFromStoreMutation } from "../../mutations";
+import { useGetStoreBoxes } from "../../queries";
 interface StoreBoxesModalProps {
     storeId: number;
 }

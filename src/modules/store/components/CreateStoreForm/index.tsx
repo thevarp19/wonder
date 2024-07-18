@@ -2,6 +2,7 @@ import { FormikInput } from "@/components/ui/FormikInput";
 import { cn } from "@/utils/shared.util";
 import { Button, Checkbox, Form } from "antd";
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { useCreateStore } from "../../forms";
 import { CitiesInput } from "../shared/CitiesInput";
 import { WorkingTimeInput } from "./WorkingTimeInput";
@@ -100,16 +101,28 @@ export const CreateStoreForm: FC<CreateStoreFormProps> = () => {
                         }}
                     />
                 </Form.Item>
-
-                <Button
-                    htmlType="submit"
-                    type="primary"
-                    size={"large"}
-                    className={cn("w-full !rounded-md")}
-                    loading={mutation.isPending}
-                >
-                    Создать
-                </Button>
+                <div className="flex flex-col gap-2">
+                    <Button
+                        htmlType="submit"
+                        type="primary"
+                        size={"large"}
+                        className={cn("w-full !rounded-md")}
+                        loading={mutation.isPending}
+                    >
+                        Создать
+                    </Button>
+                    <Link
+                        to="/admin/settings"
+                        className="w-full cursor-pointer"
+                    >
+                        <Button
+                            size={"large"}
+                            className={cn("w-full !rounded-md")}
+                        >
+                            Отмена
+                        </Button>
+                    </Link>
+                </div>
             </Form>
         </div>
     );

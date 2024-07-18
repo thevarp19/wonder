@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { GetBoxResponse } from "../box/types";
 import {
     getSellerStores,
+    getStoreBoxes,
     getStoreById,
     getStores,
     getStoreSellerById,
@@ -40,6 +42,15 @@ export const useGetSellerStores = () => {
     });
 };
 
+export const useGetStoreBoxes = (id: number) => {
+    return useQuery<GetBoxResponse[]>({
+        queryKey: ["storeBox", id],
+        queryFn: async () => {
+            const { data } = await getStoreBoxes(id);
+            return data;
+        },
+    });
+};
 export const useGetStore = (id: number | null) => {
     return useQuery<GetDetailStoreResponse>({
         queryKey: [`store`, id],

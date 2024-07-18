@@ -1,4 +1,5 @@
 import { axiosAuthorized } from "@/lib/axios";
+import { GetBoxResponse } from "../box/types";
 import {
     ActivateStoreSellerRequest,
     CreateStoreRequest,
@@ -42,7 +43,11 @@ export function getSellerStoreById(id: number) {
         `/api/warehouse/seller/${id}/`
     );
 }
-
+export function getStoreBoxes(storeId: number) {
+    return axiosAuthorized.get<GetBoxResponse[]>(
+        `/api/box/warehouse/${storeId}/`
+    );
+}
 export function getStores() {
     return axiosAuthorized.get<GetStoreResponse[]>(`/api/warehouse/wonder/`);
 }
@@ -77,9 +82,9 @@ export function deleteStore(id: string) {
 }
 
 export function bindBoxToStore(storeId: number, boxId: number) {
-    return axiosAuthorized.post(`/api/box/${storeId}/${boxId}/`);
+    return axiosAuthorized.post(`/api/box/warehouse/${storeId}/${boxId}/`);
 }
 
 export function removeBoxFromStore(storeId: number, boxId: number) {
-    return axiosAuthorized.delete(`/api/box/${storeId}/${boxId}/`);
+    return axiosAuthorized.delete(`/api/box/warehouse/${storeId}/${boxId}/`);
 }

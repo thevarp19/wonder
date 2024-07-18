@@ -4,7 +4,7 @@ import { CitiesInput } from "@/modules/store/components/shared/CitiesInput";
 import { cn } from "@/utils/shared.util";
 import { Button, Checkbox, Form, Spin } from "antd";
 import { FC } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useUpdateStoreSeller } from "../../forms";
 import { useGetSellerStore } from "../../queries";
 import { UpdateWorkingTimeInput } from "./UpdateWorkingTimeInput";
@@ -102,16 +102,22 @@ export const UpdateStoreSellerForm: FC<UpdateStoreSellerFormProps> = ({}) => {
                     }}
                 />
             </Form.Item>
-
-            <Button
-                htmlType="submit"
-                type="primary"
-                size={"large"}
-                className={cn("w-full !rounded-md")}
-                loading={mutation.isPending}
-            >
-                Сохранить
-            </Button>
+            <div className="flex gap-2 pt-5">
+                <Button
+                    htmlType="submit"
+                    type="primary"
+                    size={"large"}
+                    className={cn("w-full !rounded-md")}
+                    loading={mutation.isPending}
+                >
+                    Сохранить
+                </Button>
+                <Link to="/admin/settings" className="w-full cursor-pointer">
+                    <Button size={"large"} className={cn("w-full !rounded-md")}>
+                        Отмена
+                    </Button>
+                </Link>
+            </div>
         </Form>
     );
 };
