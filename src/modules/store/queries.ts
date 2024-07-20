@@ -9,6 +9,7 @@ import {
     getStoreSellerOwnById,
 } from "./api";
 import {
+    GetDetailSellerOwnStoreResponse,
     GetDetailSellerStoreResponse,
     GetDetailStoreResponse,
     GetStoreResponse,
@@ -34,7 +35,7 @@ export const useGetDetailedSellerStores = (id: number) => {
     });
 };
 export const useGetDetailedSellerOwnStores = (id: number) => {
-    return useQuery<GetDetailSellerStoreResponse>({
+    return useQuery<GetDetailSellerOwnStoreResponse>({
         queryKey: ["store-seller-own", id],
         queryFn: async () => {
             const { data } = await getStoreSellerOwnById(id);

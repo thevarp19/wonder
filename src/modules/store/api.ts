@@ -4,6 +4,7 @@ import {
     ActivateStoreSellerRequest,
     CreateStoreRequest,
     CreateStoreSellerRequest,
+    GetDetailSellerOwnStoreResponse,
     GetDetailSellerStoreResponse,
     GetDetailStoreResponse,
     GetStoreResponse,
@@ -34,7 +35,7 @@ export function getStoreSellerById(id: number) {
     );
 }
 export function getStoreSellerOwnById(id: number) {
-    return axiosAuthorized.get<GetDetailSellerStoreResponse>(
+    return axiosAuthorized.get<GetDetailSellerOwnStoreResponse>(
         `/api/warhouse/kaspi-info/${id}/`
     );
 }

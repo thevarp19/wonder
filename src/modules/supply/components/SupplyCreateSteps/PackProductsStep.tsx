@@ -114,8 +114,8 @@ function getProductQuantityLabel(
     packs: SupplyPack[],
     products: ProductQuantity[]
 ) {
-    return `${value.product.name.substring(0, 15)}${
-        value.product.name.length > 15 ? "..." : ""
+    return `${value.product.title.substring(0, 15)}${
+        value.product.title.length > 15 ? "..." : ""
     } - макс: ${getAvailableProductQuantity(
         packs,
         "-1",

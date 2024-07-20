@@ -1,5 +1,5 @@
 import { ConfigProvider, Switch, Table, TableColumnsType } from "antd";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { changeProductsVisibilityMutation } from "../../mutations";
 import { useGetProducts } from "../../queries";
@@ -36,8 +36,8 @@ const columns: TableColumnsType<GetProductContent> = [
     // },
 ];
 
-export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
-    const [page, setPage] = useState(1);
+export const ProductsTable: FC<ProductsTableProps> = ({}) => {
+    // const [page, setPage] = useState(1);
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
     // const { data: productsCount } = useGetProductsPrices(
     //     page,
@@ -45,9 +45,9 @@ export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
     //     searchValue,
     //     isPublished
     // );
-    useEffect(() => {
-        setPage(1);
-    }, [searchValue]);
+    // useEffect(() => {
+    //     setPage(1);
+    // }, [searchValue]);
     const { data: products, isPending } = useGetProducts(
         // page,
         // undefined,

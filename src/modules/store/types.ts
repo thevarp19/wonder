@@ -72,13 +72,31 @@ export interface UpdateStoreSellerRequest {
         city: number;
     };
 }
-export interface GetDetailSellerStoreResponse {
+export interface GetDetailSellerOwnStoreResponse {
     id: number;
     city: string;
     street_name: string;
     street_number: string;
     is_warehouse: boolean;
     additional_information: string;
+}
+export interface GetDetailSellerStoreResponse {
+    id: number;
+    enabled: boolean;
+    kaspi_warehouse_id: string;
+    warehouse: {
+        id: number;
+        operating_modes: WorkDayOfWeekResponse[];
+        street_name: string;
+        street_number: string;
+        is_warehouse: boolean;
+        additional_information: string;
+        city: {
+            id: number;
+            name: string;
+            code: string;
+        };
+    };
 }
 export interface GetDetailStoreResponse {
     volume: string;
