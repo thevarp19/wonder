@@ -5,27 +5,30 @@ import {
     getProductsOptions,
     getProductsPrices,
     getProductsWithSizes,
+    getSellerActiveCities,
 } from "./api";
 import {
+    GetProductContent,
     GetProductPricesResponse,
     GetProductResponse,
     GetProductsByParamsResponse,
     GetProductsWithSizesResponse,
+    ProductStoreCity,
 } from "./types";
 
 export const useGetProducts = (
-    page: number = 0,
-    size: number = 10,
-    searchValue: string = "",
+    // page: number = 0,
+    // size: number = 10,
+    // searchValue: string = "",
     isPublished: boolean | null = null
 ) => {
-    return useQuery<GetProductResponse>({
-        queryKey: [`products`, page, size, searchValue, isPublished],
+    return useQuery<GetProductContent[]>({
+        queryKey: [`products`, isPublished],
         queryFn: async () => {
             const { data } = await getProducts(
-                page,
-                size,
-                searchValue,
+                // page,
+                // size,
+                // searchValue,
                 isPublished
             );
             return data;
@@ -107,20 +110,31 @@ export const useGetProductsByParams = (
 };
 
 export const useGetProductsPrices = (
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
-    searchValue: string = "",
+    cities: number[] = [],
+    // searchValue: string = "",
     isPublished: boolean | null = null
 ) => {
     return useQuery<GetProductPricesResponse>({
-        queryKey: [`products-prices`, page, size, searchValue, isPublished],
+        queryKey: [`products-prices`, page, size, isPublished, cities],
         queryFn: async () => {
             const { data } = await getProductsPrices(
                 page,
                 size,
-                searchValue,
+                // searchValue,
+                cities,
                 isPublished
             );
+            return data;
+        },
+    });
+};
+export const useGetActiveCities = () => {
+    return useQuery<ProductStoreCity[]>({
+        queryKey: [`active-cities`],
+        queryFn: async () => {
+            const { data } = await getSellerActiveCities();
             return data;
         },
     });

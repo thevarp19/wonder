@@ -13,31 +13,31 @@ interface ProductsTableProps {
 const columns: TableColumnsType<GetProductContent> = [
     {
         title: "Артикул",
-        dataIndex: "vendorCode",
+        dataIndex: "vendor_code",
     },
     {
         title: "Название",
-        dataIndex: "name",
+        dataIndex: "title",
     },
-    {
-        title: "Опубликовано",
-        dataIndex: "isPublished",
-        render: (_, record) => <ProductEnableSwitch {...record} />,
-    },
+    // {
+    //     title: "Опубликовано",
+    //     dataIndex: "isPublished",
+    //     render: (_, record) => <ProductEnableSwitch {...record} />,
+    // },
 
-    {
-        title: "Количество в Алматы",
-        render: (_, record) => <span>{record.counts[0].count}</span>,
-    },
+    // {
+    //     title: "Количество в Алматы",
+    //     render: (_, record) => <span>{record.counts[0].count}</span>,
+    // },
 
-    {
-        title: "Количество в Астане",
-        render: (_, record) => <span>{record.counts[1].count}</span>,
-    },
+    // {
+    //     title: "Количество в Астане",
+    //     render: (_, record) => <span>{record.counts[1].count}</span>,
+    // },
 ];
 
 export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
     // const { data: productsCount } = useGetProductsPrices(
     //     page,
@@ -46,12 +46,12 @@ export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
     //     isPublished
     // );
     useEffect(() => {
-        setPage(0);
+        setPage(1);
     }, [searchValue]);
     const { data: products, isPending } = useGetProducts(
-        page,
-        undefined,
-        searchValue,
+        // page,
+        // undefined,
+        // searchValue,
         isPublished
     );
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
@@ -79,17 +79,17 @@ export const ProductsTable: FC<ProductsTableProps> = ({ searchValue }) => {
                 <Table
                     columns={columns}
                     loading={isPending}
-                    size="small"
-                    dataSource={products?.content}
-                    rowKey={(record) => record.vendorCode}
+                    // size="small"
+                    dataSource={products ?? []}
+                    rowKey={(record) => record.vendor_code}
                     pagination={{
-                        pageSize: 10,
-                        total: products?.totalElements,
-                        showSizeChanger: false,
-                        onChange(page) {
-                            setPage(page - 1);
-                        },
-                        current: page + 1,
+                        // pageSize: 10,
+                        // total: products?.totalElements,
+                        // showSizeChanger: false,
+                        // onChange(page) {
+                        //     setPage(page - 1);
+                        // },
+                        // current: page + 1,
                         position: isSmallScreen ? ["bottomCenter"] : undefined,
                     }}
                     scroll={{ x: "max-content" }}
@@ -113,7 +113,7 @@ export function ProductEnableSwitch({
                 checked={enabled}
                 loading={isPending}
                 onChange={async (checked) => {
-                    mutateAsync({ id: id, isPublished: checked });
+                    mutateAsync([{ id: id, is_published: checked }]);
                 }}
             />
         </div>

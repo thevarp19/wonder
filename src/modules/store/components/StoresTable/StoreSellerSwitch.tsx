@@ -15,27 +15,27 @@ export const StoreSellerSwitch: FC<StoreSwitchProps> = ({ record }) => {
     const [checked, setChecked] = useState(record?.seller_warehouse?.enabled);
     useEffect(() => {
         setChecked(record?.seller_warehouse?.enabled);
-    }, [record.seller_warehouse.enabled]);
+    }, [record?.seller_warehouse?.enabled]);
     const handleChange = async (checked: boolean) => {
         setChecked(checked);
 
-        if (record.seller_warehouse === null) {
+        if (record?.seller_warehouse === null) {
             message.error(
                 "Активируйте склад. Зайдите в редактирование и напишите Kaspi ID из кабинета продавца."
             );
             setChecked(false);
             return;
         }
-        if (record.wonder_warehouse === null) {
+        if (record?.wonder_warehouse === null) {
             await mutateAsync({ enabled: checked });
             return;
         }
-        if (record.wonder_warehouse.enabled === false) {
+        if (record?.wonder_warehouse?.enabled === false) {
             message.error("Склад не активен. Невозможно изменить статус.");
             setChecked(record?.seller_warehouse?.enabled);
             return;
         }
-        if (record.wonder_warehouse.enabled === true) {
+        if (record?.wonder_warehouse?.enabled === true) {
             await mutateAsync({ enabled: checked });
         }
     };

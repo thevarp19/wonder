@@ -2,31 +2,37 @@ import { axiosAuthorized } from "@/lib/axios";
 import { UpdateProductSizeRequest } from "../store/types";
 import {
     ChangeProductPriceRequest,
+    GetProductContent,
     GetProductPricesResponse,
     GetProductResponse,
     GetProductsByParamsResponse,
     GetProductsWithSizesResponse,
+    ProductStoreCity,
 } from "./types";
 
-export function createProductsFromFile(formData: FormData) {
-    return axiosAuthorized.post("/api/product/create-by-file/", formData);
+export function createProductsFromFile(formData: FormData, importType: string) {
+    return axiosAuthorized.post(
+        `/api/product/import-file/?import_type=${importType}`,
+        formData
+    );
 }
 
 export function getProducts(
-    page: number = 0,
-    size: number = 10,
-    searchValue: string = "",
-    isPublished: boolean | null = null
+    // page: number = 1,
+    // size: number = 10,
+    // searchValue: string = "",
+    isPublished: boolean | null = null,
+    cityId: number = 1
 ) {
-    let url = `/api/products?page=${page}&size=${size}&searchValue=${searchValue}&sortBy=id`;
+    let url = `/api/seller-city-product-price-quantity/?city=${cityId}`;
     if (isPublished !== null) {
-        url += `&isPublished=${isPublished}`;
+        url += `&is_published=${isPublished}`;
     }
-    return axiosAuthorized.get<GetProductResponse>(url);
+    return axiosAuthorized.get<GetProductContent[]>(url);
 }
 
 export async function getProductsOptions({
-    pageParam = 0,
+    pageParam = 1,
     pageSize = 10,
     searchValue = "",
 }) {
@@ -35,22 +41,32 @@ export async function getProductsOptions({
     return data;
 }
 export function getProductsPrices(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
-    searchValue: string = "",
+    // searchValue: string = "",
+    cities: number[] = [],
     isPublished: boolean | null = null
 ) {
-    let url = `/api/seller-product/prices?page=${page}&size=${size}&searchValue=${searchValue}&sortBy=id/`;
+    let url = `api/seller-product/?page=${page}&size=${size}`;
     if (isPublished !== null) {
-        url += `&isPublished=${isPublished}`;
+        url += `&is_published=${isPublished}`;
     }
+    if (cities.length > 0) {
+        url += cities.map((cityId) => `&cities=${cityId}`).join("");
+    }
+
     return axiosAuthorized.get<GetProductPricesResponse>(url);
 }
 
-export function changeProductVisibility(id: number, isVisible: boolean) {
-    return axiosAuthorized.patch<void>(
-        `/api/products/publish?productId=${id}&isPublished=${isVisible}`
-    );
+export function changeProductVisibility(
+    values: [
+        {
+            id: number;
+            is_published: boolean;
+        }
+    ]
+) {
+    return axiosAuthorized.patch(`/api/seller-product/update/`, values);
 }
 export function updateProductSize(
     id: string,
@@ -59,12 +75,17 @@ export function updateProductSize(
     return axiosAuthorized.patch(`/api/products/change-size/${id}`, values);
 }
 
-export function changeProductPrice(value: ChangeProductPriceRequest) {
-    return axiosAuthorized.patch<void>(`/api/products/price`, value);
+export function changeProductPrice(value: ChangeProductPriceRequest[]) {
+    return axiosAuthorized.patch(`/api/seller-product/update/`, value);
+}
+export function getSellerActiveCities() {
+    return axiosAuthorized.get<ProductStoreCity[]>(
+        `/api/city/seller-warehouse-enabled/`
+    );
 }
 
 export function getProductsWithSizes(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     byVendorCode: boolean = false,
@@ -74,7 +95,7 @@ export function getProductsWithSizes(
     return axiosAuthorized.get<GetProductsWithSizesResponse>(url);
 }
 export function getProductsByParams(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     byVendorCode: boolean = false,

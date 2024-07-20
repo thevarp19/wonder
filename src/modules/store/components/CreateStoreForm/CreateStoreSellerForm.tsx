@@ -34,8 +34,11 @@ export const CreateStoreSellerForm: FC<CreateStoreSellerFormProps> = () => {
                     <CitiesInput
                         className=""
                         size="large"
-                        onSelect={(_) => {
-                            formik.setFieldValue("warehouse.city", 1);
+                        onSelect={(_, option) => {
+                            formik.setFieldValue(
+                                "warehouse.city",
+                                option.value
+                            );
                         }}
                     />
                 </Form.Item>

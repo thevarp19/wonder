@@ -30,7 +30,7 @@ const columns: TableColumnsType<GetProductCount> = [
 ];
 
 export const ProductsCountTable: FC<ProductsCountTableProps> = ({}) => {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
 
     const { data: products, isPending } = useGetSellerProductCount(
         page,

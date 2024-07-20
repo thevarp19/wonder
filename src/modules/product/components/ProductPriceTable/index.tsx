@@ -19,8 +19,8 @@ import {
     useProductPricesChange,
 } from "../../forms";
 import { changeProductPriceMutation } from "../../mutations";
-import { useGetProductsPrices } from "../../queries";
-import { ProductPriceCity, ProductWithPrices } from "../../types";
+import { useGetActiveCities, useGetProductsPrices } from "../../queries";
+import { GetProductWithPrices, ProductStoreCity } from "../../types";
 import { ProductPublishedFilter } from "../ProductsFilter/ProductPublishedFilter";
 import { ProductEnableSwitch } from "../ProductsTable";
 
@@ -28,20 +28,16 @@ interface ProductPriceTableProps {
     debouncedSearchValue: string;
 }
 
-const columns: TableColumnsType<ProductWithPrices> = [
+const columns: TableColumnsType<GetProductWithPrices> = [
     {
         title: "Артикул",
-        dataIndex: "vendorCode",
+        dataIndex: "vendor_code",
         // fixed: "left",
-        // width: 150,
+        width: 150,
     },
     {
         title: "Название",
-        render: (_, record) => (
-            <a href={record.vendorCode} className="">
-                {record.name}
-            </a>
-        ),
+        render: (_, record) => record.title,
         width: 200,
         // fixed: "left",
         // width: 150,
@@ -50,15 +46,15 @@ const columns: TableColumnsType<ProductWithPrices> = [
         title: "Опубликовано",
         dataIndex: "isPublished",
         render: (_, record) => (
-            <ProductEnableSwitch enabled={record.published} id={record.id} />
+            <ProductEnableSwitch enabled={record.is_published} id={record.id} />
         ),
-        // width: 100,
+        width: 100,
     },
     {
         title: "Кол-во",
-        render: (_, record) => <div className="">{record.count}</div>,
+        render: (_, record) => <div className="">{record.total_quantity}</div>,
         width: 100,
-        sorter: (a, b) => a.count - b.count,
+        sorter: (a, b) => a.total_quantity - b.total_quantity,
     },
 ];
 
@@ -70,7 +66,7 @@ function MainPriceCitySelect({
 }: {
     isEditable: boolean;
     mainCityId: number | null;
-    cities: ProductPriceCity[] | undefined;
+    cities: ProductStoreCity[] | undefined;
     setValue: (value: string, label: string) => void;
 }) {
     const selectedCity = cities?.find((city) => city.id === mainCityId) || null;
@@ -79,13 +75,13 @@ function MainPriceCitySelect({
         <Select
             disabled={!isEditable}
             style={{ width: "100%", borderRadius: 24 }}
-            defaultValue={selectedCity ? selectedCity.id.toString() : "-1"}
+            defaultValue={selectedCity ? selectedCity.id.toString() : null}
             onChange={(_, option) =>
                 // @ts-ignore
                 setValue(option.value, option.label)
             }
             options={[
-                { value: "-1", label: "Не выбрано" },
+                { value: null, label: "Не выбрано" },
                 ...(cities ?? []).map((city) => ({
                     value: city.id.toString(),
                     label: city.name,
@@ -98,41 +94,40 @@ function MainPriceCitySelect({
 function StoreCheckboxes({
     checked,
     setChecked,
-    stores,
+    cities,
 }: {
     checked: string[];
     setChecked: Dispatch<SetStateAction<string[]>>;
-    stores: ProductPriceCity[];
+    cities: ProductStoreCity[];
 }) {
     return (
         <div className="flex flex-col gap-4">
-            {stores.map((store) => (
-                <div key={store.name.toLowerCase()}>
+            {cities.map((city) => (
+                <div key={city.name.toLowerCase()}>
                     <Checkbox
                         checked={
                             checked.findIndex((name) => {
-                                console.log(name, store.name.toLowerCase());
-                                return name === store.name.toLowerCase();
+                                return name === city.name.toLowerCase();
                             }) !== -1
                         }
                         onChange={(e) => {
                             if (e.target.checked) {
                                 setChecked((prev) => [
                                     ...prev,
-                                    store.name.toLowerCase(),
+                                    city.name.toLowerCase(),
                                 ]);
                             } else {
                                 setChecked((prev) =>
                                     prev.filter(
                                         (name) =>
                                             name.toLowerCase() !==
-                                            store.name.toLowerCase()
+                                            city.name.toLowerCase()
                                     )
                                 );
                             }
                         }}
                     >
-                        {store.name}
+                        {city.name}
                     </Checkbox>
                 </div>
             ))}
@@ -142,18 +137,20 @@ function StoreCheckboxes({
 
 function findProductPriceAndCountInCity(
     storeName: string,
-    record: ProductWithPrices
+    record: GetProductWithPrices
 ) {
     let result = {
         price: 0,
         count: 0,
         storeId: 0,
+        color: "",
     };
-    record.prices.forEach((price) => {
-        if (price.cityName.toLowerCase() === storeName.toLowerCase()) {
+    record.city_prices.forEach((price) => {
+        if (price.city.name.toLowerCase() === storeName.toLowerCase()) {
             result.price = price.price;
-            result.count = record.count;
-            result.storeId = price.cityId;
+            result.count = record.total_quantity;
+            result.storeId = price.id;
+            result.color = price.color;
         }
     });
     return result;
@@ -162,7 +159,7 @@ function findProductPriceAndCountInCity(
 export const ProductPriceTable: FC<ProductPriceTableProps> = ({
     debouncedSearchValue,
 }) => {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
 
     const [activeStores, setActiveStores] = useState<string[]>(
         myLocalStorage?.get("activeStores") || ["алматы"]
@@ -170,15 +167,21 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
     const [isEditable, setIsEditable] = useState(false);
+    const { data: cities, isPending: cityPending } = useGetActiveCities();
+    const activeStoreIds =
+        cities
+            ?.filter((city) => activeStores.includes(city.name.toLowerCase()))
+            .map((city) => city.id) || [];
 
     const { data: products, isPending } = useGetProductsPrices(
         page,
-        undefined,
-        debouncedSearchValue,
+        10,
+        // debouncedSearchValue,
+        activeStoreIds,
         isPublished
     );
     useEffect(() => {
-        setPage(0);
+        setPage(1);
     }, [debouncedSearchValue]);
     useEffect(() => {
         myLocalStorage?.set("activeStores", activeStores);
@@ -186,8 +189,8 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
 
     const uniqueStores = [];
     for (const store of new Set(activeStores)) {
-        if (products?.content.cities.length) {
-            const storeIndex = products.content.cities.findIndex(
+        if (cities?.length) {
+            const storeIndex = cities.findIndex(
                 (city) => city.name.toLowerCase() === store.toLowerCase()
             );
             if (storeIndex !== -1) {
@@ -197,6 +200,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
             uniqueStores.push(store);
         }
     }
+
     const { addCityPriceChange, addMainPriceChange, state, clearChanges } =
         useProductPricesChange();
 
@@ -204,19 +208,19 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
         ...columns,
         {
             title: "Главный город цены",
-            render: (_: any, record: ProductWithPrices) => (
+            render: (_: any, record: GetProductWithPrices) => (
                 <MainPriceCitySelect
                     isEditable={isEditable}
-                    mainCityId={record?.mainPriceCityId}
+                    mainCityId={record?.main_city?.id || null}
                     setValue={(value, label) => {
                         addMainPriceChange({
                             productId: record.id,
-                            productName: record.name,
+                            productName: record.title,
                             mainCityId: Number(value),
                             mainCityName: label,
                         });
                     }}
-                    cities={products?.content?.cities}
+                    cities={cities}
                 />
             ),
             width: 150,
@@ -227,7 +231,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
             .map((store) => ({
                 title: `${store.toLocaleUpperCase()}`,
                 width: 120,
-                render: (_: any, record: ProductWithPrices) => (
+                render: (_: any, record: GetProductWithPrices) => (
                     <ProductPriceCell
                         store={store}
                         record={record}
@@ -247,6 +251,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
             <Modal
                 title="Склады"
                 open={isModalOpen}
+                cancelText="Назад"
                 onCancel={() => {
                     setIsModalOpen(false);
                 }}
@@ -257,17 +262,11 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
                 <StoreCheckboxes
                     checked={activeStores}
                     setChecked={setActiveStores}
-                    stores={products?.content?.cities || []}
+                    cities={cities || []}
                 />
             </Modal>
             <div className="flex items-center justify-between px-2 mb-4 md:px-4">
                 <div className="flex items-center w-full gap-4">
-                    {/* <div className="w-full max-w-sm">
-                        <ProductsSearch
-                            searchValue={searchValue}
-                            setSearchValue={setSearchValue}
-                        />
-                    </div> */}
                     <ProductPublishedFilter
                         isPublished={isPublished}
                         setIsPublished={setIsPublished}
@@ -303,9 +302,9 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
                         triggerAsc: "Нажмите для сортировки по возрастанию",
                         cancelSort: "Нажмите для отмены сортировки",
                     }}
-                    dataSource={products?.content?.products || []}
-                    rowKey={(r) => r.vendorCode}
-                    loading={isPending}
+                    dataSource={products?.content || []}
+                    rowKey={(record) => record.vendor_code}
+                    loading={isPending || cityPending}
                     // scroll={{ x: 1200 }}
                     footer={() => (
                         <div className="flex justify-end">
@@ -317,6 +316,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
                                         await mutateAsync(
                                             getPriceChangeRequest(state)
                                         );
+                                        clearChanges();
                                         setIsEditable(false);
                                     }}
                                     clearChanges={clearChanges}
@@ -426,28 +426,37 @@ function ProductPriceCell({
     state,
 }: {
     store: string;
-    record: ProductWithPrices;
+    record: GetProductWithPrices;
     isEditable: boolean;
     addCityPriceChange: (cityPrice: ProductCityPriceChangeState) => void;
     state: ProductPriceChangeState;
 }) {
-    const { price, count, storeId } = findProductPriceAndCountInCity(
+    const { price, storeId, color } = findProductPriceAndCountInCity(
         store,
         record
     );
+    const getColorHex = (color: string) => {
+        switch (color) {
+            case "red":
+                return "#FF0000";
+            case "yellow":
+                return "#FFFF00";
+            case "green":
+                return "#008000";
+            default:
+                return "#FFFFFF";
+        }
+    };
+    const backgroundColor = getColorHex(color);
+
     return (
         <div className="relative w-full h-full ">
-            {/* <div
-                style={{
-                    backgroundColor: getColorFromCount(count),
-                }}
-            ></div> */}
             {isEditable ? (
                 <InputNumber
                     defaultValue={price}
                     inputMode="numeric"
                     style={{
-                        backgroundColor: getColorFromCount(count),
+                        backgroundColor: backgroundColor,
                         fontWeight: 600,
                         paddingLeft: 10,
                         borderRadius: 16,
@@ -463,7 +472,7 @@ function ProductPriceCell({
                         if (value !== null) {
                             addCityPriceChange({
                                 productId: record.id,
-                                productName: record.name,
+                                productName: record.title,
                                 cityId: storeId,
                                 cityName: store,
                                 prevPrice: price,
@@ -475,7 +484,7 @@ function ProductPriceCell({
             ) : (
                 <div
                     style={{
-                        backgroundColor: getColorFromCount(count),
+                        backgroundColor: color,
                     }}
                     className="flex items-center justify-center gap-2 py-1 font-semibold border rounded-2xl"
                 >
@@ -484,18 +493,4 @@ function ProductPriceCell({
             )}
         </div>
     );
-}
-
-function getColorFromCount(count: number) {
-    count = Math.min(Math.max(count, 0), 200);
-
-    const factor = count / 200;
-
-    const red = Math.round(255 - 127 * factor);
-
-    const green = Math.round(255 - 255 * factor);
-
-    const blue = Math.round(0 + 128 * factor);
-
-    return `rgb(${red},${green},${blue})`;
 }

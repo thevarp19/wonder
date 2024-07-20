@@ -33,6 +33,12 @@ export function getStoreSellerById(id: number) {
         `/api/warehouse/seller/${id}/`
     );
 }
+export function getStoreSellerOwnById(id: number) {
+    return axiosAuthorized.get<GetDetailSellerStoreResponse>(
+        `/api/warhouse/kaspi-info/${id}/`
+    );
+}
+
 export function getStoreById(id: number) {
     return axiosAuthorized.get<GetDetailStoreResponse>(
         `/api/warehouse/wonder/${id}/`

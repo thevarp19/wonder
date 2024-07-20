@@ -35,7 +35,6 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
             }?${newSearchParams.toString()}`;
             window.history.replaceState(null, "", newUrl);
         }
-
     }, [scanSearchValue]);
     return (
         <div className="flex flex-col">
@@ -53,10 +52,16 @@ export const EmployeeSearchPage: FC<EmployeeSearchPageProps> = ({}) => {
                     onClick={toScanProductsSearch}
                     className="flex items-center justify-center bg-[#EF7214]  rounded-md cursor-pointer py-[14px] md:w-[130px] w-full md:max-h-[32px] max-h-[47px] gap-2 px-2"
                 >
-                    <Image src={scan} alt="scan" className={cn("min-w-4 h-4")} />
-                    <h2 className="md:text-[12px] text-[16px] text-white">CКАНИРОВАТЬ</h2>
+                    <Image
+                        src={scan}
+                        alt="scan"
+                        className={cn("min-w-4 h-4")}
+                    />
+                    <h2 className="md:text-[12px] text-[16px] text-white">
+                        CКАНИРОВАТЬ
+                    </h2>
                 </div>
-            </div>  
+            </div>
             <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
                 <EmployeeSearchResultsTable searchValue={searchQuery} />
             </div>
@@ -97,11 +102,10 @@ const columns: TableColumnsType<any> = [
     },
 ];
 
-
 export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
     searchValue,
 }) => {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const { data, isPending } = useGetProductsByParams(
         page,
         undefined,
@@ -117,12 +121,11 @@ export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
             theme={{
                 components: {
                     Table: {
-                        headerBg: "#fff",   
+                        headerBg: "#fff",
                         headerColor: "#1C1C1C66",
                         headerBorderRadius: 10,
                         headerSplitColor: "#fff",
                     },
-                    
                 },
             }}
         >
@@ -139,7 +142,7 @@ export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
                         setPage(page - 1);
                     },
                     current: page + 1,
-                    position: isSmallScreen ? ["bottomCenter"] : undefined
+                    position: isSmallScreen ? ["bottomCenter"] : undefined,
                 }}
                 scroll={{ x: "max-content" }}
             />

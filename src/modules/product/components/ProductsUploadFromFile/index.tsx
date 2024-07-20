@@ -1,8 +1,10 @@
 import { InboxOutlined } from "@ant-design/icons";
-import { Spin, Upload } from "antd";
-import { FC, useEffect } from "react";
+import { Form, Select, Spin, Upload } from "antd";
+import { FC, useEffect, useState } from "react";
 import { createProductsFromFileMutation } from "../../mutations";
 import { GetProductContent } from "../../types";
+
+const { Option } = Select;
 
 interface ProductsUploadFromFileProps {
     setProducts?: (products: GetProductContent[]) => void;
@@ -12,11 +14,24 @@ export const ProductsUploadFromFile: FC<ProductsUploadFromFileProps> = ({
     setProducts,
 }) => {
     const { isPending, mutate, data } = createProductsFromFileMutation();
+    const [importType, setImportType] = useState("sheet_additions");
+
     useEffect(() => {
         if (data && setProducts) {
             setProducts(data);
         }
     }, [data]);
+
+    const handleImportTypeChange = (value: string) => {
+        setImportType(value);
+    };
+
+    const handleFileUpload = (file: File) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        mutate({ formData, importType });
+        return false;
+    };
     return (
         <div className="p-4">
             <h1 className="pb-4 text-base font-semibold md:text-2xl">
@@ -34,26 +49,42 @@ export const ProductsUploadFromFile: FC<ProductsUploadFromFileProps> = ({
                         <Spin size="large" />
                     </div>
                 )}
-                <Upload.Dragger
-                    multiple={false}
-                    maxCount={1}
-                    showUploadList={false}
-                    accept=".csv, .xls, .xlsx"
-                    beforeUpload={(file) => {
-                        const formData = new FormData();
-                        formData.append("file", file);
-                        mutate(formData);
-                        return false;
-                    }}
-                >
-                    <p className="ant-upload-drag-icon">
-                        <InboxOutlined />
-                    </p>
-                    <p className="ant-upload-text">
-                        Нажмите или перетащите файл в эту область для загрузки
-                    </p>
-                    <p className="ant-upload-hint"></p>
-                </Upload.Dragger>
+                <Form layout="vertical">
+                    <Form.Item label="Тип импорта" required>
+                        <Select
+                            defaultValue="sheet_additions"
+                            onChange={handleImportTypeChange}
+                        >
+                            <Option value="sheet_additions">
+                                Добавление листа
+                            </Option>
+                            <Option value="sheet_replacement">
+                                Замена листа
+                            </Option>
+                            <Option value="sheet_updates">
+                                Обновление листа
+                            </Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item>
+                        <Upload.Dragger
+                            multiple={false}
+                            maxCount={1}
+                            showUploadList={false}
+                            accept=".csv, .xls, .xlsx"
+                            beforeUpload={handleFileUpload}
+                        >
+                            <p className="ant-upload-drag-icon">
+                                <InboxOutlined />
+                            </p>
+                            <p className="ant-upload-text">
+                                Нажмите или перетащите файл в эту область для
+                                загрузки
+                            </p>
+                            <p className="ant-upload-hint"></p>
+                        </Upload.Dragger>
+                    </Form.Item>
+                </Form>
             </div>
         </div>
     );

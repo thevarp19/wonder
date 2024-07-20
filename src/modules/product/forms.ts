@@ -38,18 +38,40 @@ type ProductPriceChangeAction =
 
 export function getPriceChangeRequest(
     state: ProductPriceChangeState
-): ChangeProductPriceRequest {
-    return {
-        priceList: state.cityPrices.map((cityPrice) => ({
-            price: cityPrice.newPrice,
-            cityId: cityPrice.cityId,
-            productId: cityPrice.productId,
-        })),
-        mainPriceList: state.mainPrices.map((mainPrice) => ({
-            productId: mainPrice.productId,
-            mainCityId: mainPrice.mainCityId,
-        })),
-    };
+): ChangeProductPriceRequest[] {
+    const mainPriceMap = new Map<number, ProductMainPriceChangeState>();
+    state.mainPrices.forEach((mainPrice) => {
+        mainPriceMap.set(mainPrice.productId, mainPrice);
+    });
+
+    const processedProductIds = new Set<number>();
+
+    const cityPriceRequests = state.cityPrices.map((cityPrice) => {
+        processedProductIds.add(cityPrice.productId);
+        const mainCity =
+            mainPriceMap.get(cityPrice.productId)?.mainCityId || null;
+
+        return {
+            id: cityPrice.productId,
+            main_city: mainCity,
+            city_prices: [
+                {
+                    id: cityPrice.cityId,
+                    price: cityPrice.newPrice.toString(),
+                },
+            ],
+        };
+    });
+
+    const mainPriceRequests = state.mainPrices
+        .filter((mainPrice) => !processedProductIds.has(mainPrice.productId))
+        .map((mainPrice) => ({
+            id: mainPrice.productId,
+            main_city: mainPrice.mainCityId === 0 ? null : mainPrice.mainCityId,
+            city_prices: [],
+        }));
+
+    return [...cityPriceRequests, ...mainPriceRequests];
 }
 
 export function getPriceChanges(state: ProductPriceChangeState): string[] {
@@ -165,6 +187,7 @@ export const useProductPricesChange = () => {
         clearChanges,
     };
 };
+
 export const useUpdateProductSize = (productId: string) => {
     const mutation = updateProductSizeMutation(productId);
 

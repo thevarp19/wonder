@@ -74,21 +74,11 @@ export interface UpdateStoreSellerRequest {
 }
 export interface GetDetailSellerStoreResponse {
     id: number;
-    enabled: boolean;
-    kaspi_warehouse_id: string;
-    warehouse: {
-        id: number;
-        operating_modes: WorkDayOfWeekResponse[];
-        street_name: string;
-        street_number: string;
-        is_warehouse: boolean;
-        additional_information: string;
-        city: {
-            id: number;
-            name: string;
-            code: string;
-        };
-    };
+    city: string;
+    street_name: string;
+    street_number: string;
+    is_warehouse: boolean;
+    additional_information: string;
 }
 export interface GetDetailStoreResponse {
     volume: string;

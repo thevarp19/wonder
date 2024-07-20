@@ -1,35 +1,36 @@
-import {
-    BasePaginationProductsSizesResponse,
-    BasePaginationResponse,
-} from "@/types";
+import { BasePaginationResponse } from "@/types";
 
-export interface ProductPrice {
-    cityId: number;
-    cityName: string;
+export interface CityPrices {
+    id: number;
+    city: {
+        id: number;
+        name: string;
+        code: string;
+    };
     price: number;
-    count: number;
+    color: string;
 }
 
-export interface ProductWithPrices {
+export interface GetProductWithPrices {
     id: number;
-    count: number;
-    name: string;
-    published: boolean;
-    vendorCode: string;
-    mainPriceCityId: number | null;
-    prices: ProductPrice[];
+    vendor_code: string;
+    title: string;
+    total_quantity: number;
+    main_city: {
+        id: number;
+        name: string;
+        code: string;
+    };
+    city_prices: CityPrices[];
+    is_published: boolean;
 }
 
 export interface GetProductResponse
     extends BasePaginationResponse<GetProductContent> {}
 
 export interface GetProductPricesResponse
-    extends BasePaginationProductsSizesResponse<GetProductPricesContent> {}
+    extends BasePaginationResponse<GetProductWithPrices> {}
 
-export interface GetProductPricesContent {
-    cities: ProductPriceCity[];
-    products: ProductWithPrices[];
-}
 export interface GetProductsWithSizesResponse
     extends BasePaginationResponse<GetProductsWithSizesContent[]> {}
 
@@ -57,30 +58,23 @@ export interface GetProductByParamsContent {
     price: number;
 }
 
-export interface ProductPriceCity {
+export interface ProductStoreCity {
     id: number;
     name: string;
     code: string;
-    enabled: true;
 }
 
 export interface ChangeProductPriceRequest {
-    priceList: {
-        price: number;
-        cityId: number;
-        productId: number;
-    }[];
-    mainPriceList: {
-        productId: number;
-        mainCityId: number;
-    }[];
+    id: number;
+    is_published?: boolean;
+    main_city: number | null;
+    city_prices: { id: number; price: string }[];
 }
 
 export interface GetProductContent {
     id: number;
-    vendorCode: string;
-    keycloakUserId: string;
-    name: string;
-    enabled: boolean;
-    counts: ProductPrice[];
+    warehouse_quantities: string;
+    vendor_code: string;
+    title: string;
+    price: string;
 }

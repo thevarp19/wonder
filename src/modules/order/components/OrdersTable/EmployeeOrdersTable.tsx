@@ -2,10 +2,10 @@ import { DateCell } from "@/components/ui/DateCell";
 import { PriceCell } from "@/components/ui/PriceCell";
 import { Select, Table, TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersEmployee } from "../../queries";
 import { DeliveryMode, GetOrdersEmployeeContent } from "../../types";
-import { useMediaQuery } from "react-responsive";
 
 const columns: TableColumnsType<GetOrdersEmployeeContent> = [
     {
@@ -81,7 +81,7 @@ export const EmployeeOrdersTable: FC<EmployeeOrdersTableProps> = ({
     byProductArticle,
     byProductVendorCode,
 }) => {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const { data: orders, isPending } = useGetOrdersEmployee(
         "2000-12-02",
         "2040-12-02",
@@ -98,7 +98,7 @@ export const EmployeeOrdersTable: FC<EmployeeOrdersTableProps> = ({
     );
 
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
-    
+
     return (
         <Table
             columns={columns}
@@ -113,7 +113,7 @@ export const EmployeeOrdersTable: FC<EmployeeOrdersTableProps> = ({
                     setPage(page - 1);
                 },
                 current: page + 1,
-                position: isSmallScreen ? ["bottomCenter"] : undefined
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
             }}
             scroll={{ x: "max-content" }}
         />

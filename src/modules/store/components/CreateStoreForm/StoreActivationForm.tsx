@@ -6,13 +6,13 @@ import { App, Button, Form, Input } from "antd";
 import { FC } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useActivateStoreSeller } from "../../forms";
-import { useGetDetailedSellerStores } from "../../queries";
+import { useGetDetailedSellerOwnStores } from "../../queries";
 
 export const StoreActivationForm: FC = () => {
     const { storeId: storeIdRaw } = useParams();
     const { message } = App.useApp();
     const wonderId = parseInt(storeIdRaw || "");
-    const { data: store, isPending } = useGetDetailedSellerStores(wonderId);
+    const { data: store, isPending } = useGetDetailedSellerOwnStores(wonderId);
     const { formik, mutation } = useActivateStoreSeller(wonderId);
     if (isPending) {
         return <Loading />;
@@ -54,12 +54,12 @@ export const StoreActivationForm: FC = () => {
                     <div className="flex flex-col gap-2 mb-4">
                         <h2 className="text-sm">Город</h2>
                         <Input
-                            value={store?.warehouse.city.name}
+                            value={store?.city}
                             disabled
                             suffix={
                                 <CopyOutlined
                                     onClick={() => {
-                                        onCopy(String(store?.warehouse.city));
+                                        onCopy(String(store?.city));
                                     }}
                                 />
                             }
@@ -68,14 +68,12 @@ export const StoreActivationForm: FC = () => {
                     <div className="flex flex-col gap-2 mb-4">
                         <h2 className="text-sm">Название улицы</h2>
                         <Input
-                            value={store?.warehouse.street_name}
+                            value={store?.street_name}
                             disabled
                             suffix={
                                 <CopyOutlined
                                     onClick={() => {
-                                        onCopy(
-                                            String(store?.warehouse.street_name)
-                                        );
+                                        onCopy(String(store?.street_name));
                                     }}
                                 />
                             }
@@ -84,16 +82,12 @@ export const StoreActivationForm: FC = () => {
                     <div className="flex flex-col gap-2 mb-4">
                         <h2 className="text-sm">Номер улицы</h2>
                         <Input
-                            value={store?.warehouse.street_number}
+                            value={store?.street_number}
                             disabled
                             suffix={
                                 <CopyOutlined
                                     onClick={() => {
-                                        onCopy(
-                                            String(
-                                                store?.warehouse.street_number
-                                            )
-                                        );
+                                        onCopy(String(store?.street_number));
                                     }}
                                 />
                             }
@@ -102,15 +96,14 @@ export const StoreActivationForm: FC = () => {
                     <div className="flex flex-col gap-2 mb-4">
                         <h2 className="text-sm">Дополнительная информация</h2>
                         <Input
-                            value={store?.warehouse.additional_information}
+                            value={store?.additional_information}
                             disabled
                             suffix={
                                 <CopyOutlined
                                     onClick={() => {
                                         onCopy(
                                             String(
-                                                store?.warehouse
-                                                    .additional_information
+                                                store?.additional_information
                                             )
                                         );
                                     }}
@@ -122,7 +115,7 @@ export const StoreActivationForm: FC = () => {
                     <div className="flex flex-col gap-2 mb-4">
                         <h2 className="text-sm">Склад</h2>
                         <Input
-                            value={store?.warehouse.is_warehouse ? "Да" : "Нет"}
+                            value={store?.is_warehouse ? "Да" : "Нет"}
                             disabled
                         />
                     </div>

@@ -231,7 +231,7 @@ export const EmployeeSearchResultsTable: FC<{
     searchValue: string;
     filterKey: string;
 }> = ({ searchValue, filterKey }) => {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const { data, isPending } = useGetProductsWithSizes(
         page,
         undefined,

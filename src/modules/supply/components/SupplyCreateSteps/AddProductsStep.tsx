@@ -35,7 +35,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
         {
             title: "Название",
             render: (_, record) => (
-                <a href={record.product.vendorCode}>{record.product.name}</a>
+                <a href={record.product.vendor_code}>{record.product.title}</a>
             ),
         },
         // {
@@ -132,7 +132,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                     onPopupScroll={handlePopupScroll}
                     options={data?.pages.flatMap((page) =>
                         page.content.map((product) => ({
-                            label: product.name,
+                            label: product.title,
                             value: product.id,
                         }))
                     )}

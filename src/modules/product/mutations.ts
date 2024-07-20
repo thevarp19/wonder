@@ -14,9 +14,13 @@ import { ChangeProductPriceRequest, GetProductContent } from "./types";
 export const createProductsFromFileMutation = () => {
     const { message } = App.useApp();
 
-    return useMutation<GetProductContent[], AxiosError<any>, FormData>({
-        async mutationFn(formData) {
-            const { data } = await createProductsFromFile(formData);
+    return useMutation<
+        GetProductContent[],
+        AxiosError<any>,
+        { formData: FormData; importType: string }
+    >({
+        async mutationFn({ formData, importType }) {
+            const { data } = await createProductsFromFile(formData, importType);
             return data;
         },
         onSuccess() {
@@ -53,10 +57,10 @@ export const changeProductsVisibilityMutation = () => {
     return useMutation<
         void,
         AxiosError<any>,
-        { id: number; isPublished: boolean }
+        [{ id: number; is_published: boolean }]
     >({
         async mutationFn(values) {
-            await changeProductVisibility(values.id, values.isPublished);
+            await changeProductVisibility(values);
         },
         onSuccess() {
             message.success("Успешно!");
@@ -76,7 +80,7 @@ export const changeProductsVisibilityMutation = () => {
 export const changeProductPriceMutation = () => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
-    return useMutation<void, AxiosError<any>, ChangeProductPriceRequest>({
+    return useMutation<void, AxiosError<any>, ChangeProductPriceRequest[]>({
         async mutationFn(values) {
             await changeProductPrice(values);
         },

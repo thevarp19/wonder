@@ -83,7 +83,7 @@ export const SellerOrdersTable: FC<SellerOrdersTableProps> = ({
     byProductArticle,
     byProductVendorCode,
 }) => {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const { data: orders, isPending } = useGetOrdersSeller(
         "2000-12-02",
         "2040-12-02",

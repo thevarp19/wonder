@@ -95,7 +95,7 @@ export const AdminOrdersTable: FC<OrdersTableProps> = ({
 }) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const { data: orders, isPending } = useGetOrdersAdmin(
         "2000-12-02",
         "2040-12-02",
