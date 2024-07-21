@@ -28,6 +28,9 @@ export interface GetProductWithPrices {
 export interface GetProductResponse
     extends BasePaginationResponse<GetProductContent> {}
 
+export interface GetProductCoverResponse
+    extends BasePaginationResponse<GetProductCover> {}
+
 export interface GetProductPricesResponse
     extends BasePaginationResponse<GetProductWithPrices> {}
 
@@ -73,8 +76,14 @@ export interface ChangeProductPriceRequest {
 
 export interface GetProductContent {
     id: number;
-    warehouse_quantities: string;
+    warehouse_quantities: { quantity: number; kaspi_warehouse_id: string }[];
     vendor_code: string;
     title: string;
     price: string;
+}
+export interface GetProductCover {
+    id: number;
+    vendor_code: string;
+    title: string;
+    purchase_price: string;
 }

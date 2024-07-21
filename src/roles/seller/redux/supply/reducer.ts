@@ -1,19 +1,21 @@
 import { myLocalStorage } from "@/lib/storage/browserStorage";
-import { GetStoreResponse } from "@/modules/store/types";
+import { GetAvailableStoreResponse } from "@/modules/store/types";
 import { v4 as uuidv4 } from "uuid";
 import { ProductQuantity, SupplyPack } from "../../types/supply";
 import * as types from "./types";
 
 export interface SupplyState {
+    sellerId: number | null;
     products: ProductQuantity[];
     packs: SupplyPack[];
-    store: GetStoreResponse | null;
+    store: GetAvailableStoreResponse | null;
     date: string | null;
     supplyServerId: number | null;
     pathToReport?: string;
 }
 
 const INITIAL_STATE: SupplyState = {
+    sellerId: myLocalStorage?.get("supply-seller-id") || null,
     products: myLocalStorage?.get("supply-products") || [],
     packs: myLocalStorage?.get("supply-packs") || [],
     store: myLocalStorage?.get("supply-store") || null,
@@ -28,11 +30,13 @@ export const sellerSupplyReducer = (
     switch (action.type) {
         case types.RESET:
             myLocalStorage?.remove("supply-products");
+            myLocalStorage?.remove("supply-seller-id");
             myLocalStorage?.remove("supply-packs");
             myLocalStorage?.remove("supply-store");
             myLocalStorage?.remove("supply-date");
             myLocalStorage?.remove("supply-server-id");
             return {
+                sellerId: 0,
                 products: [],
                 packs: [],
                 store: null,
@@ -42,6 +46,7 @@ export const sellerSupplyReducer = (
         case types.SET_SUPPLY_ID:
             myLocalStorage?.set("supply-server-id", action.payload);
             return { ...state, supplyServerId: action.payload };
+
         case types.ADD_PRODUCTS:
             return {
                 ...state,
@@ -108,6 +113,8 @@ export const sellerSupplyReducer = (
             myLocalStorage?.set("supply-date", state.date);
             return state;
         case types.SET_STORE:
+            console.log("SET_STORE", state);
+
             return { ...state, store: action.payload };
         case types.SET_DATE:
             return { ...state, date: action.payload };

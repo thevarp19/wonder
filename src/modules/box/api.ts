@@ -4,10 +4,9 @@ import { GetBoxResponse } from "./types";
 export function createBox(values: any) {
     return axiosAuthorized.post(`/api/box/`, values);
 }
-
-export function getBoxes(id: number) {
+export function getStoreBoxes(storeId: number) {
     return axiosAuthorized.get<GetBoxResponse[]>(
-        `/api/box-types?store-id=${id}`
+        `/api/box/warehouse/${storeId}/`
     );
 }
 export function getAllBoxes() {

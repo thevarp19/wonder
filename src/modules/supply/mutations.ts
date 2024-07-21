@@ -10,7 +10,7 @@ import {
 } from "./types";
 
 export const createSupplyMutation = (
-    onSuccess?: (supplyId: number, pathToReport: string) => void
+    onSuccess?: (supplyId: number, reportPath: string) => void
 ) => {
     const { message } = App.useApp();
 
@@ -26,7 +26,7 @@ export const createSupplyMutation = (
         onSuccess(data) {
             message.success("Успешно!");
             if (onSuccess) {
-                onSuccess(data.id, data.pathToReport);
+                onSuccess(data.id, data.report_a4);
             }
         },
         onError(error) {

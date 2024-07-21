@@ -15,7 +15,7 @@ export const sellerLoginSuccess = (data: LoginResponse): LoginSuccessAction => {
         refresh: data.refresh,
     });
     if (!getRoles()?.includes("seller")) {
-        throw new Error("Invalid role");
+        throw new Error("Недопустимая роль. Ожидалась роль seller");
     }
     return {
         type: LOGIN_SUCCESS,

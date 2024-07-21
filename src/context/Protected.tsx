@@ -9,7 +9,7 @@ interface ProtectedProps {
 
 export const Protected: FC<ProtectedProps> = ({ checkAction, navigate }) => {
     const [loading, setLoading] = useState(true);
-
+    // const { message } = App.useApp();
     async function handleCheckAction() {
         try {
             const isValid = await checkAction();

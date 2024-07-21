@@ -43,7 +43,7 @@ export function getSellerSupplies(
 }
 
 export function createSupply(data: CreateSupplyRequest) {
-    return axiosAuthorized.post<CreateSupplyResponse>(`/api/supplies`, data);
+    return axiosAuthorized.post<CreateSupplyResponse>(`/api/supply/v2/`, data);
 }
 
 export function acceptSupplyProducts(values: AcceptSupplyProductRequest) {

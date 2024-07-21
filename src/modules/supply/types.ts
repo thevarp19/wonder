@@ -38,19 +38,16 @@ export interface GetSuppliesByDate {
 
 export interface CreateSupplyResponse {
     id: number;
-    supplyCreatedTime: string;
-    supplyAcceptTime: string;
-    supplyState: string;
-    pathToReport: string;
-    formattedAddress: string;
+    report_a4: string;
+    report_row: string;
 }
 export interface CreateSupplyRequest {
-    storeId: number;
-    selectedTime: string;
-    selectedBoxes: {
-        selectedBoxId: number;
-        productQuantities: {
-            productId: number;
+    seller_warehouse: number;
+    date: string;
+    supply_boxes: {
+        box: number;
+        supplier_box_products: {
+            seller_product: number;
             quantity: number;
         }[];
     }[];

@@ -3,7 +3,6 @@ import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Table, TableColumnsType, Tag } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { useGetSellerSupplies } from "../../queries";
 import { GetSellerSupply, SupplyState } from "../../types";
 // import { SupplyPDFReportModal } from "../SupplyReportPDF/SupplyPDFReportModal";
 
@@ -29,7 +28,7 @@ function getColor(status: SupplyState) {
 }
 
 export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
-    const { data, isPending } = useGetSellerSupplies();
+    // const { data, isPending } = useGetSellerSupplies();
 
     const columns: TableColumnsType<GetSellerSupply> = [
         {
@@ -69,7 +68,7 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
                     <Link target="_blank" to={record.pathToReport}>
                         <Button
                             danger
-                            loading={isPending}
+                            loading={false}
                             icon={
                                 <DownloadOutlined
                                     color="#ef7214"
@@ -85,7 +84,7 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
 
     return (
         <div>
-            <Table loading={isPending} columns={columns} dataSource={data} />
+            <Table loading={false} columns={columns} dataSource={[]} />
         </div>
     );
 };

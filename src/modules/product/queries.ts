@@ -9,8 +9,8 @@ import {
 } from "./api";
 import {
     GetProductContent,
+    GetProductCoverResponse,
     GetProductPricesResponse,
-    GetProductResponse,
     GetProductsByParamsResponse,
     GetProductsWithSizesResponse,
     ProductStoreCity,
@@ -36,15 +36,15 @@ export const useGetProducts = (
     });
 };
 export const useInfiniteGetProducts = (pageSize = 10, searchValue = "") => {
-    return useInfiniteQuery<GetProductResponse>({
+    return useInfiniteQuery<GetProductCoverResponse>({
         queryKey: ["products", searchValue],
-        queryFn: ({ pageParam = 0 }: any) =>
+        queryFn: ({ pageParam = 1 }: any) =>
             getProductsOptions({
                 pageParam,
                 pageSize,
                 searchValue,
             }),
-        initialPageParam: 0,
+        initialPageParam: 1,
         getNextPageParam: (lastPage) => {
             return lastPage.last ? undefined : lastPage.page + 1;
         },

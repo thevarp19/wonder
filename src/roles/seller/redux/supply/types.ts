@@ -1,5 +1,5 @@
 import { GetBoxResponse } from "@/modules/box/types";
-import { GetStoreResponse } from "@/modules/store/types";
+import { GetAvailableStoreResponse } from "@/modules/store/types";
 import { ProductQuantity, SupplyPack } from "../../types/supply";
 
 export const ADD_PRODUCTS = "SUPPLY_ADD_PRODUCTS";
@@ -83,7 +83,7 @@ export interface SetPacks {
 
 export interface SetStore {
     type: typeof SET_STORE;
-    payload: GetStoreResponse;
+    payload: GetAvailableStoreResponse;
 }
 
 export interface SetDate {

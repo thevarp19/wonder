@@ -36,6 +36,16 @@ export interface GetStoreResponse {
     };
     enabled: boolean;
 }
+export interface GetAvailableStoreResponse {
+    id: number;
+    kaspi_warehouse_id: string;
+    warehouse: {
+        id: number;
+        operating_modes: WorkDayOfWeekRequest[];
+        formatted_address: string;
+        is_warehouse: boolean;
+    };
+}
 export interface GetStoreSellerResponse {
     seller_warehouse: SellerWarehouse;
     wonder_warehouse: WonderWarehouse;

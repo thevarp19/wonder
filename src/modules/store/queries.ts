@@ -1,14 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
+import { getStoreBoxes } from "../box/api";
 import { GetBoxResponse } from "../box/types";
 import {
+    getAvailableStores,
     getSellerStores,
-    getStoreBoxes,
     getStoreById,
     getStores,
     getStoreSellerById,
     getStoreSellerOwnById,
 } from "./api";
 import {
+    GetAvailableStoreResponse,
     GetDetailSellerOwnStoreResponse,
     GetDetailSellerStoreResponse,
     GetDetailStoreResponse,
@@ -21,6 +23,15 @@ export const useGetStores = () => {
         queryKey: ["stores"],
         queryFn: async () => {
             const { data } = await getStores();
+            return data;
+        },
+    });
+};
+export const useGetAvailableStores = () => {
+    return useQuery<GetAvailableStoreResponse[]>({
+        queryKey: ["stores-available"],
+        queryFn: async () => {
+            const { data } = await getAvailableStores();
             return data;
         },
     });

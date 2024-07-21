@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllBoxes, getBoxes } from "./api";
+
+import { getAllBoxes, getStoreBoxes } from "./api";
 import { GetBoxResponse } from "./types";
 
 export const useGetBoxes = (id: number | null) => {
@@ -7,7 +8,7 @@ export const useGetBoxes = (id: number | null) => {
         queryKey: ["boxes", id],
         queryFn: async () => {
             if (id === null) return [];
-            const { data } = await getBoxes(id);
+            const { data } = await getStoreBoxes(id);
             return data;
         },
         enabled: id !== null,

@@ -1,6 +1,6 @@
 import { GetBoxResponse } from "@/modules/box/types";
 import { GetProductContent } from "@/modules/product/types";
-import { GetStoreResponse } from "@/modules/store/types";
+import { GetAvailableStoreResponse } from "@/modules/store/types";
 import { SupplyPack } from "../../types/supply";
 import * as types from "./types";
 
@@ -107,7 +107,7 @@ export const saveDateAndStore = (): types.SaveDateAndStore => {
     };
 };
 
-export const setStore = (store: GetStoreResponse): types.SetStore => {
+export const setStore = (store: GetAvailableStoreResponse): types.SetStore => {
     return {
         type: types.SET_STORE,
         payload: store,

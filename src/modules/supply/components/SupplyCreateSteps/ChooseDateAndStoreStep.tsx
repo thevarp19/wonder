@@ -1,4 +1,4 @@
-import { useGetStores } from "@/modules/store/queries";
+import { useGetAvailableStores } from "@/modules/store/queries";
 import { useSupply } from "@/roles/seller/redux/supply/selectors";
 import { App, DatePicker, Select } from "antd";
 import dayjs, { Dayjs } from "dayjs";
@@ -7,8 +7,6 @@ import { FC, useEffect } from "react";
 
 import { myLocalStorage } from "@/lib/storage/browserStorage";
 import { useGetBoxes } from "@/modules/box/queries";
-import { GetStoreResponse } from "@/modules/store/types";
-import { getStoreFullAddress } from "@/modules/store/utils";
 import { useAppDispatch } from "@/redux/utils";
 import * as actions from "@/roles/seller/redux/supply/actions";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -24,26 +22,24 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
     const { date, store } = useSupply();
     const dispatch = useAppDispatch();
     const { message } = App.useApp();
-    const { data: stores, isPending } = useGetStores();
-    //@ts-ignore
-    const { data: boxes } = useGetBoxes(store);
+    const { data: stores, isPending } = useGetAvailableStores();
+
+    const { data: boxes } = useGetBoxes(store?.warehouse.id ?? null);
+
     useEffect(() => {
-        myLocalStorage?.set("boxes", boxes);
+        if (boxes) {
+            myLocalStorage?.set("boxes", boxes);
+        }
     }, [boxes]);
+
     function onDateChange(day: Dayjs, dateString: string | string[]) {
-        // @ts-ignore
-        const selectedStore = stores?.find((temp) => store === temp.id);
+        const selectedStore = stores?.find((temp) => store?.id === temp.id);
         if (!selectedStore) {
             message.error("Пожалуйста, выберите склад");
             dispatch(actions.setDate(`${dayjs().format("DD-MM-YYYY")}`));
             return false;
         }
         let dayNumber = day.day();
-        // if (dayNumber === 0) {
-        //     dayNumber = 7;
-        // } else {
-        //     dayNumber++;
-        // }
         if (
             !selectedStore.warehouse.operating_modes.find(
                 (time) => time.day === dayNumber
@@ -60,9 +56,15 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
         }
         dispatch(actions.setDate(`${dateString}`));
     }
-    function onStoreChange(store: GetStoreResponse) {
-        dispatch(actions.setDate(`${dayjs().format("DD-MM-YYYY")}`));
-        dispatch(actions.setStore(store));
+
+    function onStoreChange(value: number) {
+        const selectedStore = stores?.find(
+            (store) => store.warehouse.id === value
+        );
+        if (selectedStore) {
+            dispatch(actions.setDate(`${dayjs().format("DD-MM-YYYY")}`));
+            dispatch(actions.setStore(selectedStore));
+        }
     }
 
     return (
@@ -75,11 +77,11 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
                     placeholder={"Выберите склад"}
                     className="w-80"
                     options={stores?.map((store) => ({
-                        label: getStoreFullAddress(store),
+                        label: store.warehouse.formatted_address,
                         value: store.warehouse.id,
                     }))}
-                    value={store}
-                    onChange={onStoreChange}
+                    value={store?.warehouse.id}
+                    onChange={(value) => onStoreChange(value as number)}
                     loading={isPending}
                     showSearch
                     filterOption={(input, option) =>

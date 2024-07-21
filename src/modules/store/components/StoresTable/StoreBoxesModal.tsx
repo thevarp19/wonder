@@ -1,4 +1,4 @@
-import { useGetAllBoxes } from "@/modules/box/queries";
+import { useGetAllBoxes, useGetBoxes } from "@/modules/box/queries";
 import { GetBoxResponse } from "@/modules/box/types";
 import { DeleteOutlined } from "@ant-design/icons";
 import {
@@ -12,7 +12,6 @@ import {
 import { FC, useState } from "react";
 import { useBindBoxToStore } from "../../forms";
 import { removeBoxFromStoreMutation } from "../../mutations";
-import { useGetStoreBoxes } from "../../queries";
 interface StoreBoxesModalProps {
     storeId: number;
 }
@@ -65,7 +64,7 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({ storeId }) => {
     ];
     const { data: boxes, isPending } = useGetAllBoxes();
     const { data: storeBoxes, isPending: storeBoxesLoading } =
-        useGetStoreBoxes(storeId);
+        useGetBoxes(storeId);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { formik, mutation } = useBindBoxToStore(storeId);
     return (

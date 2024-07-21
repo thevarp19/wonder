@@ -9,9 +9,7 @@ export const adminLoginSuccess = (data: LoginResponse): LoginSuccessAction => {
         refresh: data.refresh,
     });
     if (!getRoles()?.includes("admin")) {
-        console.log(getRoles());
-
-        throw new Error("Invalid role");
+        throw new Error("Недопустимая роль. Ожидалась роль admin");
     }
     return {
         type: LOGIN_SUCCESS,

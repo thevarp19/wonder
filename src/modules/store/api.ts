@@ -1,9 +1,9 @@
 import { axiosAuthorized } from "@/lib/axios";
-import { GetBoxResponse } from "../box/types";
 import {
     ActivateStoreSellerRequest,
     CreateStoreRequest,
     CreateStoreSellerRequest,
+    GetAvailableStoreResponse,
     GetDetailSellerOwnStoreResponse,
     GetDetailSellerStoreResponse,
     GetDetailStoreResponse,
@@ -50,13 +50,14 @@ export function getSellerStoreById(id: number) {
         `/api/warehouse/seller/${id}/`
     );
 }
-export function getStoreBoxes(storeId: number) {
-    return axiosAuthorized.get<GetBoxResponse[]>(
-        `/api/box/warehouse/${storeId}/`
-    );
-}
+
 export function getStores() {
     return axiosAuthorized.get<GetStoreResponse[]>(`/api/warehouse/wonder/`);
+}
+export function getAvailableStores() {
+    return axiosAuthorized.get<GetAvailableStoreResponse[]>(
+        `/api/warehouse/seller/enabled/`
+    );
 }
 
 export function getSellerStores() {

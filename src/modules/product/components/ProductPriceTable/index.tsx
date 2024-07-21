@@ -91,7 +91,7 @@ function MainPriceCitySelect({
     );
 }
 
-function StoreCheckboxes({
+export function StoreCheckboxes({
     checked,
     setChecked,
     cities,

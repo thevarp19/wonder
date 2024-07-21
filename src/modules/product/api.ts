@@ -3,8 +3,8 @@ import { UpdateProductSizeRequest } from "../store/types";
 import {
     ChangeProductPriceRequest,
     GetProductContent,
+    GetProductCoverResponse,
     GetProductPricesResponse,
-    GetProductResponse,
     GetProductsByParamsResponse,
     GetProductsWithSizesResponse,
     ProductStoreCity,
@@ -36,8 +36,8 @@ export async function getProductsOptions({
     pageSize = 10,
     searchValue = "",
 }) {
-    let url = `/api/products?page=${pageParam}&size=${pageSize}&searchValue=${searchValue}&sortBy=id`;
-    const { data } = await axiosAuthorized.get<GetProductResponse>(url);
+    let url = `/api/seller-product/cover/?page=${pageParam}&size=${pageSize}&title=${searchValue}`;
+    const { data } = await axiosAuthorized.get<GetProductCoverResponse>(url);
     return data;
 }
 export function getProductsPrices(

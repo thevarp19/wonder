@@ -1,9 +1,18 @@
-import { ConfigProvider, Switch, Table, TableColumnsType } from "antd";
-import { FC, useState } from "react";
+import { myLocalStorage } from "@/lib/storage/browserStorage";
+import {
+    Button,
+    ConfigProvider,
+    Modal,
+    Switch,
+    Table,
+    TableColumnsType,
+} from "antd";
+import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { changeProductsVisibilityMutation } from "../../mutations";
-import { useGetProducts } from "../../queries";
+import { useGetActiveCities, useGetProducts } from "../../queries";
 import { GetProductContent } from "../../types";
+import { StoreCheckboxes } from "../ProductPriceTable";
 import { ProductPublishedFilter } from "../ProductsFilter/ProductPublishedFilter";
 
 interface ProductsTableProps {
@@ -19,16 +28,13 @@ const columns: TableColumnsType<GetProductContent> = [
         title: "Название",
         dataIndex: "title",
     },
-    // {
-    //     title: "Опубликовано",
-    //     dataIndex: "isPublished",
-    //     render: (_, record) => <ProductEnableSwitch {...record} />,
-    // },
 
-    // {
-    //     title: "Количество в Алматы",
-    //     render: (_, record) => <span>{record.counts[0].count}</span>,
-    // },
+    {
+        title: "Количество в Алматы",
+        render: (_, record) => (
+            <span>{record?.warehouse_quantities[0]?.quantity}</span>
+        ),
+    },
 
     // {
     //     title: "Количество в Астане",
@@ -38,6 +44,10 @@ const columns: TableColumnsType<GetProductContent> = [
 
 export const ProductsTable: FC<ProductsTableProps> = ({}) => {
     // const [page, setPage] = useState(1);
+    const [activeStores, setActiveStores] = useState<string[]>(
+        myLocalStorage?.get("activeStores") || ["алматы"]
+    );
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
     // const { data: productsCount } = useGetProductsPrices(
     //     page,
@@ -48,21 +58,57 @@ export const ProductsTable: FC<ProductsTableProps> = ({}) => {
     // useEffect(() => {
     //     setPage(1);
     // }, [searchValue]);
+    const { data: cities, isPending: cityPending } = useGetActiveCities();
+    // const activeStoreIds =
+    //     cities
+    //         ?.filter((city) => activeStores.includes(city.name.toLowerCase()))
+    //         .map((city) => city.id) || [];
+
     const { data: products, isPending } = useGetProducts(
         // page,
         // undefined,
         // searchValue,
         isPublished
     );
+    useEffect(() => {
+        myLocalStorage?.set("activeStores", activeStores);
+    }, [activeStores]);
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
-        <div>
-            <div className="px-2">
-                <ProductPublishedFilter
-                    setIsPublished={setIsPublished}
-                    isPublished={isPublished}
+        <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
+            <Modal
+                title="Склады"
+                open={isModalOpen}
+                cancelText="Назад"
+                onCancel={() => {
+                    setIsModalOpen(false);
+                }}
+                onOk={() => {
+                    setIsModalOpen(false);
+                }}
+            >
+                <StoreCheckboxes
+                    checked={activeStores}
+                    setChecked={setActiveStores}
+                    cities={cities || []}
                 />
+            </Modal>
+            <div className="flex items-center justify-between px-2 mb-4 md:px-4">
+                <div className="flex items-center w-full gap-4">
+                    <ProductPublishedFilter
+                        isPublished={isPublished}
+                        setIsPublished={setIsPublished}
+                    />
+                </div>
+                <Button
+                    onClick={() => {
+                        setIsModalOpen(true);
+                    }}
+                    type="primary"
+                >
+                    Склады
+                </Button>
             </div>
             <ConfigProvider
                 theme={{
@@ -78,7 +124,7 @@ export const ProductsTable: FC<ProductsTableProps> = ({}) => {
             >
                 <Table
                     columns={columns}
-                    loading={isPending}
+                    loading={isPending || cityPending}
                     // size="small"
                     dataSource={products ?? []}
                     rowKey={(record) => record.vendor_code}

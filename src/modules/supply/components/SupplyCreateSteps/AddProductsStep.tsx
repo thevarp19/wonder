@@ -122,7 +122,14 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                         const p = data?.pages
                             .flatMap((page) => page.content)
                             .find((product) => product.id === value);
-                        p && dispatch(actions.addProduct(p));
+                        p &&
+                            dispatch(
+                                actions.addProduct({
+                                    ...p,
+                                    warehouse_quantities: [],
+                                    price: "",
+                                })
+                            );
                     }}
                     onDeselect={(value) => {
                         dispatch(actions.removeProduct(Number(value)));
