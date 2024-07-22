@@ -3,6 +3,7 @@ import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Table, TableColumnsType, Tag } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
+import { useGetSellerSupplies } from "../../queries";
 import { GetSellerSupply, SupplyState } from "../../types";
 // import { SupplyPDFReportModal } from "../SupplyReportPDF/SupplyPDFReportModal";
 
@@ -28,7 +29,7 @@ function getColor(status: SupplyState) {
 }
 
 export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
-    // const { data, isPending } = useGetSellerSupplies();
+    const { data, isPending } = useGetSellerSupplies();
 
     const columns: TableColumnsType<GetSellerSupply> = [
         {
@@ -43,20 +44,20 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
 
         {
             title: "Адрес",
-            dataIndex: "formattedAddress",
+            dataIndex: "seller_warehouse",
         },
         {
             title: "Дата отправки",
-            render: (_, record) => record.supplyCreatedTime?.substring(0, 10),
+            render: (_, record) => record.created_at?.substring(0, 10),
         },
         {
             title: "Дата приема",
             dataIndex: "receivingDate",
-            render: (_, record) => record.supplyAcceptTime?.substring(0, 10),
+            render: (_, record) => record.date?.substring(0, 10),
         },
         {
             title: "Статус",
-            dataIndex: "supplyState",
+            dataIndex: "status",
             render: (status) => {
                 return <Tag color={getColor(status)}>{status}</Tag>;
             },
@@ -65,7 +66,7 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
             title: "Отчет",
             render: (_, record) => {
                 return (
-                    <Link target="_blank" to={record.pathToReport}>
+                    <Link target="_blank" to={record.report_a4}>
                         <Button
                             danger
                             loading={false}
@@ -84,7 +85,7 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
 
     return (
         <div>
-            <Table loading={false} columns={columns} dataSource={[]} />
+            <Table loading={isPending} columns={columns} dataSource={data} />
         </div>
     );
 };

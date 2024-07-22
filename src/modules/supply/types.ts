@@ -71,11 +71,12 @@ export interface SupplyBoxProduct {
 
 export interface GetSellerSupply {
     id: number;
-    formattedAddress: string;
-    supplyCreatedTime: string;
-    supplyAcceptTime: string;
-    pathToReport: string;
-    supplyState: SupplyState;
+    seller_warehouse: string;
+    created_at: string;
+    date: string;
+    report_a4: string;
+    report_row: string;
+    status: string;
 }
 export type SupplyState =
     | "START"
@@ -91,6 +92,17 @@ export interface AcceptSupplyProductRequest {
         productArticles: string[];
     }[];
 }
+
+export interface AcceptSupplyProductRequest {
+    supply_boxes: {
+        id: number;
+        supplier_box_products: {
+            id: number;
+            cell: number;
+        }[];
+    }[];
+}
+
 interface ProductInfo {
     productName: string;
     productCount: number;

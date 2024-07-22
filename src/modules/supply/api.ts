@@ -33,17 +33,15 @@ export function getSupplyBox(boxBarCode: number) {
     );
 }
 
-export function getSellerSupplies(
-    startDate: string = "2000-01-01",
-    endDate: string = "2100-01-01"
-) {
-    return axiosAuthorized.get<GetSellerSupply[]>(
-        `/api/supplies/seller?start-date=${startDate}&end-date=${endDate}`
-    );
+export function getSellerSupplies() {
+    return axiosAuthorized.get<GetSellerSupply[]>(`/api/supply/seller/`);
 }
 
 export function createSupply(data: CreateSupplyRequest) {
-    return axiosAuthorized.post<CreateSupplyResponse>(`/api/supply/v2/`, data);
+    return axiosAuthorized.post<CreateSupplyResponse>(
+        `/api/supply/seller/`,
+        data
+    );
 }
 
 export function acceptSupplyProducts(values: AcceptSupplyProductRequest) {

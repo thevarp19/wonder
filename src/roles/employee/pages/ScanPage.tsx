@@ -3,7 +3,6 @@ import { ScanCellStep } from "@/modules/scan/components/steps/ScanCellStep";
 import { ScanProductsStep } from "@/modules/scan/components/steps/ScanProductsStep";
 import { SubmitStep } from "@/modules/scan/components/steps/SubmitStep";
 import { acceptSupplyMutation } from "@/modules/supply/mutations";
-import { AcceptSupplyProductRequest } from "@/modules/supply/types";
 import { useAppSelector } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
 import { App, Button, Popconfirm, Steps } from "antd";
@@ -28,22 +27,21 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
     const { isPending, mutateAsync } = acceptSupplyMutation();
     const onSubmit = () => {
         if (!supplyState.supplyId) {
-            message.error("SupplyId is not defined");
+            message.error("Не определен идентификатор поставки");
             return;
         }
-        const values: AcceptSupplyProductRequest = {
-            supplyId: supplyState.supplyId,
-            productCells: [],
-        };
-        supplyState.cells.forEach((cell) => {
-            const tempValue = {
-                cellCode: `${cell.barcode}`,
-                productArticles: cell.products.map((product) => `${product}`),
-            };
 
-            values.productCells.push(tempValue);
-        });
-        mutateAsync(values);
+        // const values: AcceptSupplyProductRequest = {
+        //     supply_boxes: supplyState.cells.map((cell) => ({
+        //         id: Number(cell.barcode),
+        //         supplier_box_products: cell.products.map((product) => ({
+        //             id: product.id,
+        //             cell: cell.id,
+        //         })),
+        //     })),
+        // };
+
+        // mutateAsync(values);
         navigate("/employee/supplies");
     };
     function nextStep() {
