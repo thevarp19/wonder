@@ -1,15 +1,7 @@
 import { myLocalStorage } from "@/lib/storage/browserStorage";
-import {
-    Button,
-    ConfigProvider,
-    Modal,
-    Switch,
-    Table,
-    TableColumnsType,
-} from "antd";
+import { Button, ConfigProvider, Modal, Table, TableColumnsType } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { changeProductsVisibilityMutation } from "../../mutations";
 import { useGetActiveCities, useGetProducts } from "../../queries";
 import { GetProductContent } from "../../types";
 import { StoreCheckboxes } from "../ProductPriceTable";
@@ -139,24 +131,3 @@ export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
         </div>
     );
 };
-
-export function ProductEnableSwitch({
-    id,
-    enabled,
-}: {
-    id: number;
-    enabled: boolean;
-}) {
-    const { isPending, mutateAsync } = changeProductsVisibilityMutation();
-    return (
-        <div className="flex items-center gap-2">
-            <Switch
-                checked={enabled}
-                loading={isPending}
-                onChange={async (checked) => {
-                    mutateAsync([{ id: id, is_published: checked }]);
-                }}
-            />
-        </div>
-    );
-}
