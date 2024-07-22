@@ -1,11 +1,13 @@
 import { ProductPriceTable } from "@/modules/product/components/ProductPriceTable";
 import { ProductsTable } from "@/modules/product/components/ProductsTable";
 import { ProductsUploadFromFile } from "@/modules/product/components/ProductsUploadFromFile";
+import { useGetEnabledProductCount } from "@/modules/product/queries";
 import { useDebounce } from "@/utils/shared.util";
 import { SearchOutlined } from "@ant-design/icons";
-import { ConfigProvider, Input, Menu, MenuProps } from "antd";
-import { FC, useCallback, useState } from "react";
+import { ConfigProvider, Input, Menu, MenuProps, Select, Spin } from "antd";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+const { Option } = Select;
 
 interface SellerProductsPageProps {}
 
@@ -26,7 +28,7 @@ const items: MenuProps["items"] = [
 
 export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
-
+    const { data: productCount, isPending } = useGetEnabledProductCount();
     const [current, setCurrent] = useState(
         searchParams.get("current") || "prices"
     );
@@ -34,8 +36,22 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
         setCurrent(e.key);
         setSearchParams({ current: e.key });
     }, []);
+    const [isPublished, setIsPublished] = useState<boolean | null>(null);
     const [searchValue, setSearchValue] = useState("");
     const debouncedSearchValue = useDebounce(searchValue, 500);
+    const handleChange = (value: string) => {
+        setIsPublished(
+            value === "published"
+                ? true
+                : value === "unpublished"
+                ? false
+                : null
+        );
+    };
+    useEffect(() => {
+        // Reset isPublished when productCount is updated
+        setIsPublished(null);
+    }, [productCount]);
     return (
         <div className="h-full bg-white rounded-t-lg">
             {/* <Button
@@ -68,13 +84,38 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                                     selectedKeys={[current]}
                                     style={{ fontWeight: 600 }}
                                 />
-                                {/* <Button
-                                    className="!rounded-md md:!min-w-[200px] !hidden md:!block"
-                                    type="primary"
-                                    href="/seller/products/upload"
+                                <Select
+                                    className="w-[200px]"
+                                    placeholder="Статус"
+                                    onChange={handleChange}
+                                    value={
+                                        isPublished === true
+                                            ? "published"
+                                            : isPublished === false
+                                            ? "unpublished"
+                                            : ""
+                                    }
                                 >
-                                    Импорт продукта
-                                </Button> */}
+                                    <Option value="">Не выбрано</Option>
+                                    <Option value="published">
+                                        {`Опубликовано (${
+                                            isPending ? (
+                                                <Spin size="small" />
+                                            ) : (
+                                                productCount?.enabled_count
+                                            )
+                                        })`}
+                                    </Option>
+                                    <Option value="unpublished">
+                                        {`Не опубликовано (${
+                                            isPending ? (
+                                                <Spin size="small" />
+                                            ) : (
+                                                productCount?.not_enabled_count
+                                            )
+                                        })`}
+                                    </Option>
+                                </Select>
                             </div>
                             <div className="flex items-center gap-4 px-2 rounded-lg">
                                 <Input
@@ -93,12 +134,16 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
 
                 {current === "prices" && (
                     <ProductPriceTable
+                        isPublished={isPublished}
                         debouncedSearchValue={debouncedSearchValue}
                     />
                 )}
                 {current === "products" && (
                     <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
-                        <ProductsTable searchValue={debouncedSearchValue} />
+                        <ProductsTable
+                            isPublished={isPublished}
+                            searchValue={debouncedSearchValue}
+                        />
                     </div>
                 )}
                 {current === "upload" && (

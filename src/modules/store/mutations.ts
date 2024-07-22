@@ -243,7 +243,7 @@ export const bindBoxToStoreMutation = () => {
         async mutationFn(values) {
             await bindBoxToStore(values.storeId, values.boxId);
             queryClient.invalidateQueries({
-                queryKey: ["storeBox", values.storeId],
+                queryKey: ["boxes", values.storeId],
             });
         },
         onSuccess() {
@@ -266,7 +266,7 @@ export const removeBoxFromStoreMutation = () => {
         async mutationFn(values) {
             await removeBoxFromStore(values.storeId, values.boxId);
             queryClient.invalidateQueries({
-                queryKey: ["storeBox", values.storeId],
+                queryKey: ["boxes", values.storeId],
             });
         },
         onSuccess() {

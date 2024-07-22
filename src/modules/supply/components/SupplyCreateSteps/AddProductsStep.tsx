@@ -51,6 +51,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                     <Form.Item label="Количество" className="!mb-4">
                         <InputNumber
                             name="quantity"
+                            min={0}
                             value={record.quantity}
                             onChange={(v) => {
                                 if (typeof v === "number")

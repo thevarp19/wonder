@@ -7,6 +7,7 @@ import {
     GetProductPricesResponse,
     GetProductsByParamsResponse,
     GetProductsWithSizesResponse,
+    ProductEnabledCount,
     ProductStoreCity,
 } from "./types";
 
@@ -81,6 +82,11 @@ export function changeProductPrice(value: ChangeProductPriceRequest[]) {
 export function getSellerActiveCities() {
     return axiosAuthorized.get<ProductStoreCity[]>(
         `/api/city/seller-warehouse-enabled/`
+    );
+}
+export function getEnabledCount() {
+    return axiosAuthorized.get<ProductEnabledCount>(
+        `/api/seller-product/enabled-count/`
     );
 }
 

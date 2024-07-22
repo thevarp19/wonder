@@ -23,7 +23,6 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
     const dispatch = useAppDispatch();
     const { message } = App.useApp();
     const { data: stores, isPending } = useGetAvailableStores();
-
     const { data: boxes } = useGetBoxes(store?.warehouse.id ?? null);
 
     useEffect(() => {
@@ -40,6 +39,12 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
             return false;
         }
         let dayNumber = day.day();
+        if (dayNumber === 0) {
+            dayNumber = 7;
+        } else {
+            dayNumber++;
+        }
+
         if (
             !selectedStore.warehouse.operating_modes.find(
                 (time) => time.day === dayNumber

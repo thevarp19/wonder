@@ -6,6 +6,7 @@ import {
     InputNumber,
     Modal,
     Select,
+    Switch,
     Table,
     TableColumnsType,
 } from "antd";
@@ -18,14 +19,16 @@ import {
     getPriceChanges,
     useProductPricesChange,
 } from "../../forms";
-import { changeProductPriceMutation } from "../../mutations";
+import {
+    changeProductPriceMutation,
+    changeProductsVisibilityMutation,
+} from "../../mutations";
 import { useGetActiveCities, useGetProductsPrices } from "../../queries";
 import { GetProductWithPrices, ProductStoreCity } from "../../types";
-import { ProductPublishedFilter } from "../ProductsFilter/ProductPublishedFilter";
-import { ProductEnableSwitch } from "../ProductsTable";
 
 interface ProductPriceTableProps {
     debouncedSearchValue: string;
+    isPublished: boolean | null;
 }
 
 const columns: TableColumnsType<GetProductWithPrices> = [
@@ -158,6 +161,7 @@ function findProductPriceAndCountInCity(
 
 export const ProductPriceTable: FC<ProductPriceTableProps> = ({
     debouncedSearchValue,
+    isPublished,
 }) => {
     const [page, setPage] = useState(1);
 
@@ -165,7 +169,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
         myLocalStorage?.get("activeStores") || ["алматы"]
     );
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isPublished, setIsPublished] = useState<boolean | null>(null);
+
     const [isEditable, setIsEditable] = useState(false);
     const { data: cities, isPending: cityPending } = useGetActiveCities();
     const activeStoreIds =
@@ -266,12 +270,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
                 />
             </Modal>
             <div className="flex items-center justify-between px-2 mb-4 md:px-4">
-                <div className="flex items-center w-full gap-4">
-                    <ProductPublishedFilter
-                        isPublished={isPublished}
-                        setIsPublished={setIsPublished}
-                    />
-                </div>
+                <div className="flex items-center w-full gap-4"></div>
                 <Button
                     onClick={() => {
                         setIsModalOpen(true);
@@ -435,6 +434,7 @@ function ProductPriceCell({
         store,
         record
     );
+
     const getColorHex = (color: string) => {
         switch (color) {
             case "red":
@@ -454,6 +454,7 @@ function ProductPriceCell({
             {isEditable ? (
                 <InputNumber
                     defaultValue={price}
+                    min={10}
                     inputMode="numeric"
                     style={{
                         backgroundColor: backgroundColor,
@@ -491,6 +492,26 @@ function ProductPriceCell({
                     {price} ₸
                 </div>
             )}
+        </div>
+    );
+}
+export function ProductEnableSwitch({
+    id,
+    enabled,
+}: {
+    id: number;
+    enabled: boolean;
+}) {
+    const { isPending, mutateAsync } = changeProductsVisibilityMutation();
+    return (
+        <div className="flex items-center gap-2">
+            <Switch
+                checked={enabled}
+                loading={isPending}
+                onChange={async (checked) => {
+                    mutateAsync([{ id: id, is_published: checked }]);
+                }}
+            />
         </div>
     );
 }

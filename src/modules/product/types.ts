@@ -66,6 +66,10 @@ export interface ProductStoreCity {
     name: string;
     code: string;
 }
+export interface ProductEnabledCount {
+    enabled_count: number;
+    not_enabled_count: number;
+}
 
 export interface ChangeProductPriceRequest {
     id: number;

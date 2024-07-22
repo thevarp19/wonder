@@ -68,6 +68,9 @@ export const changeProductsVisibilityMutation = () => {
                 queryKey: ["products"],
             });
             queryClient.invalidateQueries({
+                queryKey: ["enabled-product-count"],
+            });
+            queryClient.invalidateQueries({
                 queryKey: ["products-prices"],
             });
         },

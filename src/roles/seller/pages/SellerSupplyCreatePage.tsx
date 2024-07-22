@@ -128,8 +128,6 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
     }
     const { mutateAsync, isPending } = createSupplyMutation(
         (id, reportPath) => {
-            console.log("id", id);
-
             dispatch(setSupplyId(id));
             dispatch(setReportPath(reportPath));
         }

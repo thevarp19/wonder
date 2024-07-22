@@ -1,5 +1,6 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import {
+    getEnabledCount,
     getProducts,
     getProductsByParams,
     getProductsOptions,
@@ -13,6 +14,7 @@ import {
     GetProductPricesResponse,
     GetProductsByParamsResponse,
     GetProductsWithSizesResponse,
+    ProductEnabledCount,
     ProductStoreCity,
 } from "./types";
 
@@ -135,6 +137,15 @@ export const useGetActiveCities = () => {
         queryKey: [`active-cities`],
         queryFn: async () => {
             const { data } = await getSellerActiveCities();
+            return data;
+        },
+    });
+};
+export const useGetEnabledProductCount = () => {
+    return useQuery<ProductEnabledCount>({
+        queryKey: [`enabled-product-count`],
+        queryFn: async () => {
+            const { data } = await getEnabledCount();
             return data;
         },
     });

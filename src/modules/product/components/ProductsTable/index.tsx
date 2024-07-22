@@ -13,10 +13,10 @@ import { changeProductsVisibilityMutation } from "../../mutations";
 import { useGetActiveCities, useGetProducts } from "../../queries";
 import { GetProductContent } from "../../types";
 import { StoreCheckboxes } from "../ProductPriceTable";
-import { ProductPublishedFilter } from "../ProductsFilter/ProductPublishedFilter";
 
 interface ProductsTableProps {
     searchValue?: string;
+    isPublished: boolean | null;
 }
 
 const columns: TableColumnsType<GetProductContent> = [
@@ -42,13 +42,13 @@ const columns: TableColumnsType<GetProductContent> = [
     // },
 ];
 
-export const ProductsTable: FC<ProductsTableProps> = ({}) => {
+export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
     // const [page, setPage] = useState(1);
     const [activeStores, setActiveStores] = useState<string[]>(
         myLocalStorage?.get("activeStores") || ["алматы"]
     );
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isPublished, setIsPublished] = useState<boolean | null>(null);
+
     // const { data: productsCount } = useGetProductsPrices(
     //     page,
     //     undefined,
@@ -95,12 +95,7 @@ export const ProductsTable: FC<ProductsTableProps> = ({}) => {
                 />
             </Modal>
             <div className="flex items-center justify-between px-2 mb-4 md:px-4">
-                <div className="flex items-center w-full gap-4">
-                    <ProductPublishedFilter
-                        isPublished={isPublished}
-                        setIsPublished={setIsPublished}
-                    />
-                </div>
+                <div className="flex items-center w-full gap-4"></div>
                 <Button
                     onClick={() => {
                         setIsModalOpen(true);
