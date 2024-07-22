@@ -24,7 +24,7 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
     const { message } = App.useApp();
     const navigate = useNavigate();
     const supplyState = useAppSelector((state) => state.employee.scan);
-    const { isPending, mutateAsync } = acceptSupplyMutation();
+    const { isPending } = acceptSupplyMutation();
     const onSubmit = () => {
         if (!supplyState.supplyId) {
             message.error("Не определен идентификатор поставки");
