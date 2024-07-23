@@ -1,10 +1,4 @@
-import {
-    arrowLeftIcon,
-    defaultAvatar,
-    hamburgerIcon,
-    logo,
-    searchIcon,
-} from "@/assets";
+import { arrowLeftIcon, hamburgerIcon, logo, searchIcon } from "@/assets";
 import { MenuItemType } from "@/types";
 import { cn } from "@/utils/shared.util";
 import { Input } from "antd";
@@ -21,8 +15,8 @@ interface HamburgerMenuProps {
 export const HamburgerMenu: FC<HamburgerMenuProps> = ({
     menuItems,
     userEmail,
-    role,
     logoLink,
+    role,
 }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -49,7 +43,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({
                         className="flex justify-center md:justify-start"
                     >
                         <Image
-                            src={logoLink || logo}
+                            src={logo}
                             alt="logo"
                             className={cn("w-[108px] h-[24px]")}
                         />
@@ -106,7 +100,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({
                             onClick={closeSidebar}
                         >
                             <Image
-                                src={defaultAvatar}
+                                src={logoLink}
                                 alt="logo"
                                 className="w-[28px] h-[28px] rounded-full"
                             />
