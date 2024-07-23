@@ -1,27 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
 import {
+    getEmployeeSupplies,
     getSellerSupplies,
-    getSuppliesByDate,
     getSupplyBox,
     getSupplyById,
     getSupplyProducts,
 } from "./api";
 import {
+    GetEmployeeSupplies,
     GetSellerSupply,
-    GetSuppliesByDate,
     GetSupplyById,
     GetSupplyProducts,
 } from "./types";
 
-export const useGetSuppliesByDate = (startDate: string, endDate: string) => {
-    return useQuery<GetSuppliesByDate[]>({
-        queryKey: ["supplies", startDate, endDate],
-        queryFn: async () => {
-            const { data } = await getSuppliesByDate(startDate, endDate);
-            return data;
-        },
-    });
-};
+// export const useGetSuppliesByDate = (startDate: string, endDate: string) => {
+//     return useQuery<GetSuppliesByDate[]>({
+//         queryKey: ["supplies", startDate, endDate],
+//         queryFn: async () => {
+//             const { data } = await getSuppliesByDate(startDate, endDate);
+//             return data;
+//         },
+//     });
+// };
 
 export const useGetSupply = (id: number) => {
     return useQuery<GetSupplyById[]>({
@@ -69,6 +69,15 @@ export const useGetSellerSupplies = () => {
         queryKey: [`seller-supplies`],
         queryFn: async () => {
             const { data } = await getSellerSupplies();
+            return data;
+        },
+    });
+};
+export const useGetEmployeeSupplies = () => {
+    return useQuery<GetEmployeeSupplies[]>({
+        queryKey: [`employee-supplies`],
+        queryFn: async () => {
+            const { data } = await getEmployeeSupplies();
             return data;
         },
     });

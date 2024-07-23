@@ -60,6 +60,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
             <HamburgerMenu
                 menuItems={menuItems}
                 role={role}
+                logoLink={logoLink}
                 userEmail={userEmail ?? ""}
             />
             <Layout className="pt-[45px] md:h-auto md:pt-0">

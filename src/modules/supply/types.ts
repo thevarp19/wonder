@@ -26,14 +26,17 @@ export interface SupplyEmployeeProduct {
     productStateInStore: string;
 }
 
-export interface GetSuppliesByDate {
+export interface GetEmployeeSupplies {
+    id: number;
+    seller_store: string;
+    seller_cell_phone: string;
+    box_total_quantity: string;
+    product_total_quantity: string;
+    created_at: string;
     date: string;
-    supplies: {
-        supplyId: number;
-        sellerName: string;
-        sellerId: number;
-        supplyState: string;
-    }[];
+    report_a4: string;
+    report_row: string;
+    status: string;
 }
 
 export interface CreateSupplyResponse {

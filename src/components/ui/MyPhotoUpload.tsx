@@ -1,6 +1,6 @@
 import { PlusOutlined } from "@ant-design/icons";
-import type { GetProp, UploadFile, UploadProps } from "antd";
-import { Image, Upload, message } from "antd";
+import type { UploadFile, UploadProps } from "antd";
+import { Image, Upload } from "antd";
 import { FormikProps } from "formik";
 import React, { useState } from "react";
 
@@ -9,8 +9,6 @@ interface PhotoUploadProps {
     isEditing: boolean;
     fieldName: string;
 }
-
-type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
 export const PhotoUpload: React.FC<PhotoUploadProps> = ({
     formik,
@@ -26,19 +24,6 @@ export const PhotoUpload: React.FC<PhotoUploadProps> = ({
         setPreviewOpen(true);
     };
 
-    const beforeUpload = (file: FileType) => {
-        const isJpgOrPng =
-            file.type === "image/jpeg" || file.type === "image/png";
-        if (!isJpgOrPng) {
-            message.error("Можно загружать только файлы JPG/PNG!");
-        }
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            message.error("Размер изображения должен быть меньше 2 МБ!");
-        }
-
-        return isJpgOrPng && isLt2M ? false : Upload.LIST_IGNORE;
-    };
     const handleChange: UploadProps["onChange"] = ({
         fileList: newFileList,
     }) => {
@@ -65,7 +50,6 @@ export const PhotoUpload: React.FC<PhotoUploadProps> = ({
             <Upload
                 listType="picture-circle"
                 fileList={fileList}
-                beforeUpload={beforeUpload}
                 onPreview={handlePreview}
                 onChange={handleChange}
                 disabled={!isEditing}

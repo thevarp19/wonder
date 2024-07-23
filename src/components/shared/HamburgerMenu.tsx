@@ -15,12 +15,14 @@ import { Image } from "../ui/Image";
 interface HamburgerMenuProps {
     menuItems: MenuItemType[];
     userEmail: string;
+    logoLink?: string;
     role?: "Администратор" | "Продавец" | "Сотрудник";
 }
 export const HamburgerMenu: FC<HamburgerMenuProps> = ({
     menuItems,
     userEmail,
     role,
+    logoLink,
 }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -47,7 +49,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({
                         className="flex justify-center md:justify-start"
                     >
                         <Image
-                            src={logo}
+                            src={logoLink || logo}
                             alt="logo"
                             className={cn("w-[108px] h-[24px]")}
                         />

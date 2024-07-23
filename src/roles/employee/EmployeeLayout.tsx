@@ -1,3 +1,4 @@
+import { defaultAvatar } from "@/assets";
 import { SizesIcon } from "@/assets/custom-icon/CustomIcon";
 import { GeneralLayout } from "@/components/shared/GeneralLayout";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
@@ -164,9 +165,9 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
             menuItems={items}
             profileItems={profileItems}
             breadcrumbItems={breadcrumbMapping}
-            logoLink="/employee"
+            logoLink={defaultAvatar}
             role="Сотрудник"
-            userEmail={employeeAuth.userData?.email || "email@gmail.com"}
+            userEmail={employeeAuth.userData?.email || "WONDER"}
             selectedKeys={selectedKeys}
         />
     );

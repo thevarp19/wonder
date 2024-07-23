@@ -1,3 +1,4 @@
+import { defaultAvatar } from "@/assets";
 import { GeneralLayout } from "@/components/shared/GeneralLayout";
 import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import { adminLogout } from "@/roles/admin/redux/auth/actions";
@@ -118,9 +119,9 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
             menuItems={items}
             breadcrumbItems={breadcrumbMapping}
             profileItems={profileItems}
-            logoLink="/admin"
+            logoLink={defaultAvatar}
             role="Администратор"
-            userEmail={adminAuth.userData?.email || "email@gmail.com"}
+            userEmail={adminAuth.userData?.email || "WONDER"}
             selectedKeys={selectedKeys}
         />
     );
