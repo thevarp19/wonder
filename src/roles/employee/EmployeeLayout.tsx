@@ -6,7 +6,6 @@ import { MenuItemType } from "@/types";
 import {
     HomeOutlined,
     LogoutOutlined,
-    ProfileOutlined,
     SearchOutlined,
     ShoppingCartOutlined,
     VerticalAlignTopOutlined,
@@ -141,11 +140,6 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
     }, [pathname]);
     const dispatch = useAppDispatch();
     const profileItems: MenuProps["items"] = [
-        {
-            key: "profile",
-            label: "Профиль",
-            icon: <ProfileOutlined />,
-        },
         {
             key: "logout",
             danger: true,

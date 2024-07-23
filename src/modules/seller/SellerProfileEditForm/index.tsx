@@ -1,20 +1,24 @@
 import { FormikInput } from "@/components/ui/FormikInput";
+import { PhotoUpload } from "@/components/ui/MyPhotoUpload";
 import { PhoneNumberInput } from "@/components/ui/PhoneInput";
 import { formatPhoneNumber } from "@/utils/form.util";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Form, Popconfirm } from "antd";
-import { FC, useState } from "react";
-import { useUpdateSellerProfile } from "../forms";
-import { GetSellerProfile } from "../types";
+import { FC } from "react";
 
 interface SellerProfileEditProps {
-    data: GetSellerProfile;
+    formik: any;
+    mutation: any;
+    isEditing: boolean;
+    setIsEditing: (value: boolean) => void;
 }
 const removeSpaces = (value: string) => value.replace(/\s/g, "");
-export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
-    const { formik, mutation } = useUpdateSellerProfile(data);
-    const [isEditing, setIsEditing] = useState(false);
-
+export const SellerProfileEdit: FC<SellerProfileEditProps> = ({
+    formik,
+    mutation,
+    setIsEditing,
+    isEditing,
+}) => {
     const handleEditClick = () => {
         formik.setFieldValue(
             "phone_number",
@@ -36,6 +40,15 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({ data }) => {
     };
     return (
         <Form layout="vertical" className="w-full">
+            {isEditing && (
+                <div className="flex flex-col mt-5">
+                    <PhotoUpload
+                        formik={formik}
+                        isEditing={isEditing}
+                        fieldName="avatar"
+                    />
+                </div>
+            )}
             <div className="flex flex-col gap-5 mt-10 md:flex-row md:gap-10">
                 <div className="flex flex-col w-full gap-5 md:w-1/3">
                     <FormikInput

@@ -3,7 +3,6 @@ import { Logo } from "@/components/shared/Logo";
 import { Image } from "@/components/ui/Image";
 import { MenuItemType } from "@/types";
 import { cn } from "@/utils/shared.util";
-import { UserOutlined } from "@ant-design/icons";
 import {
     Avatar,
     Breadcrumb,
@@ -12,6 +11,7 @@ import {
     Input,
     Layout,
     MenuProps,
+    Spin,
     theme,
 } from "antd";
 import { FC, useState } from "react";
@@ -25,7 +25,8 @@ interface GeneralLayoutProps {
     menuItems: MenuItemType[];
     profileItems: MenuProps["items"];
     logoLink: string;
-    userEmail: string;
+    isPending?: boolean;
+    userEmail: string | undefined;
     breadcrumbItems: {
         [key: string]: { title: string | JSX.Element }[];
     };
@@ -36,6 +37,7 @@ interface GeneralLayoutProps {
 export const GeneralLayout: FC<GeneralLayoutProps> = ({
     menuItems,
     profileItems,
+    isPending,
     logoLink,
     breadcrumbItems,
     userEmail,
@@ -58,7 +60,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
             <HamburgerMenu
                 menuItems={menuItems}
                 role={role}
-                userEmail={userEmail}
+                userEmail={userEmail ?? ""}
             />
             <Layout className="pt-[45px] md:h-auto md:pt-0">
                 <Sider
@@ -76,26 +78,45 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                                 "justify-center": collapsed,
                             })}
                         >
-                            <div
-                                className={cn(
-                                    "flex justify-start items-center gap-2 p-2"
-                                )}
-                            >
-                                <Dropdown menu={{ items: profileItems }}>
-                                    <Avatar
-                                        size={24}
-                                        icon={<UserOutlined />}
-                                        shape="circle"
+                            <div className="w-full h-full">
+                                {isPending ? (
+                                    <Spin
+                                        size="small"
+                                        className="w-full h-full"
                                     />
-                                </Dropdown>
-                                <div className="overflow-hidden text-sm max-w-28">
-                                    <h2 className={cn({ hidden: collapsed })}>
-                                        {userEmail}
-                                    </h2>
-                                    <h2 className={cn({ hidden: collapsed })}>
-                                        {role}
-                                    </h2>
-                                </div>
+                                ) : (
+                                    <div
+                                        className={cn(
+                                            "flex justify-start items-center gap-2 p-2"
+                                        )}
+                                    >
+                                        <Dropdown
+                                            menu={{ items: profileItems }}
+                                        >
+                                            <Avatar
+                                                size={24}
+                                                src={logoLink}
+                                                shape="circle"
+                                            />
+                                        </Dropdown>
+                                        <div className="overflow-hidden text-sm max-w-28">
+                                            <h2
+                                                className={cn({
+                                                    hidden: collapsed,
+                                                })}
+                                            >
+                                                {userEmail}
+                                            </h2>
+                                            <h2
+                                                className={cn({
+                                                    hidden: collapsed,
+                                                })}
+                                            >
+                                                {role}
+                                            </h2>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <CustomMenu

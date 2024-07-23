@@ -5,7 +5,6 @@ import { MenuItemType } from "@/types";
 import {
     HomeOutlined,
     LogoutOutlined,
-    ProfileOutlined,
     SettingOutlined,
     ShoppingCartOutlined,
 } from "@ant-design/icons";
@@ -95,11 +94,6 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
     }, [pathname]);
     const dispatch = useAppDispatch();
     const profileItems: MenuProps["items"] = [
-        {
-            key: "profile",
-            label: "Профиль",
-            icon: <ProfileOutlined />,
-        },
         {
             key: "logout",
             danger: true,

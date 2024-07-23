@@ -23,6 +23,7 @@ export const useUpdateSellerProfile = (
     const formik = useFormik<GetSellerProfile>({
         initialValues: {
             phone_number: "",
+            avatar: "",
             kaspi_store_name: "",
             kaspi_seller_id: "",
             kaspi_token: "",
@@ -34,7 +35,11 @@ export const useUpdateSellerProfile = (
         validateOnBlur: true,
         validateOnChange: true,
         onSubmit: async (values) => {
-            await mutation.mutateAsync(values);
+            const formData = new FormData();
+            Object.entries(values).forEach(([key, value]) => {
+                formData.append(key, value as string | Blob);
+            });
+            await mutation.mutateAsync(formData);
         },
     });
 

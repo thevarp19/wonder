@@ -9,8 +9,10 @@ export function getStoreBoxes(storeId: number) {
         `/api/box/warehouse/${storeId}/`
     );
 }
-export function getAllBoxes() {
-    return axiosAuthorized.get<GetBoxResponse[]>(`/api/box/`);
+export function getAllBoxes(searchValue: string) {
+    return axiosAuthorized.get<GetBoxResponse[]>(
+        `/api/box/?search=${searchValue}`
+    );
 }
 
 export function deleteBox(boxId: number) {

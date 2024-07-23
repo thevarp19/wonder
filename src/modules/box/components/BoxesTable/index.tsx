@@ -7,6 +7,7 @@ import { DeleteBoxCell } from "./DeleteBoxCell";
 
 interface BoxesTableProps {
     // id: number;
+    searchValue: string;
 }
 const columns: TableColumnsType<GetBoxResponse> = [
     {
@@ -28,8 +29,8 @@ const columns: TableColumnsType<GetBoxResponse> = [
     },
 ];
 
-export const BoxesTable: FC<BoxesTableProps> = ({}) => {
-    const { data: boxes, isPending } = useGetAllBoxes();
+export const BoxesTable: FC<BoxesTableProps> = ({ searchValue }) => {
+    const { data: boxes, isPending } = useGetAllBoxes(searchValue);
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (

@@ -11,7 +11,6 @@
 //     Text,
 //     View,
 // } from "@react-pdf/renderer";
-import JsBarcode from "jsbarcode";
 // import { SupplyPack } from "../../../../roles/seller/types/supply";
 // import { GetSupplyById } from "../../types";
 
@@ -224,18 +223,3 @@ import JsBarcode from "jsbarcode";
 //         </Document>
 //     );
 // };
-
-export function generateBarcodeBase64(text: string, options = {}) {
-    const canvas = document.createElement("canvas");
-
-    JsBarcode(canvas, text, {
-        format: "CODE128",
-        lineColor: "#000",
-        width: 2,
-        height: 100,
-        displayValue: true,
-        ...options,
-    });
-
-    return canvas.toDataURL("image/png");
-}

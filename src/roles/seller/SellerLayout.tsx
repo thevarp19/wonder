@@ -1,5 +1,6 @@
 import { GeneralLayout } from "@/components/shared/GeneralLayout";
-import { useAppDispatch, useAppSelector } from "@/redux/utils";
+import { useGetSellerProfile } from "@/modules/seller/queries";
+import { useAppDispatch } from "@/redux/utils";
 import { sellerLogout } from "@/roles/seller/redux/auth/actions";
 import { MenuItemType } from "@/types";
 import {
@@ -29,6 +30,8 @@ function pathToKey(key: string) {
             return "products";
         case "/seller/supply":
             return "supply";
+        case "/seller/calculator":
+            return "calculator";
         case "/seller/supply/create":
             return "supply";
         case "/seller/orders":
@@ -140,7 +143,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                     Калькулятор
                 </Link>
             ),
-            key: "/seller/calculator",
+            key: "calculator",
             icon: (
                 <CalculatorOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
@@ -193,16 +196,17 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
         },
     ];
 
-    const sellerAuth = useAppSelector((state) => state.seller.auth);
-
+    // const sellerAuth = useAppSelector((state) => state.seller.auth);
+    const { data, isPending } = useGetSellerProfile();
     return (
         <GeneralLayout
             breadcrumbItems={breadcrumbMapping}
             menuItems={items}
+            isPending={isPending}
             profileItems={profileItems}
-            logoLink="/seller"
+            logoLink={data?.avatar || ""}
             role="Продавец"
-            userEmail={sellerAuth.userData?.email || "email@gmail.com"}
+            userEmail={data?.kaspi_store_name}
             selectedKeys={selectedKeys}
         />
     );

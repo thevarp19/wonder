@@ -15,11 +15,11 @@ export const useGetBoxes = (id: number | null) => {
     });
 };
 
-export const useGetAllBoxes = () => {
+export const useGetAllBoxes = (searchValue: string) => {
     return useQuery<GetBoxResponse[]>({
-        queryKey: ["allBoxes"],
+        queryKey: ["allBoxes", searchValue],
         queryFn: async () => {
-            const { data } = await getAllBoxes();
+            const { data } = await getAllBoxes(searchValue);
             return data;
         },
     });

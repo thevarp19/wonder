@@ -1,46 +1,58 @@
+import { GetDetailStoreResponse } from "@/modules/store/types";
 import { ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { GetCellResponse } from "../../types";
 import { UpdateCellButton } from "../UpdateCellForm/UpdateCellButton";
 import { DeleteCellCell } from "./DeleteCell";
+import { PrintCellButton } from "./PrintCellButton";
 
 interface CellsTableProps {
     cells: GetCellResponse[] | undefined;
     isPending?: boolean;
     isStorePending?: boolean;
+    store: GetDetailStoreResponse | undefined;
     storeId: number | undefined;
 }
 
 interface CellsTableColumn extends GetCellResponse {
-    count: number;
-    storeId: number | undefined;
+    count?: number;
+    store: GetDetailStoreResponse;
+    storeId?: number | undefined;
 }
 
 const columns: TableColumnsType<CellsTableColumn> = [
     {
         title: "Строка",
         dataIndex: "row",
+        key: "row",
     },
     {
         title: "Столбец",
         dataIndex: "col",
+        key: "col",
     },
     {
         title: "Номер ячейки",
         dataIndex: "line",
+        key: "line",
     },
     {
         title: "Печать",
-        render: (_) => <div>Печать</div>,
+        key: "print",
+        render: (_, record) => (
+            <PrintCellButton store={record.store} cell={{ ...record }} />
+        ),
     },
     {
         title: "Комментарий",
         dataIndex: "comment",
+        key: "comment",
         render: (_, record) => record.comment || "-",
     },
     {
         title: "Размер",
+        key: "size",
         render: (_, record) =>
             record.width && record.height && record.length ? (
                 <div>
@@ -58,6 +70,7 @@ const columns: TableColumnsType<CellsTableColumn> = [
     },
     {
         title: "Редактировать",
+        key: "edit",
         render: (_, record) => (
             <UpdateCellButton
                 storeId={record.storeId || -1}
@@ -67,6 +80,7 @@ const columns: TableColumnsType<CellsTableColumn> = [
     },
     {
         title: "Удалить",
+        key: "delete",
         render: (_, record) => (
             <DeleteCellCell id={record.id} storeId={record.storeId || -1} />
         ),
@@ -77,6 +91,7 @@ export const CellsTable: FC<CellsTableProps> = ({
     isPending,
     isStorePending,
     storeId,
+    store,
     cells,
 }) => {
     const groupedCells = groupCellsBySize(cells || []);
@@ -99,6 +114,7 @@ export const CellsTable: FC<CellsTableProps> = ({
                 columns={columns}
                 dataSource={cells?.map((cell) => ({
                     ...cell,
+                    store: store!,
                     storeId: storeId,
                     count:
                         groupedCells[

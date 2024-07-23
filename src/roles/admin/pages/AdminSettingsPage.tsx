@@ -2,7 +2,7 @@ import { searchIcon } from "@/assets";
 import { Image } from "@/components/ui/Image";
 import { BoxesTable } from "@/modules/box/components/BoxesTable";
 import { StoresTable } from "@/modules/store/components/StoresTable";
-import { cn } from "@/utils/shared.util";
+import { cn, useDebounce } from "@/utils/shared.util";
 import { DropboxOutlined, ShopOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
 import { FC, useState } from "react";
@@ -33,8 +33,11 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
     const [current, setCurrent] = useState(
         searchParams.get("menu_x") || "stores"
     );
+    const [searchValue, setSearchValue] = useState("");
+    const debouncedSearchValue = useDebounce(searchValue, 500);
 
     const onClick: MenuProps["onClick"] = (e) => {
+        setSearchValue("");
         setCurrent(e.key);
         setSearchParams({ menu_x: e.key });
     };
@@ -99,16 +102,20 @@ export const AdminSettingsPage: FC<AdminSettingsPageProps> = ({}) => {
                                     />
                                 }
                                 placeholder="Поиск"
-                                // value={""}
+                                value={searchValue}
                                 className="!min-w-[217px]"
-                                onChange={() => {}}
+                                onChange={(e) => {
+                                    setSearchValue(e.target.value);
+                                }}
                             />
                         </div>
                     </div>
                 </div>
 
                 {current === "stores" && <StoresTable />}
-                {current === "boxes" && <BoxesTable />}
+                {current === "boxes" && (
+                    <BoxesTable searchValue={debouncedSearchValue} />
+                )}
             </div>
             {/* {current === "xml" && (
                 <div className="p-4">

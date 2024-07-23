@@ -4,7 +4,7 @@ export interface GetSellerProfile {
     kaspi_store_name: string;
     kaspi_seller_id: string;
     kaspi_token: string;
-
+    avatar: string;
     first_name: string;
     last_name: string;
     email: string;

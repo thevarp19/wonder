@@ -2,6 +2,7 @@ import { CellsTable } from "@/modules/cell/components/CellsTable";
 import { PrintAllCellsButton } from "@/modules/cell/components/CellsTable/PrintAllCellsButton";
 import { CreateCellForm } from "@/modules/cell/components/CreateCellForm";
 import { useGetCells } from "@/modules/cell/queries";
+import { useGetStore } from "@/modules/store/queries";
 import { Button, Modal } from "antd";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -18,6 +19,8 @@ export const StoreCellsPage: FC<StoreCellsPageProps> = ({}) => {
         return <div>Неверный идентификатор склада</div>;
     }
     const { data: cells, isPending } = useGetCells(storeId);
+    const { data: store, isPending: storePending } = useGetStore(storeId);
+
     return (
         <div className="h-full">
             <div className="flex flex-col mb-4">
@@ -26,14 +29,17 @@ export const StoreCellsPage: FC<StoreCellsPageProps> = ({}) => {
                 </h1>
                 <div className="flex flex-col items-center w-full gap-4 md:flex-row md:max-w-sm">
                     <CreateCellModal storeId={storeId} />
-                    <PrintAllCellsButton cells={cells} />
+                    {store && (
+                        <PrintAllCellsButton cells={cells} store={store} />
+                    )}
                 </div>
             </div>
             <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
                 <CellsTable
                     storeId={storeId}
                     isPending={isPending}
-                    isStorePending={false}
+                    store={store}
+                    isStorePending={storePending}
                     cells={cells}
                 />
             </div>

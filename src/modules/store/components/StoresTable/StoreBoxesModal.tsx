@@ -62,7 +62,7 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({ storeId }) => {
             ),
         },
     ];
-    const { data: boxes, isPending } = useGetAllBoxes();
+    const { data: boxes, isPending } = useGetAllBoxes("");
     const { data: storeBoxes, isPending: storeBoxesLoading } =
         useGetBoxes(storeId);
     const [isModalOpen, setIsModalOpen] = useState(false);
