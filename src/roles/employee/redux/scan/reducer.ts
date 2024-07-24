@@ -2,6 +2,7 @@ import { myLocalStorage } from "@/lib/storage/browserStorage";
 import * as actionTypes from "./types";
 
 const INITIAL_STATE: actionTypes.ScanState = {
+    //@ts-ignore
     boxBarcode: myLocalStorage?.get("scan-box-barcode") || null,
     cells: myLocalStorage?.get("scan-cells") || [],
     currentCellBarcode:
@@ -67,6 +68,10 @@ export const scanReducer = (
                 currentCellBarcode: action.payload,
             };
             break;
+        case actionTypes.RESET_STATE:
+            newState = INITIAL_STATE;
+            removeStateFromLocalStorage();
+            break;
         default:
             newState = state;
     }
@@ -79,4 +84,11 @@ function saveState(state: actionTypes.ScanState) {
     myLocalStorage?.set("scan-cells", state.cells);
     myLocalStorage?.set("scan-current-cell-barcode", state.currentCellBarcode);
     myLocalStorage?.set("scan-supply-id", state.supplyId);
+}
+
+function removeStateFromLocalStorage() {
+    myLocalStorage?.remove("scan-box-barcode");
+    myLocalStorage?.remove("scan-cells");
+    myLocalStorage?.remove("scan-current-cell-barcode");
+    myLocalStorage?.remove("scan-supply-id");
 }

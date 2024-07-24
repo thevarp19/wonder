@@ -45,7 +45,7 @@ export const CellBlock = ({ cell, store }: CellBlockProps) => {
     const code = getCellCode(cell, store.warehouse.id);
     return (
         <View style={styles.cell}>
-            <Text style={{ maxWidth: "150px", width: "100%" }}>
+            <Text style={{ maxWidth: "220px", width: "100%" }}>
                 Адрес: {store.warehouse.city.name},{" "}
                 {store.warehouse.street_name}, {store.warehouse.street_number}
             </Text>
@@ -61,7 +61,7 @@ export const CellBlockPDF: FC<CellBlockProps> = ({ cell, store }) => {
     return (
         <Document>
             <Page
-                size="A4"
+                size={"A4"}
                 orientation={"portrait"}
                 wrap={true}
                 style={styles.anchor}

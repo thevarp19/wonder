@@ -54,7 +54,7 @@ export const useGetSupplyProducts = (id: number) => {
 };
 
 export const useGetSupplyBox = (boxBarCode: number) => {
-    return useQuery<GetSupplyProducts>({
+    return useQuery<GetSupplyProducts[]>({
         queryKey: [`supply-box`, boxBarCode],
         retry: 1,
         queryFn: async () => {

@@ -11,10 +11,9 @@ export interface GetSupplyById {
 }
 
 export interface GetSupplyProducts {
-    products: SupplyEmployeeProduct[];
-    supplyId: number;
-    storeId: number;
-    storeAddress: string;
+    title: string;
+    id: number;
+    vendor_code: string;
 }
 
 export interface SupplyEmployeeProduct {
@@ -88,20 +87,20 @@ export type SupplyState =
     | "IN_DELIVERY"
     | "REJECTED";
 
-export interface AcceptSupplyProductRequest {
-    supplyId: number;
-    productCells: {
-        cellCode: string;
-        productArticles: string[];
-    }[];
-}
+// export interface AcceptSupplyProductRequest {
+//     supplyId: number;
+//     productCells: {
+//         cellCode: string;
+//         productArticles: string[];
+//     }[];
+// }
 
 export interface AcceptSupplyProductRequest {
     supply_boxes: {
         id: number;
         supplier_box_products: {
             id: number;
-            cell: number;
+            cell: string;
         }[];
     }[];
 }

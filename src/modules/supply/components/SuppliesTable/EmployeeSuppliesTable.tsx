@@ -58,7 +58,7 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
             title: "Отчет",
             render: (_, record) => {
                 return (
-                    <Link target="_blank" to={record.report_row}>
+                    <Link target="_blank" to={record.report_a4}>
                         <Button
                             danger
                             loading={false}

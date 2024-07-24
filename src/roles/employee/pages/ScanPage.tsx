@@ -3,11 +3,13 @@ import { ScanCellStep } from "@/modules/scan/components/steps/ScanCellStep";
 import { ScanProductsStep } from "@/modules/scan/components/steps/ScanProductsStep";
 import { SubmitStep } from "@/modules/scan/components/steps/SubmitStep";
 import { acceptSupplyMutation } from "@/modules/supply/mutations";
-import { useAppSelector } from "@/redux/utils";
+import { AcceptSupplyProductRequest } from "@/modules/supply/types";
+import { useAppDispatch, useAppSelector } from "@/redux/utils";
 import { cn } from "@/utils/shared.util";
 import { App, Button, Popconfirm, Steps } from "antd";
 import { FC, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { resetState } from "../redux/scan/actions";
 
 interface ScanPageProps {}
 
@@ -22,26 +24,30 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [step, setStep] = useState(Number(searchParams.get("step")) || 0);
     const { message } = App.useApp();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const supplyState = useAppSelector((state) => state.employee.scan);
-    const { isPending } = acceptSupplyMutation();
-    const onSubmit = () => {
+    const { mutateAsync, isPending } = acceptSupplyMutation(
+        supplyState.supplyId || -1
+    );
+    const onSubmit = async () => {
         if (!supplyState.supplyId) {
             message.error("Не определен идентификатор поставки");
             return;
         }
 
-        // const values: AcceptSupplyProductRequest = {
-        //     supply_boxes: supplyState.cells.map((cell) => ({
-        //         id: Number(cell.barcode),
-        //         supplier_box_products: cell.products.map((product) => ({
-        //             id: product.id,
-        //             cell: cell.id,
-        //         })),
-        //     })),
-        // };
+        const values: AcceptSupplyProductRequest = {
+            supply_boxes: supplyState.cells.map((cell) => ({
+                id: supplyState.boxBarcode,
+                supplier_box_products: cell.products.map((productId) => ({
+                    id: productId,
+                    cell: cell.barcode,
+                })),
+            })),
+        };
 
-        // mutateAsync(values);
+        await mutateAsync(values);
+        dispatch(resetState());
         navigate("/employee/supplies");
     };
     function nextStep() {

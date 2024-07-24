@@ -16,7 +16,7 @@ import { useScannerMultipleResults } from "../../hooks";
 interface SubmitStepProps {}
 
 function nonScannedProducts(
-    supplyProducts: GetSupplyProducts,
+    supplyProducts: GetSupplyProducts[],
     cells: ScanCell[]
 ) {
     const scannedProducts: number[] = [];
@@ -25,8 +25,8 @@ function nonScannedProducts(
             scannedProducts.push(product);
         });
     });
-    return supplyProducts.products.filter(
-        (product) => !scannedProducts.includes(Number(product.article))
+    return supplyProducts.filter(
+        (product) => !scannedProducts.includes(Number(product.id))
     );
 }
 
@@ -44,6 +44,7 @@ export const SubmitStep: FC<SubmitStepProps> = ({}) => {
         const temp = productBarcodeList
             .map((e) => Number(e))
             .filter((e) => !isNaN(e));
+
         if (currentCell?.barcode && temp.length) {
             dispatch(actions.addProductsToCell(currentCell.barcode, temp));
         }
@@ -68,8 +69,9 @@ export const SubmitStep: FC<SubmitStepProps> = ({}) => {
                             <ul>
                                 {nonScannedProducts(data, cells).map(
                                     (product) => (
-                                        <li key={product.article}>
-                                            {product.name}, {product.article}
+                                        <li key={product.vendor_code}>
+                                            {product.title},{" "}
+                                            {product.vendor_code}
                                         </li>
                                     )
                                 )}

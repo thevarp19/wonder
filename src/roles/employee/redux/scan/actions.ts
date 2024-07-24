@@ -31,3 +31,6 @@ export const setCurrentCellBarcode = (
     type: types.SET_CURRENT_CELL_BARCODE,
     payload: cellBarcode,
 });
+export const resetState = (): types.ResetState => ({
+    type: types.RESET_STATE,
+});

@@ -1,5 +1,5 @@
 import { useGetSupplyBox } from "@/modules/supply/queries";
-import { SupplyBoxProduct } from "@/modules/supply/types";
+import { GetSupplyProducts } from "@/modules/supply/types";
 import { useAppDispatch } from "@/redux/utils";
 import * as actions from "@/roles/employee/redux/scan/actions";
 import { useBoxBarcode } from "@/roles/employee/redux/scan/selectors";
@@ -11,12 +11,12 @@ import { toScanCell } from "../../utils";
 interface ScanCellStepProps {}
 
 function groupBoxProducts(
-    products: SupplyBoxProduct[]
-): { product: SupplyBoxProduct; count: number }[] {
-    const result: { product: SupplyBoxProduct; count: number }[] = [];
+    products: GetSupplyProducts[]
+): { product: GetSupplyProducts; count: number }[] {
+    const result: { product: GetSupplyProducts; count: number }[] = [];
     products.forEach((product) => {
         const existingProduct = result.find(
-            (item) => item.product.vendorCode === product.vendorCode
+            (item) => item.product.vendor_code === product.vendor_code
         );
         if (existingProduct) {
             existingProduct.count++;
@@ -35,7 +35,7 @@ export const ScanCellStep: FC<ScanCellStepProps> = ({}) => {
         : boxBarcodeInUrlParsed;
     const boxBarcode = useBoxBarcode();
     const dispatch = useAppDispatch();
-    const { data, isError } = useGetSupplyBox(boxBarcode as number);
+    const { data: products, isError } = useGetSupplyBox(boxBarcode as number);
     useEffect(() => {
         if (boxBarcodeInUrl) {
             dispatch(actions.setBoxBarcode(boxBarcodeInUrl));
@@ -50,13 +50,13 @@ export const ScanCellStep: FC<ScanCellStepProps> = ({}) => {
     return (
         <div>
             <p>Штрих-код коробки: {boxBarcode}</p>
-            {data && (
+            {products && (
                 <div className="p-4 border-2 border-black w-max">
                     <p>Продукты в коробке:</p>
                     <ul>
-                        {groupBoxProducts(data.products).map((product) => (
-                            <li key={product.product.article}>
-                                {product.product.name}, {product.count} шт.
+                        {groupBoxProducts(products).map((product) => (
+                            <li key={product.product.vendor_code}>
+                                {product.product.title}, {product.count} шт.
                             </li>
                         ))}
                     </ul>

@@ -4,10 +4,6 @@ import { GetSupplyProducts, SupplyEmployeeProduct } from "../../types";
 
 const columns: TableColumnsType<SupplyEmployeeProduct> = [
     {
-        title: "Артикул",
-        dataIndex: "article",
-    },
-    {
         title: "Название",
         dataIndex: "name",
     },
@@ -40,7 +36,7 @@ export const SupplyEmployeeProductsTable: FC<
     return (
         <Table
             columns={columns}
-            dataSource={data?.products}
+            dataSource={[]}
             rowKey={"id"}
             loading={isPending}
             locale={{

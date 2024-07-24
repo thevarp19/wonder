@@ -5,7 +5,6 @@ import {
     CreateSupplyResponse,
     GetEmployeeSupplies,
     GetSellerSupply,
-    GetSupplyBox,
     GetSupplyById,
     GetSupplyProducts,
     GetSupplyReport,
@@ -23,13 +22,13 @@ export function getSupplyById(id: number) {
 
 export function getSupplyProducts(id: number) {
     return axiosAuthorized.get<GetSupplyProducts>(
-        `/api/supplies/employee/products?supply-id=${id}`
+        `/api/supplier-box-product/supply/${id}/`
     );
 }
 
 export function getSupplyBox(boxBarCode: number) {
-    return axiosAuthorized.get<GetSupplyBox>(
-        `/api/supplies/get-by-box/${boxBarCode}`
+    return axiosAuthorized.get<GetSupplyProducts[]>(
+        `/api/supplier-box-product/box/${boxBarCode}/`
     );
 }
 
@@ -48,8 +47,14 @@ export function createSupply(data: CreateSupplyRequest) {
     );
 }
 
-export function acceptSupplyProducts(values: AcceptSupplyProductRequest) {
-    return axiosAuthorized.post(`/api/supplies/employee/scan`, values);
+export function acceptSupplyProducts(
+    values: AcceptSupplyProductRequest,
+    supplyId: number
+) {
+    return axiosAuthorized.patch(
+        `/api/supply/employee/accept/${supplyId}/`,
+        values
+    );
 }
 export function getSupplyReport(id: number) {
     return axiosAuthorized.get<GetSupplyReport>(

@@ -35,13 +35,16 @@ export const createSupplyMutation = (
     });
 };
 
-export const acceptSupplyMutation = (onSuccess?: () => void) => {
+export const acceptSupplyMutation = (
+    supplyId: number,
+    onSuccess?: () => void
+) => {
     const { message } = App.useApp();
     const navigate = useNavigate();
 
     return useMutation<void, AxiosError<any>, AcceptSupplyProductRequest>({
         async mutationFn(values) {
-            await acceptSupplyProducts(values);
+            await acceptSupplyProducts(values, supplyId);
         },
         onSuccess() {
             message.success("Успешно!");

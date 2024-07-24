@@ -4,7 +4,7 @@ export interface ScanCell {
 }
 
 export interface ScanState {
-    boxBarcode: number | null;
+    boxBarcode: number;
     cells: ScanCell[];
     currentCellBarcode: string | null;
     supplyId: number | null;
@@ -15,6 +15,7 @@ export const SET_SUPPLY_ID = "SCAN_SET_SUPPLY_ID";
 export const CREATE_SCANNING_CELL = "SCAN_CREATE_SCANNING_CELL";
 export const ADD_PRODUCTS_TO_CELL = "SCAN_ADD_PRODUCTS_TO_CELL";
 export const SET_CURRENT_CELL_BARCODE = "SCAN_SET_CURRENT_CELL_BARCODE";
+export const RESET_STATE = "RESET_STATE";
 
 export interface SetSupplyId {
     type: typeof SET_SUPPLY_ID;
@@ -44,9 +45,13 @@ export interface SetCurrentCellBarCode {
     payload: string;
 }
 
+export interface ResetState {
+    type: typeof RESET_STATE;
+}
 export type ScanActions =
     | SetBoxBarCode
     | SetSupplyId
+    | ResetState
     | CreateScanningCell
     | AddProductsToCell
     | SetCurrentCellBarCode;

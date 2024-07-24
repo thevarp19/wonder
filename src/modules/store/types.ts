@@ -177,6 +177,7 @@ export interface WonderWarehouse {
     id: number;
     volume: string;
     rental_price: string;
+    can_receive_supply: boolean;
     enabled: boolean;
 }
 
