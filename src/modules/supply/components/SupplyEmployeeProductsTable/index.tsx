@@ -32,7 +32,7 @@ interface SupplyEmployeeProductsTableProps {
 
 export const SupplyEmployeeProductsTable: FC<
     SupplyEmployeeProductsTableProps
-> = ({ data, isPending }) => {
+> = ({ isPending }) => {
     return (
         <Table
             columns={columns}
