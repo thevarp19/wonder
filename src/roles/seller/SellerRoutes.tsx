@@ -1,5 +1,5 @@
 import { Protected } from "@/context/Protected";
-import { ProductsUploadInstructions } from "@/modules/product/components/ProductsUploadInstructions";
+import { ProductsUploadInstructionsCollapse } from "@/modules/product/components/ProductsUploadInstructions/ProductInstructionCollapse";
 import { StoreActivationForm } from "@/modules/store/components/CreateStoreForm/StoreActivationForm";
 import { useAppSelector } from "@/redux/utils";
 import { FC } from "react";
@@ -63,7 +63,7 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                     <Route path="/products" element={<SellerProductsPage />} />
                     <Route
                         path="/products/upload/instruction"
-                        element={<ProductsUploadInstructions />}
+                        element={<ProductsUploadInstructionsCollapse />}
                     />
                     <Route path="/supply" element={<SellerSupplyPage />} />
                     <Route
