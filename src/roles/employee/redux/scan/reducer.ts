@@ -69,8 +69,16 @@ export const scanReducer = (
             };
             break;
         case actionTypes.RESET_STATE:
-            newState = INITIAL_STATE;
-            removeStateFromLocalStorage();
+            myLocalStorage?.remove("scan-box-barcode");
+            myLocalStorage?.remove("scan-cells");
+            myLocalStorage?.remove("scan-current-cell-barcode");
+            myLocalStorage?.remove("scan-supply-id");
+            newState = {
+                //@ts-ignore
+                boxBarcode: null,
+                cells: [],
+                currentCellBarcode: null,
+            };
             break;
         default:
             newState = state;
@@ -84,11 +92,4 @@ function saveState(state: actionTypes.ScanState) {
     myLocalStorage?.set("scan-cells", state.cells);
     myLocalStorage?.set("scan-current-cell-barcode", state.currentCellBarcode);
     myLocalStorage?.set("scan-supply-id", state.supplyId);
-}
-
-function removeStateFromLocalStorage() {
-    myLocalStorage?.remove("scan-box-barcode");
-    myLocalStorage?.remove("scan-cells");
-    myLocalStorage?.remove("scan-current-cell-barcode");
-    myLocalStorage?.remove("scan-supply-id");
 }

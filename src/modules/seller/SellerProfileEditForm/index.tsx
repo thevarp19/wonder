@@ -1,10 +1,13 @@
 import { FormikInput } from "@/components/ui/FormikInput";
 import { PhotoUpload } from "@/components/ui/MyPhotoUpload";
 import { PhoneNumberInput } from "@/components/ui/PhoneInput";
+import { useAppDispatch } from "@/redux/utils";
+import { sellerLogout } from "@/roles/seller/redux/auth/actions";
 import { formatPhoneNumber } from "@/utils/form.util";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Form, Popconfirm } from "antd";
 import { FC } from "react";
+import { deleteProfileMutation } from "../mutations";
 
 interface SellerProfileEditProps {
     formik: any;
@@ -19,6 +22,9 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({
     setIsEditing,
     isEditing,
 }) => {
+    const dispatch = useAppDispatch();
+    const { mutateAsync } = deleteProfileMutation();
+
     const handleEditClick = () => {
         formik.setFieldValue(
             "phone_number",
@@ -131,7 +137,10 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({
                         title="Удалить аккаунт"
                         cancelText="Отмена"
                         description="Вы уверены, что хотите удалить аккаунт?"
-                        onConfirm={() => {}}
+                        onConfirm={async () => {
+                            await mutateAsync();
+                            dispatch(sellerLogout());
+                        }}
                     >
                         <Button danger icon={<DeleteOutlined />}>
                             Удалить аккаунт

@@ -12,3 +12,6 @@ export function updateSellerProfile(formData: FormData) {
         },
     });
 }
+export function deleteSellerProfile() {
+    return axiosAuthorized.delete(`/api/sellers/profile/`);
+}

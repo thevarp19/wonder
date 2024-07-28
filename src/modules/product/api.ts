@@ -70,10 +70,19 @@ export function changeProductVisibility(
     return axiosAuthorized.patch(`/api/seller-product/update/`, values);
 }
 export function updateProductSize(
-    id: string,
+    id: number,
     values: UpdateProductSizeRequest
 ) {
-    return axiosAuthorized.patch(`/api/products/change-size/${id}`, values);
+    return axiosAuthorized.patch(`/api/product-size/${id}/`, values);
+}
+export function createProductSize(
+    id: number,
+    values: UpdateProductSizeRequest
+) {
+    return axiosAuthorized.post(`/api/product-size/`, {
+        ...values,
+        product: id,
+    });
 }
 
 export function changeProductPrice(value: ChangeProductPriceRequest[]) {
@@ -93,11 +102,13 @@ export function getEnabledCount() {
 export function getProductsWithSizes(
     page: number = 1,
     size: number = 10,
-    searchValue: string = "",
-    byVendorCode: boolean = false,
-    byProductName: boolean = false
+    search: string = "",
+    hasSizes: boolean | null = null
 ) {
-    let url = `/api/products/get-with-sizes?searchValue=${searchValue}&byVendorCode=${byVendorCode}&byProductName=${byProductName}&page=${page}&size=${size}`;
+    let url = `/api/product/sizes/?page=${page}&size=${size}&search=${search}`;
+    if (hasSizes !== null) {
+        url += `&has_size=${hasSizes}`;
+    }
     return axiosAuthorized.get<GetProductsWithSizesResponse>(url);
 }
 export function getProductsByParams(

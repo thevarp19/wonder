@@ -41,15 +41,10 @@ export interface GetProductsByParamsResponse
     extends BasePaginationResponse<GetProductByParamsContent[]> {}
 
 export interface GetProductsWithSizesContent {
-    productName: string;
-    productArticle: string;
-    vendorCode: string;
-    width: number;
-    length: number;
-    weight: number;
-    height: number;
-    comment: string;
-    state: string;
+    id: number;
+    product_size: ProductSizes;
+    vendor_code: string;
+    title: string;
 }
 export interface GetProductByParamsContent {
     productId: number;
@@ -61,6 +56,15 @@ export interface GetProductByParamsContent {
     price: number;
 }
 
+export interface ProductSizes {
+    id: number;
+    length: number;
+    width: number;
+    height: number;
+    weight: number;
+    comment: string;
+    product: number;
+}
 export interface ProductStoreCity {
     id: number;
     name: string;

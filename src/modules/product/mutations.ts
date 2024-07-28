@@ -7,6 +7,7 @@ import {
     changeProductPrice,
     changeProductVisibility,
     createProductsFromFile,
+    createProductSize,
     updateProductSize,
 } from "./api";
 import { ChangeProductPriceRequest, GetProductContent } from "./types";
@@ -31,13 +32,33 @@ export const createProductsFromFileMutation = () => {
         },
     });
 };
-export const updateProductSizeMutation = (id: string) => {
+export const updateProductSizeMutation = (id: number) => {
     const { message } = App.useApp();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>, UpdateProductSizeRequest>({
-        async mutationFn(values) {
+        async mutationFn(values: UpdateProductSizeRequest) {
             await updateProductSize(id, values);
+        },
+        onSuccess() {
+            message.success("Успешно!");
+            navigate("/employee/sizes/");
+            queryClient.invalidateQueries({
+                queryKey: ["productsWithSizes"],
+            });
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
+        },
+    });
+};
+export const createProductSizeMutation = (id: number) => {
+    const { message } = App.useApp();
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    return useMutation<void, AxiosError<any>, UpdateProductSizeRequest>({
+        async mutationFn(values: UpdateProductSizeRequest) {
+            await createProductSize(id, values);
         },
         onSuccess() {
             message.success("Успешно!");

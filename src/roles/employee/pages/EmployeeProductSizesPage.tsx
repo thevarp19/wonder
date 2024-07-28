@@ -5,6 +5,7 @@ import { SearchInput } from "@/components/ui/SearchInput";
 import { UpdateSizesForm } from "@/modules/product/components/UpdateSizesForm";
 import { useUpdateProductSize } from "@/modules/product/forms";
 import { useGetProductsWithSizes } from "@/modules/product/queries";
+import { ProductSizes } from "@/modules/product/types";
 import { useScannerResults } from "@/modules/scan/hooks";
 import { toScanProductsSizes } from "@/modules/scan/utils";
 import { cn } from "@/utils/shared.util";
@@ -134,54 +135,72 @@ export const EmployeeProductSizesPage: FC<
 const columns: TableColumnsType<any> = [
     {
         title: "Vendor Код",
-        dataIndex: "vendorCode",
-        key: "vendorCode",
+        dataIndex: "vendor_code",
+        key: "vendor_code",
     },
     {
         title: "Наименование",
-        dataIndex: "productName",
+        dataIndex: "title",
+        key: "title",
     },
     {
         title: "Длина",
-        dataIndex: "length",
+        dataIndex: ["product_size", "length"],
+        key: "length",
+        render: (length: number) => (length ? length : "-"),
     },
     {
         title: "Ширина",
-        dataIndex: "width",
+        dataIndex: ["product_size", "width"],
+        key: "width",
+        render: (width: number) => (width ? width : "-"),
     },
     {
         title: "Высота",
-        dataIndex: "height",
+        dataIndex: ["product_size", "height"],
+        key: "height",
+        render: (height: number) => (height ? height : "-"),
     },
     {
         title: "Вес",
-        dataIndex: "weight",
+        dataIndex: ["product_size", "weight"],
+        key: "weight",
+        render: (weight: number) => (weight ? weight : "-"),
     },
     {
         title: "Комментарий",
-        dataIndex: "comment",
+        dataIndex: ["product_size", "comment"],
+        key: "comment",
+        render: (comment: string) => (comment ? comment : "-"),
     },
     {
         title: "",
+        key: "action",
         render: (_, record) => (
             <UpdateSizesModal
-                vendorCode={record.vendorCode}
-                productName={record.productName}
+                productId={record.id}
+                product={record.product_size}
+                vendorCode={record.vendor_code}
+                productName={record.title}
             />
         ),
     },
 ];
 
 const UpdateSizesModal = ({
+    productId,
     vendorCode,
     productName,
+    product,
 }: {
+    productId: number;
     vendorCode: string;
+    product: ProductSizes | null;
     productName: string;
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const primaryVendorCode = vendorCode.split("_")[0];
-    const { formik } = useUpdateProductSize(primaryVendorCode);
+
+    const { formik } = useUpdateProductSize(productId, product || null);
 
     return (
         <>
@@ -232,41 +251,19 @@ export const EmployeeSearchResultsTable: FC<{
     filterKey: string;
 }> = ({ searchValue, filterKey }) => {
     const [page, setPage] = useState(1);
+    const hasSizes =
+        filterKey === "scanned"
+            ? true
+            : filterKey === "non-scanned"
+            ? false
+            : null;
     const { data, isPending } = useGetProductsWithSizes(
         page,
-        undefined,
+        10,
         searchValue,
-        true,
-        true
+        hasSizes
     );
 
-    const [filteredData, setFilteredData] = useState<any[]>([]);
-
-    useEffect(() => {
-        if (data?.content) {
-            const filtered = data.content.filter((item: any) => {
-                if (filterKey === "scanned") {
-                    return (
-                        item.width !== null &&
-                        item.length !== null &&
-                        item.weight !== null &&
-                        item.height !== null &&
-                        item.comment !== null
-                    );
-                } else if (filterKey === "non-scanned") {
-                    return (
-                        item.width === null &&
-                        item.length === null &&
-                        item.weight === null &&
-                        item.height === null &&
-                        item.comment === null
-                    );
-                }
-                return true;
-            });
-            setFilteredData(filtered);
-        }
-    }, [data, filterKey]);
     // const mockData = [
     //     {
     //         productName: "Product 1",
@@ -310,8 +307,8 @@ export const EmployeeSearchResultsTable: FC<{
             <Table
                 columns={columns}
                 loading={isPending}
-                dataSource={filteredData}
-                rowKey={(record) => record.vendorCode}
+                dataSource={data?.content}
+                rowKey={(record) => record.vendor_code}
                 pagination={{
                     pageSize: 10,
                     total: data?.totalElements,

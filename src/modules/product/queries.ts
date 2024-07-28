@@ -56,26 +56,17 @@ export const useInfiniteGetProducts = (pageSize = 10, searchValue = "") => {
 export const useGetProductsWithSizes = (
     page: number = 0,
     size: number = 10,
-    searchValue: string = "",
-    byVendorCode: boolean = false,
-    byProductName: boolean = false
+    search: string = "",
+    hasSizes: boolean | null = null
 ) => {
     return useQuery<GetProductsWithSizesResponse>({
-        queryKey: [
-            `productsWithSizes`,
-            page,
-            size,
-            searchValue,
-            byVendorCode,
-            byProductName,
-        ],
+        queryKey: [`productsWithSizes`, page, size, search, hasSizes],
         queryFn: async () => {
             const { data } = await getProductsWithSizes(
                 page,
                 size,
-                searchValue,
-                byVendorCode,
-                byProductName
+                search,
+                hasSizes
             );
             return data;
         },
