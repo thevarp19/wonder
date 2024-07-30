@@ -20,16 +20,17 @@ Font.register({
 
 const styles = StyleSheet.create({
     barcode: {
-        width: 100,
+        width: "58mm", // 58 mm wide
+        height: "40mm", // 40 mm tall
     },
     cell: {
         flexDirection: "column",
         display: "flex",
-        gap: 3,
         alignItems: "center",
         fontSize: 8,
-        padding: 10,
-        border: 1,
+        paddingVertical: 10,
+        borderBottom: 0.5,
+        // marginBottom: "3mm",
     },
     anchor: {
         fontFamily: "Roboto",
@@ -45,7 +46,7 @@ export const CellBlock = ({ cell, store }: CellBlockProps) => {
     const code = getCellCode(cell, store.warehouse.id);
     return (
         <View style={styles.cell}>
-            <Text style={{ maxWidth: "220px", width: "100%" }}>
+            <Text>
                 Адрес: {store.warehouse.city.name},{" "}
                 {store.warehouse.street_name}, {store.warehouse.street_number}
             </Text>
@@ -61,7 +62,7 @@ export const CellBlockPDF: FC<CellBlockProps> = ({ cell, store }) => {
     return (
         <Document>
             <Page
-                size={"A4"}
+                size={[164]}
                 orientation={"portrait"}
                 wrap={true}
                 style={styles.anchor}

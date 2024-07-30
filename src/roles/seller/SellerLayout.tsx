@@ -21,6 +21,9 @@ import { Link, useLocation } from "react-router-dom";
 interface SellerLayoutProps {}
 
 function pathToKey(key: string) {
+    if (key.startsWith("/seller/settings/")) {
+        return "settings";
+    }
     switch (key) {
         case "/seller":
             return "home";

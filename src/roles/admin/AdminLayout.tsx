@@ -24,6 +24,9 @@ const breadcrumbMapping: {
     "/admin/settings": [{ title: "Меню" }, { title: <a href="">Настройки</a> }],
 };
 function pathToKey(key: string) {
+    if (key.startsWith("/admin/settings/")) {
+        return "settings";
+    }
     switch (key) {
         case "/admin":
             return "home";

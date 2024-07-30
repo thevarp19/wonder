@@ -13,13 +13,10 @@ const styles = StyleSheet.create({
     anchor: {
         fontFamily: "Roboto",
     },
-    grid: {
-        flexDirection: "row",
+    column: {
+        flexDirection: "column",
         display: "flex",
-        flexWrap: "wrap",
-        gap: 10,
-        marginTop: 40,
-        marginLeft: 40,
+        gap: 12,
     },
     root: {
         display: "flex",
@@ -35,14 +32,9 @@ export interface CellPDFProps {
 export const CellPDF: FC<CellPDFProps> = ({ cells, store }) => {
     return (
         <Document>
-            <Page
-                size="A4"
-                orientation={"portrait"}
-                wrap={true}
-                style={styles.anchor}
-            >
+            <Page size={[164]} orientation="portrait" style={styles.anchor}>
                 <View style={styles.root}>
-                    <View style={styles.grid}>
+                    <View style={styles.column}>
                         {cells.map((cell) => (
                             <CellBlock
                                 key={cell.id}
