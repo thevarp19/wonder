@@ -89,7 +89,7 @@ export const UpdateStoreSellerForm: FC<UpdateStoreSellerFormProps> = ({}) => {
             />
             <div className="flex gap-2 py-5">
                 <Checkbox
-                    value={formik.values.warehouse.is_warehouse}
+                    checked={formik.values.warehouse.is_warehouse}
                     onChange={formik.handleChange}
                     name="warehouse.is_warehouse"
                 />
