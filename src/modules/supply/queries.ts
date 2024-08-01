@@ -44,7 +44,7 @@ export const useGetSupply = (id: number) => {
 // };
 
 export const useGetSupplyProducts = (id: number) => {
-    return useQuery<GetSupplyProducts>({
+    return useQuery<GetSupplyProducts[]>({
         queryKey: [`supply-products`, id],
         queryFn: async () => {
             const { data } = await getSupplyProducts(id);

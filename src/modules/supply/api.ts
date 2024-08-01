@@ -21,7 +21,7 @@ export function getSupplyById(id: number) {
 }
 
 export function getSupplyProducts(id: number) {
-    return axiosAuthorized.get<GetSupplyProducts>(
+    return axiosAuthorized.get<GetSupplyProducts[]>(
         `/api/supplier-box-product/supply/${id}/`
     );
 }

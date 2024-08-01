@@ -5,38 +5,42 @@ import { GetSupplyProducts, SupplyEmployeeProduct } from "../../types";
 const columns: TableColumnsType<SupplyEmployeeProduct> = [
     {
         title: "Название",
-        dataIndex: "name",
+        dataIndex: "title",
     },
     {
         title: "Артикул поставщика",
-        dataIndex: "vendorCode",
+        dataIndex: "vendor_code",
     },
     {
         title: "Штрих-код коробки",
-        dataIndex: "vendorCodeOfBox",
+        dataIndex: "supply_box",
     },
     {
         title: "Название типа коробки",
-        dataIndex: "typeOfBoxName",
+        dataIndex: "box_type_name",
+    },
+    {
+        title: "Размер коробки",
+        dataIndex: "box_type_size",
     },
     {
         title: "Статус",
-        dataIndex: "productStateInStore",
+        dataIndex: "status",
     },
 ];
 
 interface SupplyEmployeeProductsTableProps {
-    data?: GetSupplyProducts;
+    data: GetSupplyProducts[];
     isPending: boolean;
 }
 
 export const SupplyEmployeeProductsTable: FC<
     SupplyEmployeeProductsTableProps
-> = ({ isPending }) => {
+> = ({ data, isPending }) => {
     return (
         <Table
             columns={columns}
-            dataSource={[]}
+            dataSource={data}
             rowKey={"id"}
             loading={isPending}
             locale={{

@@ -63,7 +63,7 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
             },
         },
         {
-            title: "Отчет",
+            title: "Штрихкоды А4",
             render: (_, record) => {
                 return (
                     <Link target="_blank" to={record.report_a4}>
@@ -81,6 +81,44 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
                 );
             },
         },
+        {
+            title: "Штрихкоды в ряд",
+            render: (_, record) => {
+                return (
+                    <Link target="_blank" to={record.report_row}>
+                        <Button
+                            danger
+                            loading={false}
+                            icon={
+                                <DownloadOutlined
+                                    color="#ef7214"
+                                    style={{ color: "#ef7214" }}
+                                />
+                            }
+                        ></Button>
+                    </Link>
+                );
+            },
+        },
+        // {
+        //     title: "Отчет",
+        //     render: (_, record) => {
+        //         return (
+        //             <Link target="_blank" to={record.report_a4}>
+        //                 <Button
+        //                     danger
+        //                     loading={false}
+        //                     icon={
+        //                         <DownloadOutlined
+        //                             color="#ef7214"
+        //                             style={{ color: "#ef7214" }}
+        //                         />
+        //                     }
+        //                 ></Button>
+        //             </Link>
+        //         );
+        //     },
+        // },
     ];
 
     return (

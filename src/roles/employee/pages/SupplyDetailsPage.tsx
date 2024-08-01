@@ -13,12 +13,15 @@ export const SupplyDetailsPage: FC<SupplyDetailsPageProps> = ({}) => {
     const { data, isPending } = useGetSupplyProducts(Number(supplyId));
 
     const dispatch = useAppDispatch();
+
+    const dataSource = data ? data : [];
+
     return (
         <div>
             <div className="flex items-center justify-between my-4">
                 <div className="flex flex-col gap-1 text-xl font-semibold">
                     <span>Идентификатор: {supplyId}</span>
-                    <span>Склад: {data?.title}</span>
+                    <span>Склад: {}</span>
                 </div>
                 <Link to={`/employee/scan`}>
                     <Button
@@ -33,7 +36,10 @@ export const SupplyDetailsPage: FC<SupplyDetailsPageProps> = ({}) => {
                     </Button>
                 </Link>
             </div>
-            <SupplyEmployeeProductsTable data={data} isPending={isPending} />
+            <SupplyEmployeeProductsTable
+                data={dataSource}
+                isPending={isPending}
+            />
         </div>
     );
 };

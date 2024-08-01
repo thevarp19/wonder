@@ -11,18 +11,23 @@ export interface GetSupplyById {
 }
 
 export interface GetSupplyProducts {
-    title: string;
     id: number;
     vendor_code: string;
+    title: string;
+    supply_box: string;
+    box_type_name: string;
+    box_type_size: string;
+    status: string;
 }
 
 export interface SupplyEmployeeProduct {
-    article: string;
-    name: string;
-    vendorCode: string;
-    vendorCodeOfBox: string;
-    typeOfBoxName: string;
-    productStateInStore: string;
+    id: number;
+    vendor_code: string;
+    title: string;
+    supply_box: string;
+    box_type_name: string;
+    box_type_size: string;
+    status: string;
 }
 
 export interface GetEmployeeSupplies {
