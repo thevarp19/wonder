@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     column: {
         flexDirection: "column",
         display: "flex",
-        gap: 12,
+        gap: 9,
     },
     root: {
         display: "flex",
