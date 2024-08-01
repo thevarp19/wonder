@@ -34,6 +34,7 @@ export interface GetStoreResponse {
         operating_modes: WorkDayOfWeekResponse[];
         is_warehouse: boolean;
     };
+    can_receive_supply?: boolean;
     enabled: boolean;
 }
 export interface GetAvailableStoreResponse {

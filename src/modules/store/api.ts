@@ -78,6 +78,12 @@ export function updateStoreSeller(
 export function updateStoreStatus(id: number, values: { enabled: boolean }) {
     return axiosAuthorized.patch(`/api/warehouse/wonder/${id}/`, values);
 }
+export function updateStoreSupplyStatus(
+    id: number,
+    values: { can_receive_supply: boolean }
+) {
+    return axiosAuthorized.patch(`/api/warehouse/wonder/${id}/`, values);
+}
 export function updateStoreStatusSeller(
     id: number,
     values: { enabled: boolean }

@@ -14,6 +14,7 @@ import {
     updateStoreSeller,
     updateStoreStatus,
     updateStoreStatusSeller,
+    updateStoreSupplyStatus,
 } from "./api";
 import {
     ActivateStoreSellerRequest,
@@ -100,6 +101,29 @@ export const updateStoreStatusMutation = (id: number) => {
     return useMutation<void, AxiosError<any>, { enabled: boolean }>({
         async mutationFn(values) {
             await updateStoreStatus(id, values);
+        },
+        onSuccess() {
+            message.success("Успешно!");
+            // navigate("/admin/settings/?menu_x=stores");
+            queryClient.invalidateQueries({
+                queryKey: ["stores"],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["stores-seller"],
+            });
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
+        },
+    });
+};
+export const updateStoreSupplyStatusMutation = (id: number) => {
+    const { message } = App.useApp();
+    // const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    return useMutation<void, AxiosError<any>, { can_receive_supply: boolean }>({
+        async mutationFn(values) {
+            await updateStoreSupplyStatus(id, values);
         },
         onSuccess() {
             message.success("Успешно!");

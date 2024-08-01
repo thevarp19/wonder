@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useGetStores } from "../../queries";
 import { GetStoreResponse } from "../../types";
 import { StoreBoxesModal } from "./StoreBoxesModal";
+import { StoreSupplySwitch } from "./StoreSupplySwitch";
 import { StoreSwitch } from "./StoreSwitch";
 import { StoreWorkingTimeCell } from "./StoreWorkingTimeCell";
 
@@ -36,6 +37,10 @@ const columns: TableColumnsType<GetStoreResponse> = [
     {
         title: "Статус",
         render: (_, record) => <StoreSwitch record={record} />,
+    },
+    {
+        title: "Статус поставки",
+        render: (_, record) => <StoreSupplySwitch record={record} />,
     },
     {
         title: "Склад",
