@@ -5,71 +5,46 @@ import {
     GetOrderById,
     GetOrderDetailEmployee,
     GetOrdersAdmin,
-    GetOrdersByDate,
     GetOrdersEmployee,
     GetOrdersSeller,
 } from "./types";
 
 export function getOrdersAdmin(
-    startDate: string,
-    endDate: string,
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
-    deliveryMode: DeliveryMode = "",
-    byOrderCode: boolean = false,
-    byShopName: boolean = false,
-    byStoreAddress: boolean = false,
-    byProductName: boolean = true,
-    byProductArticle: boolean = false,
-    byProductVendorCode: boolean = false
+    deliveryMode: DeliveryMode = "ALL"
 ) {
     return axiosAuthorized.get<GetOrdersAdmin>(
-        `/api/orders/admin?start-date=${startDate}&end-date=${endDate}&page=${page}&size=${size}&searchValue=${searchValue}&deliveryMode=${deliveryMode}&byOrderCode=${byOrderCode}&byShopName=${byShopName}&byStoreAddress=${byStoreAddress}&byProductName=${byProductName}&byProductArticle=${byProductArticle}&byProductVendorCode=${byProductVendorCode}`
+        `/api/order-admin/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
 
-export function getOrdersByDate(startDate: string, endDate: string) {
-    return axiosAuthorized.get<GetOrdersByDate[]>(
-        `/api/orders/admin?start-date=${startDate}&end-date=${endDate}`
-    );
-}
+// export function getOrdersByDate(startDate: string, endDate: string) {
+//     return axiosAuthorized.get<GetOrdersByDate[]>(
+//         `/api/orders/admin?start-date=${startDate}&end-date=${endDate}`
+//     );
+// }
 
 export function getOrdersSeller(
-    startDate: string,
-    endDate: string,
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
-    deliveryMode: DeliveryMode = "",
-    byOrderCode: boolean = false,
-    byShopName: boolean = false,
-    byStoreAddress: boolean = false,
-    byProductName: boolean = true,
-    byProductArticle: boolean = false,
-    byProductVendorCode: boolean = false
+    deliveryMode: DeliveryMode = "ALL"
 ) {
     return axiosAuthorized.get<GetOrdersSeller>(
-        `/api/orders/seller?start-date=${startDate}&end-date=${endDate}&page=${page}&size=${size}&searchValue=${searchValue}&deliveryMode=${deliveryMode}&byOrderCode=${byOrderCode}&byShopName=${byShopName}&byStoreAddress=${byStoreAddress}&byProductName=${byProductName}&byProductArticle=${byProductArticle}&byProductVendorCode=${byProductVendorCode}`
+        `/api/order-seller/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
 
 export function getOrdersEmployee(
-    startDate: string,
-    endDate: string,
     page: number = 0,
     size: number = 10,
     searchValue: string = "",
-    deliveryMode: DeliveryMode = "",
-    byOrderCode: boolean = false,
-    byShopName: boolean = false,
-    byStoreAddress: boolean = false,
-    byProductName: boolean = true,
-    byProductArticle: boolean = false,
-    byProductVendorCode: boolean = false
+    deliveryMode: DeliveryMode = ""
 ) {
     return axiosAuthorized.get<GetOrdersEmployee>(
-        `/api/orders/employee?start-date=${startDate}&end-date=${endDate}&page=${page}&size=${size}&searchValue=${searchValue}&deliveryMode=${deliveryMode}&byOrderCode=${byOrderCode}&byShopName=${byShopName}&byStoreAddress=${byStoreAddress}&byProductName=${byProductName}&byProductArticle=${byProductArticle}&byProductVendorCode=${byProductVendorCode}`
+        `/api/order-employee/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
 

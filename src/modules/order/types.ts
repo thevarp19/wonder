@@ -13,48 +13,45 @@ export interface GetOrderById {
 }
 
 export interface GetOrdersAdmin
-    extends BasePaginationResponse<GetOrdersByDate> {}
+    extends BasePaginationResponse<GetOrdersAdminContent> {}
 
 export interface GetOrdersSeller
-    extends BasePaginationResponse<GetOrdersByDate> {}
+    extends BasePaginationResponse<GetOrdersSellerContent> {}
 
 export interface GetOrdersEmployee
     extends BasePaginationResponse<GetOrdersEmployeeContent> {}
 
-export interface GetOrdersByDate {
-    id: number;
-    kaspiId: string;
+export interface GetOrdersSellerContent {
+    id: string;
     code: string;
-    totalPrice: number;
-    paymentMode: string;
-    plannedDeliveryDate: number;
-    creationDate: number;
-    deliveryCostForSeller: number;
-    isKaspiDelivery: boolean;
-    deliveryMode: string;
-    tradePrice: number;
-    state: string;
-    waybill: string | null;
-    courierTransmissionDate: number;
-    courierTransmissionPlanningDate: number;
-    waybillNumber: string;
-    deliveryCost: number;
-    sellerName: string;
-    storeFormattedAddress: string;
+    delivery_mode: string;
+    creation_date: number;
+    transmission_date: number;
+    receiving_date: number;
+    total_price: number;
+    wonder_status: string;
+    warehouse: string;
+}
+export interface GetOrdersAdminContent {
+    id: string;
+    code: string;
+    delivery_mode: string;
+    creation_date: number;
+    transmission_date: number;
+    receiving_date: number;
+    total_price: number;
+    wonder_status: string;
+    warehouse_address: string;
 }
 
 export interface GetOrdersEmployeeContent {
-    orderStatus: string;
-    descriptionOfOrderStatus: string;
-    orderAvailableAction: string;
-    orderCode: string;
-    shopName: string;
-    formattedAddress: string;
-    orderCreatedAt: string;
-    orderToSendTime: string;
-    deliveryType: string;
-    price: number;
-    productsCount: number;
+    id: string;
+    code: string;
+    kaspi_store_name: string;
+    creation_date: number;
+    delivery_mode: string;
+    total_price: number;
+    wonder_status: string;
 }
 
 export interface GetOrderDetailEmployee {
@@ -79,11 +76,11 @@ export interface Product {
 }
 
 export type DeliveryMode =
-    | "DELIVERY_LOCAL"
-    | "DELIVERY_PICKUP"
-    | "DELIVERY_REGIONAL_PICKUP"
-    | "DELiVERY_POSTOMAT"
-    | "DELIVERY_REGIONAL_TODOOR"
+    | "ALL"
+    | "EXPRESS"
+    | "ZAMLER"
+    | "PICKUP"
+    | "ARCHIVE"
     | "";
 
 export interface ProductAssemble {

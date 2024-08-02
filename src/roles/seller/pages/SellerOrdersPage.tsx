@@ -1,76 +1,57 @@
 import { searchIcon } from "@/assets";
-import { Title } from "@/components/shared/Title";
-import { FilterMenu } from "@/components/ui/FilterMenu";
 import { Image } from "@/components/ui/Image";
 import { SellerOrdersTable } from "@/modules/order/components/OrdersTable/SellerOrdersTable";
 import { items } from "@/modules/order/const";
 import { DeliveryMode } from "@/modules/order/types";
-import {
-    Button,
-    ConfigProvider,
-    DatePicker,
-    Input,
-    Menu,
-    MenuProps,
-} from "antd";
-import ruRU from "antd/lib/locale/ru_RU";
-import dayjs from "dayjs";
+import { useDebounce } from "@/utils/shared.util";
+import { ConfigProvider, Input, Menu, MenuProps } from "antd";
 import "dayjs/locale/ru";
 import { FC, useState } from "react";
 interface SellerOrdersPageProps {}
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 
 const deliveryModes: { [key: string]: DeliveryMode } = {
-    all: "",
-    kaspi: "DELIVERY_REGIONAL_TODOOR",
-    kaspiPostomat: "DELiVERY_POSTOMAT",
-    express: "DELIVERY_LOCAL",
-    pickup: "DELIVERY_PICKUP",
-    kaspiDelivery: "DELIVERY_REGIONAL_PICKUP",
+    all: "ALL",
+    zamler: "ZAMLER",
+    express: "EXPRESS",
+    pickup: "PICKUP",
+    archive: "ARCHIVE",
 };
 
 export const SellerOrdersPage: FC<SellerOrdersPageProps> = ({}) => {
-    // const [searchValue, setSearchValue] = useState("");
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchValue, setSearchValue] = useState("");
+    const debouncedSearchValue = useDebounce(searchValue, 500);
+    // const [searchQuery, setSearchQuery] = useState("");
     const [current, setCurrent] = useState("all");
-    const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("");
-    const [checkedItems, setCheckedItems] = useState({
-        byOrderCode: true,
-        byShopName: true,
-        byStoreAddress: true,
-        byProductName: true,
-        byProductArticle: true,
-        byProductVendorCode: true,
-    });
+    const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("ALL");
 
-    const [dateRange, setDateRange] = useState<
-        [dayjs.Dayjs | null, dayjs.Dayjs | null]
-    >([null, null]);
+    // const [dateRange, setDateRange] = useState<
+    //     [dayjs.Dayjs | null, dayjs.Dayjs | null]
+    // >([null, null]);
 
-    const handleDateChange = (
-        dates: [dayjs.Dayjs | null, dayjs.Dayjs | null]
-    ) => {
-        setDateRange(dates);
-    };
-    const handleSearch = () => {
-        if (dateRange[0] && dateRange[1]) {
-            const formattedDates = dateRange.map((date) =>
-                date?.format("YYYY-MM-DD")
-            );
-            console.log("Selected Dates:", formattedDates);
-            // Use formattedDates as needed
-            // Example: setSearchQuery({ ...searchValue, dates: formattedDates });
-        }
-        setSearchQuery("");
-    };
+    // const handleDateChange = (
+    //     dates: [dayjs.Dayjs | null, dayjs.Dayjs | null]
+    // ) => {
+    //     setDateRange(dates);
+    // };
+    // const handleSelectDate = () => {
+    //     if (dateRange[0] && dateRange[1]) {
+    //         const formattedDates = dateRange.map((date) =>
+    //             date?.format("YYYY-MM-DD")
+    //         );
+    //         console.log("Selected Dates:", formattedDates);
+    //         // Use formattedDates as needed
+    //         // Example: setSearchQuery({ ...searchValue, dates: formattedDates });
+    //     }
+    //     setSearchQuery("");
+    // };
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
         setDeliveryMode(deliveryModes[e.key]);
     };
     return (
         <div className="h-full">
-            <Title text="Заказы" />
-            <div className="flex items-center justify-between mb-4">
+            {/* <div className="flex items-center justify-between mb-4">
                 <div className="flex flex-col items-center w-full gap-4 md:flex-row md:max-w-sm">
                     <ConfigProvider locale={ruRU}>
                         <RangePicker
@@ -87,12 +68,12 @@ export const SellerOrdersPage: FC<SellerOrdersPageProps> = ({}) => {
                     <Button
                         className="md:w-[130px] w-full md:!h-[32px] !h-[42px] md:!text-[13px] !text-[16px]"
                         type="primary"
-                        onClick={handleSearch}
+                        onClick={handleSelectDate}
                     >
                         Применить
                     </Button>
                 </div>
-            </div>
+            </div> */}
             <div className="flex flex-col gap-5">
                 <div className="overflow-x-auto bg-[#F7F9FB] md:pt-0 pt-2 rounded-lg">
                     <div className="min-w-[600px] flex justify-between">
@@ -124,29 +105,19 @@ export const SellerOrdersPage: FC<SellerOrdersPageProps> = ({}) => {
                                     />
                                 }
                                 placeholder="Поиск"
-                                // value={""}
+                                value={searchValue}
                                 className="!min-w-[217px]"
-                                onChange={() => {}}
+                                onChange={(e) => {
+                                    setSearchValue(e.target.value);
+                                }}
                             />
-                            <div className="flex w-[30px]">
-                                <FilterMenu
-                                    checkedItems={checkedItems}
-                                    setCheckedItems={setCheckedItems}
-                                />
-                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
                     <SellerOrdersTable
-                        searchValue={searchQuery}
+                        searchValue={debouncedSearchValue}
                         deliveryMode={deliveryMode}
-                        byOrderCode={checkedItems.byOrderCode}
-                        byShopName={checkedItems.byShopName}
-                        byStoreAddress={checkedItems.byStoreAddress}
-                        byProductName={checkedItems.byProductName}
-                        byProductArticle={checkedItems.byProductArticle}
-                        byProductVendorCode={checkedItems.byProductVendorCode}
                     />
                 </div>
             </div>

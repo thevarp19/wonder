@@ -95,7 +95,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                                             menu={{ items: profileItems }}
                                         >
                                             <Avatar
-                                                size={40}
+                                                size={32}
                                                 src={logoLink}
                                                 shape="circle"
                                             />

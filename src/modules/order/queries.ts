@@ -3,7 +3,6 @@ import {
     getAdminOrderById,
     getEmployeeOrderById,
     getOrdersAdmin,
-    getOrdersByDate,
     getOrdersEmployee,
     getOrdersSeller,
     getSellerOrderById,
@@ -13,118 +12,56 @@ import {
     GetOrderById,
     GetOrderDetailEmployee,
     GetOrdersAdmin,
-    GetOrdersByDate,
     GetOrdersEmployee,
     GetOrdersSeller,
 } from "./types";
 
 export const useGetOrdersAdmin = (
-    startDate: string,
-    endDate: string,
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
-    deliveryMode: DeliveryMode,
-    byOrderCode: boolean = true,
-    byShopName: boolean = false,
-    byStoreAddress: boolean = false,
-    byProductName: boolean = false,
-    byProductArticle: boolean = false,
-    byProductVendorCode: boolean = false
+    deliveryMode: DeliveryMode
 ) => {
     return useQuery<GetOrdersAdmin>({
-        queryKey: [
-            `orders-admin`,
-            startDate,
-            endDate,
-            page,
-            size,
-            searchValue,
-            deliveryMode,
-            byOrderCode,
-            byShopName,
-            byStoreAddress,
-            byProductName,
-            byProductArticle,
-            byProductVendorCode,
-        ],
-
+        queryKey: [`orders-admin`, page, size, searchValue, deliveryMode],
         queryFn: async () => {
             const { data } = await getOrdersAdmin(
-                startDate,
-                endDate,
                 page,
                 size,
                 searchValue,
-                deliveryMode,
-                byOrderCode,
-                byShopName,
-                byStoreAddress,
-                byProductName,
-                byProductArticle,
-                byProductVendorCode
+                deliveryMode
             );
             return data;
         },
     });
 };
 
-export const useGetOrdersByDate = (startDate: string, endDate: string) => {
-    return useQuery<GetOrdersByDate[]>({
-        queryKey: ["orders", startDate, endDate],
-        queryFn: async () => {
-            const { data } = await getOrdersByDate(startDate, endDate);
-            return data
-                .filter((order) => order.waybill !== null)
-                .sort((a, b) => b.creationDate - a.creationDate);
-        },
-    });
-};
+// export const useGetOrdersByDate = (startDate: string, endDate: string) => {
+//     return useQuery<GetOrdersByDate[]>({
+//         queryKey: ["orders", startDate, endDate],
+//         queryFn: async () => {
+//             const { data } = await getOrdersByDate(startDate, endDate);
+//             return data
+//                 .filter((order) => order.waybill !== null)
+//                 .sort((a, b) => b.creationDate - a.creationDate);
+//         },
+//     });
+// };
 
 export const useGetOrdersSeller = (
-    startDate: string,
-    endDate: string,
     page: number = 0,
     size: number = 10,
     searchValue: string = "",
-    deliveryMode: DeliveryMode,
-    byOrderCode: boolean = true,
-    byShopName: boolean = false,
-    byStoreAddress: boolean = false,
-    byProductName: boolean = false,
-    byProductArticle: boolean = false,
-    byProductVendorCode: boolean = false
+    deliveryMode: DeliveryMode
 ) => {
     return useQuery<GetOrdersSeller>({
-        queryKey: [
-            "seller-orders",
-            startDate,
-            endDate,
-            page,
-            size,
-            searchValue,
-            deliveryMode,
-            byOrderCode,
-            byShopName,
-            byStoreAddress,
-            byProductName,
-            byProductArticle,
-            byProductVendorCode,
-        ],
+        queryKey: ["seller-orders", page, size, searchValue, deliveryMode],
         queryFn: async () => {
             const { data } = await getOrdersSeller(
-                startDate,
-                endDate,
                 page,
                 size,
                 searchValue,
-                deliveryMode,
-                byOrderCode,
-                byShopName,
-                byStoreAddress,
-                byProductName,
-                byProductArticle,
-                byProductVendorCode
+                deliveryMode
             );
             return data;
         },
@@ -132,49 +69,19 @@ export const useGetOrdersSeller = (
 };
 
 export const useGetOrdersEmployee = (
-    startDate: string,
-    endDate: string,
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
-    deliveryMode: DeliveryMode,
-    byOrderCode: boolean = true,
-    byShopName: boolean = false,
-    byStoreAddress: boolean = false,
-    byProductName: boolean = false,
-    byProductArticle: boolean = false,
-    byProductVendorCode: boolean = false
+    deliveryMode: DeliveryMode
 ) => {
     return useQuery<GetOrdersEmployee>({
-        queryKey: [
-            "orders-employee",
-            startDate,
-            endDate,
-            page,
-            size,
-            searchValue,
-            deliveryMode,
-            byOrderCode,
-            byShopName,
-            byStoreAddress,
-            byProductName,
-            byProductArticle,
-            byProductVendorCode,
-        ],
+        queryKey: ["orders-employee", page, size, searchValue, deliveryMode],
         queryFn: async () => {
             const { data } = await getOrdersEmployee(
-                startDate,
-                endDate,
                 page,
                 size,
                 searchValue,
-                deliveryMode,
-                byOrderCode,
-                byShopName,
-                byStoreAddress,
-                byProductName,
-                byProductArticle,
-                byProductVendorCode
+                deliveryMode
             );
             return data;
         },

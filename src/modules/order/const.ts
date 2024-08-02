@@ -6,12 +6,8 @@ export const items: MenuProps["items"] = [
         key: "all",
     },
     {
-        label: "Kaspi доставка",
-        key: "kaspi",
-    },
-    {
-        label: "Kaspi Postomat",
-        key: "kaspiPostomat",
+        label: "Замлер",
+        key: "zamler",
     },
     {
         label: "Express",
@@ -20,9 +16,5 @@ export const items: MenuProps["items"] = [
     {
         label: "Самовывоз",
         key: "pickup",
-    },
-    {
-        label: "Kaspi Доставка в Postomat",
-        key: "kaspiDelivery",
     },
 ];

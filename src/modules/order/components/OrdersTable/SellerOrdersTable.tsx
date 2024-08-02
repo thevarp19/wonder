@@ -4,99 +4,72 @@ import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersSeller } from "../../queries";
-import { DeliveryMode, GetOrdersByDate } from "../../types";
-import { orderStatusColorMap, orderStatusMap } from "../../utils";
+import { DeliveryMode, GetOrdersSellerContent } from "../../types";
 
-const columns: TableColumnsType<GetOrdersByDate> = [
+const columns: TableColumnsType<GetOrdersSellerContent> = [
     {
         title: "Номер заказа",
         render: (_, record) => (
             <Link to={`/seller/orders/${record.code}`}>{record.code}</Link>
         ),
     },
-    {
-        title: "Название Склада",
-        dataIndex: "sellerName",
-    },
+    // {
+    //     title: "Название Склада",
+    //     dataIndex: "sellerName",
+    // },
     {
         title: "Склад",
-        dataIndex: "storeFormattedAddress",
+        dataIndex: "warehouse",
     },
     {
         title: "Время заказа",
-        render: (_, record) => <DateCell timestamp={record.creationDate} />,
+        render: (_, record) => <DateCell timestamp={record.creation_date} />,
     },
     {
         title: "Тип доставки",
         dataIndex: "deliveryMode",
-        render: (_, record) => <Tag>{record.deliveryMode}</Tag>,
+        render: (_, record) => <Tag>{record.delivery_mode}</Tag>,
     },
     {
         title: "Дата передачи",
         render: (_, record) => (
-            <DateCell timestamp={record.courierTransmissionDate} />
+            <DateCell timestamp={record.transmission_date} />
         ),
     },
     {
-        title: "Планируемая дата доставки",
-        render: (_, record) => (
-            <DateCell timestamp={record.plannedDeliveryDate} />
-        ),
+        title: "Дата получения",
+        render: (_, record) => <DateCell timestamp={record.receiving_date} />,
+    },
+    {
+        title: "Сумма заказа",
+        render: (_, record) => <div>{record.total_price} KZT</div>,
     },
     {
         title: "Статус",
-        dataIndex: "state",
-        render: (_, record) => (
-            <Tag color={orderStatusColorMap(record.state)}>
-                {orderStatusMap(record.state)}
-            </Tag>
-        ),
+        dataIndex: "wonder_status",
+        render: (_, record) => <Tag>{record.wonder_status}</Tag>,
     },
-    {
-        title: "Цена",
-        render: (_, record) => <div>{record.totalPrice} KZT</div>,
-    },
-    {
-        title: "Торговая цена",
-        render: (_, record) => <div>{record.tradePrice} KZT</div>,
-    },
+    // {
+    //     title: "Торговая цена",
+    //     render: (_, record) => <div>{record.} KZT</div>,
+    // },
 ];
 
 interface SellerOrdersTableProps {
     searchValue: string;
     deliveryMode: DeliveryMode;
-    byOrderCode: boolean;
-    byShopName: boolean;
-    byStoreAddress: boolean;
-    byProductName: boolean;
-    byProductArticle: boolean;
-    byProductVendorCode: boolean;
 }
 
 export const SellerOrdersTable: FC<SellerOrdersTableProps> = ({
     searchValue,
     deliveryMode,
-    byOrderCode,
-    byShopName,
-    byStoreAddress,
-    byProductName,
-    byProductArticle,
-    byProductVendorCode,
 }) => {
     const [page, setPage] = useState(1);
     const { data: orders, isPending } = useGetOrdersSeller(
-        "2000-12-02",
-        "2040-12-02",
         page,
         10,
         searchValue,
-        deliveryMode,
-        byOrderCode,
-        byShopName,
-        byStoreAddress,
-        byProductName,
-        byProductArticle,
-        byProductVendorCode
+        deliveryMode
     );
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
