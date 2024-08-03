@@ -1,12 +1,15 @@
 import { axiosAuthorized } from "@/lib/axios";
 import {
-    AssembleOrderResponse,
     DeliveryMode,
+    GetAssembleOrdersEmployee,
     GetOrderById,
     GetOrderDetailEmployee,
     GetOrdersAdmin,
     GetOrdersEmployee,
     GetOrdersSeller,
+    GetPackageOrdersEmployee,
+    GetTransferOrdersEmployee,
+    ProductStatusChangeRequest,
 } from "./types";
 
 export function getOrdersAdmin(
@@ -41,10 +44,40 @@ export function getOrdersEmployee(
     page: number = 0,
     size: number = 10,
     searchValue: string = "",
-    deliveryMode: DeliveryMode = ""
+    deliveryMode: DeliveryMode = "ALL"
 ) {
     return axiosAuthorized.get<GetOrdersEmployee>(
         `/api/order-employee/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getAssembleOrderEmployee(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetAssembleOrdersEmployee>(
+        `/api/supplier-box-product/order/employee/assemble/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getPackageOrderEmployee(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetPackageOrdersEmployee>(
+        `/api/supplier-box-product/order/employee/packaging/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getTransferOrderEmployee(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetTransferOrdersEmployee>(
+        `/api/order-employee/transfer/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
 
@@ -64,30 +97,27 @@ export function getEmployeeOrderById(id: number) {
         `/api/orders/employee/details/${id}`
     );
 }
-export function startAssemble(id: number) {
-    return axiosAuthorized.post<AssembleOrderResponse>(
-        `/api/assemblies/${id}/start`
-    );
-}
-export function assembleProducts(id: number, values: any) {
-    return axiosAuthorized.post<AssembleOrderResponse>(
-        `/api/assemblies/${id}/assemble-product`,
-        values
-    );
-}
-export function finishAssemble(id: number) {
-    return axiosAuthorized.post<any>(`/api/assemblies/${id}/finish`);
-}
+// export function startAssemble(id: number) {
+//     return axiosAuthorized.post<AssembleOrderResponse>(
+//         `/api/assemblies/${id}/start`
+//     );
+// }
+// export function assembleProducts(id: number, values: any) {
+//     return axiosAuthorized.post<AssembleOrderResponse>(
+//         `/api/assemblies/${id}/assemble-product`,
+//         values
+//     );
+// }
+// export function finishAssemble(id: number) {
+//     return axiosAuthorized.post<any>(`/api/assemblies/${id}/finish`);
+// }
 
-export function startPackage(id: number) {
-    return axiosAuthorized.post<any>(`/api/order-packages/${id}/start`);
-}
-export function finishPackage(id: number) {
-    return axiosAuthorized.post<any>(`/api/order-packages/${id}/finish`);
-}
-export function packageProducts(id: number, values: any) {
-    return axiosAuthorized.post<any>(
-        `/api/order-packages/${id}/package-product`,
+// export function packageProducts(id: number) {
+//     return axiosAuthorized.post<any>(`/api/order-packages/${id}/start`);
+// }
+export function orderPackage(values: ProductStatusChangeRequest[]) {
+    return axiosAuthorized.put(
+        `/api/supplier-box-product/order/employee/status/`,
         values
     );
 }

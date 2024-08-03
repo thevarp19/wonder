@@ -5,14 +5,24 @@ interface DateCellProps {
 }
 
 export const DateCell: FC<DateCellProps> = ({ timestamp }) => {
-    if (timestamp === null) {
+    if (!timestamp) {
         return <div>-</div>;
     }
-    const options: Intl.DateTimeFormatOptions = {
-        timeZone: "Asia/Almaty",
-        hour: "2-digit",
-        minute: "2-digit",
-    };
+
+    let dateObject;
+
+    if (typeof timestamp === "string") {
+        const parsedTimestamp = parseInt(timestamp, 10);
+        dateObject = isNaN(parsedTimestamp) ? null : new Date(parsedTimestamp);
+    } else if (typeof timestamp === "number") {
+        dateObject = new Date(timestamp);
+    } else {
+        dateObject = null;
+    }
+
+    if (!dateObject || isNaN(dateObject.getTime())) {
+        return <div>Invalid Date</div>;
+    }
 
     const dateFormatter = new Intl.DateTimeFormat("ru-RU", {
         timeZone: "Asia/Almaty",
@@ -21,12 +31,16 @@ export const DateCell: FC<DateCellProps> = ({ timestamp }) => {
         day: "2-digit",
     });
 
-    const timeFormatter = new Intl.DateTimeFormat("ru-RU", options);
+    const timeFormatter = new Intl.DateTimeFormat("ru-RU", {
+        timeZone: "Asia/Almaty",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
 
     return (
         <div>
-            <div>{dateFormatter.format(new Date(timestamp))}</div>
-            {timeFormatter.format(new Date(timestamp)).substring(0, 5)}
+            <div>{dateFormatter.format(dateObject)}</div>
+            {timeFormatter.format(dateObject)}
         </div>
     );
 };

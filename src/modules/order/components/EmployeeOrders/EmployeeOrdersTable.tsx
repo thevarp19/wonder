@@ -19,7 +19,7 @@ const columns: TableColumnsType<GetOrdersEmployeeContent> = [
         render: (_, record) => <DateCell timestamp={record?.creation_date} />,
     },
     {
-        title: "Называние магазина",
+        title: "Название магазина",
         dataIndex: "kaspi_store_name",
     },
     {

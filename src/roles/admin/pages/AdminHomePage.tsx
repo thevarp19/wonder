@@ -5,28 +5,24 @@ import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
 import { BarCharts } from "@/modules/statistics/components/BarCharts";
 import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable";
 import { PieCharts } from "@/modules/statistics/components/PieCharts";
-import {
-    useGetAdminDailyInfo,
-    useGetAdminSalesInfo,
-} from "@/modules/statistics/queries";
+import { useGetAdminDailyInfo } from "@/modules/statistics/queries";
 import { DurationType, StatisticsInfo } from "@/modules/statistics/types";
 import { cn } from "@/utils/shared.util";
-import { Spin } from "antd";
 import { FC, useState } from "react";
 
 interface AdminHomePageProps {}
 
 export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     const [duration, setDuration] = useState<DurationType>("MONTH");
-    const { data: statistics, isPending } = useGetAdminSalesInfo(duration);
+    // const { data: statistics, isPending } = useGetAdminSalesInfo(duration);
     const { data: dailyInfo, isPending: getDailyLoading } =
         useGetAdminDailyInfo(duration);
-    // const statistics = {
-    //     ordersInfo: { count: 140, percent: 48 },
-    //     sellersInfo: { count: 52, percent: -18 },
-    //     suppliesInfo: { count: 42, percent: 18 },
-    //     incomeInfo: { count: 80, percent: 50 },
-    // };
+    const statistics = {
+        ordersInfo: { count: 140, percent: 48 },
+        sellersInfo: { count: 52, percent: -18 },
+        suppliesInfo: { count: 42, percent: 18 },
+        incomeInfo: { count: 80, percent: 50 },
+    };
     const topSellers = [
         { place: 1, name: "ИП QIT" },
         { place: 2, name: "ИП Techai" },
@@ -46,13 +42,13 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     //           .sort((a, b) => b.totalIncome - a.totalIncome)
     //           .slice(0, 4)
     //     : [];
-    if (isPending) {
-        return (
-            <div className="flex items-center justify-center h-[500px]">
-                <Spin size="large" />
-            </div>
-        );
-    }
+    // if (isPending) {
+    //     return (
+    //         <div className="flex items-center justify-center h-[500px]">
+    //             <Spin size="large" />
+    //         </div>
+    //     );
+    // }
     return (
         <div className="flex flex-col sm:pb-0 pb-[68px]">
             <div className="flex flex-col gap-7">

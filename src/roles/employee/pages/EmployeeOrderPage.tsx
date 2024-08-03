@@ -1,13 +1,7 @@
 // import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/EmployeeOrderTable";
-import { assembleProducts } from "@/modules/order/api";
-import { EmployeeOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/EmployeeOrderDetailsTable";
-import {
-    finishAssembleMutation,
-    finishPackageMutation,
-    packageProductsMutation,
-    startAssembleMutation,
-    startPackageMutation,
-} from "@/modules/order/mutations";
+
+import { EmployeeOrderDetailsTable } from "@/modules/order/components/EmployeeOrders/EmployeeOrderDetailsTable";
+import {} from "@/modules/order/mutations";
 import { useGetEmployeeOrder } from "@/modules/order/queries";
 import { useScannerMultipleResults } from "@/modules/scan/hooks";
 import { useQueryClient } from "@tanstack/react-query";
@@ -106,38 +100,38 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
     const { message } = App.useApp();
     const hasCalledEffect = useRef(false);
     const { data, isPending } = useGetEmployeeOrder(orderId);
-    const { mutateAsync: startAssembly } = startAssembleMutation(orderId);
-    const { mutateAsync: finishAssemble } = finishAssembleMutation(orderId);
-    const { mutateAsync: startPackage } = startPackageMutation(orderId);
-    const { mutateAsync: packageProducts } = packageProductsMutation(orderId);
-    const { mutateAsync: finishPackage } = finishPackageMutation(orderId);
+    // const { mutateAsync: startAssembly } = startAssembleMutation(orderId);
+    // const { mutateAsync: finishAssemble } = finishAssembleMutation(orderId);
+    // const { mutateAsync: startPackage } = startPackageMutation(orderId);
+    // const { mutateAsync: packageProducts } = packageProductsMutation(orderId);
+    // const { mutateAsync: finishPackage } = finishPackageMutation(orderId);
 
-    const mutations = {
-        startAssembly,
-        finishAssemble,
-        startPackage,
-        finishPackage,
-        packageProducts,
-    };
+    // const mutations = {
+    //     startAssembly,
+    //     finishAssemble,
+    //     startPackage,
+    //     finishPackage,
+    //     packageProducts,
+    // };
 
     const newSearchParams = new URLSearchParams(window.location.search);
-    const renderButton = (
-        orderStatus: keyof ReturnType<typeof createStatusConfig>
-    ) => {
-        const statusConfig = createStatusConfig(mutations);
-        const config = statusConfig[orderStatus] || statusConfig.UNKNOWN_STATUS;
+    // const renderButton = (
+    //     orderStatus: keyof ReturnType<typeof createStatusConfig>
+    // ) => {
+    //     // const statusConfig = createStatusConfig(mutations);
+    //     // const config = statusConfig[orderStatus] || statusConfig.UNKNOWN_STATUS;
 
-        return (
-            <Button
-                type="primary"
-                size="large"
-                onClick={config.action}
-                disabled={config.disabled}
-            >
-                {config.text}
-            </Button>
-        );
-    };
+    //     return (
+    //         <Button
+    //             type="primary"
+    //             size="large"
+    //             onClick={config.action}
+    //             disabled={config.disabled}
+    //         >
+    //             {config.text}
+    //         </Button>
+    //     );
+    // };
     const orderStatus =
         (data?.orderStatus as keyof ReturnType<typeof createStatusConfig>) ||
         "UNKNOWN_STATUS";
@@ -146,9 +140,9 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
         const assembleProductsHandler = async () => {
             if (scannedProducts.length > 0) {
                 try {
-                    await assembleProducts(orderId, {
-                        productArticles: scannedProducts,
-                    });
+                    // await assembleProducts(orderId, {
+                    //     productArticles: scannedProducts,
+                    // });
 
                     queryClient.invalidateQueries({
                         queryKey: [`order-employee-${orderId}`],
@@ -193,7 +187,7 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
                         </Button>
                     </Link>
                 )}
-                {isPending ? <Spin /> : renderButton(orderStatus)}
+                {/* {isPending ? <Spin /> : renderButton(orderStatus)} */}
             </div>
             <EmployeeOrderDetailsTable
                 orderId={orderId}

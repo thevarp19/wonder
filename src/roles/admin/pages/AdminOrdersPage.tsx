@@ -1,24 +1,15 @@
 import { searchIcon } from "@/assets";
 import { Image } from "@/components/ui/Image";
 import { AdminOrdersTable } from "@/modules/order/components/OrdersTable/AdminOrdersTable";
-import { items } from "@/modules/order/const";
+import { deliveryModes, items } from "@/modules/order/const";
 import { DeliveryMode } from "@/modules/order/types";
 import { useDebounce } from "@/utils/shared.util";
 import { ConfigProvider, Input, Menu, MenuProps } from "antd";
-import "dayjs/locale/ru";
 import { FC, useState } from "react";
 
 interface AdminOrdersPageProps {}
 
 // const { RangePicker } = DatePicker;
-
-const deliveryModes: { [key: string]: DeliveryMode } = {
-    all: "ALL",
-    zamler: "ZAMLER",
-    express: "EXPRESS",
-    pickup: "PICKUP",
-    archive: "ARCHIVE",
-};
 
 export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
     const [searchValue, setSearchValue] = useState("");

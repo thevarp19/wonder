@@ -26,3 +26,7 @@ export function toScanProductsAssemble(orderId: number) {
 export function toScanProductsPackage(orderId: number) {
     window.location.href = `${scannerUrl}&type=single&useFor=employeePackage&orderId=${orderId}`;
 }
+
+export function toScanOrdersPackage() {
+    window.location.href = `${scannerUrl}&type=multiple&useFor=employeePackage`;
+}

@@ -20,7 +20,39 @@ export interface GetOrdersSeller
 
 export interface GetOrdersEmployee
     extends BasePaginationResponse<GetOrdersEmployeeContent> {}
+export interface GetAssembleOrdersEmployee
+    extends BasePaginationResponse<GetAssembleOrdersContent> {}
+export interface GetPackageOrdersEmployee
+    extends BasePaginationResponse<GetPackageOrdersContent> {}
+export interface GetTransferOrdersEmployee
+    extends BasePaginationResponse<GetTransferOrdersContent> {}
 
+export interface GetAssembleOrdersContent {
+    id: number;
+    product_vendor_code: string;
+    product_title: string;
+    cell_number: string;
+    order_code: string;
+    order_creation_date: string;
+    order_entry: string;
+}
+export interface GetTransferOrdersContent {
+    id: string;
+    code: string;
+    kaspi_store_name: string;
+    delivery_mode: string;
+    creation_date: number;
+    courier_transmission_planning_date: string;
+}
+export interface GetPackageOrdersContent {
+    id: number;
+    product_vendor_code: string;
+    product_title: string;
+    order_code: string;
+    order_creation_date: string;
+    waybill: string;
+    order_entry: string;
+}
 export interface GetOrdersSellerContent {
     id: string;
     code: string;
@@ -104,4 +136,11 @@ export interface AssembleOrderResponse {
     startedEmployeeName: string;
     orderCode: string;
     assembleState: string;
+}
+export type OrderEmployeeStatus = "ASSEMBLE" | "PACKAGING" | "TRANSFER" | "END";
+
+export interface ProductStatusChangeRequest {
+    id: number;
+    order_entry: string;
+    status: string;
 }

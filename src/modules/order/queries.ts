@@ -1,19 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 import {
     getAdminOrderById,
+    getAssembleOrderEmployee,
     getEmployeeOrderById,
     getOrdersAdmin,
     getOrdersEmployee,
     getOrdersSeller,
+    getPackageOrderEmployee,
     getSellerOrderById,
+    getTransferOrderEmployee,
 } from "./api";
 import {
     DeliveryMode,
+    GetAssembleOrdersEmployee,
     GetOrderById,
     GetOrderDetailEmployee,
     GetOrdersAdmin,
     GetOrdersEmployee,
     GetOrdersSeller,
+    GetPackageOrdersEmployee,
+    GetTransferOrdersEmployee,
 } from "./types";
 
 export const useGetOrdersAdmin = (
@@ -78,6 +84,81 @@ export const useGetOrdersEmployee = (
         queryKey: ["orders-employee", page, size, searchValue, deliveryMode],
         queryFn: async () => {
             const { data } = await getOrdersEmployee(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetAssembleOrderEmployee = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetAssembleOrdersEmployee>({
+        queryKey: [
+            "orders-employee-assemble",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getAssembleOrderEmployee(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetTransferOrderEmployee = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetTransferOrdersEmployee>({
+        queryKey: [
+            "orders-employee-transfer",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getTransferOrderEmployee(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetPackageOrderEmployee = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetPackageOrdersEmployee>({
+        queryKey: [
+            "orders-employee-package",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getPackageOrderEmployee(
                 page,
                 size,
                 searchValue,

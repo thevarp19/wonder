@@ -1,4 +1,5 @@
 import { MenuProps } from "antd";
+import { DeliveryMode } from "./types";
 
 export const items: MenuProps["items"] = [
     {
@@ -18,3 +19,10 @@ export const items: MenuProps["items"] = [
         key: "pickup",
     },
 ];
+export const deliveryModes: { [key: string]: DeliveryMode } = {
+    all: "ALL",
+    zamler: "ZAMLER",
+    express: "EXPRESS",
+    pickup: "PICKUP",
+    archive: "ARCHIVE",
+};
