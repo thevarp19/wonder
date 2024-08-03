@@ -2,7 +2,7 @@ import { scan, searchIcon } from "@/assets";
 import { Image } from "@/components/ui/Image";
 import { EmployeeAssembleTable } from "@/modules/order/components/EmployeeOrders/EmployeeAssembleTable";
 import { deliveryModes, items } from "@/modules/order/const";
-import { orderPackageMutation } from "@/modules/order/mutations";
+import { orderStatusMutation } from "@/modules/order/mutations";
 import { useGetAssembleOrderEmployee } from "@/modules/order/queries";
 import {
     DeliveryMode,
@@ -32,12 +32,12 @@ export const EmployeeOrderAssemblePage: FC<
         debouncedSearchValue,
         deliveryMode
     );
-    const { mutateAsync: packageMutate } = orderPackageMutation();
+    const { mutateAsync: packageMutate } = orderStatusMutation();
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
         setDeliveryMode(deliveryModes[e.key]);
     };
-    const newSearchParams = new URLSearchParams(window.location.search);
+    // const newSearchParams = new URLSearchParams(window.location.search);
 
     useEffect(() => {
         if (hasCalledEffect.current) return;
@@ -72,13 +72,13 @@ export const EmployeeOrderAssemblePage: FC<
             hasCalledEffect.current = true;
         }
 
-        newSearchParams.delete("result");
-        newSearchParams.delete("type");
-        newSearchParams.delete("step");
-        const newUrl = `${
-            window.location.pathname
-        }?${newSearchParams.toString()}`;
-        window.history.replaceState(null, "", newUrl);
+        // newSearchParams.delete("result");
+        // newSearchParams.delete("type");
+        // newSearchParams.delete("step");
+        // const newUrl = `${
+        //     window.location.pathname
+        // }?${newSearchParams.toString()}`;
+        // window.history.replaceState(null, "", newUrl);
     }, [scannedProducts, orders, isPending]);
 
     return (

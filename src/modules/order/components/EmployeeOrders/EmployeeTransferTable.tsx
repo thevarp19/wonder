@@ -2,13 +2,17 @@ import { DateCell } from "@/components/ui/DateCell";
 import { ConfigProvider, Table, TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { Link } from "react-router-dom";
 import { useGetTransferOrderEmployee } from "../../queries";
 import { DeliveryMode, GetTransferOrdersContent } from "../../types";
 
 const columns: TableColumnsType<GetTransferOrdersContent> = [
     {
         title: "ID заказа",
-        dataIndex: "order_code",
+        dataIndex: "code",
+        render: (_, record) => (
+            <Link to={`/employee/orders/${record.id}`}>{record.code}</Link>
+        ),
     },
     {
         title: "Название магазина",

@@ -198,9 +198,9 @@ export const useGetSellerOrder = (id: number) => {
     });
 };
 
-export const useGetEmployeeOrder = (id: number) => {
+export const useGetEmployeeOrder = (id: string) => {
     return useQuery<GetOrderDetailEmployee>({
-        queryKey: [`order-employee-${id}`],
+        queryKey: [`order-detail-${id}`],
         queryFn: async () => {
             const { data } = await getEmployeeOrderById(id);
             return data;

@@ -39,7 +39,7 @@ export const DateCell: FC<DateCellProps> = ({ timestamp }) => {
 
     return (
         <div>
-            <div>{dateFormatter.format(dateObject)}</div>
+            {dateFormatter.format(dateObject)}{" "}
             {timeFormatter.format(dateObject)}
         </div>
     );

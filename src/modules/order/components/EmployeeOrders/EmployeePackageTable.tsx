@@ -1,11 +1,10 @@
 import { DateCell } from "@/components/ui/DateCell";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, Table, TableColumnsType } from "antd";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import { useGetPackageOrderEmployee } from "../../queries";
-import { DeliveryMode, GetPackageOrdersContent } from "../../types";
+import { GetPackageOrdersContent, GetPackageOrdersEmployee } from "../../types";
 
 const columns: TableColumnsType<GetPackageOrdersContent> = [
     {
@@ -56,22 +55,18 @@ const columns: TableColumnsType<GetPackageOrdersContent> = [
 ];
 
 interface EmployeePackageTableProps {
-    searchValue: string;
-    deliveryMode: DeliveryMode;
+    data: GetPackageOrdersEmployee | undefined;
+    isPending: boolean;
+    setPage: (page: number) => void;
+    page: number;
 }
 
 export const EmployeePackageTable: FC<EmployeePackageTableProps> = ({
-    searchValue,
-    deliveryMode,
+    data,
+    isPending,
+    setPage,
+    page,
 }) => {
-    const [page, setPage] = useState(1);
-    const { data: orders, isPending } = useGetPackageOrderEmployee(
-        page,
-        10,
-        searchValue,
-        deliveryMode
-    );
-
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
@@ -89,12 +84,12 @@ export const EmployeePackageTable: FC<EmployeePackageTableProps> = ({
         >
             <Table
                 columns={columns}
-                dataSource={orders?.content}
+                dataSource={data?.content}
                 rowKey={"id"}
                 loading={isPending}
                 pagination={{
                     pageSize: 10,
-                    total: orders?.totalElements,
+                    total: data?.totalElements,
                     showSizeChanger: false,
                     onChange(page) {
                         setPage(page - 1);

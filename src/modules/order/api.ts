@@ -92,9 +92,9 @@ export function getSellerOrderById(id: number) {
         `/api/orders/seller/details/${id}`
     );
 }
-export function getEmployeeOrderById(id: number) {
+export function getEmployeeOrderById(id: string) {
     return axiosAuthorized.get<GetOrderDetailEmployee>(
-        `/api/orders/employee/details/${id}`
+        `/api/order-employee/${id}/`
     );
 }
 // export function startAssemble(id: number) {
@@ -115,7 +115,7 @@ export function getEmployeeOrderById(id: number) {
 // export function packageProducts(id: number) {
 //     return axiosAuthorized.post<any>(`/api/order-packages/${id}/start`);
 // }
-export function orderPackage(values: ProductStatusChangeRequest[]) {
+export function orderStatus(values: ProductStatusChangeRequest[]) {
     return axiosAuthorized.put(
         `/api/supplier-box-product/order/employee/status/`,
         values

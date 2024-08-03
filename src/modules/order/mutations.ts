@@ -1,23 +1,26 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { App } from "antd";
 import { AxiosError } from "axios";
-import { orderPackage } from "./api";
+import { orderStatus } from "./api";
 import { ProductStatusChangeRequest } from "./types";
 
-export const orderPackageMutation = () => {
+export const orderStatusMutation = () => {
     const { message } = App.useApp();
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>, ProductStatusChangeRequest[]>({
         async mutationFn(values) {
-            await orderPackage(values);
+            await orderStatus(values);
         },
         onSuccess() {
             message.success("Успешно!");
             queryClient.invalidateQueries({
+                queryKey: [`orders-employee-assemble`],
+            });
+            queryClient.invalidateQueries({
                 queryKey: [`orders-employee-package`],
             });
             queryClient.invalidateQueries({
-                queryKey: [`orders-employee-assemble`],
+                queryKey: [`orders-employee-transfer`],
             });
         },
         onError(error) {

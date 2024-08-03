@@ -87,14 +87,46 @@ export interface GetOrdersEmployeeContent {
 }
 
 export interface GetOrderDetailEmployee {
-    orderStatus: string;
-    descriptionOfOrderStatus: string;
-    orderAvailableAction: string;
-    products: Product[];
-    deliveryMode: string;
-    waybill: string;
-    orderCode: string;
-    deliveryTime: string | null;
+    id: string;
+    kaspi_store_name: string;
+    delivery_mode: string;
+    wonder_status: string;
+    seller_cell_products: {
+        id: number;
+        product_vendor_code: string;
+        product_title: string;
+        cell_number: string;
+        order_entry: string;
+    }[];
+    customer: {
+        id: string;
+        name: string;
+        cell_phone: string;
+        first_name: string;
+        last_name: string;
+    };
+    delivery_address: string;
+    code: string;
+    total_price: number;
+    payment_mode: string;
+    planned_delivery_date: number;
+    creation_date: number;
+    delivery_cost_for_seller: number;
+    is_kaspi_delivery: boolean;
+    credit_term: number;
+    signature_required: boolean;
+    pre_order: boolean;
+    delivery_cost: number;
+    state: string;
+    assembled: boolean;
+    packaged: boolean;
+    status: string;
+    approved_by_bank_date: number;
+    cancellation_reason: string;
+    cancellation_comment: string;
+    transmission_date: number;
+    receiving_date: number;
+    kaspi_delivery: number;
 }
 
 export interface Product {

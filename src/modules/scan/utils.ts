@@ -30,3 +30,6 @@ export function toScanProductsPackage(orderId: number) {
 export function toScanOrdersPackage() {
     window.location.href = `${scannerUrl}&type=multiple&useFor=employeePackage`;
 }
+export function toScanOrdersTransfer() {
+    window.location.href = `${scannerUrl}&type=multiple&useFor=employeeTransfer`;
+}
