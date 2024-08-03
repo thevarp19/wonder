@@ -11,7 +11,7 @@ import {
 import { useScannerMultipleResults } from "@/modules/scan/hooks";
 import { toScanOrdersPackage } from "@/modules/scan/utils";
 import { cn, useDebounce } from "@/utils/shared.util";
-import { App, Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
+import { Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
 import { FC, useEffect, useRef, useState } from "react";
 
 interface EmployeeOrderAssemblePageProps {}
@@ -23,7 +23,6 @@ export const EmployeeOrderAssemblePage: FC<
     const [searchValue, setSearchValue] = useState("");
     const debouncedSearchValue = useDebounce(searchValue, 500);
     const hasCalledEffect = useRef(false);
-    const { message } = App.useApp();
     const [current, setCurrent] = useState("all");
     const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("ALL");
     const [page, setPage] = useState(1);

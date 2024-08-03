@@ -5,93 +5,93 @@ import {} from "@/modules/order/mutations";
 import { useGetEmployeeOrder } from "@/modules/order/queries";
 import { useScannerMultipleResults } from "@/modules/scan/hooks";
 import { useQueryClient } from "@tanstack/react-query";
-import { App, Button, Spin } from "antd";
+import { App, Button } from "antd";
 import { FC, useEffect, useMemo, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 
 interface EmployeeOrderPageProps {}
-const createStatusConfig = (mutations: any) => ({
-    ASSEMBLY_NOT_STARTED: {
-        text: "Собрать заказ",
-        disabled: false,
-        action: () => {
-            mutations.startAssembly();
-        },
-    },
-    ASSEMBLY_IN_PROGRESS: {
-        text: (
-            <div className="flex items-center gap-2">
-                Идет сборка
-                <Spin size="small" />
-            </div>
-        ),
-        disabled: true,
-        action: () => {},
-    },
-    READY_TO_FINISH_ASSEMBLY: {
-        text: "Завершить сборку",
-        disabled: false,
-        action: () => {
-            mutations.finishAssemble();
-        },
-    },
-    PACKAGING_NOT_STARTED: {
-        text: "Начать упаковку",
-        disabled: false,
-        action: () => {
-            mutations.startPackage();
-        },
-    },
-    PACKAGING_IN_PROGRESS: {
-        text: (
-            <div className="flex items-center gap-2">
-                Идет упаковка
-                <Spin size="small" />
-            </div>
-        ),
-        disabled: true,
-        action: () => {},
-    },
-    READY_TO_FINISH_PACKAGING: {
-        text: <div className="flex items-center gap-2">Завершить упаковку</div>,
-        disabled: false,
-        action: () => {
-            mutations.finishPackage();
-        },
-    },
-    READY_TO_SHIP_TO_COURIER: {
-        text: "Готово к отправке, ожидание курьера",
-        disabled: true,
+// const createStatusConfig = (mutations: any) => ({
+//     ASSEMBLY_NOT_STARTED: {
+//         text: "Собрать заказ",
+//         disabled: false,
+//         action: () => {
+//             mutations.startAssembly();
+//         },
+//     },
+//     ASSEMBLY_IN_PROGRESS: {
+//         text: (
+//             <div className="flex items-center gap-2">
+//                 Идет сборка
+//                 <Spin size="small" />
+//             </div>
+//         ),
+//         disabled: true,
+//         action: () => {},
+//     },
+//     READY_TO_FINISH_ASSEMBLY: {
+//         text: "Завершить сборку",
+//         disabled: false,
+//         action: () => {
+//             mutations.finishAssemble();
+//         },
+//     },
+//     PACKAGING_NOT_STARTED: {
+//         text: "Начать упаковку",
+//         disabled: false,
+//         action: () => {
+//             mutations.startPackage();
+//         },
+//     },
+//     PACKAGING_IN_PROGRESS: {
+//         text: (
+//             <div className="flex items-center gap-2">
+//                 Идет упаковка
+//                 <Spin size="small" />
+//             </div>
+//         ),
+//         disabled: true,
+//         action: () => {},
+//     },
+//     READY_TO_FINISH_PACKAGING: {
+//         text: <div className="flex items-center gap-2">Завершить упаковку</div>,
+//         disabled: false,
+//         action: () => {
+//             mutations.finishPackage();
+//         },
+//     },
+//     READY_TO_SHIP_TO_COURIER: {
+//         text: "Готово к отправке, ожидание курьера",
+//         disabled: true,
 
-        action: () => {},
-    },
-    READY_TO_SHIP_TO_COURIER_EXPRESS: {
-        text: "Готово к отправке экспресс, ожидание курьера",
-        disabled: true,
-        action: () => {},
-    },
-    READY_TO_SHIP_TO_ZAMMLER: {
-        text: "Готово к отправке, ожидание заммлера",
-        disabled: true,
-        action: () => {},
-    },
-    READY_TO_SHIP_TO_CLIENT: {
-        text: "Готово к отправке, ожидание клиента",
-        disabled: true,
-        action: () => {},
-    },
-    READY_TO_SHIP: {
-        text: "Готов к отправке, наша доставка",
-        disabled: true,
-        action: () => {},
-    },
+//         action: () => {},
+//     },
+//     READY_TO_SHIP_TO_COURIER_EXPRESS: {
+//         text: "Готово к отправке экспресс, ожидание курьера",
+//         disabled: true,
+//         action: () => {},
+//     },
+//     READY_TO_SHIP_TO_ZAMMLER: {
+//         text: "Готово к отправке, ожидание заммлера",
+//         disabled: true,
+//         action: () => {},
+//     },
+//     READY_TO_SHIP_TO_CLIENT: {
+//         text: "Готово к отправке, ожидание клиента",
+//         disabled: true,
+//         action: () => {},
+//     },
+//     READY_TO_SHIP: {
+//         text: "Готов к отправке, наша доставка",
+//         disabled: true,
+//         action: () => {},
+//     },
 
-    UNKNOWN_STATUS: {
-        text: "Невозможно определить статус",
-        disabled: true,
-        action: () => {},
-    },
-});
+//     UNKNOWN_STATUS: {
+//         text: "Невозможно определить статус",
+//         disabled: true,
+//         action: () => {},
+//     },
+// });
 export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
     const { orderId: orderIdRaw } = useParams();
     const orderId = useMemo(() => parseInt(orderIdRaw || ""), [orderIdRaw]);
@@ -132,9 +132,9 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
     //         </Button>
     //     );
     // };
-    const orderStatus =
-        (data?.orderStatus as keyof ReturnType<typeof createStatusConfig>) ||
-        "UNKNOWN_STATUS";
+    // const orderStatus =
+    //     (data?.orderStatus as keyof ReturnType<typeof createStatusConfig>) ||
+    //     "UNKNOWN_STATUS";
     useEffect(() => {
         if (hasCalledEffect.current) return;
         const assembleProductsHandler = async () => {
