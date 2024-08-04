@@ -1,15 +1,22 @@
+import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { CityAnalyticsItem } from "../types";
+import { formatPercentage } from "../utils";
 
-const data = [
-    { name: "Алматы", value: 38.6 },
-    { name: "Шымкент", value: 22.5 },
-    { name: "Астана", value: 30.8 },
-    { name: "Другие", value: 8.1 },
-];
+// const data = [
+//     { name: "Алматы", value: 38.6 },
+//     { name: "Шымкент", value: 22.5 },
+//     { name: "Астана", value: 30.8 },
+//     { name: "Другие", value: 8.1 },
+// ];
 const COLORS = ["#EF7214", "#BAEDBD", "#95A4FC", "#B1E3FF"];
 
-export const PieCharts = () => {
+interface PieChartsProps {
+    data: CityAnalyticsItem[];
+}
+
+export const PieCharts: FC<PieChartsProps> = ({ data }) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
 
     return (
@@ -27,7 +34,7 @@ export const PieCharts = () => {
                                 outerRadius={isSmallScreen ? 50 : 80}
                                 fill="#8884d8"
                                 paddingAngle={3}
-                                dataKey="value"
+                                dataKey="order_count"
                             >
                                 {data.map((_entry, index) => (
                                     <Cell
@@ -51,7 +58,7 @@ export const PieCharts = () => {
                                     className="w-2 h-2 rounded-full"
                                 ></div>
                                 <h2 className="text-[10px] sm:text-[18px]">
-                                    {item.name}
+                                    {item.city}
                                 </h2>
                             </div>
                         ))}
@@ -62,7 +69,7 @@ export const PieCharts = () => {
                                 key={index}
                                 className="text-[10px] sm:text-[18px]"
                             >
-                                {item.value}%
+                                {formatPercentage(parseInt(item.percentage))}%
                             </p>
                         ))}
                     </div>

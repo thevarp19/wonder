@@ -5,24 +5,25 @@ import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
 import { BarCharts } from "@/modules/statistics/components/BarCharts";
 import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable";
 import { PieCharts } from "@/modules/statistics/components/PieCharts";
-import { useGetAdminDailyInfo } from "@/modules/statistics/queries";
-import { DurationType, StatisticsInfo } from "@/modules/statistics/types";
+import { useGetAdminStatistics } from "@/modules/statistics/queries";
+import { DurationType, HeaderItem } from "@/modules/statistics/types";
+import { formatPercentage } from "@/modules/statistics/utils";
 import { cn } from "@/utils/shared.util";
+import { Spin } from "antd";
 import { FC, useState } from "react";
 
 interface AdminHomePageProps {}
 
 export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
-    const [duration, setDuration] = useState<DurationType>("MONTH");
-    // const { data: statistics, isPending } = useGetAdminSalesInfo(duration);
-    const { data: dailyInfo, isPending: getDailyLoading } =
-        useGetAdminDailyInfo(duration);
-    const statistics = {
-        ordersInfo: { count: 140, percent: 48 },
-        sellersInfo: { count: 52, percent: -18 },
-        suppliesInfo: { count: 42, percent: 18 },
-        incomeInfo: { count: 80, percent: 50 },
-    };
+    const [duration, setDuration] = useState<DurationType>("MONTHLY");
+
+    const { data: statistics, isPending } = useGetAdminStatistics(duration);
+    // const statistics = {
+    //     ordersInfo: { count: 140, percent: 48 },
+    //     sellersInfo: { count: 52, percent: -18 },
+    //     suppliesInfo: { count: 42, percent: 18 },
+    //     incomeInfo: { count: 80, percent: 50 },
+    // };
     const topSellers = [
         { place: 1, name: "ИП QIT" },
         { place: 2, name: "ИП Techai" },
@@ -42,13 +43,13 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     //           .sort((a, b) => b.totalIncome - a.totalIncome)
     //           .slice(0, 4)
     //     : [];
-    // if (isPending) {
-    //     return (
-    //         <div className="flex items-center justify-center h-[500px]">
-    //             <Spin size="large" />
-    //         </div>
-    //     );
-    // }
+    if (isPending) {
+        return (
+            <div className="flex items-center justify-center h-[500px]">
+                <Spin size="large" />
+            </div>
+        );
+    }
     return (
         <div className="flex flex-col sm:pb-0 pb-[68px]">
             <div className="flex flex-col gap-7">
@@ -61,34 +62,37 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                 <div className="grid grid-cols-2 gap-[10px] sm:gap-6 sm:flex sm:justify-between">
                     <ResultsCard
                         statisticsName="Заказы"
-                        statistics={statistics?.ordersInfo}
+                        statistics={statistics?.header[0]}
                         bgColor="blue"
                     />
                     <ResultsCard
                         statisticsName="Продавцы"
-                        statistics={statistics?.sellersInfo}
+                        statistics={statistics?.header[1]}
                         bgColor="orange"
                     />
                     <ResultsCard
                         statisticsName="Поставки"
-                        statistics={statistics?.suppliesInfo}
+                        statistics={statistics?.header[2]}
                         bgColor="blue"
                     />
                     <ResultsCard
                         statisticsName="Продажа"
-                        statistics={statistics?.incomeInfo}
+                        statistics={statistics?.header[3]}
                         bgColor="orange"
                     />
                 </div>
                 <div className="flex flex-col gap-5">
                     <AreaCharts
-                        data={dailyInfo || []}
+                        data={statistics?.check || []}
                         duration={duration}
-                        loading={getDailyLoading}
+                        loading={isPending}
                     />
                     <div className="flex flex-col items-center justify-between w-full gap-5 sm:mt-10 sm:gap-10 sm:flex-row">
-                        <BarCharts duration={duration} />
-                        <PieCharts />
+                        <BarCharts
+                            data={statistics?.weekly_order || []}
+                            duration={duration}
+                        />
+                        <PieCharts data={statistics?.city_analytics ?? []} />
                     </div>
                     <div className="flex flex-col gap-5 sm:flex-row">
                         <div className="sm:min-w-[825px] h-max sm:h-[525px] p-5 sm:p-8 bg-[#F7F9FB] flex flex-col gap-6 rounded-[34px]">
@@ -109,7 +113,7 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
 
 type ResultsCardProps = {
     statisticsName: string;
-    statistics: StatisticsInfo | undefined;
+    statistics: HeaderItem | undefined;
     bgColor?: string;
 };
 const ResultsCard = ({
@@ -118,33 +122,37 @@ const ResultsCard = ({
     bgColor,
 }: ResultsCardProps) => {
     const percentColor =
-        statistics?.percent != null
-            ? statistics.percent > 0
+        statistics?.percentage != null
+            ? statistics.percentage > 0
                 ? "text-[#28A745]"
                 : "text-[#F43749]"
             : "";
 
     return (
         <div
-            className={`h-[98px] sm:h-[150px] sm:min-w-[265px] p-5 sm:p-8 flex flex-col gap-[10px] rounded-xl sm:rounded-[20px] ${
+            className={`h-[98px] sm:h-[150px] sm:min-w-[265px] sm:max-w-[265px] p-5 sm:p-8 flex flex-col gap-[10px] rounded-xl sm:rounded-[20px] ${
                 bgColor === "blue" ? "bg-[#E7F6FF]" : "bg-[#FFDBC0]"
             }`}
         >
             <div className="flex items-center justify-between text-[12px] sm:text-[18px]">
                 {statisticsName}{" "}
             </div>
-            <div className="flex justify-between gap-[6px] sm:gap-5">
+            <div
+                className={`flex justify-between gap-[6px] sm:gap-5 ${
+                    statisticsName === "Продажа" && "flex-col sm:gap-1 gap-1"
+                }`}
+            >
                 <div className="text-xl sm:text-[32px] whitespace-nowrap">{`${
-                    statistics?.count
+                    statistics?.value
                 } ${statisticsName === "Продажа" ? "₸" : ""}`}</div>
-                {statistics?.percent !== null && (
+                {statistics?.percentage !== null && (
                     <div
-                        className={`flex justify-center items-center p-2 ${percentColor}`}
+                        className={`flex justify-center items-center sm:p-2 ${percentColor}`}
                     >
-                        {statistics?.percent != null &&
-                        statistics?.percent > 0 ? (
+                        {statistics?.percentage != null &&
+                        statistics?.percentage > 0 ? (
                             <span className="flex items-center gap-[3px] sm:gap-[5px] text-[10px] sm:text-base">
-                                +{statistics?.percent}%
+                                +{formatPercentage(statistics?.percentage)}%
                                 <Image
                                     src={arrowRise}
                                     alt="arrowRise"
@@ -155,7 +163,7 @@ const ResultsCard = ({
                             </span>
                         ) : (
                             <span className="flex items-center gap-[3px] sm:gap-[5px] text-[10px] sm:text-base">
-                                {statistics?.percent}%
+                                {statistics?.percentage}%
                                 <Image
                                     src={arrowFall}
                                     alt="arrowFall"

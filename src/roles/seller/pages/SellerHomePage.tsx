@@ -1,26 +1,16 @@
 import { arrowFall, arrowRise } from "@/assets";
-import DurationSwitch from "@/components/ui/DurationSwitch";
 import { Image } from "@/components/ui/Image";
-import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
-import { BarCharts } from "@/modules/statistics/components/BarCharts";
-import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable";
-import { PieCharts } from "@/modules/statistics/components/PieCharts";
-import {
-    useGetSellerDailyInfo,
-    useGetSellerSalesInfo,
-} from "@/modules/statistics/queries";
-import { DurationType, StatisticsInfo } from "@/modules/statistics/types";
+
 import { cn } from "@/utils/shared.util";
-import { Spin } from "antd";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 interface SellerHomePageProps {}
 
 export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
-    const [duration, setDuration] = useState<DurationType>("MONTH");
-    const { data: statistics, isPending } = useGetSellerSalesInfo(duration);
-    const { data: dailyInfo, isPending: getDailyLoading } =
-        useGetSellerDailyInfo(duration);
+    // const [duration, setDuration] = useState<DurationType>("MONTHLY");
+    // const { data: statistics, isPending } = useGetSellerSalesInfo(duration);
+    // const { data: dailyInfo, isPending: getDailyLoading } =
+    //     useGetSellerDailyInfo(duration);
     // const { data: topProducts, isPending: topProductsLoading } =
     //     useGetSellerTopProducts();
     // const sortedTopProducts = topProducts?.content
@@ -33,16 +23,16 @@ export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
     //     suppliesInfo: { count: 42, percent: 18 },
     //     incomeInfo: { count: 80, percent: 50 },
     // };
-    if (isPending || getDailyLoading) {
-        return (
-            <div className="flex items-center justify-center h-[500px]">
-                <Spin size="large" />
-            </div>
-        );
-    }
+    // if (isPending || getDailyLoading) {
+    //     return (
+    //         <div className="flex items-center justify-center h-[500px]">
+    //             <Spin size="large" />
+    //         </div>
+    //     );
+    // }
     return (
         <div className="flex flex-col bg-white sm:pb-0 pb-[68px]">
-            <div className="flex flex-col gap-7">
+            {/* <div className="flex flex-col gap-7">
                 <div className="bg-white rounded-md w-max">
                     <DurationSwitch
                         duration={duration}
@@ -90,17 +80,17 @@ export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
 
 type ResultsCardProps = {
     statisticsName: string;
-    statistics: StatisticsInfo | undefined;
+    statistics: any | undefined;
     bgColor?: string;
 };
-const ResultsCard = ({
+export const ResultsCard = ({
     statisticsName,
     statistics,
     bgColor,

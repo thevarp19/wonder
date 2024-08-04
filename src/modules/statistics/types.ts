@@ -1,61 +1,36 @@
-import { BasePaginationResponse } from "@/types";
-
-export interface GetSalesSellerInfoResponse {
-    ordersInfo: StatisticsInfo;
-    productsInfo: StatisticsInfo;
-    suppliesInfo: StatisticsInfo;
-    incomeInfo: StatisticsInfo;
-}
-export interface GetSalesAdminInfoResponse {
-    ordersInfo: StatisticsInfo;
-    sellersInfo: StatisticsInfo;
-    suppliesInfo: StatisticsInfo;
-    incomeInfo: StatisticsInfo;
-}
-export interface StatisticsInfo {
-    count: number;
-    percent: number;
-}
-export type DurationType = "DAY" | "WEEK" | "MONTH" | "YEAR";
-
-export interface GetProductCountResponse
-    extends BasePaginationResponse<GetProductCount> {}
-
-export interface GetTopSellerResponse
-    extends BasePaginationResponse<GetTopSeller> {}
-
-export interface GetTopProductResponse
-    extends BasePaginationResponse<GetTopProduct> {}
-
-export interface GetLastOrdersResponse
-    extends BasePaginationResponse<GetLastOrders> {}
-
-export interface GetProductCount {
-    article: string;
-    name: string;
-    count: number;
-    storeId: number;
-    storeFormattedAddress: string;
-}
-export interface GetTopSeller {
-    shopName: string;
-    totalIncome: number;
+export interface HeaderItem {
+    title: string;
+    value: string;
+    percentage: number;
 }
 
-export interface GetTopProduct {
-    productId: number;
-    productName: string;
-    productPrice: number;
-    count: number;
-}
-export interface GetLastOrders {
-    orderCode: string;
-    shopName: string;
-    price: number;
+export interface CheckItem {
+    day: string;
+    total_value: number;
 }
 
-export interface GetDailyCountResponse {
-    count: number;
-    income: number;
-    localDate: string;
+export interface WeeklyOrderItem {
+    day: number;
+    total_value: number;
 }
+
+export interface CityAnalyticsItem {
+    city: string;
+    order_count: number;
+    percentage: string;
+}
+
+export interface TopStore {
+    pk: number;
+    kaspi_store_name: string;
+}
+
+export interface AnalyticsData {
+    header: HeaderItem[];
+    check: CheckItem[];
+    weekly_order: WeeklyOrderItem[];
+    city_analytics: CityAnalyticsItem[];
+    top_stores: TopStore[];
+}
+
+export type DurationType = "DAILY" | "WEEKLY" | "MONTHLY" | "YEARLY";

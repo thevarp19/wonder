@@ -6,15 +6,18 @@ export const formatLocalDate = (dateString: string, duration: DurationType) => {
     dayjs.locale("ru");
     const date = dayjs(dateString);
     switch (duration) {
-        case "DAY":
+        case "DAILY":
             return date.format("HH:mm");
-        case "WEEK":
+        case "WEEKLY":
             return date.format("ddd");
-        case "MONTH":
+        case "MONTHLY":
             return date.format("MMM D");
-        case "YEAR":
+        case "YEARLY":
             return date.format("MMM");
         default:
             return dateString;
     }
 };
+export function formatPercentage(value: number): string {
+    return `${value.toFixed(1)}`;
+}

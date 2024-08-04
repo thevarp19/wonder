@@ -1,13 +1,12 @@
 import { ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { GetLastOrders } from "../types";
 
 interface ProductsCountTableProps {
     searchValue?: string;
 }
 
-const columns: TableColumnsType<GetLastOrders> = [
+const columns: TableColumnsType<any> = [
     {
         title: "Код заказа",
         dataIndex: "orderCode",

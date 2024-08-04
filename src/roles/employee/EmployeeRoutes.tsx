@@ -73,6 +73,18 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                         element={<div>Coming soon!</div>}
                     />
                     <Route
+                        path="/orders/new"
+                        element={<div>Coming soon!</div>}
+                    />
+                    <Route
+                        path="/orders/signing"
+                        element={<div>Coming soon!</div>}
+                    />
+                    <Route
+                        path="/orders/archive"
+                        element={<div>Coming soon!</div>}
+                    />
+                    <Route
                         path="/orders/cancelled"
                         element={<div>Coming soon!</div>}
                     />

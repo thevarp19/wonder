@@ -9,10 +9,13 @@ import {
     AuditOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
+    FileOutlined,
+    HistoryOutlined,
     HomeOutlined,
     LogoutOutlined,
     SearchOutlined,
     ShoppingCartOutlined,
+    ThunderboltOutlined,
     TruckOutlined,
     VerticalAlignTopOutlined,
 } from "@ant-design/icons";
@@ -32,6 +35,12 @@ function pathToKey(key: string) {
             return "scan";
         case "/employee/orders":
             return "orders";
+        case "/employee/orders/new":
+            return "orders-new";
+        case "/employee/orders/signing":
+            return "orders-signing";
+        case "/employee/orders/archive":
+            return "orders-archive";
         case "/employee/orders/assemble":
             return "order-assemble";
         case "/employee/orders/package":
@@ -86,6 +95,21 @@ const breadcrumbMapping: {
     ],
     "/employee/search": [{ title: "Меню" }, { title: <a href="">Поиск</a> }],
     "/employee/sizes": [{ title: "Меню" }, { title: <a href="">Размеры</a> }],
+    "/employee/orders/new": [
+        { title: "Меню" },
+        { title: <a href="">Заказы</a> },
+        { title: <a href="">Новый</a> },
+    ],
+    "/employee/orders/signing": [
+        { title: "Меню" },
+        { title: <a href="">Заказы</a> },
+        { title: <a href="">Подписание</a> },
+    ],
+    "/employee/orders/archive": [
+        { title: "Меню" },
+        { title: <a href="">Заказы</a> },
+        { title: <a href="">Архив</a> },
+    ],
 };
 export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
@@ -103,6 +127,38 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
             key: "home",
             icon: (
                 <HomeOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/orders/new"}
+                >
+                    Новые
+                </Link>
+            ),
+            key: "orders-new",
+            icon: (
+                <ThunderboltOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/orders/signing"}
+                >
+                    На подписании
+                </Link>
+            ),
+            key: "orders-signing",
+            icon: (
+                <FileOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),
@@ -226,6 +282,22 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
             ],
             icon: (
                 <ShoppingCartOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/orders/archive"}
+                >
+                    Архив
+                </Link>
+            ),
+            key: "orders-archive",
+            icon: (
+                <HistoryOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

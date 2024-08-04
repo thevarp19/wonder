@@ -14,10 +14,10 @@ const DurationSwitch: FC<DurationSwitchProps> = ({ duration, setDuration }) => {
     };
 
     const items: MenuProps["items"] = [
-        { key: "DAY", label: "За день" },
-        { key: "WEEK", label: "За неделю" },
-        { key: "MONTH", label: "За месяц" },
-        { key: "YEAR", label: "За год" },
+        { key: "DAILY", label: "За день" },
+        { key: "WEEKLY", label: "За неделю" },
+        { key: "MONTHLY", label: "За месяц" },
+        { key: "YEARLY", label: "За год" },
     ];
 
     return (
@@ -31,10 +31,10 @@ const DurationSwitch: FC<DurationSwitchProps> = ({ duration, setDuration }) => {
                 onClick={(e) => e.preventDefault()}
             >
                 <Space>
-                    {duration === "DAY" && "За день"}
-                    {duration === "WEEK" && "За неделю"}
-                    {duration === "MONTH" && "За месяц"}
-                    {duration === "YEAR" && "За год"}
+                    {duration === "DAILY" && "За день"}
+                    {duration === "WEEKLY" && "За неделю"}
+                    {duration === "MONTHLY" && "За месяц"}
+                    {duration === "YEARLY" && "За год"}
                     <DownOutlined />
                 </Space>
             </div>

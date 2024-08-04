@@ -10,44 +10,75 @@ import {
     XAxis,
     YAxis,
 } from "recharts";
+import { WeeklyOrderItem } from "../types";
 
-const data = [
-    {
-        count: 1400,
-        income: 1300,
-        day: "пн",
-    },
-    {
-        count: 15000,
-        income: 1400,
-        day: "вт",
-    },
-    {
-        count: 16900,
-        income: 1500,
-        day: "ср",
-    },
-    {
-        count: 17000,
-        income: 1600,
-        day: "чт",
-    },
-    {
-        count: 1800,
-        income: 1700,
-        day: "пт",
-    },
-    {
-        count: 1900,
-        income: 1800,
-        day: "сб",
-    },
-    {
-        count: 2000,
-        income: 900,
-        day: "вс",
-    },
-];
+// const data = [
+//     {
+//         count: 1400,
+//         income: 1300,
+//         day: "пн",
+//     },
+//     {
+//         count: 15000,
+//         income: 1400,
+//         day: "вт",
+//     },
+//     {
+//         count: 16900,
+//         income: 1500,
+//         day: "ср",
+//     },
+//     {
+//         count: 16900,
+//         income: 1500,
+//         day: "ср",
+//     },
+//     {
+//         count: 16900,
+//         income: 1500,
+//         day: "ср",
+//     },
+//     {
+//         count: 16900,
+//         income: 1500,
+//         day: "ср",
+//     },
+//     {
+//         count: 16900,
+//         income: 1500,
+//         day: "ср",
+//     },
+//     {
+//         count: 16900,
+//         income: 1500,
+//         day: "ср",
+//     },
+//     {
+//         count: 16900,
+//         income: 1500,
+//         day: "ср",
+//     },
+//     {
+//         count: 17000,
+//         income: 1600,
+//         day: "чт",
+//     },
+//     {
+//         count: 1800,
+//         income: 1700,
+//         day: "пт",
+//     },
+//     {
+//         count: 1900,
+//         income: 1800,
+//         day: "сб",
+//     },
+//     {
+//         count: 2000,
+//         income: 900,
+//         day: "вс",
+//     },
+// ];
 
 const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
     if (active && payload && payload.length) {
@@ -64,10 +95,11 @@ const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
 };
 
 interface BarChartsProps {
+    data: WeeklyOrderItem[];
     duration: string;
 }
 
-export const BarCharts: FC<BarChartsProps> = () => {
+export const BarCharts: FC<BarChartsProps> = ({ data }) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
 
     return (
@@ -80,14 +112,14 @@ export const BarCharts: FC<BarChartsProps> = () => {
                     <CartesianGrid strokeDasharray="0" strokeWidth={0} />
                     <XAxis dataKey="day" padding={{ left: 30, right: 30 }} />
                     <YAxis
-                        dataKey="income"
+                        dataKey="score"
                         tickSize={10}
                         axisLine={false}
                         tick={{ fontSize: isSmallScreen ? 10 : 14 }}
                     />
                     <Tooltip content={<CustomTooltip />} />
                     <Bar
-                        dataKey="income"
+                        dataKey="score"
                         fill="#C6EAFF"
                         barSize={isSmallScreen ? 16 : 24}
                     />
