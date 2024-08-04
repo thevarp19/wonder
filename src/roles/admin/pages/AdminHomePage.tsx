@@ -6,7 +6,7 @@ import { BarCharts } from "@/modules/statistics/components/BarCharts";
 import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable";
 import { PieCharts } from "@/modules/statistics/components/PieCharts";
 import { useGetAdminStatistics } from "@/modules/statistics/queries";
-import { DurationType, HeaderItem } from "@/modules/statistics/types";
+import { DurationType, HeaderItem, TopStore } from "@/modules/statistics/types";
 import { formatPercentage } from "@/modules/statistics/utils";
 import { cn } from "@/utils/shared.util";
 import { Spin } from "antd";
@@ -22,20 +22,19 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
     //     ordersInfo: { count: 140, percent: 48 },
     //     sellersInfo: { count: 52, percent: -18 },
     //     suppliesInfo: { count: 42, percent: 18 },
-    //     incomeInfo: { count: 80, percent: 50 },
-    // };
-    const topSellers = [
-        { place: 1, name: "ИП QIT" },
-        { place: 2, name: "ИП Techai" },
-        { place: 3, name: "ИП Arena" },
-        { place: 4, name: "ИП Orda" },
-        { place: 5, name: "АО Arena" },
-        { place: 6, name: "АО Technodom" },
-        { place: 7, name: "ИП Techai" },
-        { place: 8, name: "ИП Arena" },
-        { place: 9, name: "ИП Orda" },
-        { place: 10, name: "ИП Akhmediyarova" },
-    ];
+    //     incomeInfo: { count: 80, percent: 50 },и
+    // const topSellers = [
+    //     { place: 1, name: "ИП QIT" },
+    //     { place: 2, name: "ИП Techai" },
+    //     { place: 3, name: "ИП Arena" },
+    //     { place: 4, name: "ИП Orda" },
+    //     { place: 5, name: "АО Arena" },
+    //     { place: 6, name: "АО Technodom" },
+    //     { place: 7, name: "ИП Techai" },
+    //     { place: 8, name: "ИП Arena" },
+    //     { place: 9, name: "ИП Orda" },
+    //     { place: 10, name: "ИП Akhmediyarova" },
+    // ];
     // const { data: topSellers, isPending: topSellersLoading } =
     //     useGetAdminTopSeller();
     // const sortedTopSellers = topSellers?.content
@@ -102,7 +101,9 @@ export const AdminHomePage: FC<AdminHomePageProps> = ({}) => {
                             <LastOrdersTable />
                         </div>
                         <div className="w-full h-[525px] bg-[#F7F9FB] rounded-[34px] ">
-                            <TopSellersList topSellers={topSellers} />
+                            <TopSellersList
+                                topSellers={statistics?.top_stores || []}
+                            />
                         </div>
                     </div>
                 </div>
@@ -181,7 +182,7 @@ const ResultsCard = ({
 };
 
 interface TopSellersListProps {
-    topSellers: { place: number; name: string }[];
+    topSellers: TopStore[];
 }
 
 const TopSellersList: FC<TopSellersListProps> = ({ topSellers }) => {
@@ -189,11 +190,11 @@ const TopSellersList: FC<TopSellersListProps> = ({ topSellers }) => {
         <div className="p-8 bg-[#F7F9FB] flex flex-col items-center gap-5 rounded-[34px] h-max">
             <h2 className="text-xl font-semibold">ТОП Магазины</h2>
             <div className="grid grid-cols-1 gap-[5px]">
-                {topSellers.map((seller) => (
+                {topSellers.map((seller, index) => (
                     <TopSellerCard
-                        key={seller.place}
-                        place={seller.place}
-                        name={seller.name}
+                        key={seller.pk}
+                        place={index + 1}
+                        name={seller.kaspi_store_name}
                     />
                 ))}
             </div>

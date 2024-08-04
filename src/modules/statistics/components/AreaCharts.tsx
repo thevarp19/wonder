@@ -1,5 +1,5 @@
 import { Spin } from "antd";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import {
     Area,
@@ -72,8 +72,11 @@ export const AreaCharts: FC<AreaChartsProps> = ({
 
     const formattedData = (data ?? []).map((item: any) => ({
         ...item,
-        localDate: formatLocalDate(item.localDate, duration),
+        creation_datetime: formatLocalDate(item.creation_datetime, duration),
     }));
+    useEffect(() => {
+        console.log(formattedData);
+    }, [formattedData]);
     if (loading) {
         <div className="flex items-center justify-center">
             <Spin size="large" />
@@ -118,7 +121,7 @@ export const AreaCharts: FC<AreaChartsProps> = ({
                         </linearGradient>
                     </defs>
                     <CartesianGrid y={99999} strokeDasharray="0" />
-                    <XAxis padding={{ left: 35 }} dataKey="day" />
+                    <XAxis padding={{ left: 35 }} dataKey="creation_datetime" />
                     <YAxis strokeWidth={0} dataKey="total_value" />
                     <Tooltip content={<CustomTooltip />} />
 

@@ -4,16 +4,43 @@ import { DurationType } from "./types";
 
 export const formatLocalDate = (dateString: string, duration: DurationType) => {
     dayjs.locale("ru");
-    const date = dayjs(dateString);
+    const currentDate = dayjs();
+    const dateNumber = parseInt(dateString, 10);
+
     switch (duration) {
         case "DAILY":
-            return date.format("HH:mm");
+            // Assuming dateString represents the hour in the current day
+            return currentDate.hour(dateNumber).minute(0).format("HH:mm");
+
         case "WEEKLY":
-            return date.format("ddd");
+            // Assuming dateString represents the day of the month from the previous week to now
+            let targetDate = currentDate.date(dateNumber);
+            // If the target date is in the future, it means it's referring to the previous month
+            if (targetDate.isAfter(currentDate)) {
+                targetDate = targetDate.subtract(1, "month").date(dateNumber);
+            }
+            return targetDate.format("ddd, MMM D");
+
         case "MONTHLY":
-            return date.format("MMM D");
+            // Assuming dateString represents the day of the current or previous month
+            let targetMonthDate = currentDate.date(dateNumber);
+            if (targetMonthDate.isAfter(currentDate)) {
+                targetMonthDate = targetMonthDate
+                    .subtract(1, "month")
+                    .date(dateNumber);
+            }
+            return targetMonthDate.format("MMM D");
+
         case "YEARLY":
-            return date.format("MMM");
+            // Assuming dateString represents the month of the year
+            let targetYearDate = currentDate.month(dateNumber - 1);
+            if (targetYearDate.isAfter(currentDate)) {
+                targetYearDate = targetYearDate
+                    .subtract(1, "year")
+                    .month(dateNumber - 1);
+            }
+            return targetYearDate.format("MMM");
+
         default:
             return dateString;
     }

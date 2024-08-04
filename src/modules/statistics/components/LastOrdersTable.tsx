@@ -1,23 +1,34 @@
 import { ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useGetAdminLastOrders } from "../queries";
+import { GetLastOrdersContent } from "../types";
 
 interface ProductsCountTableProps {
     searchValue?: string;
 }
 
-const columns: TableColumnsType<any> = [
+const columns: TableColumnsType<GetLastOrdersContent> = [
     {
         title: "Код заказа",
-        dataIndex: "orderCode",
+        dataIndex: "order_code",
+        key: "order_code",
     },
     {
-        title: "Название склада",
-        render: (_, record) => <span>{record.shopName}</span>,
+        title: "Название продукта",
+        dataIndex: "product_title",
+        key: "product_title",
+    },
+
+    {
+        title: "Название магазина",
+        dataIndex: "store_name",
+        key: "store_name",
     },
     {
         title: "Цена",
-        render: (_, record) => <span>{record.price}</span>,
+        dataIndex: "price",
+        key: "price",
     },
 ];
 
@@ -25,53 +36,49 @@ export const LastOrdersTable: FC<ProductsCountTableProps> = ({}) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
 
     const [page, setPage] = useState(1);
-    const isPending = false;
-    // const { data: lastOrders, isPending } = useGetAdminLastOrders(
-    //     page,
-    //     undefined
-    // );
-    const content = [
-        {
-            shopName: "Wireless Mouse",
-            price: 150,
-            orderCode: "1",
-        },
-        {
-            shopName: "Mechanical Keyboard",
-            price: 85,
-            orderCode: "2",
-        },
-        {
-            shopName: "27-inch Monitor",
-            price: 45,
-            orderCode: "3",
-        },
-        {
-            shopName: "USB-C Hub",
-            price: 200,
-            orderCode: "4",
-        },
-        {
-            shopName: "External Hard Drive",
-            price: 120,
-            orderCode: "5",
-        },
-        {
-            shopName: "27-inch Monitor",
-            price: 45,
-            orderCode: "3",
-        },
-        {
-            shopName: "USB-C Hub",
-            price: 200,
-            orderCode: "4",
-        },
-        {
-            shopName: "External Hard Drive",
-            price: 120,
-            orderCode: "5",
-        },
-    ];
+    const { data: lastOrders, isPending } = useGetAdminLastOrders(page, 5);
+    // const content = [
+    //     {
+    //         shopName: "Wireless Mouse",
+    //         price: 150,
+    //         orderCode: "1",
+    //     },
+    //     {
+    //         shopName: "Mechanical Keyboard",
+    //         price: 85,
+    //         orderCode: "2",
+    //     },
+    //     {
+    //         shopName: "27-inch Monitor",
+    //         price: 45,
+    //         orderCode: "3",
+    //     },
+    //     {
+    //         shopName: "USB-C Hub",
+    //         price: 200,
+    //         orderCode: "4",
+    //     },
+    //     {
+    //         shopName: "External Hard Drive",
+    //         price: 120,
+    //         orderCode: "5",
+    //     },
+    //     {
+    //         shopName: "27-inch Monitor",
+    //         price: 45,
+    //         orderCode: "3",
+    //     },
+    //     {
+    //         shopName: "USB-C Hub",
+    //         price: 200,
+    //         orderCode: "4",
+    //     },
+    //     {
+    //         shopName: "External Hard Drive",
+    //         price: 120,
+    //         orderCode: "5",
+    //     },
+    // ];
 
     return (
         <ConfigProvider
@@ -94,11 +101,11 @@ export const LastOrdersTable: FC<ProductsCountTableProps> = ({}) => {
                 size={isSmallScreen ? "small" : "large"}
                 columns={columns}
                 loading={isPending}
-                dataSource={content}
-                rowKey={(record) => record.orderCode}
+                dataSource={lastOrders?.content}
+                rowKey={(record) => record.id}
                 pagination={{
                     pageSize: 5,
-                    total: 10,
+                    total: lastOrders?.totalElements,
                     showSizeChanger: false,
                     onChange(page) {
                         setPage(page - 1);

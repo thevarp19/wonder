@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAdminStatistics } from "./api";
-import { AnalyticsData, DurationType } from "./types";
+import { getAdminLastOrders, getAdminStatistics } from "./api";
+import { AnalyticsData, DurationType, GetLastOrdersResponse } from "./types";
 
 // export const useGetAdminSalesInfo = (duration: DurationType) => {
 //     return useQuery<GetSalesAdminInfoResponse>({
@@ -42,15 +42,15 @@ import { AnalyticsData, DurationType } from "./types";
 //         },
 //     });
 // };
-// export const useGetAdminLastOrders = (page: number = 0, size: number = 10) => {
-//     return useQuery<GetLastOrdersResponse>({
-//         queryKey: [`lastOrders`, page, size],
-//         queryFn: async () => {
-//             const { data } = await getAdminLastOrders(page, size);
-//             return data;
-//         },
-//     });
-// };
+export const useGetAdminLastOrders = (page: number = 1, size: number = 5) => {
+    return useQuery<GetLastOrdersResponse>({
+        queryKey: [`lastOrders`, page, size],
+        queryFn: async () => {
+            const { data } = await getAdminLastOrders(page, size);
+            return data;
+        },
+    });
+};
 
 export const useGetAdminStatistics = (duration: DurationType) => {
     return useQuery<AnalyticsData>({

@@ -20,10 +20,13 @@ export interface GetOrdersSeller
 
 export interface GetOrdersEmployee
     extends BasePaginationResponse<GetOrdersEmployeeContent> {}
+
 export interface GetAssembleOrdersEmployee
     extends BasePaginationResponse<GetAssembleOrdersContent> {}
+
 export interface GetPackageOrdersEmployee
     extends BasePaginationResponse<GetPackageOrdersContent> {}
+
 export interface GetTransferOrdersEmployee
     extends BasePaginationResponse<GetTransferOrdersContent> {}
 

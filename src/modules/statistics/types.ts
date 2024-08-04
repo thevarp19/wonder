@@ -1,3 +1,5 @@
+import { BasePaginationResponse } from "@/types";
+
 export interface HeaderItem {
     title: string;
     value: string;
@@ -31,6 +33,18 @@ export interface AnalyticsData {
     weekly_order: WeeklyOrderItem[];
     city_analytics: CityAnalyticsItem[];
     top_stores: TopStore[];
+}
+export interface GetLastOrdersResponse
+    extends BasePaginationResponse<GetLastOrdersContent> {}
+export interface GetLastOrdersContent {
+    id: number;
+    product_vendor_code: string;
+    product_title: string;
+    order_code: string;
+    store_name: string;
+    price: string;
+    warehouse: string;
+    order_entry: string;
 }
 
 export type DurationType = "DAILY" | "WEEKLY" | "MONTHLY" | "YEARLY";
