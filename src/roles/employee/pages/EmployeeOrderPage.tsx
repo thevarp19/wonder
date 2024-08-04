@@ -14,11 +14,11 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
     const { orderId: orderIdRaw } = useParams();
 
     const { data, isPending } = useGetEmployeeOrder(orderIdRaw ?? "");
-
+    const orderCode = data?.code?.toString() ?? "";
     return (
         <div>
             <h2 className="pb-4 text-2xl font-semibold">
-                Заказ- <span className="underline">{orderIdRaw}</span>
+                Заказ- <span className="underline">{orderCode}</span>
             </h2>
             <div className="flex justify-between mt-5 space-x-4">
                 <div className="flex flex-col w-1/2 gap-3 p-5 rounded-lg bg-gray-50">
