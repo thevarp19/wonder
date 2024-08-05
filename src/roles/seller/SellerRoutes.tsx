@@ -16,6 +16,7 @@ import {
     SellerProductsPage,
     SellerProfilePage,
     SellerRegisterPage,
+    SellerServiceParamsPage,
     SellerSettingsPage,
     SellerSupplyDetailsPage,
     SellerSupplyPage,
@@ -79,6 +80,10 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                         element={<SellerCalculatorPage />}
                     />
                     <Route path="/orders" element={<SellerOrdersPage />} />
+                    <Route
+                        path="/service-params"
+                        element={<SellerServiceParamsPage />}
+                    />
                     <Route
                         path="/orders/:orderId"
                         element={<SellerOrderPage />}

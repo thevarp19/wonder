@@ -33,6 +33,8 @@ function pathToKey(key: string) {
             return "products";
         case "/seller/supply":
             return "supply";
+        case "/seller/service-params":
+            return "service-params";
         case "/seller/calculator":
             return "calculator";
         case "/seller/supply/create":
@@ -66,6 +68,10 @@ const breadcrumbMapping: {
     "/seller/calculator": [
         { title: "Меню" },
         { title: <a href="/seller/calculator">Калькулятор</a> },
+    ],
+    "/seller/service-params": [
+        { title: "Меню" },
+        { title: <a href="/seller/service-params">Параметры услуг</a> },
     ],
 };
 export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
@@ -121,6 +127,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                 />
             ),
         },
+
         {
             label: (
                 <Link
@@ -165,6 +172,22 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             key: "settings",
             icon: (
                 <SettingOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/seller/service-params"}
+                >
+                    Параметры услуг
+                </Link>
+            ),
+            key: "service-params",
+            icon: (
+                <ProductOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

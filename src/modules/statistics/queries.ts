@@ -1,5 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAdminLastOrders, getAdminStatistics } from "./api";
+import {
+    getAdminLastOrders,
+    getAdminStatistics,
+    getSellerStatistics,
+} from "./api";
 import { AnalyticsData, DurationType, GetLastOrdersResponse } from "./types";
 
 // export const useGetAdminSalesInfo = (duration: DurationType) => {
@@ -57,6 +61,15 @@ export const useGetAdminStatistics = (duration: DurationType) => {
         queryKey: [`statisticsAdmin`, duration],
         queryFn: async () => {
             const { data } = await getAdminStatistics(duration);
+            return data;
+        },
+    });
+};
+export const useGetSellerStatistics = (duration: DurationType) => {
+    return useQuery<AnalyticsData>({
+        queryKey: [`statisticsSeller`, duration],
+        queryFn: async () => {
+            const { data } = await getSellerStatistics(duration);
             return data;
         },
     });
