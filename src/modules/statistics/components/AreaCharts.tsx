@@ -99,7 +99,7 @@ export const AreaCharts: FC<AreaChartsProps> = ({
                 <h2 className="text-xl ps-6">Чек</h2>
                 <AreaChart
                     margin={{ left: 30 }}
-                    width={isSmallScreen ? 640 : 1150}
+                    width={isSmallScreen ? 640 : 1200}
                     height={isSmallScreen ? 260 : 310}
                     data={formattedData}
                 >
@@ -121,7 +121,7 @@ export const AreaCharts: FC<AreaChartsProps> = ({
                         </linearGradient>
                     </defs>
                     <CartesianGrid y={99999} strokeDasharray="0" />
-                    <XAxis padding={{ left: 35 }} dataKey="creation_datetime" />
+                    <XAxis padding={{ left: 15 }} dataKey="creation_datetime" />
                     <YAxis strokeWidth={0} dataKey="total_value" />
                     <Tooltip content={<CustomTooltip />} />
 

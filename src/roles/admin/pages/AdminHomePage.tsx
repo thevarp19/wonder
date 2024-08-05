@@ -7,7 +7,6 @@ import { LastOrdersTable } from "@/modules/statistics/components/LastOrdersTable
 import { PieCharts } from "@/modules/statistics/components/PieCharts";
 import { useGetAdminStatistics } from "@/modules/statistics/queries";
 import { DurationType, HeaderItem, TopStore } from "@/modules/statistics/types";
-import { formatPercentage } from "@/modules/statistics/utils";
 import { cn } from "@/utils/shared.util";
 import { Spin } from "antd";
 import { FC, useState } from "react";
@@ -153,7 +152,7 @@ const ResultsCard = ({
                         {statistics?.percentage != null &&
                         statistics?.percentage > 0 ? (
                             <span className="flex items-center gap-[3px] sm:gap-[5px] text-[10px] sm:text-base">
-                                +{formatPercentage(statistics?.percentage)}%
+                                +{statistics?.percentage}%
                                 <Image
                                     src={arrowRise}
                                     alt="arrowRise"

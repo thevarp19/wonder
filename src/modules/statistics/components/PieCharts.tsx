@@ -2,7 +2,6 @@ import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import { CityAnalyticsItem } from "../types";
-import { formatPercentage } from "../utils";
 
 // const data = [
 //     { name: "Алматы", value: 38.6 },
@@ -69,7 +68,7 @@ export const PieCharts: FC<PieChartsProps> = ({ data }) => {
                                 key={index}
                                 className="text-[10px] sm:text-[18px]"
                             >
-                                {formatPercentage(parseInt(item.percentage))}%
+                                {item.percentage}%
                             </p>
                         ))}
                     </div>

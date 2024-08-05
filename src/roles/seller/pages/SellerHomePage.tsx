@@ -7,7 +7,6 @@ import { PieCharts } from "@/modules/statistics/components/PieCharts";
 import { ProductsCountTable } from "@/modules/statistics/components/ProductCountTable";
 import { useGetSellerStatistics } from "@/modules/statistics/queries";
 import { DurationType, HeaderItem } from "@/modules/statistics/types";
-import { formatPercentage } from "@/modules/statistics/utils";
 
 import { cn } from "@/utils/shared.util";
 import { Spin } from "antd";
@@ -132,7 +131,7 @@ const ResultsCard = ({
                         {statistics?.percentage != null &&
                         statistics?.percentage > 0 ? (
                             <span className="flex items-center gap-[3px] sm:gap-[5px] text-[10px] sm:text-base">
-                                +{formatPercentage(statistics?.percentage)}%
+                                +{statistics?.percentage}%
                                 <Image
                                     src={arrowRise}
                                     alt="arrowRise"
