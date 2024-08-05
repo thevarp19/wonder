@@ -4,6 +4,7 @@ import { Image } from "@/components/ui/Image";
 import { AreaCharts } from "@/modules/statistics/components/AreaCharts";
 import { BarCharts } from "@/modules/statistics/components/BarCharts";
 import { PieCharts } from "@/modules/statistics/components/PieCharts";
+import { ProductsCountTable } from "@/modules/statistics/components/ProductCountTable";
 import { useGetSellerStatistics } from "@/modules/statistics/queries";
 import { DurationType, HeaderItem } from "@/modules/statistics/types";
 import { formatPercentage } from "@/modules/statistics/utils";
@@ -48,7 +49,7 @@ export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
                         bgColor="blue"
                     />
                     <ResultsCard
-                        statisticsName="Продавцы"
+                        statisticsName="Артикул"
                         statistics={statistics?.header[1]}
                         bgColor="orange"
                     />
@@ -79,9 +80,9 @@ export const SellerHomePage: FC<SellerHomePageProps> = ({}) => {
                     <div className="flex gap-5">
                         <div className="w-full h-max sm:h-[525px] p-5 sm:p-8 bg-[#F7F9FB] flex flex-col gap-6 rounded-[34px]">
                             <h2 className="text-xs font-semibold sm:text-xl">
-                                Таблица заказов
+                                Остаток товаров
                             </h2>
-                            {/* <LastOrdersTable /> */}
+                            <ProductsCountTable />
                         </div>
                     </div>
                 </div>

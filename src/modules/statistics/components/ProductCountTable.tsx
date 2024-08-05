@@ -1,59 +1,78 @@
-// import { ConfigProvider, Table, TableColumnsType } from "antd";
-// import ruRU from "antd/lib/locale/ru_RU";
-// import { FC, useState } from "react";
+import { ConfigProvider, Table, TableColumnsType } from "antd";
+import ruRU from "antd/lib/locale/ru_RU";
+import { FC, useState } from "react";
+import { useGetSellerProductCount } from "../queries";
+import { GetProductCountContent } from "../types";
 
-// interface ProductsCountTableProps {
-//     searchValue?: string;
-// }
+interface ProductsCountTableProps {
+    searchValue?: string;
+}
 
-// const columns: TableColumnsType<GetProductCount> = [
-//     {
-//         title: "Артикул",
-//         dataIndex: "article",
-//     },
-//     {
-//         title: "Название",
-//         render: (_, record) => <a href={record.article}>{record.name}</a>,
-//     },
+const columns: TableColumnsType<GetProductCountContent> = [
+    {
+        title: "Артикул",
+        dataIndex: "vendor_code",
+        key: "vendor_code",
+    },
+    {
+        title: "Название",
+        dataIndex: "title",
+        key: "title",
+    },
+    {
+        title: "Количество",
+        dataIndex: "quantity",
+        key: "quantity",
+    },
+    {
+        title: "ID склада",
+        dataIndex: "seller_warehouse_id",
+        key: "seller_warehouse_id",
+    },
+    {
+        title: "Город",
+        dataIndex: "city_name",
+        key: "city_name",
+    },
+];
+export const ProductsCountTable: FC<ProductsCountTableProps> = ({}) => {
+    const [page, setPage] = useState(1);
 
-//     {
-//         title: "Количество",
-//         render: (_, record) => <span>{record.count}</span>,
-//     },
+    const { data: products, isPending } = useGetSellerProductCount(page, 5);
 
-//     {
-//         title: "Адрес склада",
-//         render: (_, record) => <span>{record.storeFormattedAddress}</span>,
-//     },
-// ];
-
-// export const ProductsCountTable: FC<ProductsCountTableProps> = ({}) => {
-//     const [page, setPage] = useState(1);
-
-//     const { data: products, isPending } = useGetSellerProductCount(
-//         page,
-//         undefined
-//     );
-
-//     return (
-//         <ConfigProvider locale={ruRU}>
-//             <Table
-//                 className="h-full"
-//                 size="small"
-//                 columns={columns}
-//                 loading={isPending}
-//                 dataSource={products?.content}
-//                 rowKey={(record) => record.article}
-//                 pagination={{
-//                     pageSize: 10,
-//                     total: products?.totalElements,
-//                     showSizeChanger: false,
-//                     onChange(page) {
-//                         setPage(page - 1);
-//                     },
-//                     current: page + 1,
-//                 }}
-//             />
-//         </ConfigProvider>
-//     );
-// };
+    return (
+        <ConfigProvider
+            locale={ruRU}
+            theme={{
+                components: {
+                    Table: {
+                        headerBg: "#F78936",
+                        headerColor: "#fff",
+                        headerBorderRadius: 10,
+                        headerSplitColor: "#F78936",
+                        colorBgContainer: "#F7F9FB",
+                        borderColor: "#F7F9FB",
+                        // cellPaddingBlock: isSmallScreen ? 10 : 20,
+                    },
+                },
+            }}
+        >
+            <Table
+                className="h-full"
+                columns={columns}
+                loading={isPending}
+                dataSource={products?.content}
+                rowKey={(record) => record.vendor_code}
+                pagination={{
+                    pageSize: 5,
+                    total: products?.totalElements,
+                    showSizeChanger: false,
+                    onChange(page) {
+                        setPage(page - 1);
+                    },
+                    current: page + 1,
+                }}
+            />
+        </ConfigProvider>
+    );
+};

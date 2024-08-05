@@ -36,6 +36,8 @@ export interface AnalyticsData {
 }
 export interface GetLastOrdersResponse
     extends BasePaginationResponse<GetLastOrdersContent> {}
+export interface GetProductCountResponse
+    extends BasePaginationResponse<GetProductCountContent> {}
 export interface GetLastOrdersContent {
     id: number;
     product_vendor_code: string;
@@ -45,6 +47,13 @@ export interface GetLastOrdersContent {
     price: string;
     warehouse: string;
     order_entry: string;
+}
+export interface GetProductCountContent {
+    vendor_code: string;
+    title: string;
+    quantity: number;
+    seller_warehouse_id: string;
+    city_name: string;
 }
 
 export type DurationType = "DAILY" | "WEEKLY" | "MONTHLY" | "YEARLY";

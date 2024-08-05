@@ -85,7 +85,7 @@ const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
         return (
             <div className="px-7 py-1 rounded-full bg-[lightblue] text-white">
                 <p className="text-center text-[18px] font-[500]">
-                    {payload[0].value} ₸
+                    {payload[0].value}
                 </p>
             </div>
         );

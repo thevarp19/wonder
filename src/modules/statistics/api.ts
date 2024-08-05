@@ -1,5 +1,9 @@
 import { axiosAuthorized } from "@/lib/axios";
-import { AnalyticsData, GetLastOrdersResponse } from "./types";
+import {
+    AnalyticsData,
+    GetLastOrdersResponse,
+    GetProductCountResponse,
+} from "./types";
 
 export function getAdminStatistics(duration: string) {
     return axiosAuthorized.get<AnalyticsData>(
@@ -16,8 +20,8 @@ export function getAdminLastOrders(page: number = 1, size: number = 5) {
         `/api/analytics/admin/active-orders/?page=${page}&size=${size}`
     );
 }
-export function getSellerLastOrders(page: number = 1, size: number = 5) {
-    return axiosAuthorized.get<GetLastOrdersResponse>(
-        `/api/analytics/admin/active-orders/?page=${page}&size=${size}`
+export function getSellerProductCount(page: number = 1, size: number = 5) {
+    return axiosAuthorized.get<GetProductCountResponse>(
+        `/api/analytics/seller/products/?page=${page}&size=${size}`
     );
 }

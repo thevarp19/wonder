@@ -1,8 +1,9 @@
-import { ProductsUploadInstructions } from "@/modules/product/components/ProductsUploadInstructions";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import type { CollapseProps } from "antd";
 import { Collapse } from "antd";
 import React from "react";
+import { ProductsUploadInstructionsAuto } from "./ProductsUploadInstructionsAuto";
+import { ProductsUploadInstructionsManual } from "./ProductsUploadInstructionsManual";
 
 export const ProductsUploadInstructionsCollapse: React.FC = () => {
     const panelStyle: React.CSSProperties = {
@@ -19,13 +20,13 @@ export const ProductsUploadInstructionsCollapse: React.FC = () => {
         {
             key: "1",
             label: "Ручная Загрузка",
-            children: <ProductsUploadInstructions />,
+            children: <ProductsUploadInstructionsManual />,
             style: panelStyle,
         },
         {
             key: "2",
             label: "Автоматическая Загрузка",
-            children: <></>,
+            children: <ProductsUploadInstructionsAuto />,
             style: panelStyle,
         },
     ];

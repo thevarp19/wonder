@@ -11,7 +11,7 @@ import {
     sheetReplacement,
 } from "@/assets";
 
-export const ProductsUploadInstructions = () => {
+export const ProductsUploadInstructionsManual = () => {
     return (
         <div className="p-2">
             <div className="flex flex-col gap-4">
