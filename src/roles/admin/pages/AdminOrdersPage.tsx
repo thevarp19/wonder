@@ -1,6 +1,6 @@
 import { searchIcon } from "@/assets";
 import { Image } from "@/components/ui/Image";
-import { AdminOrdersTable } from "@/modules/order/components/OrdersTable/AdminOrdersTable";
+import { AdminOrdersTable } from "@/modules/order/components/AdminOrders/AdminOrdersTable";
 import { deliveryModes, items } from "@/modules/order/const";
 import { DeliveryMode } from "@/modules/order/types";
 import { useDebounce } from "@/utils/shared.util";

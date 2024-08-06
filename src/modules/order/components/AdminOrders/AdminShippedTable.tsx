@@ -2,52 +2,56 @@ import { DateCell } from "@/components/ui/DateCell";
 import { ConfigProvider, Table, TableColumnsType, Tag } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
-import {
-    GetAssembleOrdersEmployee,
-    GetAssembleOrdersEmployeeContent,
-} from "../../types";
+import { GetOrdersContent, GetShippedOrders } from "../../types";
 
-const columns: TableColumnsType<GetAssembleOrdersEmployeeContent> = [
+const columns: TableColumnsType<GetOrdersContent> = [
     {
         title: "ID заказа",
-        dataIndex: "order_code",
-    },
-    {
-        title: "ID товара",
-        dataIndex: "id",
+        dataIndex: "code",
     },
     {
         title: "Артикул",
-        dataIndex: "product_vendor_code",
+        dataIndex: "product_vendor_codes",
+        render: (product_vendor_codes) =>
+            product_vendor_codes.map((code: any, index: any) => (
+                <Tag key={index}>{code}</Tag>
+            )),
     },
-
+    {
+        title: "Название склада",
+        dataIndex: "store_name",
+        render: (_, record) => <span>{record?.store_name}</span>,
+    },
     {
         title: "Название товара",
-        dataIndex: "product_title",
+        dataIndex: "product_titles",
+        render: (product_titles) =>
+            product_titles.map((title: any, index: any) => (
+                <Tag key={index}>{title}</Tag>
+            )),
     },
-    {
-        title: "Номер ячейки",
-        dataIndex: "deliveryMode",
-        render: (_, record) => <Tag>{record.cell_number}</Tag>,
-    },
-
     {
         title: "Время заказа",
-        dataIndex: "order_creation_date",
+        dataIndex: "creation_date",
+        render: (_, record) => <DateCell timestamp={record.creation_date} />,
+    },
+    {
+        title: "Дата передачи",
+        dataIndex: "transmission_date",
         render: (_, record) => (
-            <DateCell timestamp={record?.order_creation_date} />
+            <DateCell timestamp={record.transmission_date} />
         ),
     },
 ];
 
-interface EmployeeAssembleTableProps {
-    data: GetAssembleOrdersEmployee | undefined;
+interface AdminShippedTableProps {
+    data: GetShippedOrders | undefined;
     isPending: boolean;
     setPage: (page: number) => void;
     page: number;
 }
 
-export const EmployeeAssembleTable: FC<EmployeeAssembleTableProps> = ({
+export const AdminShippedTable: FC<AdminShippedTableProps> = ({
     data,
     isPending,
     setPage,

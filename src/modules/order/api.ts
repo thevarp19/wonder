@@ -1,13 +1,17 @@
 import { axiosAuthorized } from "@/lib/axios";
 import {
     DeliveryMode,
+    GetAssembleOrders,
     GetAssembleOrdersEmployee,
-    GetOrderById,
+    GetCancelledOrders,
     GetOrderDetailEmployee,
     GetOrdersAdmin,
     GetOrdersEmployee,
     GetOrdersSeller,
+    GetPackageOrders,
     GetPackageOrdersEmployee,
+    GetShippedOrders,
+    GetTransferOrders,
     GetTransferOrdersEmployee,
     ProductStatusChangeRequest,
 } from "./types";
@@ -22,12 +26,6 @@ export function getOrdersAdmin(
         `/api/order-admin/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
-
-// export function getOrdersByDate(startDate: string, endDate: string) {
-//     return axiosAuthorized.get<GetOrdersByDate[]>(
-//         `/api/orders/admin?start-date=${startDate}&end-date=${endDate}`
-//     );
-// }
 
 export function getOrdersSeller(
     page: number = 1,
@@ -60,6 +58,26 @@ export function getAssembleOrderEmployee(
         `/api/supplier-box-product/order/employee/assemble/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
+export function getAssembleOrderSeller(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetAssembleOrders>(
+        `/api/order-seller/assemble/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getAssembleOrderAdmin(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetAssembleOrders>(
+        `/api/order-admin/assemble/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
 export function getPackageOrderEmployee(
     page: number = 0,
     size: number = 10,
@@ -68,6 +86,26 @@ export function getPackageOrderEmployee(
 ) {
     return axiosAuthorized.get<GetPackageOrdersEmployee>(
         `/api/supplier-box-product/order/employee/packaging/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getPackageOrderSeller(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetPackageOrders>(
+        `api/order-seller/packaging/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getPackageOrderAdmin(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetPackageOrders>(
+        `api/order-admin/packaging/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
 export function getTransferOrderEmployee(
@@ -80,41 +118,73 @@ export function getTransferOrderEmployee(
         `/api/order-employee/transfer/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
-
-export function getAdminOrderById(id: number) {
-    return axiosAuthorized.get<GetOrderById[]>(
-        `/api/orders/admin/details/${id}`
+export function getTransferOrderSeller(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetTransferOrders>(
+        `/api/order-seller/transfer/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getTransferOrderAdmin(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetTransferOrders>(
+        `/api/order-admin/transfer/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getShippedOrderSeller(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetShippedOrders>(
+        `/api/order-seller/sent/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getShippedOrderAdmin(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetShippedOrders>(
+        `/api/order-admin/sent/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getCancelledOrderSeller(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetCancelledOrders>(
+        `/api/order-seller/cancelled/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getCancelledOrderAdmin(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetCancelledOrders>(
+        `/api/order-admin/assemble/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
 
-export function getSellerOrderById(id: number) {
-    return axiosAuthorized.get<GetOrderById[]>(
-        `/api/orders/seller/details/${id}`
-    );
-}
 export function getEmployeeOrderById(id: string) {
     return axiosAuthorized.get<GetOrderDetailEmployee>(
         `/api/order-employee/${id}/`
     );
 }
-// export function startAssemble(id: number) {
-//     return axiosAuthorized.post<AssembleOrderResponse>(
-//         `/api/assemblies/${id}/start`
-//     );
-// }
-// export function assembleProducts(id: number, values: any) {
-//     return axiosAuthorized.post<AssembleOrderResponse>(
-//         `/api/assemblies/${id}/assemble-product`,
-//         values
-//     );
-// }
-// export function finishAssemble(id: number) {
-//     return axiosAuthorized.post<any>(`/api/assemblies/${id}/finish`);
-// }
 
-// export function packageProducts(id: number) {
-//     return axiosAuthorized.post<any>(`/api/order-packages/${id}/start`);
-// }
 export function orderStatus(values: ProductStatusChangeRequest[]) {
     return axiosAuthorized.put(
         `/api/supplier-box-product/order/employee/status/`,

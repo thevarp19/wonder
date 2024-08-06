@@ -5,8 +5,13 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { AdminLayout } from "./AdminLayout";
 import {
     AdminLoginPage,
+    AdminOrderAssemblePage,
+    AdminOrderCancelledPage,
+    AdminOrderPackagePage,
     AdminOrderPage,
+    AdminOrderShippedPage,
     AdminOrdersPage,
+    AdminOrderTransferPage,
     AdminSettingsPage,
     CreateBoxPage,
     CreateStorePage,
@@ -61,6 +66,38 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                         element={<StoreEmployeesPage />}
                     />
                     <Route path="/orders" element={<AdminOrdersPage />} />
+                    <Route
+                        path="/orders/assemble"
+                        element={<AdminOrderAssemblePage />}
+                    />
+                    <Route
+                        path="/orders/package"
+                        element={<AdminOrderPackagePage />}
+                    />
+                    <Route
+                        path="/orders/transfer"
+                        element={<AdminOrderTransferPage />}
+                    />
+                    <Route
+                        path="/orders/shipped"
+                        element={<AdminOrderShippedPage />}
+                    />
+                    <Route
+                        path="/orders/new"
+                        element={<div>Coming soon!</div>}
+                    />
+                    <Route
+                        path="/orders/signing"
+                        element={<div>Coming soon!</div>}
+                    />
+                    <Route
+                        path="/orders/archive"
+                        element={<div>Coming soon!</div>}
+                    />
+                    <Route
+                        path="/orders/cancelled"
+                        element={<AdminOrderCancelledPage />}
+                    />
                     <Route
                         path="/orders/:orderId"
                         element={<AdminOrderPage />}

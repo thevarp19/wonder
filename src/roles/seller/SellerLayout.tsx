@@ -4,13 +4,21 @@ import { useAppDispatch } from "@/redux/utils";
 import { sellerLogout } from "@/roles/seller/redux/auth/actions";
 import { MenuItemType } from "@/types";
 import {
+    AppstoreAddOutlined,
+    AuditOutlined,
     CalculatorOutlined,
+    CheckCircleOutlined,
+    CloseCircleOutlined,
+    FileOutlined,
+    HistoryOutlined,
     HomeOutlined,
     LogoutOutlined,
     ProductOutlined,
     ProfileOutlined,
     SettingOutlined,
     ShoppingCartOutlined,
+    ThunderboltOutlined,
+    TruckOutlined,
     VerticalAlignTopOutlined,
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
@@ -41,6 +49,24 @@ function pathToKey(key: string) {
             return "supply";
         case "/seller/orders":
             return "orders";
+        case "/seller/my-orders":
+            return "my-orders";
+        case "/seller/orders/new":
+            return "orders-new";
+        case "/seller/orders/signing":
+            return "orders-signing";
+        case "/seller/orders/archive":
+            return "orders-archive";
+        case "/seller/orders/assemble":
+            return "order-assemble";
+        case "/seller/orders/package":
+            return "order-package";
+        case "/seller/orders/transfer":
+            return "order-transfer";
+        case "/seller/orders/shipped":
+            return "order-shipped";
+        case "/seller/orders/cancelled":
+            return "order-cancelled";
         default:
             return "home";
     }
@@ -73,6 +99,46 @@ const breadcrumbMapping: {
         { title: "Меню" },
         { title: <a href="/seller/service-params">Параметры услуг</a> },
     ],
+    "/seller/orders/assemble": [
+        { title: "Меню" },
+        { title: <a href="">Заказы</a> },
+        { title: <a href="">Сборка</a> },
+    ],
+    "/seller/orders/package": [
+        { title: "Меню" },
+        { title: <a href="">Заказы</a> },
+        { title: <a href="">Упаковка</a> },
+    ],
+    "/seller/orders/transfer": [
+        { title: "Меню" },
+        { title: <a href="">Заказы</a> },
+        { title: <a href="">Передача</a> },
+    ],
+    "/seller/orders/shipped": [
+        { title: "Меню" },
+        { title: <a href="">Заказы</a> },
+        { title: <a href="">Отправлено</a> },
+    ],
+    "/seller/orders/cancelled": [
+        { title: "Меню" },
+        { title: <a href="">Заказы</a> },
+        { title: <a href="">Отменено</a> },
+    ],
+    "/seller/orders/new": [
+        { title: "Меню" },
+        { title: <a href="">Заказы</a> },
+        { title: <a href="">Новый</a> },
+    ],
+    "/seller/orders/signing": [
+        { title: "Меню" },
+        { title: <a href="">Заказы</a> },
+        { title: <a href="">Подписание</a> },
+    ],
+    "/seller/orders/archive": [
+        { title: "Меню" },
+        { title: <a href="">Заказы</a> },
+        { title: <a href="">Архив</a> },
+    ],
 };
 export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
@@ -98,6 +164,38 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/seller/orders/new"}
+                >
+                    Новые
+                </Link>
+            ),
+            key: "orders-new",
+            icon: (
+                <ThunderboltOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/seller/orders/signing"}
+                >
+                    На подписании
+                </Link>
+            ),
+            key: "orders-signing",
+            icon: (
+                <FileOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
                     to={"/seller/orders"}
                 >
                     Заказы
@@ -109,6 +207,215 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),
+            children: [
+                {
+                    key: "order-assemble",
+                    icon: (
+                        <AppstoreAddOutlined
+                            style={{
+                                fontSize: isSmallScreen ? "24px" : "14px",
+                            }}
+                        />
+                    ),
+                    label: (
+                        <Link
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }}
+                            to={"/seller/orders/assemble"}
+                        >
+                            Сборка
+                        </Link>
+                    ),
+                },
+                {
+                    key: "order-package",
+                    icon: (
+                        <AuditOutlined
+                            style={{
+                                fontSize: isSmallScreen ? "24px" : "14px",
+                            }}
+                        />
+                    ),
+                    label: (
+                        <Link
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }}
+                            to={"/seller/orders/package"}
+                        >
+                            Упаковка
+                        </Link>
+                    ),
+                },
+                {
+                    key: "order-transfer",
+                    icon: (
+                        <TruckOutlined
+                            style={{
+                                fontSize: isSmallScreen ? "24px" : "14px",
+                            }}
+                        />
+                    ),
+                    label: (
+                        <Link
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }}
+                            to={"/seller/orders/transfer"}
+                        >
+                            Передача
+                        </Link>
+                    ),
+                },
+                {
+                    key: "order-shipped",
+                    icon: (
+                        <CheckCircleOutlined
+                            style={{
+                                fontSize: isSmallScreen ? "24px" : "14px",
+                            }}
+                        />
+                    ),
+                    label: (
+                        <Link
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }}
+                            to={"/seller/orders/shipped"}
+                        >
+                            Отправлено
+                        </Link>
+                    ),
+                },
+                {
+                    key: "order-cancelled",
+                    icon: (
+                        <CloseCircleOutlined
+                            style={{
+                                fontSize: isSmallScreen ? "24px" : "14px",
+                            }}
+                        />
+                    ),
+                    label: (
+                        <Link
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }}
+                            to={"/seller/orders/cancelled"}
+                        >
+                            Отменено
+                        </Link>
+                    ),
+                },
+            ],
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/seller/my-orders"}
+                >
+                    Мои Заказы
+                </Link>
+            ),
+            key: "my-orders",
+            icon: (
+                <ShoppingCartOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+            children: [
+                {
+                    key: "my-order-package",
+                    icon: (
+                        <AuditOutlined
+                            style={{
+                                fontSize: isSmallScreen ? "24px" : "14px",
+                            }}
+                        />
+                    ),
+                    label: (
+                        <Link
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }}
+                            to={"/seller/orders/package"}
+                        >
+                            Упаковка
+                        </Link>
+                    ),
+                },
+                {
+                    key: "my-order-transfer",
+                    icon: (
+                        <TruckOutlined
+                            style={{
+                                fontSize: isSmallScreen ? "24px" : "14px",
+                            }}
+                        />
+                    ),
+                    label: (
+                        <Link
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }}
+                            to={"/seller/orders/transfer"}
+                        >
+                            Передача
+                        </Link>
+                    ),
+                },
+                {
+                    key: "my-order-shipped",
+                    icon: (
+                        <CheckCircleOutlined
+                            style={{
+                                fontSize: isSmallScreen ? "24px" : "14px",
+                            }}
+                        />
+                    ),
+                    label: (
+                        <Link
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }}
+                            to={"/seller/orders/shipped"}
+                        >
+                            Отправлено
+                        </Link>
+                    ),
+                },
+                {
+                    key: "my-order-cancelled",
+                    icon: (
+                        <CloseCircleOutlined
+                            style={{
+                                fontSize: isSmallScreen ? "24px" : "14px",
+                            }}
+                        />
+                    ),
+                    label: (
+                        <Link
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }}
+                            to={"/seller/orders/cancelled"}
+                        >
+                            Отменено
+                        </Link>
+                    ),
+                },
+            ],
         },
 
         {
@@ -188,6 +495,22 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             key: "service-params",
             icon: (
                 <ProductOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/seller/orders/archive"}
+                >
+                    Архив
+                </Link>
+            ),
+            key: "orders-archive",
+            icon: (
+                <HistoryOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

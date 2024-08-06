@@ -23,12 +23,14 @@ export const CustomMenu: FC<CustomMenuProps> = ({
         >
             <div className="flex flex-col gap-2">
                 <h2 className="text-sm text-[#1C1C1C66] ps-1">Меню</h2>
-                <Menu
-                    mode="inline"
-                    items={menuItems}
-                    selectedKeys={selectedKeys}
-                    className="scroll-hidden"
-                />
+                <div className="max-h-[550px] overflow-y-scroll">
+                    <Menu
+                        mode="inline"
+                        items={menuItems}
+                        selectedKeys={selectedKeys}
+                        className="scroll-hidden"
+                    />
+                </div>
             </div>
         </ConfigProvider>
     );

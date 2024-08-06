@@ -1,17 +1,5 @@
 import { BasePaginationResponse } from "@/types";
 
-export interface GetOrderById {
-    productArticle: string;
-    productName: string;
-    productVendorCode: string;
-    cellCode: string;
-    productTradePrice: number;
-    productSellPrice: number;
-    income: number;
-    pathToProductBarcode: string;
-    pathToBoxBarcode: string;
-}
-
 export interface GetOrdersAdmin
     extends BasePaginationResponse<GetOrdersAdminContent> {}
 
@@ -22,15 +10,30 @@ export interface GetOrdersEmployee
     extends BasePaginationResponse<GetOrdersEmployeeContent> {}
 
 export interface GetAssembleOrdersEmployee
-    extends BasePaginationResponse<GetAssembleOrdersContent> {}
+    extends BasePaginationResponse<GetAssembleOrdersEmployeeContent> {}
 
 export interface GetPackageOrdersEmployee
-    extends BasePaginationResponse<GetPackageOrdersContent> {}
+    extends BasePaginationResponse<GetPackageOrdersEmployeeContent> {}
 
 export interface GetTransferOrdersEmployee
-    extends BasePaginationResponse<GetTransferOrdersContent> {}
+    extends BasePaginationResponse<GetTransferOrdersEmployeeContent> {}
 
-export interface GetAssembleOrdersContent {
+export interface GetAssembleOrders
+    extends BasePaginationResponse<GetOrdersContent> {}
+
+export interface GetPackageOrders
+    extends BasePaginationResponse<GetOrdersContent> {}
+
+export interface GetTransferOrders
+    extends BasePaginationResponse<GetOrdersContent> {}
+
+export interface GetShippedOrders
+    extends BasePaginationResponse<GetOrdersContent> {}
+
+export interface GetCancelledOrders
+    extends BasePaginationResponse<GetOrdersContent> {}
+
+export interface GetAssembleOrdersEmployeeContent {
     id: number;
     product_vendor_code: string;
     product_title: string;
@@ -39,15 +42,7 @@ export interface GetAssembleOrdersContent {
     order_creation_date: string;
     order_entry: string;
 }
-export interface GetTransferOrdersContent {
-    id: string;
-    code: string;
-    kaspi_store_name: string;
-    delivery_mode: string;
-    creation_date: number;
-    courier_transmission_planning_date: string;
-}
-export interface GetPackageOrdersContent {
+export interface GetPackageOrdersEmployeeContent {
     id: number;
     product_vendor_code: string;
     product_title: string;
@@ -56,6 +51,27 @@ export interface GetPackageOrdersContent {
     waybill: string;
     order_entry: string;
 }
+
+export interface GetTransferOrdersEmployeeContent {
+    id: string;
+    code: string;
+    kaspi_store_name: string;
+    delivery_mode: string;
+    creation_date: number;
+    courier_transmission_planning_date: string;
+}
+export interface GetOrdersContent {
+    id: string;
+    code: string;
+    product_vendor_codes: string[];
+    product_titles: string[];
+    creation_date: number;
+    transmission_date: string;
+    total_price: number;
+    quantity_all?: number;
+    store_name?: string;
+}
+
 export interface GetOrdersSellerContent {
     id: string;
     code: string;
@@ -132,16 +148,6 @@ export interface GetOrderDetailEmployee {
     kaspi_delivery: number;
 }
 
-export interface Product {
-    productName: string;
-    productArticle: string;
-    productVendorCode: string;
-    pathToProductBarcode: string;
-    pathToBoxBarcode: string;
-    productStateInStore: string;
-    productCell: string;
-}
-
 export type DeliveryMode =
     | "ALL"
     | "EXPRESS"
@@ -150,28 +156,6 @@ export type DeliveryMode =
     | "ARCHIVE"
     | "";
 
-export interface ProductAssemble {
-    id: number;
-    article: string;
-    name: string;
-    cellCode: string;
-}
-
-export interface ProcessedProduct extends ProductAssemble {
-    processedEmployeeName: string;
-    processedDate: string;
-}
-
-export interface AssembleOrderResponse {
-    productsToProcess: ProductAssemble[];
-    processedProducts: ProcessedProduct[];
-    deliveryMode: string;
-    deadline: string;
-    sellerName: string;
-    startedEmployeeName: string;
-    orderCode: string;
-    assembleState: string;
-}
 export type OrderEmployeeStatus = "ASSEMBLE" | "PACKAGING" | "TRANSFER" | "END";
 
 export interface ProductStatusChangeRequest {

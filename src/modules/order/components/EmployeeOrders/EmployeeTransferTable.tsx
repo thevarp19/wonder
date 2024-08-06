@@ -4,9 +4,9 @@ import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetTransferOrderEmployee } from "../../queries";
-import { DeliveryMode, GetTransferOrdersContent } from "../../types";
+import { DeliveryMode, GetTransferOrdersEmployeeContent } from "../../types";
 
-const columns: TableColumnsType<GetTransferOrdersContent> = [
+const columns: TableColumnsType<GetTransferOrdersEmployeeContent> = [
     {
         title: "ID заказа",
         dataIndex: "code",

@@ -1,53 +1,62 @@
 import { DateCell } from "@/components/ui/DateCell";
-import { ConfigProvider, Table, TableColumnsType, Tag } from "antd";
+import { ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
-import {
-    GetAssembleOrdersEmployee,
-    GetAssembleOrdersEmployeeContent,
-} from "../../types";
+import { GetOrdersContent, GetTransferOrders } from "../../types";
 
-const columns: TableColumnsType<GetAssembleOrdersEmployeeContent> = [
+const columns: TableColumnsType<GetOrdersContent> = [
     {
         title: "ID заказа",
-        dataIndex: "order_code",
+        dataIndex: "code",
     },
-    {
-        title: "ID товара",
-        dataIndex: "id",
-    },
-    {
-        title: "Артикул",
-        dataIndex: "product_vendor_code",
-    },
-
-    {
-        title: "Название товара",
-        dataIndex: "product_title",
-    },
-    {
-        title: "Номер ячейки",
-        dataIndex: "deliveryMode",
-        render: (_, record) => <Tag>{record.cell_number}</Tag>,
-    },
+    // {
+    //     title: "ID товара",
+    //     dataIndex: "id",
+    // },
+    // {
+    //     title: "Артикул",
+    //     dataIndex: "product_vendor_codes",
+    //     render: (product_vendor_codes) =>
+    //         product_vendor_codes.map((code: any, index: any) => (
+    //             <Tag key={index}>{code}</Tag>
+    //         )),
+    // },
+    // {
+    //     title: "Название товара",
+    //     dataIndex: "product_titles",
+    //     render: (product_titles) =>
+    //         product_titles.map((title: any, index: any) => (
+    //             <Tag key={index}>{title}</Tag>
+    //         )),
+    // },
 
     {
         title: "Время заказа",
-        dataIndex: "order_creation_date",
+        dataIndex: "creation_date",
+        render: (_, record) => <DateCell timestamp={record.creation_date} />,
+    },
+    {
+        title: "Дата передачи",
+        dataIndex: "transmission_date",
         render: (_, record) => (
-            <DateCell timestamp={record?.order_creation_date} />
+            <DateCell timestamp={record.transmission_date} />
         ),
+    },
+    {
+        title: "Все количество",
+        dataIndex: "quantity_all",
+        render: (_, record) => <span>{record?.quantity_all}</span>,
     },
 ];
 
-interface EmployeeAssembleTableProps {
-    data: GetAssembleOrdersEmployee | undefined;
+interface SellerTransferTableProps {
+    data: GetTransferOrders | undefined;
     isPending: boolean;
     setPage: (page: number) => void;
     page: number;
 }
 
-export const EmployeeAssembleTable: FC<EmployeeAssembleTableProps> = ({
+export const SellerTransferTable: FC<SellerTransferTableProps> = ({
     data,
     isPending,
     setPage,

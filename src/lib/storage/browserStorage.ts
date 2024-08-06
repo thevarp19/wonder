@@ -11,9 +11,9 @@ class BrowserStorage {
         return tryWithErrorLog(() => {
             const stringValue = this.storage.getItem(key);
             if (!stringValue) {
-                throw new Error(`No value for key "${key}"`);
+                // throw new Error(`No value for key "${key}"`);
             }
-            const value = JSON.parse(stringValue) as V;
+            const value = stringValue ? (JSON.parse(stringValue) as V) : null;
             return value || null;
         });
     }

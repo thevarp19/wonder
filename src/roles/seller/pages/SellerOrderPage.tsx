@@ -1,4 +1,3 @@
-import { SellerOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/SellerOrderDetailsTable";
 // import { OrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
@@ -30,7 +29,7 @@ export const SellerOrderPage: FC<SellerOrderPageProps> = ({}) => {
                     ></Button>
                 </div> */}
             </div>
-            <SellerOrderDetailsTable orderId={orderId} />
+            {/* <SellerOrderDetailsTable orderId={orderId} /> */}
         </div>
     );
 };

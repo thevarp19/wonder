@@ -4,9 +4,12 @@ import { Button, ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import { GetPackageOrdersContent, GetPackageOrdersEmployee } from "../../types";
+import {
+    GetPackageOrdersEmployee,
+    GetPackageOrdersEmployeeContent,
+} from "../../types";
 
-const columns: TableColumnsType<GetPackageOrdersContent> = [
+const columns: TableColumnsType<GetPackageOrdersEmployeeContent> = [
     {
         title: "ID заказа",
         dataIndex: "order_code",

@@ -3,14 +3,12 @@ import { Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 // import { useGetOrder } from "../../queries";
-import { useGetAdminOrder } from "../../queries";
-import { GetOrderById } from "../../types";
 
 interface AdminOrderDetailsTableProps {
     orderId: number;
 }
 
-const columns: TableColumnsType<GetOrderById> = [
+const columns: TableColumnsType<any> = [
     {
         title: "ID",
         render: (_, record) => (
@@ -42,17 +40,15 @@ const columns: TableColumnsType<GetOrderById> = [
     },
 ];
 
-export const AdminOrderDetailsTable: FC<AdminOrderDetailsTableProps> = ({
-    orderId,
-}) => {
-    const { data, isPending } = useGetAdminOrder(orderId);
+export const AdminOrderDetailsTable: FC<AdminOrderDetailsTableProps> = ({}) => {
+    // const { data, isPending } = useGetAdminOrder(orderId);
 
     return (
         <Table
             columns={columns}
-            dataSource={data}
+            dataSource={[]}
             rowKey={"productVendorCode"}
-            loading={isPending}
+            loading={false}
         />
     );
 };

@@ -1,7 +1,7 @@
 // import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/EmployeeOrderTable";
 
 import { DateCell } from "@/components/ui/DateCell";
-import { EmployeeOrderDetailsTable } from "@/modules/order/components/EmployeeOrders/EmployeeOrderDetailsTable";
+import { EmployeeOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable/EmployeeOrderDetailsTable";
 import {} from "@/modules/order/mutations";
 import { useGetEmployeeOrder } from "@/modules/order/queries";
 import { Tag } from "antd";

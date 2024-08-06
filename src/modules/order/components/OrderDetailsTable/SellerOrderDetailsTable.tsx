@@ -4,14 +4,13 @@ import { FC } from "react";
 // import { useGetOrder } from "../../queries";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { useGetSellerOrder } from "../../queries";
-import { GetOrderById } from "../../types";
+// import { GetOrderById } from "../../types";
 
 interface SellerOrderDetailsTableProps {
     orderId: number;
 }
 
-const columns: TableColumnsType<GetOrderById> = [
+const columns: TableColumnsType<any> = [
     {
         title: "ID",
         render: (_, record) => (
@@ -97,17 +96,17 @@ const columns: TableColumnsType<GetOrderById> = [
 //     );
 // };
 
-export const SellerOrderDetailsTable: FC<SellerOrderDetailsTableProps> = ({
-    orderId,
-}) => {
-    const { data, isPending } = useGetSellerOrder(orderId);
+export const SellerOrderDetailsTable: FC<
+    SellerOrderDetailsTableProps
+> = ({}) => {
+    // const { data, isPending } = useGetSellerOrder(orderId);
 
     return (
         <Table
             columns={columns}
-            dataSource={data}
+            dataSource={[]}
             rowKey={"productVendorCode"}
-            loading={isPending}
+            loading={false}
         />
     );
 };

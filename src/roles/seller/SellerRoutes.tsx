@@ -10,19 +10,24 @@ import {
     SellerCreateStorePage,
     SellerHomePage,
     SellerLoginPage,
+    SellerOrderAssemblePage,
+    SellerOrderCancelledPage,
+    SellerOrderPackagePage,
     SellerOrderPage,
+    SellerOrderShippedPage,
     SellerOrdersPage,
+    SellerOrderTransferPage,
     SellerProductSizesPage,
     SellerProductsPage,
     SellerProfilePage,
     SellerRegisterPage,
     SellerServiceParamsPage,
     SellerSettingsPage,
+    SellerSupplyCreatePage,
     SellerSupplyDetailsPage,
     SellerSupplyPage,
     SellerUpdateStorePage,
 } from "./pages";
-import { SellerSupplyCreatePage } from "./pages/SellerSupplyCreatePage";
 
 interface SellerRoutesProps {}
 
@@ -80,6 +85,43 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                         element={<SellerCalculatorPage />}
                     />
                     <Route path="/orders" element={<SellerOrdersPage />} />
+                    <Route
+                        path="/my-orders"
+                        element={<div>Coming soon!</div>}
+                    />
+                    <Route
+                        path="/orders/assemble"
+                        element={<SellerOrderAssemblePage />}
+                    />
+                    <Route
+                        path="/orders/package"
+                        element={<SellerOrderPackagePage />}
+                    />
+                    <Route
+                        path="/orders/transfer"
+                        element={<SellerOrderTransferPage />}
+                    />
+                    <Route
+                        path="/orders/shipped"
+                        element={<SellerOrderShippedPage />}
+                    />
+                    <Route
+                        path="/orders/cancelled"
+                        element={<SellerOrderCancelledPage />}
+                    />
+                    <Route
+                        path="/orders/new"
+                        element={<div>Coming soon!</div>}
+                    />
+                    <Route
+                        path="/orders/signing"
+                        element={<div>Coming soon!</div>}
+                    />
+                    <Route
+                        path="/orders/archive"
+                        element={<div>Coming soon!</div>}
+                    />
+
                     <Route
                         path="/service-params"
                         element={<SellerServiceParamsPage />}

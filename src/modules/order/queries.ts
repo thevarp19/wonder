@@ -1,24 +1,36 @@
 import { useQuery } from "@tanstack/react-query";
 import {
-    getAdminOrderById,
+    getAssembleOrderAdmin,
     getAssembleOrderEmployee,
+    getAssembleOrderSeller,
+    getCancelledOrderAdmin,
+    getCancelledOrderSeller,
     getEmployeeOrderById,
     getOrdersAdmin,
     getOrdersEmployee,
     getOrdersSeller,
+    getPackageOrderAdmin,
     getPackageOrderEmployee,
-    getSellerOrderById,
+    getPackageOrderSeller,
+    getShippedOrderAdmin,
+    getShippedOrderSeller,
+    getTransferOrderAdmin,
     getTransferOrderEmployee,
+    getTransferOrderSeller,
 } from "./api";
 import {
     DeliveryMode,
+    GetAssembleOrders,
     GetAssembleOrdersEmployee,
-    GetOrderById,
+    GetCancelledOrders,
     GetOrderDetailEmployee,
     GetOrdersAdmin,
     GetOrdersEmployee,
     GetOrdersSeller,
+    GetPackageOrders,
     GetPackageOrdersEmployee,
+    GetShippedOrders,
+    GetTransferOrders,
     GetTransferOrdersEmployee,
 } from "./types";
 
@@ -41,18 +53,6 @@ export const useGetOrdersAdmin = (
         },
     });
 };
-
-// export const useGetOrdersByDate = (startDate: string, endDate: string) => {
-//     return useQuery<GetOrdersByDate[]>({
-//         queryKey: ["orders", startDate, endDate],
-//         queryFn: async () => {
-//             const { data } = await getOrdersByDate(startDate, endDate);
-//             return data
-//                 .filter((order) => order.waybill !== null)
-//                 .sort((a, b) => b.creationDate - a.creationDate);
-//         },
-//     });
-// };
 
 export const useGetOrdersSeller = (
     page: number = 0,
@@ -118,22 +118,47 @@ export const useGetAssembleOrderEmployee = (
         },
     });
 };
-export const useGetTransferOrderEmployee = (
+export const useGetAssembleOrderSeller = (
     page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
 ) => {
-    return useQuery<GetTransferOrdersEmployee>({
+    return useQuery<GetAssembleOrders>({
         queryKey: [
-            "orders-employee-transfer",
+            "orders-seller-assemble",
             page,
             size,
             searchValue,
             deliveryMode,
         ],
         queryFn: async () => {
-            const { data } = await getTransferOrderEmployee(
+            const { data } = await getAssembleOrderSeller(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetAssembleOrderAdmin = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetAssembleOrders>({
+        queryKey: [
+            "orders-admin-assemble",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getAssembleOrderAdmin(
                 page,
                 size,
                 searchValue,
@@ -168,31 +193,227 @@ export const useGetPackageOrderEmployee = (
         },
     });
 };
-
-// export const useGetOrderDetailEmployee = (id: number) => {
-//     return useQuery<GetOrderDetailEmployee[]>({
-//         queryKey: [`order-employee-${id}`],
-//         queryFn: async () => {
-//             const { data } = await getEmployeeOrderById(id);
-//             return data;
-//         },
-//     });
-// };
-
-export const useGetAdminOrder = (id: number) => {
-    return useQuery<GetOrderById[]>({
-        queryKey: [`order-admin-${id}`],
+export const useGetPackageOrderSeller = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetPackageOrders>({
+        queryKey: [
+            "orders-seller-package",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
         queryFn: async () => {
-            const { data } = await getAdminOrderById(id);
+            const { data } = await getPackageOrderSeller(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
             return data;
         },
     });
 };
-export const useGetSellerOrder = (id: number) => {
-    return useQuery<GetOrderById[]>({
-        queryKey: [`order-admin-${id}`],
+export const useGetPackageOrderAdmin = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetPackageOrders>({
+        queryKey: [
+            "orders-admin-package",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
         queryFn: async () => {
-            const { data } = await getSellerOrderById(id);
+            const { data } = await getPackageOrderAdmin(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetTransferOrderEmployee = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetTransferOrdersEmployee>({
+        queryKey: [
+            "orders-employee-transfer",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getTransferOrderEmployee(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetTransferOrderSeller = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetTransferOrders>({
+        queryKey: [
+            "orders-seller-transfer",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getTransferOrderSeller(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetTransferOrderAdmin = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetTransferOrders>({
+        queryKey: [
+            "orders-admin-transfer",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getTransferOrderAdmin(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetShippedOrderSeller = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetShippedOrders>({
+        queryKey: [
+            "orders-seller-shipped",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getShippedOrderSeller(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetShippedOrderAdmin = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetShippedOrders>({
+        queryKey: [
+            "orders-admin-shipped",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getShippedOrderAdmin(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetCancelledOrderSeller = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetCancelledOrders>({
+        queryKey: [
+            "orders-seller-cancelled",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getCancelledOrderSeller(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetCancelledOrderAdmin = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetCancelledOrders>({
+        queryKey: [
+            "orders-admin-cancelled",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getCancelledOrderAdmin(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
             return data;
         },
     });

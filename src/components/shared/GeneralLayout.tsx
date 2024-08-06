@@ -1,4 +1,4 @@
-import { bellIcon, icon, searchIcon, sidebarIcon } from "@/assets";
+import { bellIcon, icon, sidebarIcon } from "@/assets";
 import { Logo } from "@/components/shared/Logo";
 import { Image } from "@/components/ui/Image";
 import { MenuItemType } from "@/types";
@@ -8,7 +8,6 @@ import {
     Breadcrumb,
     ConfigProvider,
     Dropdown,
-    Input,
     Layout,
     MenuProps,
     Spin,
@@ -68,12 +67,12 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                     theme="light"
                     collapsible
                     className={cn(
-                        "hidden md:flex px-4 py-5 flex-col justify-center border-r-[1px] border-[#1C1C1C1A] relative"
+                        "hidden md:flex px-2 py-5 flex-col justify-center border-r-[1px] border-[#1C1C1C1A] relative"
                     )}
                     collapsed={collapsed}
                     trigger={null}
                 >
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 ">
                         <div
                             className={cn("flex items-center gap-4", {
                                 "justify-center": collapsed,
@@ -95,7 +94,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                                             menu={{ items: profileItems }}
                                         >
                                             <Avatar
-                                                size={32}
+                                                size={collapsed ? 24 : 32}
                                                 src={logoLink}
                                                 shape="circle"
                                             />
@@ -127,7 +126,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                     </div>
                     <div
                         className={cn(
-                            "absolute bottom-0 flex justify-center items-center h-[40px] mb-[28px] ms-[3px]"
+                            "absolute bottom-0 flex justify-center items-center h-[40px] mb-[28px] ms-[3px] "
                         )}
                     >
                         <Link to={logoLink} className="flex items-center">
@@ -175,7 +174,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
 
                         <div className="flex items-center gap-5 max-h-[28px]">
                             <div className="w-[215px]">
-                                <Input
+                                {/* <Input
                                     prefix={
                                         <Image
                                             src={searchIcon}
@@ -186,7 +185,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                                     placeholder="Поиск"
                                     // value={""}
                                     onChange={() => {}}
-                                />
+                                /> */}
                             </div>
                             <div>
                                 <Image
