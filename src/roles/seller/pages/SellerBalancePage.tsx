@@ -94,7 +94,10 @@ export const AddReplenishmentModal: FC = () => {
                     <Popconfirm
                         title="Подтверждение операции"
                         description="Вы подтверждаете операцию?"
-                        onConfirm={formik.submitForm}
+                        onConfirm={() => {
+                            formik.submitForm;
+                            setIsModalOpen(false);
+                        }}
                         okText="Да"
                         cancelText="Нет"
                     >

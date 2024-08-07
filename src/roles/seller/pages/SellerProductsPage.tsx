@@ -49,19 +49,10 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
         );
     };
     useEffect(() => {
-        // Reset isPublished when productCount is updated
         setIsPublished(null);
     }, [productCount]);
     return (
         <div className="h-full bg-white rounded-t-lg">
-            {/* <Button
-                size="large"
-                className="!rounded-md !w-full md:!hidden !block mb-8"
-                type="primary"
-                href="/seller/products/upload"
-            >
-                Импорт продукта
-            </Button> */}
             <div className="flex flex-col gap-5">
                 <div className="overflow-x-auto bg-[#F7F9FB] md:p-2 p-0 pt-2 rounded-lg">
                     <div className="min-w-[600px] flex justify-between">

@@ -44,11 +44,11 @@ export async function getProductsOptions({
 export function getProductsPrices(
     page: number = 1,
     size: number = 10,
-    // searchValue: string = "",
+    searchValue: string = "",
     cities: number[] = [],
     isPublished: boolean | null = null
 ) {
-    let url = `api/seller-product/?page=${page}&size=${size}`;
+    let url = `api/seller-product/?page=${page}&size=${size}&search=${searchValue}`;
     if (isPublished !== null) {
         url += `&is_published=${isPublished}`;
     }

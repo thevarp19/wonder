@@ -106,7 +106,7 @@ export const useGetProductsPrices = (
     page: number = 1,
     size: number = 10,
     cities: number[] = [],
-    // searchValue: string = "",
+    searchValue: string = "",
     isPublished: boolean | null = null
 ) => {
     return useQuery<GetProductPricesResponse>({
@@ -115,7 +115,7 @@ export const useGetProductsPrices = (
             const { data } = await getProductsPrices(
                 page,
                 size,
-                // searchValue,
+                searchValue,
                 cities,
                 isPublished
             );
