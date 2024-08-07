@@ -15,6 +15,7 @@ import { SellerServiceParamsPage } from "./SellerServiceParamsPage";
 import { SellerSettingsPage } from "./SellerSettingsPage";
 import { SellerUpdateStorePage } from "./SellerUpdateStorePage";
 
+import { SellerArchiveOrdersPage } from "./SellerArchiveOrdersPage";
 import { SellerOrderCancelledPage } from "./SellerOrderCancelledPage";
 import { SellerOrderShippedPage } from "./SellerOrderShippedPage";
 import { SellerSupplyCreatePage } from "./SellerSupplyCreatePage";
@@ -22,6 +23,7 @@ import { SellerSupplyDetailsPage } from "./SellerSupplyDetailsPage";
 import { SellerSupplyPage } from "./SellerSupplyPage";
 
 export {
+    SellerArchiveOrdersPage,
     SellerCalculatorPage,
     SellerCreateStorePage,
     SellerHomePage,

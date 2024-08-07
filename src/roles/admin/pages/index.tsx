@@ -1,3 +1,4 @@
+import { AdminArchiveOrdersPage } from "./AdminArchiveOrdersPage";
 import { AdminLoginPage } from "./AdminLoginPage";
 import { AdminOrderAssemblePage } from "./AdminOrderAssemblePage";
 import { AdminOrderCancelledPage } from "./AdminOrderCancelledPage";
@@ -14,6 +15,7 @@ import { StoreEmployeesPage } from "./StoreEmployeesPage";
 import { UpdateStorePage } from "./UpdateStorePage";
 
 export {
+    AdminArchiveOrdersPage,
     AdminLoginPage,
     AdminOrderAssemblePage,
     AdminOrderCancelledPage,

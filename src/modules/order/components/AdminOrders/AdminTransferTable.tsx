@@ -1,5 +1,5 @@
 import { DateCell } from "@/components/ui/DateCell";
-import { ConfigProvider, Table, TableColumnsType, Tag } from "antd";
+import { ConfigProvider, Table, TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { GetOrdersContent, GetTransferOrders } from "../../types";
@@ -9,27 +9,27 @@ const columns: TableColumnsType<GetOrdersContent> = [
         title: "ID заказа",
         dataIndex: "code",
     },
-    {
-        title: "Артикул",
-        dataIndex: "product_vendor_codes",
-        render: (product_vendor_codes) =>
-            product_vendor_codes.map((code: any, index: any) => (
-                <Tag key={index}>{code}</Tag>
-            )),
-    },
+    // {
+    //     title: "Артикул",
+    //     dataIndex: "product_vendor_codes",
+    //     render: (product_vendor_codes) =>
+    //         product_vendor_codes.map((code: any, index: any) => (
+    //             <Tag key={index}>{code}</Tag>
+    //         )),
+    // },
     {
         title: "Название склада",
         dataIndex: "store_name",
         render: (_, record) => <span>{record?.store_name}</span>,
     },
-    {
-        title: "Название товара",
-        dataIndex: "product_titles",
-        render: (product_titles) =>
-            product_titles.map((title: any, index: any) => (
-                <Tag key={index}>{title}</Tag>
-            )),
-    },
+    // {
+    //     title: "Название товара",
+    //     dataIndex: "product_titles",
+    //     render: (product_titles) =>
+    //         product_titles.map((title: any, index: any) => (
+    //             <Tag key={index}>{title}</Tag>
+    //         )),
+    // },
     {
         title: "Время заказа",
         dataIndex: "creation_date",

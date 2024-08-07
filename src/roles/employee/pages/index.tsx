@@ -1,3 +1,4 @@
+import { EmployeeArchiveOrdersPage } from "./EmployeeArchiveOrdersPage";
 import { EmployeeLoginPage } from "./EmployeeLoginPage";
 import { EmployeeOrderAssemblePage } from "./EmployeeOrderAssemblePage";
 import { EmployeeOrderPackagePage } from "./EmployeeOrderPackagePage";
@@ -11,6 +12,7 @@ import { ScanPage } from "./ScanPage";
 import { SupplyDetailsPage } from "./SupplyDetailsPage";
 
 export {
+    EmployeeArchiveOrdersPage,
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,
     EmployeeOrderPackagePage,

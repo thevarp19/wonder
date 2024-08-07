@@ -4,6 +4,7 @@ import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { AdminLayout } from "./AdminLayout";
 import {
+    AdminArchiveOrdersPage,
     AdminLoginPage,
     AdminOrderAssemblePage,
     AdminOrderCancelledPage,
@@ -92,7 +93,7 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                     />
                     <Route
                         path="/orders/archive"
-                        element={<div>Coming soon!</div>}
+                        element={<AdminArchiveOrdersPage />}
                     />
                     <Route
                         path="/orders/cancelled"

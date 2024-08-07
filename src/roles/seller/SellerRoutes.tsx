@@ -6,6 +6,7 @@ import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { SellerLayout } from "./SellerLayout";
 import {
+    SellerArchiveOrdersPage,
     SellerCalculatorPage,
     SellerCreateStorePage,
     SellerHomePage,
@@ -119,7 +120,7 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                     />
                     <Route
                         path="/orders/archive"
-                        element={<div>Coming soon!</div>}
+                        element={<SellerArchiveOrdersPage />}
                     />
 
                     <Route

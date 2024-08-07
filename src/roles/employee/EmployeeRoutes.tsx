@@ -5,6 +5,7 @@ import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { EmployeeLayout } from "./EmployeeLayout";
 import {
+    EmployeeArchiveOrdersPage,
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,
     EmployeeOrderPackagePage,
@@ -82,7 +83,7 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                     />
                     <Route
                         path="/orders/archive"
-                        element={<div>Coming soon!</div>}
+                        element={<EmployeeArchiveOrdersPage />}
                     />
                     <Route
                         path="/orders/cancelled"
