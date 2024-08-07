@@ -5,6 +5,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { AdminLayout } from "./AdminLayout";
 import {
     AdminArchiveOrdersPage,
+    AdminBalancePage,
     AdminLoginPage,
     AdminOrderAssemblePage,
     AdminOrderCancelledPage,
@@ -99,6 +100,7 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                         path="/orders/cancelled"
                         element={<AdminOrderCancelledPage />}
                     />
+                    <Route path="/balance" element={<AdminBalancePage />} />
                     <Route
                         path="/orders/:orderId"
                         element={<AdminOrderPage />}

@@ -6,6 +6,7 @@ import { MenuItemType } from "@/types";
 import {
     AppstoreAddOutlined,
     AuditOutlined,
+    BankOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
     FileOutlined,
@@ -70,6 +71,7 @@ const breadcrumbMapping: {
         { title: <a href="">Заказы</a> },
         { title: <a href="">Архив</a> },
     ],
+    "/admin/balance": [{ title: "Меню" }, { title: <a href="">Баланс</a> }],
 };
 function pathToKey(key: string) {
     if (key.startsWith("/admin/settings/")) {
@@ -82,6 +84,8 @@ function pathToKey(key: string) {
             return "settings";
         case "/admin/orders":
             return "orders";
+        case "/admin/balance":
+            return "balance";
         case "/admin/orders/new":
             return "orders-new";
         case "/admin/orders/signing":
@@ -305,6 +309,22 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
             key: "orders-archive",
             icon: (
                 <HistoryOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/admin/balance"}
+                >
+                    Баланс
+                </Link>
+            ),
+            key: "balance",
+            icon: (
+                <BankOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

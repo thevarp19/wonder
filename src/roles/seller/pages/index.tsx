@@ -16,6 +16,7 @@ import { SellerSettingsPage } from "./SellerSettingsPage";
 import { SellerUpdateStorePage } from "./SellerUpdateStorePage";
 
 import { SellerArchiveOrdersPage } from "./SellerArchiveOrdersPage";
+import { SellerBalancePage } from "./SellerBalancePage";
 import { SellerOrderCancelledPage } from "./SellerOrderCancelledPage";
 import { SellerOrderShippedPage } from "./SellerOrderShippedPage";
 import { SellerSupplyCreatePage } from "./SellerSupplyCreatePage";
@@ -24,6 +25,7 @@ import { SellerSupplyPage } from "./SellerSupplyPage";
 
 export {
     SellerArchiveOrdersPage,
+    SellerBalancePage,
     SellerCalculatorPage,
     SellerCreateStorePage,
     SellerHomePage,

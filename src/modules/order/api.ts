@@ -39,7 +39,7 @@ export function getOrdersSeller(
 }
 
 export function getOrdersEmployee(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -49,7 +49,7 @@ export function getOrdersEmployee(
     );
 }
 export function getAssembleOrderEmployee(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -59,7 +59,7 @@ export function getAssembleOrderEmployee(
     );
 }
 export function getAssembleOrderSeller(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -69,7 +69,7 @@ export function getAssembleOrderSeller(
     );
 }
 export function getAssembleOrderAdmin(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -79,7 +79,7 @@ export function getAssembleOrderAdmin(
     );
 }
 export function getPackageOrderEmployee(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -89,7 +89,7 @@ export function getPackageOrderEmployee(
     );
 }
 export function getPackageOrderSeller(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -99,7 +99,7 @@ export function getPackageOrderSeller(
     );
 }
 export function getPackageOrderAdmin(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -109,7 +109,7 @@ export function getPackageOrderAdmin(
     );
 }
 export function getTransferOrderEmployee(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -119,7 +119,7 @@ export function getTransferOrderEmployee(
     );
 }
 export function getTransferOrderSeller(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -129,7 +129,7 @@ export function getTransferOrderSeller(
     );
 }
 export function getTransferOrderAdmin(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -139,7 +139,7 @@ export function getTransferOrderAdmin(
     );
 }
 export function getShippedOrderSeller(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -149,7 +149,7 @@ export function getShippedOrderSeller(
     );
 }
 export function getShippedOrderAdmin(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -159,7 +159,7 @@ export function getShippedOrderAdmin(
     );
 }
 export function getCancelledOrderSeller(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -169,7 +169,7 @@ export function getCancelledOrderSeller(
     );
 }
 export function getCancelledOrderAdmin(
-    page: number = 0,
+    page: number = 1,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"

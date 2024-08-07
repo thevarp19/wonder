@@ -6,6 +6,7 @@ import { MenuItemType } from "@/types";
 import {
     AppstoreAddOutlined,
     AuditOutlined,
+    BankOutlined,
     CalculatorOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
@@ -49,6 +50,8 @@ function pathToKey(key: string) {
             return "supply";
         case "/seller/orders":
             return "orders";
+        case "/seller/balance":
+            return "balance";
         case "/seller/my-orders":
             return "my-orders";
         case "/seller/orders/new":
@@ -139,6 +142,7 @@ const breadcrumbMapping: {
         { title: <a href="">Заказы</a> },
         { title: <a href="">Архив</a> },
     ],
+    "/seller/balance": [{ title: "Меню" }, { title: <a href="">Баланс</a> }],
 };
 export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
@@ -156,6 +160,22 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             key: "home",
             icon: (
                 <HomeOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/seller/balance"}
+                >
+                    Баланс
+                </Link>
+            ),
+            key: "balance",
+            icon: (
+                <BankOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

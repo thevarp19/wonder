@@ -9,15 +9,12 @@ export const DateCell: FC<DateCellProps> = ({ timestamp }) => {
         return <div>-</div>;
     }
 
-    let dateObject;
+    let dateObject: Date | null = null;
 
     if (typeof timestamp === "string") {
-        const parsedTimestamp = parseInt(timestamp, 10);
-        dateObject = isNaN(parsedTimestamp) ? null : new Date(parsedTimestamp);
+        dateObject = new Date(timestamp);
     } else if (typeof timestamp === "number") {
         dateObject = new Date(timestamp);
-    } else {
-        dateObject = null;
     }
 
     if (!dateObject || isNaN(dateObject.getTime())) {

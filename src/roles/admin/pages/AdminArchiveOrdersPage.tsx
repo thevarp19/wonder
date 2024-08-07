@@ -69,7 +69,7 @@ export const AdminArchiveOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
             </div> */}
             <div className="flex flex-col gap-5">
                 <div className="overflow-x-auto bg-[#F7F9FB] md:pt-0 pt-2 rounded-lg ">
-                    <div className="min-w-[600px] flex justify-between">
+                    <div className="min-w-[600px] flex justify-between py-2">
                         <div className="flex items-center gap-4 px-2 rounded-lg">
                             <Input
                                 prefix={
