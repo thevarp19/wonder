@@ -180,8 +180,8 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
     const { data: products, isPending } = useGetProductsPrices(
         page,
         10,
-        activeStoreIds,
         debouncedSearchValue,
+        activeStoreIds,
         isPublished
     );
     useEffect(() => {
