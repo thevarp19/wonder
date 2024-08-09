@@ -95,7 +95,7 @@ export const AddReplenishmentModal: FC = () => {
                         title="Подтверждение операции"
                         description="Вы подтверждаете операцию?"
                         onConfirm={() => {
-                            formik.submitForm;
+                            formik.handleSubmit();
                             setIsModalOpen(false);
                         }}
                         okText="Да"
