@@ -126,12 +126,16 @@ export const changeProductPriceMutation = () => {
 };
 export const autoUploadDataMutation = () => {
     const { message } = App.useApp();
-    return useMutation<void, AxiosError<any>, LoginRequest>({
+    const navigate = useNavigate();
+    return useMutation<any, AxiosError<any>, LoginRequest>({
         async mutationFn(values) {
-            await autoUploadProductData(values);
+            const response = await autoUploadProductData(values);
+            return response;
         },
-        onSuccess() {
-            message.success("Успешно!");
+        onSuccess(response) {
+            // message.success("Успешно!");
+            message.success(response?.data?.detail);
+            navigate("/seller");
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);
