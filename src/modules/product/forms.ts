@@ -1,11 +1,16 @@
 import { formatPrice } from "@/utils/shared.util";
 import { useFormik } from "formik";
 import { useEffect, useReducer } from "react";
+import * as Yup from "yup";
 import { UpdateProductSizeRequest } from "../store/types";
 import {
+    autoUploadDataMutation,
     createProductSizeMutation,
     updateProductSizeMutation,
 } from "./mutations";
+
+import { passwordSchemas } from "@/lib/validations/shared";
+import { LoginRequest } from "../auth/types";
 import { ChangeProductPriceRequest, ProductSizes } from "./types";
 
 export interface ProductCityPriceChangeState {
@@ -227,4 +232,29 @@ export const useUpdateProductSize = (
     }
 
     return { formik };
+};
+const loginSchema = Yup.object().shape({
+    // email: emailSchema().required("Это обязательное поле"),
+    password: passwordSchemas("password").self.required(
+        "Это обязательное поле"
+    ),
+});
+export const useAutoUploadForm = () => {
+    const mutation = autoUploadDataMutation();
+
+    const formik = useFormik<LoginRequest>({
+        initialValues: {
+            username: "",
+            password: "",
+        },
+        validationSchema: loginSchema,
+        validateOnChange: true,
+        onSubmit: handleSubmit,
+    });
+
+    async function handleSubmit() {
+        await mutation.mutateAsync(formik.values);
+    }
+
+    return { formik, mutation };
 };

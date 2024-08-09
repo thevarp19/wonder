@@ -11,7 +11,7 @@ import * as Yup from "yup";
 import { loginMutation, sellerRegisterMutation } from "./mutations";
 
 const loginSchema = Yup.object().shape({
-    // email: emailSchema().required("Это обязательное поле"),
+    // username: emailSchema().required("Это обязательное поле"),
     password: passwordSchemas("password").self.required(
         "Это обязательное поле"
     ),

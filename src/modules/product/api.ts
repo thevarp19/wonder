@@ -1,4 +1,5 @@
-import { axiosAuthorized } from "@/lib/axios";
+import { axiosAuthorized, axiosAuthorizedAutoUpload } from "@/lib/axios";
+import { LoginRequest } from "../auth/types";
 import { UpdateProductSizeRequest } from "../store/types";
 import {
     ChangeProductPriceRequest,
@@ -83,6 +84,9 @@ export function createProductSize(
         ...values,
         product: id,
     });
+}
+export function autoUploadProductData(values: LoginRequest) {
+    return axiosAuthorizedAutoUpload.post(`/products/import-products`, values);
 }
 
 export function changeProductPrice(value: ChangeProductPriceRequest[]) {

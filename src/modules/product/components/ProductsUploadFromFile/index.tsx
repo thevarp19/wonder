@@ -1,10 +1,10 @@
 import { FormikInput } from "@/components/ui/FormikInput";
-import { useSellerRegister } from "@/modules/auth/forms";
 import { cn } from "@/utils/shared.util";
 import { InboxOutlined } from "@ant-design/icons";
 import { Button, Form, Select, Spin, Upload } from "antd";
 import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAutoUploadForm } from "../../forms";
 import { createProductsFromFileMutation } from "../../mutations";
 import { GetProductContent } from "../../types";
 
@@ -20,7 +20,7 @@ export const ProductsUploadFromFile: FC<ProductsUploadFromFileProps> = ({
     const { isPending, mutate, data } = createProductsFromFileMutation();
     const [importType, setImportType] = useState("sheet_additions");
     const [uploadType, setUploadType] = useState("");
-    const { formik } = useSellerRegister();
+    const { formik } = useAutoUploadForm();
 
     useEffect(() => {
         if (data && setProducts) {
@@ -109,7 +109,7 @@ export const ProductsUploadFromFile: FC<ProductsUploadFromFileProps> = ({
                         <div className="flex flex-col gap-[10px] text-[#4B4B4B]">
                             Почта
                             <FormikInput
-                                name="email"
+                                name="username"
                                 formik={formik}
                                 formItemProps={{ className: cn("w-full") }}
                                 inputProps={{
@@ -134,6 +134,7 @@ export const ProductsUploadFromFile: FC<ProductsUploadFromFileProps> = ({
                             type="primary"
                             size="large"
                             className="!w-full mt-3"
+                            onClick={formik.submitForm}
                         >
                             Подтвердить
                         </Button>

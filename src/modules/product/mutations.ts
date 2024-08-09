@@ -2,8 +2,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { App } from "antd";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
+import { LoginRequest } from "../auth/types";
 import { UpdateProductSizeRequest } from "../store/types";
 import {
+    autoUploadProductData,
     changeProductPrice,
     changeProductVisibility,
     createProductsFromFile,
@@ -116,6 +118,20 @@ export const changeProductPriceMutation = () => {
             queryClient.invalidateQueries({
                 queryKey: ["products-prices"],
             });
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
+        },
+    });
+};
+export const autoUploadDataMutation = () => {
+    const { message } = App.useApp();
+    return useMutation<void, AxiosError<any>, LoginRequest>({
+        async mutationFn(values) {
+            await autoUploadProductData(values);
+        },
+        onSuccess() {
+            message.success("Успешно!");
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);
