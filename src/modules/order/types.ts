@@ -102,7 +102,7 @@ export interface GetOrdersEmployeeContent {
     creation_date: number;
     delivery_mode: string;
     total_price: number;
-    wonder_status: string;
+    wonder_status?: string;
 }
 
 export interface GetOrderDetailEmployee {

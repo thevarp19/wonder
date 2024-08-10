@@ -1,8 +1,10 @@
 import { EmployeeArchiveOrdersPage } from "./EmployeeArchiveOrdersPage";
 import { EmployeeLoginPage } from "./EmployeeLoginPage";
 import { EmployeeOrderAssemblePage } from "./EmployeeOrderAssemblePage";
+import { EmployeeOrderCancelledPage } from "./EmployeeOrderCancelledPage";
 import { EmployeeOrderPackagePage } from "./EmployeeOrderPackagePage";
 import { EmployeeOrderPage } from "./EmployeeOrderPage";
+import { EmployeeOrderShippedPage } from "./EmployeeOrderShippedPage";
 import { EmployeeOrdersPage } from "./EmployeeOrdersPage";
 import { EmployeeOrderTransferPage } from "./EmployeeOrderTransferPage";
 import { EmployeeProductSizesPage } from "./EmployeeProductSizesPage";
@@ -15,8 +17,10 @@ export {
     EmployeeArchiveOrdersPage,
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,
+    EmployeeOrderCancelledPage,
     EmployeeOrderPackagePage,
     EmployeeOrderPage,
+    EmployeeOrderShippedPage,
     EmployeeOrdersPage,
     EmployeeOrderTransferPage,
     EmployeeProductSizesPage,

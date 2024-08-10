@@ -148,6 +148,16 @@ export function getShippedOrderSeller(
         `/api/order-seller/sent/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
+export function getShippedOrderEmployee(
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetOrdersEmployee>(
+        `/api/order-employee/sent/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
 export function getShippedOrderAdmin(
     page: number = 1,
     size: number = 10,
@@ -166,6 +176,16 @@ export function getCancelledOrderSeller(
 ) {
     return axiosAuthorized.get<GetCancelledOrders>(
         `/api/order-seller/cancelled/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getCancelledOrderEmployee(
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetOrdersEmployee>(
+        `/api/order-employee/cancelled/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
 export function getCancelledOrderAdmin(

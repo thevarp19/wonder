@@ -4,6 +4,7 @@ import {
     getAssembleOrderEmployee,
     getAssembleOrderSeller,
     getCancelledOrderAdmin,
+    getCancelledOrderEmployee,
     getCancelledOrderSeller,
     getEmployeeOrderById,
     getOrdersAdmin,
@@ -13,6 +14,7 @@ import {
     getPackageOrderEmployee,
     getPackageOrderSeller,
     getShippedOrderAdmin,
+    getShippedOrderEmployee,
     getShippedOrderSeller,
     getTransferOrderAdmin,
     getTransferOrderEmployee,
@@ -343,6 +345,31 @@ export const useGetShippedOrderSeller = (
         },
     });
 };
+export const useGetShippedOrderEmployee = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetOrdersEmployee>({
+        queryKey: [
+            "orders-employee-shipped",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getShippedOrderEmployee(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
 export const useGetShippedOrderAdmin = (
     page: number = 1,
     size: number = 10,
@@ -384,6 +411,31 @@ export const useGetCancelledOrderSeller = (
         ],
         queryFn: async () => {
             const { data } = await getCancelledOrderSeller(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetCancelledOrderEmployee = (
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetOrdersEmployee>({
+        queryKey: [
+            "orders-employee-cancelled",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getCancelledOrderEmployee(
                 page,
                 size,
                 searchValue,

@@ -35,7 +35,7 @@ const columns: TableColumnsType<GetOrdersEmployeeContent> = [
     {
         title: "Статус",
         dataIndex: "state",
-        render: (_, record) => <Tag>{record.wonder_status}</Tag>,
+        render: (_, record) => <Tag>{record?.wonder_status}</Tag>,
     },
 ];
 
@@ -62,7 +62,7 @@ export const EmployeeOrdersTable: FC<EmployeeOrdersTableProps> = ({
         <Table
             columns={columns}
             dataSource={orders?.content}
-            rowKey={"orderCode"}
+            rowKey={"code"}
             loading={isPending}
             pagination={{
                 pageSize: 10,

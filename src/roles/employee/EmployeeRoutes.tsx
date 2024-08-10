@@ -8,8 +8,10 @@ import {
     EmployeeArchiveOrdersPage,
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,
+    EmployeeOrderCancelledPage,
     EmployeeOrderPackagePage,
     EmployeeOrderPage,
+    EmployeeOrderShippedPage,
     EmployeeOrdersPage,
     EmployeeOrderTransferPage,
     EmployeeProductSizesPage,
@@ -71,7 +73,7 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                     />
                     <Route
                         path="/orders/shipped"
-                        element={<div>Coming soon!</div>}
+                        element={<EmployeeOrderShippedPage />}
                     />
                     <Route
                         path="/orders/new"
@@ -87,7 +89,7 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                     />
                     <Route
                         path="/orders/cancelled"
-                        element={<div>Coming soon!</div>}
+                        element={<EmployeeOrderCancelledPage />}
                     />
                     <Route
                         path="/orders/:orderId"
