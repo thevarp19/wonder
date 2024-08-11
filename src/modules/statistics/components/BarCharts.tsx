@@ -12,73 +12,22 @@ import {
 } from "recharts";
 import { WeeklyOrderItem } from "../types";
 
-// const data = [
-//     {
-//         count: 1400,
-//         income: 1300,
-//         day: "пн",
-//     },
-//     {
-//         count: 15000,
-//         income: 1400,
-//         day: "вт",
-//     },
-//     {
-//         count: 16900,
-//         income: 1500,
-//         day: "ср",
-//     },
-//     {
-//         count: 16900,
-//         income: 1500,
-//         day: "ср",
-//     },
-//     {
-//         count: 16900,
-//         income: 1500,
-//         day: "ср",
-//     },
-//     {
-//         count: 16900,
-//         income: 1500,
-//         day: "ср",
-//     },
-//     {
-//         count: 16900,
-//         income: 1500,
-//         day: "ср",
-//     },
-//     {
-//         count: 16900,
-//         income: 1500,
-//         day: "ср",
-//     },
-//     {
-//         count: 16900,
-//         income: 1500,
-//         day: "ср",
-//     },
-//     {
-//         count: 17000,
-//         income: 1600,
-//         day: "чт",
-//     },
-//     {
-//         count: 1800,
-//         income: 1700,
-//         day: "пт",
-//     },
-//     {
-//         count: 1900,
-//         income: 1800,
-//         day: "сб",
-//     },
-//     {
-//         count: 2000,
-//         income: 900,
-//         day: "вс",
-//     },
-// ];
+const dayMapping: { [key: number]: string } = {
+    1: "пн",
+    2: "вт",
+    3: "ср",
+    4: "чт",
+    5: "пт",
+    6: "сб",
+    7: "вс",
+};
+
+const mapDaysToStrings = (data: WeeklyOrderItem[]) => {
+    return data.map((item) => ({
+        ...item,
+        day: dayMapping[item.day],
+    }));
+};
 
 const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
     if (active && payload && payload.length) {
@@ -102,13 +51,15 @@ interface BarChartsProps {
 export const BarCharts: FC<BarChartsProps> = ({ data }) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
 
+    const mappedData = mapDaysToStrings(data);
+
     return (
         <div className="w-full sm:w-[50%] h-full p-6 sm:p-10 flex flex-col justify-center bg-[#F7F9FB] rounded-[32px]">
             <h2 className="text-base sm:text-[24px] font-[500] ml-7 mb-5">
                 Заказы
             </h2>
             <ResponsiveContainer height={300}>
-                <BarChart data={data}>
+                <BarChart data={mappedData}>
                     <CartesianGrid strokeDasharray="0" strokeWidth={0} />
                     <XAxis dataKey="day" padding={{ left: 30, right: 30 }} />
                     <YAxis
