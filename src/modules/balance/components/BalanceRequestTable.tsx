@@ -1,19 +1,27 @@
-import { DownloadOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Select, Table, TableColumnsType } from "antd";
-import { FC } from "react";
+import { axiosAuthorized } from "@/lib/axios";
+import { UploadOutlined } from "@ant-design/icons";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+    App,
+    Button,
+    ConfigProvider,
+    Modal,
+    Select,
+    Table,
+    TableColumnsType,
+} from "antd";
+import { RcFile } from "antd/es/upload";
+import { Upload } from "antd/lib";
+import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Link } from "react-router-dom";
 import { statusReplenishMutation } from "../mutations";
 import {
     GetAdminReplenishmentContent,
     GetAdminReplenishmentResponse,
 } from "../types";
 const { Option } = Select;
+
 const columns: TableColumnsType<GetAdminReplenishmentContent> = [
-    // {
-    //     title: "ID",
-    //     dataIndex: "id",
-    // },
     {
         title: "Название магазина Kaspi",
         dataIndex: "seller.kaspi_store_name",
@@ -50,18 +58,11 @@ const columns: TableColumnsType<GetAdminReplenishmentContent> = [
         dataIndex: "check_url",
         render: (_, record) => {
             return (
-                <Link target="_blank" to={record.check_url}>
-                    <Button
-                        danger
-                        loading={false}
-                        icon={
-                            <DownloadOutlined
-                                color="#ef7214"
-                                style={{ color: "#ef7214" }}
-                            />
-                        }
-                    ></Button>
-                </Link>
+                <UploadCheckModal
+                    id={record.id}
+                    initialFile={record?.check_url}
+                    onUploadSuccess={() => (record.status = "PROCESSING")}
+                />
             );
         },
     },
@@ -119,27 +120,139 @@ export const BalanceRequestTable: FC<BalanceRequestTableProps> = ({
 interface ReplenishmentStatusChangeProps {
     record: GetAdminReplenishmentContent;
 }
-// type ReplenishmentStatus = "PROCESSING" | "PAID";
 export const ReplenishmentStatusChange: FC<ReplenishmentStatusChangeProps> = ({
     record,
 }) => {
     const { isPending, mutateAsync } = statusReplenishMutation(record.id);
+
     const handleChange = async (value: string) => {
         await mutateAsync(value);
+        if (value === "PAID") {
+            record.status = "PAID";
+        }
     };
+
+    const isPaid = record.status === "PAID";
+    const isFileUploaded = Boolean(record.check_url);
 
     return (
         <div className="flex items-center gap-2">
             <Select
-                // className="w-[200px]"
                 placeholder="Статус"
                 onChange={handleChange}
-                value={record.status === "PROCESSING" ? "PROCESSING" : "PAID"}
-                disabled={isPending}
+                value={record.status}
+                disabled={isPending || isPaid}
             >
                 <Option value="PROCESSING">Ожидание</Option>
-                <Option value="PAID">Оплачено</Option>
+                <Option value="PAID" disabled={!isFileUploaded || isPaid}>
+                    Оплачено
+                </Option>
             </Select>
         </div>
+    );
+};
+
+interface UploadCheckModalProps {
+    id: number | undefined;
+    initialFile?: string;
+    onUploadSuccess?: () => void;
+}
+
+export const UploadCheckModal: FC<UploadCheckModalProps> = ({
+    id,
+    initialFile,
+    onUploadSuccess,
+}) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [fileList, setFileList] = useState<any[]>([]);
+    const { message } = App.useApp();
+    const queryClient = useQueryClient();
+    const handleUpload = async (file: RcFile) => {
+        if (!id) return;
+
+        const formData = new FormData();
+        formData.append("check_file", file);
+
+        try {
+            await axiosAuthorized.patch(
+                `/api/replenishment/admin/${id}/`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+            message.success("Файл успешно загружен");
+            queryClient.invalidateQueries({
+                queryKey: [`admin-replenishment`],
+            });
+            setIsModalOpen(false);
+
+            if (onUploadSuccess) {
+                onUploadSuccess();
+            }
+        } catch (error) {
+            message.error("Ошибка при загрузке файла");
+        }
+    };
+
+    return (
+        <>
+            <Modal
+                title="Загрузить чек"
+                open={isModalOpen}
+                onCancel={() => setIsModalOpen(false)}
+                cancelText="Назад"
+                okButtonProps={{ style: { display: "none" } }}
+                destroyOnClose
+            >
+                <Upload
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    beforeUpload={(file) => {
+                        handleUpload(file);
+                        return false;
+                    }}
+                    fileList={fileList}
+                    onChange={({ fileList }) => setFileList(fileList)}
+                    listType="picture"
+                    showUploadList={{
+                        showRemoveIcon: true,
+                        showPreviewIcon: true,
+                    }}
+                    defaultFileList={
+                        initialFile
+                            ? [
+                                  {
+                                      uid: "-1",
+                                      name: initialFile.split("/").pop() || "",
+                                      status: "done",
+                                      url: initialFile,
+                                  },
+                              ]
+                            : []
+                    }
+                >
+                    <Button icon={<UploadOutlined />}>Загрузить чек</Button>
+                </Upload>
+                {initialFile && (
+                    <div style={{ marginTop: 16 }}>
+                        <a
+                            href={initialFile}
+                            target="_blank"
+                            className="cursor-pointer"
+                            rel="noopener noreferrer"
+                        >
+                            Посмотреть файл
+                        </a>
+                    </div>
+                )}
+            </Modal>
+            <Button
+                className={`${initialFile ? "!bg-[#cbffc0]" : ""}`}
+                icon={<UploadOutlined />}
+                onClick={() => setIsModalOpen(true)}
+            ></Button>
+        </>
     );
 };

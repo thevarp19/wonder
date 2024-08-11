@@ -28,8 +28,8 @@ export function changeStatusReplenishment(id: number, status: string) {
         status: status,
     });
 }
-export function changeFileReplenishment(id: number, file: string) {
-    return axiosAuthorized.patch(`/api/replenishment/admin/${id}/`, {
-        check_file: file,
-    });
-}
+// export function changeFileReplenishment(id: number, file: string) {
+//     return axiosAuthorized.patch(`/api/replenishment/admin/${id}/`, {
+//         check_file: file,
+//     });
+// }

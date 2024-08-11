@@ -1,6 +1,13 @@
 import { DateCell } from "@/components/ui/DateCell";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Table, TableColumnsType, Tag } from "antd";
+import {
+    Button,
+    ConfigProvider,
+    Table,
+    TableColumnsType,
+    Tag,
+    Tooltip,
+} from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -45,11 +52,10 @@ const columns: TableColumnsType<GetSellerReplenishmentContent> = [
         title: "Чек",
         dataIndex: "check_url",
         render: (_, record) => {
-            return (
+            return record.check_url ? (
                 <Link target="_blank" to={record.check_url}>
                     <Button
                         danger
-                        loading={false}
                         icon={
                             <DownloadOutlined
                                 color="#ef7214"
@@ -58,6 +64,19 @@ const columns: TableColumnsType<GetSellerReplenishmentContent> = [
                         }
                     ></Button>
                 </Link>
+            ) : (
+                <Tooltip title="Чек отсутствует">
+                    <Button
+                        danger
+                        icon={
+                            <DownloadOutlined
+                                color="#000000"
+                                style={{ color: "#000000" }}
+                            />
+                        }
+                        disabled
+                    ></Button>
+                </Tooltip>
             );
         },
     },

@@ -23,8 +23,9 @@ const columns: TableColumnsType<GetAdminReplenishmentContent> = [
         dataIndex: "iban",
     },
     {
-        title: "Сумма",
-        dataIndex: "amount",
+        title: "Баланс",
+        dataIndex: "balance",
+        render: (_, record) => <span>{record.seller.balance}</span>,
     },
 ];
 

@@ -14,6 +14,7 @@ export interface GetAdminReplenishmentContent {
         email: string;
         phone_number: string;
         kaspi_store_name: string;
+        balance: string;
     };
     iban: string;
     amount: number;

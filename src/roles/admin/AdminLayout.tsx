@@ -130,6 +130,22 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/admin/balance"}
+                >
+                    Баланс
+                </Link>
+            ),
+            key: "balance",
+            icon: (
+                <BankOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
                     to={"/admin/orders/new"}
                 >
                     Новые
@@ -309,22 +325,6 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
             key: "orders-archive",
             icon: (
                 <HistoryOutlined
-                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
-                />
-            ),
-        },
-        {
-            label: (
-                <Link
-                    style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/admin/balance"}
-                >
-                    Баланс
-                </Link>
-            ),
-            key: "balance",
-            icon: (
-                <BankOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

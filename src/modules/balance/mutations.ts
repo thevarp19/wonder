@@ -42,3 +42,22 @@ export const statusReplenishMutation = (id: number) => {
         },
     });
 };
+// export const uploadFileReplenishMutation = (id: number) => {
+//     const { message } = App.useApp();
+//     const queryClient = useQueryClient();
+//     return useMutation<void, AxiosError<any>, any>({
+//         async mutationFn(values) {
+//             await changeFileReplenishment(id, values);
+//         },
+//         onSuccess() {
+//             message.success("Успешно!");
+
+//             queryClient.invalidateQueries({
+//                 queryKey: [`admin-replenishment`],
+//             });
+//         },
+//         onError(error) {
+//             message.error(`${error?.response?.data.message}`);
+//         },
+//     });
+// };
