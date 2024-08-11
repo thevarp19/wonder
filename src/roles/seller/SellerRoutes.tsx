@@ -1,5 +1,6 @@
 import { Protected } from "@/context/Protected";
 import { ProductsUploadInstructionsCollapse } from "@/modules/product/components/ProductsUploadInstructions/ProductInstructionCollapse";
+import { ProductsUploadInstructionsAuto } from "@/modules/product/components/ProductsUploadInstructions/ProductsUploadInstructionsAuto";
 import { StoreActivationForm } from "@/modules/store/components/CreateStoreForm/StoreActivationForm";
 import { useAppSelector } from "@/redux/utils";
 import { FC } from "react";
@@ -138,6 +139,14 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
             </Route>
             <Route path="/login" element={<SellerLoginPage />} />
             <Route path="/register" element={<SellerRegisterPage />} />
+            <Route
+                path="/auto-upload-instruction"
+                element={
+                    <div className="flex justify-center px-20 py-10">
+                        <ProductsUploadInstructionsAuto />
+                    </div>
+                }
+            />
         </Routes>
     );
 };

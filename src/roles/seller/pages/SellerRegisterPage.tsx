@@ -10,7 +10,7 @@ export const SellerRegisterPage: FC<SellerRegisterPageProps> = ({}) => {
         <div className="flex flex-col items-center h-screen bg-[#F7F9FB]">
             <HeaderLogo />
             <div className="flex justify-center w-full h-full md:pt-[70px] pt-0">
-                <section className="flex flex-col items-center w-full max-w-sm">
+                <section className="flex flex-col items-center w-full max-w-md">
                     <h1 className="py-5 text-2xl font-semibold">
                         Добро пожаловать!
                     </h1>

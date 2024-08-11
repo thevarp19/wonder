@@ -6,6 +6,7 @@ import { cn } from "@/utils/shared.util";
 import {
     Avatar,
     Breadcrumb,
+    Button,
     ConfigProvider,
     Dropdown,
     Layout,
@@ -25,6 +26,7 @@ interface GeneralLayoutProps {
     profileItems: MenuProps["items"];
     logoLink: string;
     isPending?: boolean;
+    balance?: string;
     userEmail: string | undefined;
     breadcrumbItems: {
         [key: string]: { title: string | JSX.Element }[];
@@ -42,6 +44,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
     userEmail,
     role,
     selectedKeys,
+    balance,
 }) => {
     const [collapsed, setCollapsed] = useState(false);
     const {
@@ -85,36 +88,57 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                                         className="w-full h-full"
                                     />
                                 ) : (
-                                    <div
-                                        className={cn(
-                                            "flex justify-start items-center gap-2 p-2"
-                                        )}
-                                    >
-                                        <Dropdown
-                                            menu={{ items: profileItems }}
+                                    <div className="flex flex-col gap-2">
+                                        <div
+                                            className={cn(
+                                                "flex justify-start items-center gap-2 p-2"
+                                            )}
                                         >
-                                            <Avatar
-                                                size={collapsed ? 24 : 32}
-                                                src={logoLink}
-                                                shape="circle"
-                                            />
-                                        </Dropdown>
-                                        <div className="overflow-hidden text-sm max-w-28">
-                                            <h2
-                                                className={cn({
-                                                    hidden: collapsed,
-                                                })}
+                                            <Dropdown
+                                                menu={{ items: profileItems }}
                                             >
-                                                {userEmail}
-                                            </h2>
-                                            <h2
-                                                className={cn({
-                                                    hidden: collapsed,
-                                                })}
-                                            >
-                                                {role}
-                                            </h2>
+                                                <Avatar
+                                                    size={collapsed ? 24 : 32}
+                                                    src={logoLink}
+                                                    shape="circle"
+                                                />
+                                            </Dropdown>
+                                            <div className="overflow-hidden text-sm max-w-28">
+                                                <h2
+                                                    className={cn({
+                                                        hidden: collapsed,
+                                                    })}
+                                                >
+                                                    {userEmail}
+                                                </h2>
+                                                <h2
+                                                    className={cn({
+                                                        hidden: collapsed,
+                                                    })}
+                                                >
+                                                    {role}
+                                                </h2>
+                                            </div>
                                         </div>
+                                        {role === "Продавец" && (
+                                            <div className="flex flex-col items-center gap-2 px-1 py-2 border rounded-md">
+                                                <h2
+                                                    className={cn({
+                                                        hidden: collapsed,
+                                                    })}
+                                                >
+                                                    Баланс: {balance} ₸
+                                                </h2>
+                                                <Button
+                                                    size="small"
+                                                    type="primary"
+                                                    className="w-full"
+                                                    href="/seller/balance"
+                                                >
+                                                    Пополнить
+                                                </Button>
+                                            </div>
+                                        )}
                                     </div>
                                 )}
                             </div>

@@ -30,6 +30,8 @@ export const useUpdateSellerProfile = (
             first_name: "",
             last_name: "",
             email: "",
+            xml: "",
+            balance: "",
         },
         validationSchema: updateSellerProfileSchema,
         validateOnBlur: true,

@@ -576,6 +576,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             logoLink={data?.avatar || ""}
             role="Продавец"
             userEmail={data?.kaspi_store_name}
+            balance={data?.balance}
             selectedKeys={selectedKeys}
         />
     );

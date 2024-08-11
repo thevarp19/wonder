@@ -2,6 +2,7 @@ import { FormikInput, FormikPasswordInput } from "@/components/ui/FormikInput";
 import { phoneNumberChangeHandler } from "@/utils/form.util";
 import { cn } from "@/utils/shared.util";
 import {
+    IdcardOutlined,
     ShopOutlined,
     SolutionOutlined,
     UserOutlined,
@@ -44,6 +45,15 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
             formik.setFieldTouched("kaspi_token");
             return;
         }
+        if (
+            (formik.values.merchant_email == "" ||
+                formik.values.merchant_password == "") &&
+            current == 3
+        ) {
+            formik.setFieldTouched("merchant_email");
+            formik.setFieldTouched("merchant_password");
+            return;
+        }
         setCurrent(current + 1);
     };
 
@@ -51,7 +61,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
         setCurrent(current - 1);
     };
     return (
-        <div className="w-full max-w-xs sm:max-w-sm">
+        <div className="w-full max-w-xs sm:max-w-md">
             <ConfigProvider
                 theme={{
                     components: {
@@ -62,7 +72,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                 }}
             >
                 <Steps
-                    responsive={false}
+                    responsive={true}
                     className="!mb-10"
                     current={1}
                     items={[
@@ -72,14 +82,19 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                             status: current >= 1 ? "process" : "wait",
                         },
                         {
-                            title: "Склад",
+                            title: "Магазин",
                             icon: <ShopOutlined />,
                             status: current >= 2 ? "process" : "wait",
                         },
                         {
+                            title: "Доступ",
+                            icon: <IdcardOutlined />,
+                            status: current >= 3 ? "process" : "wait",
+                        },
+                        {
                             title: "Аккаунт",
                             icon: <SolutionOutlined />,
-                            status: current == 3 ? "process" : "wait",
+                            status: current == 4 ? "process" : "wait",
                         },
                     ]}
                 />
@@ -207,7 +222,76 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                     </Form.Item>
                 </div>
                 <div
-                    className={cn("hidden", { block: current == 3 }, "w-full ")}
+                    className={cn("hidden", { block: current == 3 }, "w-full")}
+                >
+                    <div className="flex flex-col gap-2 mb-3">
+                        <h2 className="text-lg font-medium">
+                            Автоматическая интеграция данных
+                        </h2>
+                        <h3 className="text-sm text-[#696969] max-w-md">
+                            Автоматическая выгрузка данных с Кабинета продавца
+                            через предоставления доступа к Менеджер аккаунту
+                            Kaspi
+                        </h3>
+                        <h2 className="font-bold ">
+                            Данные Менеджер аккаунта Kaspi:
+                        </h2>
+                    </div>
+                    <div className="flex flex-col gap-[10px] text-[#4B4B4B]">
+                        Почта
+                        <FormikInput
+                            name="merchant_email"
+                            formik={formik}
+                            formItemProps={{ className: cn("w-full") }}
+                            inputProps={{
+                                placeholder: "Почта ",
+                                size: "large",
+                            }}
+                        />
+                    </div>
+                    <div className="flex flex-col gap-[10px] text-[#4B4B4B]">
+                        Пароль
+                        <FormikInput
+                            name="merchant_password"
+                            formik={formik}
+                            formItemProps={{ className: cn("w-full") }}
+                            inputProps={{
+                                placeholder: "Пароль",
+                                size: "large",
+                            }}
+                        />
+                    </div>
+                    <Link
+                        to={"/seller/auto-upload-instruction"}
+                        style={{ color: "inherit", textDecoration: "inherit" }}
+                    >
+                        <h2 className="text-sm font-medium underline text-[#EF7214]">
+                            Как создать менеджер аккаунт?
+                        </h2>
+                    </Link>
+
+                    <Form.Item className="w-full !mb-4 !mt-8">
+                        <Button
+                            size={"large"}
+                            onClick={next}
+                            type="primary"
+                            className={cn("w-full")}
+                        >
+                            Следующий шаг
+                        </Button>
+                    </Form.Item>
+                    <Form.Item className="w-full !mb-4">
+                        <Button
+                            size={"large"}
+                            onClick={prev}
+                            className={cn("w-full")}
+                        >
+                            Назад
+                        </Button>
+                    </Form.Item>
+                </div>
+                <div
+                    className={cn("hidden", { block: current == 4 }, "w-full ")}
                 >
                     <div className="flex flex-col gap-[10px] text-[#4B4B4B]">
                         E-mail

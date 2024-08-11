@@ -47,6 +47,8 @@ const sellerRegisterSchema = Yup.object().shape({
     ),
     kaspi_store_name: requiredStringSchema("Название магазина"),
     kaspi_seller_id: requiredStringSchema("ID продавца"),
+    kaspi_email: emailSchema().required("Это обязательное поле"),
+    kaspi_password: requiredStringSchema("Каспи пороль"),
     kaspi_token: requiredStringSchema("Токен Каспи API"),
 });
 
@@ -63,6 +65,8 @@ export const useSellerRegister = () => {
             kaspi_store_name: "",
             kaspi_seller_id: "",
             kaspi_token: "",
+            merchant_email: "",
+            merchant_password: "",
         },
         validationSchema: sellerRegisterSchema,
         validateOnChange: true,
