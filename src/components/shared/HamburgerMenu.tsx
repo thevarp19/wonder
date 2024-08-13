@@ -1,6 +1,7 @@
 import { arrowLeftIcon, hamburgerIcon, logo, searchIcon } from "@/assets";
 import { MenuItemType } from "@/types";
 import { cn } from "@/utils/shared.util";
+import { CaretDownOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
@@ -19,13 +20,26 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({
     role,
 }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>(
+        {}
+    );
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
+
     const closeSidebar = () => {
         setIsSidebarOpen(false);
+        // setOpenSubmenus({});
     };
+
+    const toggleSubmenu = (key: string) => {
+        setOpenSubmenus((prev) => ({
+            ...prev,
+            [key]: !prev[key],
+        }));
+    };
+
     return (
         <>
             <div className="md:hidden fixed w-full h-[45px] px-4 py-[6px] bg-white z-50">
@@ -58,7 +72,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({
             )}
 
             <div
-                className={`fixed top-0 left-0 h-full w-full md:hidden flex flex-col gap-4 bg-white px-4 py-[6px] shadow-md z-50 transform transition-transform duration-300 ease-in-out ${
+                className={`fixed top-0 left-0 h-full w-full md:hidden flex flex-col gap-4 bg-white px-4 py-[6px] shadow-md z-50 transform transition-transform duration-300 ease-in-out  ${
                     isSidebarOpen ? "translate-x-0" : "-translate-x-full"
                 }`}
             >
@@ -85,11 +99,10 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({
                         }
                         placeholder="Поиск"
                         className="w-full border rounded-md !bg-[#1C1C1C0D]"
-                        // value={""}
                         style={{ padding: "8px 4px" }}
                         onChange={() => {}}
                     />
-                    <div className="bg-[#F7F9FB] w-full rounded-md">
+                    <div className="bg-[#F7F9FB] w-full rounded-md max-h-[calc(100vh-10rem)] overflow-y-scroll">
                         <Link
                             to={role === "Продавец" ? "profile" : "#"}
                             style={{
@@ -106,26 +119,87 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({
                             />
                             <span className="text-lg ">{userEmail}</span>
                         </Link>
-                        <div className="flex flex-col space-y-1">
+                        <div className="flex flex-col space-y-1 pb-[40px]">
                             {menuItems?.map((item, index) => (
-                                <Link
-                                    style={{
-                                        color: "inherit",
-                                        textDecoration: "inherit",
-                                    }}
-                                    onClick={closeSidebar}
-                                    to={item.label.props.to}
-                                    key={item?.key}
-                                    className={`flex items-center gap-4 p-4 ${
-                                        menuItems.length - 1 !== index &&
-                                        "border-b border-[#0000001A]"
-                                    }`}
-                                >
-                                    {item?.icon}
-                                    <div className="text-lg">
-                                        {item?.label.props.children}
+                                <div key={item?.key}>
+                                    <div
+                                        onClick={() =>
+                                            item?.children
+                                                ? toggleSubmenu(item.key)
+                                                : closeSidebar()
+                                        }
+                                        className={`flex items-center gap-4 p-4 ${
+                                            menuItems.length - 1 !== index &&
+                                            "border-b border-[#0000001A]"
+                                        }`}
+                                    >
+                                        {item?.icon}
+                                        <div className="flex justify-between w-full">
+                                            <div className="text-lg">
+                                                {item?.label.props.children}
+                                            </div>
+                                            {item?.children && (
+                                                <div
+                                                    className={`text-lg transform transition-transform duration-300 ease-in-out ${
+                                                        openSubmenus[item.key]
+                                                            ? "rotate-180"
+                                                            : "rotate-0"
+                                                    }`}
+                                                >
+                                                    <CaretDownOutlined />
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                </Link>
+                                    {item?.children && (
+                                        <div
+                                            className={`flex flex-col pl-8 transition-all duration-300 ease-in-out overflow-hidden`}
+                                            style={{
+                                                maxHeight: openSubmenus[
+                                                    item.key
+                                                ]
+                                                    ? `${
+                                                          item.children.length *
+                                                          80
+                                                      }px`
+                                                    : "0px",
+                                                opacity: openSubmenus[item.key]
+                                                    ? 1
+                                                    : 0,
+                                            }}
+                                        >
+                                            <Link
+                                                key={item?.key}
+                                                to={item.label.props.to}
+                                                style={{
+                                                    color: "inherit",
+                                                    textDecoration: "inherit",
+                                                }}
+                                                onClick={closeSidebar}
+                                                className="py-4 border-b border-[#0000001A]"
+                                            >
+                                                {item?.label.props.children}
+                                            </Link>
+
+                                            {item?.children.map((child) => (
+                                                <Link
+                                                    key={child.key}
+                                                    to={child.label.props.to}
+                                                    style={{
+                                                        color: "inherit",
+                                                        textDecoration:
+                                                            "inherit",
+                                                    }}
+                                                    onClick={closeSidebar}
+                                                    className="flex items-center gap-3 py-4 border-b border-[#0000001A]"
+                                                >
+                                                    {child.icon}
+                                                    {child.label.props.children}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             ))}
                         </div>
                     </div>
