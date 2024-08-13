@@ -122,7 +122,11 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({
                         <div className="flex flex-col space-y-1 pb-[40px]">
                             {menuItems?.map((item, index) => (
                                 <div key={item?.key}>
-                                    <div
+                                    <Link
+                                        style={{
+                                            color: "inherit",
+                                            textDecoration: "inherit",
+                                        }}
                                         onClick={() =>
                                             item?.children
                                                 ? toggleSubmenu(item.key)
@@ -132,6 +136,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({
                                             menuItems.length - 1 !== index &&
                                             "border-b border-[#0000001A]"
                                         }`}
+                                        to={item.label.props.to}
                                     >
                                         {item?.icon}
                                         <div className="flex justify-between w-full">
@@ -150,7 +155,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({
                                                 </div>
                                             )}
                                         </div>
-                                    </div>
+                                    </Link>
                                     {item?.children && (
                                         <div
                                             className={`flex flex-col pl-8 transition-all duration-300 ease-in-out overflow-hidden`}
