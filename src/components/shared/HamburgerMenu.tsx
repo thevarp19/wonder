@@ -1,4 +1,14 @@
-import { arrowLeftIcon, hamburgerIcon, logo, searchIcon } from "@/assets";
+import {
+    arrowLeftIcon,
+    hamburgerIcon,
+    logo,
+    logoutIcon,
+    searchIcon,
+} from "@/assets";
+import { useAppDispatch } from "@/redux/utils";
+import { adminLogout } from "@/roles/admin/redux/auth/actions";
+import { employeeLogout } from "@/roles/employee/redux/auth/actions";
+import { sellerLogout } from "@/roles/seller/redux/auth/actions";
 import { MenuItemType } from "@/types";
 import { cn } from "@/utils/shared.util";
 import { CaretDownOutlined } from "@ant-design/icons";
@@ -39,7 +49,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({
             [key]: !prev[key],
         }));
     };
-
+    const dispatch = useAppDispatch();
     return (
         <>
             <div className="md:hidden fixed w-full h-[45px] px-4 py-[6px] bg-white z-50">
@@ -84,6 +94,29 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({
                             alt="arrowLeftIcon"
                             className={cn("w-[32px] h-[32px]")}
                         />
+                    </div>
+                    <div className="absolute right-0">
+                        <Link
+                            to={"/"}
+                            onClick={() => {
+                                dispatch(
+                                    role === "Администратор"
+                                        ? adminLogout()
+                                        : role === "Продавец"
+                                        ? sellerLogout()
+                                        : employeeLogout()
+                                );
+                            }}
+                        >
+                            <div>
+                                <Image
+                                    src={logoutIcon}
+                                    onClick={closeSidebar}
+                                    alt="arrowLeftIcon"
+                                    className={cn("w-[24px] h-[24px]")}
+                                />
+                            </div>
+                        </Link>
                     </div>
 
                     <span className="text-lg font-semibold">Меню</span>

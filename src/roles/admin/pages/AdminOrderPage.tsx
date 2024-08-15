@@ -1,5 +1,3 @@
-import { FilterButton } from "@/components/ui/FilterButton";
-import { SearchInput } from "@/components/ui/SearchInput";
 import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable/AdminOrderDetailsTable";
 // import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/EmployeeOrderTable";
 import { FC } from "react";
@@ -17,18 +15,7 @@ export const AdminOrderPage: FC<AdminOrderPageProps> = ({}) => {
                 Заказ - <span className="underline">{orderId}</span>
             </h1>
 
-            <div className="flex items-center justify-between mb-4">
-                <div className="w-full max-w-sm">
-                    <SearchInput
-                        searchValue={""}
-                        setSearchValue={() => {}}
-                        onSearch={() => {}}
-                    />
-                </div>
-                <div>
-                    <FilterButton />
-                </div>
-            </div>
+            <div className="flex items-center justify-end mb-4"></div>
             <AdminOrderDetailsTable orderId={orderId} />
         </div>
     );

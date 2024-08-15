@@ -1,7 +1,7 @@
 import { DateCell } from "@/components/ui/DateCell";
 import { PriceCell } from "@/components/ui/PriceCell";
 import { Table, TableColumnsType, Tag } from "antd";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersEmployee } from "../../queries";
@@ -54,7 +54,9 @@ export const EmployeeArchiveOrdersTable: FC<
         searchValue,
         "ARCHIVE"
     );
-
+    useEffect(() => {
+        setPage(1);
+    }, [searchValue]);
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (

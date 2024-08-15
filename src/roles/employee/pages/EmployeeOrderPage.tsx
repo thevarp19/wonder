@@ -1,11 +1,13 @@
 // import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/EmployeeOrderTable";
 
 import { DateCell } from "@/components/ui/DateCell";
+import { FormikInput } from "@/components/ui/FormikInput";
 import { EmployeeOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable/EmployeeOrderDetailsTable";
+import { useCancelOrder } from "@/modules/order/forms";
 import {} from "@/modules/order/mutations";
 import { useGetEmployeeOrder } from "@/modules/order/queries";
-import { Tag } from "antd";
-import { FC } from "react";
+import { Button, Form, Modal, Tag } from "antd";
+import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 
 interface EmployeeOrderPageProps {}
@@ -70,9 +72,74 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
                 </div>
             </div>
             <div className="flex justify-end gap-5 my-4">
-                {/* {isPending ? <Spin /> : renderButton(orderStatus)} */}
+                <CancelOrderModal orderId={orderIdRaw || ""} />
             </div>
             <EmployeeOrderDetailsTable data={data} loading={isPending} />
         </div>
+    );
+};
+const CancelOrderModal = ({ orderId }: { orderId: string }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { formik, mutation } = useCancelOrder(orderId);
+    return (
+        <>
+            <Modal
+                title="Отмена продукта"
+                open={isModalOpen}
+                cancelButtonProps={{ style: { width: "100%" } }}
+                onCancel={() => setIsModalOpen(false)}
+                cancelText="Назад"
+                okButtonProps={{ style: { display: "none" } }}
+                destroyOnClose
+            >
+                <Form
+                    layout="vertical"
+                    className="flex flex-col w-full max-w-xl gap-2 px-10"
+                >
+                    <FormikInput
+                        name="cancellation_reason"
+                        formik={formik}
+                        formItemProps={{
+                            label: "Причина",
+                            required: true,
+                        }}
+                        inputProps={{
+                            size: "large",
+                            style: { width: "100%" },
+                        }}
+                    />
+                    <FormikInput
+                        name="cancellation_comment"
+                        formik={formik}
+                        formItemProps={{
+                            label: "Коментарий",
+                            required: true,
+                        }}
+                        inputProps={{
+                            size: "large",
+                            style: { width: "100%" },
+                        }}
+                    />
+                    <Button
+                        type="primary"
+                        loading={mutation.isPending}
+                        className="w-full md:w-auto"
+                        onClick={() => {
+                            formik.handleSubmit();
+                            setIsModalOpen(false);
+                        }}
+                    >
+                        Отменить
+                    </Button>
+                </Form>
+            </Modal>
+            <Button
+                type="primary"
+                size="large"
+                onClick={() => setIsModalOpen(true)}
+            >
+                Отменить заказ
+            </Button>
+        </>
     );
 };

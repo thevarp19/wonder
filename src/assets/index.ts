@@ -16,6 +16,7 @@ import icon from "./img/icon.svg";
 import loginAdminBanner from "./img/loginAdminBanner.png";
 import loginSellerBanner from "./img/loginSellerBanner.png";
 import logo from "./img/logo.svg";
+import logoutIcon from "./img/logoutIcon.png";
 import moveFile from "./img/moveFile.png";
 import openFile from "./img/openFile.png";
 import parametrskaspi from "./img/parametrskaspi.png";
@@ -54,6 +55,7 @@ export {
     loginAdminBanner,
     loginSellerBanner,
     logo,
+    logoutIcon,
     moveFile,
     openFile,
     parametrskaspi,

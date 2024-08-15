@@ -1,6 +1,6 @@
 import { DateCell } from "@/components/ui/DateCell";
 import { Table, TableColumnsType, Tag } from "antd";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersAdmin } from "../../queries";
@@ -64,6 +64,9 @@ export const AdminArchiveOrdersTable: FC<OrdersTableProps> = ({
         searchValue,
         "ARCHIVE"
     );
+    useEffect(() => {
+        setPage(1);
+    }, [searchValue]);
     return (
         <Table
             columns={columns}

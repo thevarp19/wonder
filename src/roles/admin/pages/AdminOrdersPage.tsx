@@ -21,6 +21,7 @@ export const AdminOrdersPage: FC<AdminOrdersPageProps> = ({}) => {
         setCurrent(e.key);
         setDeliveryMode(deliveryModes[e.key]);
     };
+
     return (
         <div className="h-full">
             <div className="flex flex-col gap-5">

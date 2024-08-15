@@ -37,48 +37,6 @@ export const LastOrdersTable: FC<ProductsCountTableProps> = ({}) => {
 
     const [page, setPage] = useState(1);
     const { data: lastOrders, isPending } = useGetAdminLastOrders(page, 5);
-    // const content = [
-    //     {
-    //         shopName: "Wireless Mouse",
-    //         price: 150,
-    //         orderCode: "1",
-    //     },
-    //     {
-    //         shopName: "Mechanical Keyboard",
-    //         price: 85,
-    //         orderCode: "2",
-    //     },
-    //     {
-    //         shopName: "27-inch Monitor",
-    //         price: 45,
-    //         orderCode: "3",
-    //     },
-    //     {
-    //         shopName: "USB-C Hub",
-    //         price: 200,
-    //         orderCode: "4",
-    //     },
-    //     {
-    //         shopName: "External Hard Drive",
-    //         price: 120,
-    //         orderCode: "5",
-    //     },
-    //     {
-    //         shopName: "27-inch Monitor",
-    //         price: 45,
-    //         orderCode: "3",
-    //     },
-    //     {
-    //         shopName: "USB-C Hub",
-    //         price: 200,
-    //         orderCode: "4",
-    //     },
-    //     {
-    //         shopName: "External Hard Drive",
-    //         price: 120,
-    //         orderCode: "5",
-    //     },
-    // ];
 
     return (
         <ConfigProvider
@@ -111,7 +69,9 @@ export const LastOrdersTable: FC<ProductsCountTableProps> = ({}) => {
                         setPage(page - 1);
                     },
                     current: page + 1,
+                    position: isSmallScreen ? ["bottomCenter"] : undefined,
                 }}
+                scroll={{ x: "max-content" }}
             />
         </ConfigProvider>
     );

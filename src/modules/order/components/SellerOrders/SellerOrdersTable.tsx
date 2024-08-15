@@ -1,6 +1,6 @@
 import { DateCell } from "@/components/ui/DateCell";
 import { Table, TableColumnsType, Tag } from "antd";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersSeller } from "../../queries";
@@ -72,7 +72,9 @@ export const SellerOrdersTable: FC<SellerOrdersTableProps> = ({
         deliveryMode
     );
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
-
+    useEffect(() => {
+        setPage(1);
+    }, [deliveryMode, searchValue]);
     return (
         <Table
             columns={columns}

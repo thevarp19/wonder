@@ -1,7 +1,7 @@
 import { DateCell } from "@/components/ui/DateCell";
 import { PriceCell } from "@/components/ui/PriceCell";
 import { Table, TableColumnsType, Tag } from "antd";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersEmployee } from "../../queries";
@@ -57,7 +57,9 @@ export const EmployeeOrdersTable: FC<EmployeeOrdersTableProps> = ({
     );
 
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
-
+    useEffect(() => {
+        setPage(1);
+    }, [deliveryMode, searchValue]);
     return (
         <Table
             columns={columns}

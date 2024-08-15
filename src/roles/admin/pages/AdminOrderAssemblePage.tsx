@@ -7,7 +7,7 @@ import { DeliveryMode } from "@/modules/order/types";
 import { cn, useDebounce } from "@/utils/shared.util";
 import { ConfigProvider, Input, Menu } from "antd";
 import { MenuProps } from "antd/lib";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface AdminOrderAssemblePageProps {}
 
@@ -23,6 +23,9 @@ export const AdminOrderAssemblePage: FC<AdminOrderAssemblePageProps> = () => {
         debouncedSearchValue,
         deliveryMode
     );
+    useEffect(() => {
+        setPage(1);
+    }, [deliveryMode, searchValue]);
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
         setDeliveryMode(deliveryModes[e.key]);

@@ -29,7 +29,7 @@ export const FormikItem: FC<FormikItemProps> = ({
             validateStatus={getFormikHelpText(formik, name) ? "error" : ""}
             help={getFormikHelpText(formik, name)}
             {...formItemProps}
-            className={cn(formItemProps?.className, "w-full !mb-4")}
+            className={cn("w-full !mb-4", formItemProps?.className)}
         >
             {children}
         </Form.Item>

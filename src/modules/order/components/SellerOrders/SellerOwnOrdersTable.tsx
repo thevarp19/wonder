@@ -3,24 +3,23 @@ import { Table, TableColumnsType, Tag } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import { useGetOrdersAdmin } from "../../queries";
-import { DeliveryMode, GetOrdersAdminContent } from "../../types";
+import { useGetOrdersSellerOwn } from "../../queries";
+import { DeliveryMode, GetOrdersSellerContent } from "../../types";
 
-interface OrdersTableProps {
-    searchValue: string;
-    deliveryMode: DeliveryMode;
-}
-
-const columns: TableColumnsType<GetOrdersAdminContent> = [
+const columns: TableColumnsType<GetOrdersSellerContent> = [
     {
         title: "Номер заказа",
         render: (_, record) => (
-            <Link to={`/admin/orders/${record.code}`}>{record.code}</Link>
+            <Link to={`/seller/orders/${record.code}`}>{record.code}</Link>
         ),
     },
+    // {
+    //     title: "Название Склада",
+    //     dataIndex: "sellerName",
+    // },
     {
         title: "Склад",
-        dataIndex: "warehouse_address",
+        dataIndex: "warehouse",
     },
     {
         title: "Время заказа",
@@ -50,21 +49,30 @@ const columns: TableColumnsType<GetOrdersAdminContent> = [
         dataIndex: "wonder_status",
         render: (_, record) => <Tag>{record.wonder_status}</Tag>,
     },
+    // {
+    //     title: "Торговая цена",
+    //     render: (_, record) => <div>{record.} KZT</div>,
+    // },
 ];
 
-export const AdminOrdersTable: FC<OrdersTableProps> = ({
+interface SellerOwnOrdersTableProps {
+    searchValue: string;
+    deliveryMode: DeliveryMode;
+}
+
+export const SellerOwnOrdersTable: FC<SellerOwnOrdersTableProps> = ({
     searchValue,
     deliveryMode,
 }) => {
-    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
-
     const [page, setPage] = useState(1);
-    const { data: orders, isPending } = useGetOrdersAdmin(
+    const { data: orders, isPending } = useGetOrdersSellerOwn(
         page,
         10,
         searchValue,
         deliveryMode
     );
+
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
     useEffect(() => {
         setPage(1);
     }, [deliveryMode, searchValue]);

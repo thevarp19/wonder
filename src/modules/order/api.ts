@@ -37,6 +37,16 @@ export function getOrdersSeller(
         `/api/order-seller/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
+export function getOrdersSellerOwn(
+    page: number = 1,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetOrdersSeller>(
+        `/api/order-seller/own/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
 
 export function getOrdersEmployee(
     page: number = 1,
@@ -47,6 +57,12 @@ export function getOrdersEmployee(
     return axiosAuthorized.get<GetOrdersEmployee>(
         `/api/order-employee/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
+}
+export function cancelOrderAdmin(
+    id: number,
+    values: { cancellation_reason: string; cancellation_comment: string }
+) {
+    return axiosAuthorized.post(`/api/order-admin/cancel/${id}/`, values);
 }
 export function getAssembleOrderEmployee(
     page: number = 1,

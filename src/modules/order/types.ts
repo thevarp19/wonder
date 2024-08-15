@@ -83,6 +83,7 @@ export interface GetOrdersSellerContent {
     wonder_status: string;
     warehouse: string;
 }
+
 export interface GetOrdersAdminContent {
     id: string;
     code: string;

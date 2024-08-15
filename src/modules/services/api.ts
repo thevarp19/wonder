@@ -1,5 +1,11 @@
 import { axiosAuthorized } from "@/lib/axios";
-import { GetServiceItemsResponse, UpdateServiceParamsRequest } from "./types";
+import {
+    CalculatorRequest,
+    CalculatorResponse,
+    GetSellerProductsSizes,
+    GetServiceItemsResponse,
+    UpdateServiceParamsRequest,
+} from "./types";
 
 export function getServiceParams(
     page: number = 0,
@@ -10,6 +16,7 @@ export function getServiceParams(
         `/api/seller-product/service-parameters/?page=${page}&size=${size}&search=${search}`
     );
 }
+
 export function updateServiceParams(
     id: number,
     values: UpdateServiceParamsRequest
@@ -18,4 +25,19 @@ export function updateServiceParams(
         `/api/seller-product/service-parameters/${id}/`,
         values
     );
+}
+export function calculateParams(values: CalculatorRequest[]) {
+    return axiosAuthorized.post<CalculatorResponse[]>(
+        `/api/service/calculate/`,
+        values
+    );
+}
+export async function getSellerProductsWithSizes({
+    pageParam = 1,
+    pageSize = 10,
+    searchValue = "",
+}) {
+    let url = `/api/product/seller/sizes/?page=${pageParam}&size=${pageSize}&search=${searchValue}`;
+    const { data } = await axiosAuthorized.get<GetSellerProductsSizes>(url);
+    return data;
 }

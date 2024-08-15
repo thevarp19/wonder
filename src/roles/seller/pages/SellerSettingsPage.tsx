@@ -1,5 +1,6 @@
 import { Title } from "@/components/shared/Title";
 import { LinkCopyInput } from "@/components/ui/LinkCopyInput";
+import { useGetSellerProfile } from "@/modules/seller/queries";
 import { SellerStoresTable } from "@/modules/store/components/StoresTable/SellerStoresTable";
 import { FileMarkdownOutlined, ShopOutlined } from "@ant-design/icons";
 import { ConfigProvider, Menu, MenuProps } from "antd";
@@ -26,6 +27,7 @@ export const SellerSettingsPage: FC<SellerSettingsPageProps> = ({}) => {
     const [current, setCurrent] = useState(
         searchParams.get("menu_x") || "stores"
     );
+    const { data: sellerInfo } = useGetSellerProfile();
 
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
@@ -72,7 +74,7 @@ export const SellerSettingsPage: FC<SellerSettingsPageProps> = ({}) => {
                         Добавьте на каспи сайт для привязки данных
                     </h2>
                     <div className="max-w-lg py-4">
-                        <LinkCopyInput link={""} />
+                        <LinkCopyInput link={sellerInfo?.xml || ""} />
                     </div>
                 </div>
             )}

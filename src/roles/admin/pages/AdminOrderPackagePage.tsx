@@ -6,7 +6,7 @@ import { useGetPackageOrderAdmin } from "@/modules/order/queries";
 import { DeliveryMode } from "@/modules/order/types";
 import { cn, useDebounce } from "@/utils/shared.util";
 import { ConfigProvider, Input, Menu, MenuProps } from "antd";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface AdminOrderPackagePageProps {}
 
@@ -22,6 +22,9 @@ export const AdminOrderPackagePage: FC<AdminOrderPackagePageProps> = () => {
         debouncedSearchValue,
         deliveryMode
     );
+    useEffect(() => {
+        setPage(1);
+    }, [deliveryMode, searchValue]);
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
         setDeliveryMode(deliveryModes[e.key]);

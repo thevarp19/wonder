@@ -73,7 +73,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
             >
                 <Steps
                     responsive={true}
-                    className="!mb-10"
+                    className="sm:!mb-10"
                     current={1}
                     items={[
                         {

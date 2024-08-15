@@ -6,7 +6,7 @@ import { useGetTransferOrderSeller } from "@/modules/order/queries";
 import { DeliveryMode } from "@/modules/order/types";
 import { cn, useDebounce } from "@/utils/shared.util";
 import { ConfigProvider, Input, Menu, MenuProps } from "antd";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface SellerOrderTransferPageProps {}
 
@@ -22,6 +22,9 @@ export const SellerOrderTransferPage: FC<SellerOrderTransferPageProps> = () => {
         debouncedSearchValue,
         deliveryMode
     );
+    useEffect(() => {
+        setPage(1);
+    }, [deliveryMode, searchValue]);
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
         setDeliveryMode(deliveryModes[e.key]);

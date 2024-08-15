@@ -1,6 +1,7 @@
 import { ConfigProvider, Table, TableColumnsType } from "antd";
 import ruRU from "antd/lib/locale/ru_RU";
 import { FC, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { useGetSellerProductCount } from "../queries";
 import { GetProductCountContent } from "../types";
 
@@ -37,6 +38,7 @@ const columns: TableColumnsType<GetProductCountContent> = [
 ];
 export const ProductsCountTable: FC<ProductsCountTableProps> = ({}) => {
     const [page, setPage] = useState(1);
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
 
     const { data: products, isPending } = useGetSellerProductCount(page, 5);
 
@@ -52,7 +54,7 @@ export const ProductsCountTable: FC<ProductsCountTableProps> = ({}) => {
                         headerSplitColor: "#F78936",
                         colorBgContainer: "#F7F9FB",
                         borderColor: "#F7F9FB",
-                        // cellPaddingBlock: isSmallScreen ? 10 : 20,
+                        cellPaddingBlock: isSmallScreen ? 10 : 20,
                     },
                 },
             }}
@@ -71,7 +73,9 @@ export const ProductsCountTable: FC<ProductsCountTableProps> = ({}) => {
                         setPage(page - 1);
                     },
                     current: page + 1,
+                    position: isSmallScreen ? ["bottomCenter"] : undefined,
                 }}
+                scroll={{ x: "max-content" }}
             />
         </ConfigProvider>
     );

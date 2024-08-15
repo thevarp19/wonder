@@ -47,14 +47,12 @@ export const EmployeeOrderPackagePage: FC<
                 const cleanedProductIds = scannedProducts.map((p) =>
                     p.replace(/^0+/, "")
                 );
-                console.log("cleanedProductIds", cleanedProductIds);
 
                 const scannedProductIdsSet = new Set(cleanedProductIds);
 
                 const filteredOrders = orders.content.filter((order) =>
                     scannedProductIdsSet.has(order.id.toString())
                 );
-                console.log("filteredOrders", filteredOrders);
 
                 const requests: ProductStatusChangeRequest[] =
                     filteredOrders.map((order) => ({

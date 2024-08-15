@@ -1,6 +1,6 @@
 import { DateCell } from "@/components/ui/DateCell";
 import { ConfigProvider, Table, TableColumnsType, Tag } from "antd";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetTransferOrderEmployee } from "../../queries";
@@ -54,7 +54,9 @@ export const EmployeeTransferTable: FC<EmployeeTransferTableProps> = ({
         searchValue,
         deliveryMode
     );
-
+    useEffect(() => {
+        setPage(1);
+    }, [deliveryMode, searchValue]);
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (

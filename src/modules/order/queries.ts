@@ -10,6 +10,7 @@ import {
     getOrdersAdmin,
     getOrdersEmployee,
     getOrdersSeller,
+    getOrdersSellerOwn,
     getPackageOrderAdmin,
     getPackageOrderEmployee,
     getPackageOrderSeller,
@@ -66,6 +67,25 @@ export const useGetOrdersSeller = (
         queryKey: ["seller-orders", page, size, searchValue, deliveryMode],
         queryFn: async () => {
             const { data } = await getOrdersSeller(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetOrdersSellerOwn = (
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetOrdersSeller>({
+        queryKey: ["seller-own-orders", page, size, searchValue, deliveryMode],
+        queryFn: async () => {
+            const { data } = await getOrdersSellerOwn(
                 page,
                 size,
                 searchValue,

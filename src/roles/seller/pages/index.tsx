@@ -19,6 +19,7 @@ import { SellerArchiveOrdersPage } from "./SellerArchiveOrdersPage";
 import { SellerBalancePage } from "./SellerBalancePage";
 import { SellerOrderCancelledPage } from "./SellerOrderCancelledPage";
 import { SellerOrderShippedPage } from "./SellerOrderShippedPage";
+import { SellerOwnOrdersPage } from "./SellerOwnOrdersPage";
 import { SellerSupplyCreatePage } from "./SellerSupplyCreatePage";
 import { SellerSupplyDetailsPage } from "./SellerSupplyDetailsPage";
 import { SellerSupplyPage } from "./SellerSupplyPage";
@@ -37,6 +38,7 @@ export {
     SellerOrderShippedPage,
     SellerOrdersPage,
     SellerOrderTransferPage,
+    SellerOwnOrdersPage,
     SellerProductSizesPage,
     SellerProductsPage,
     SellerProfilePage,

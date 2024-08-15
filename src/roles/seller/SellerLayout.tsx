@@ -366,7 +366,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/orders/package"}
+                            to={"/seller/my-orders/package"}
                         >
                             Упаковка
                         </Link>
@@ -387,7 +387,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/orders/transfer"}
+                            to={"/seller/my-orders/transfer"}
                         >
                             Передача
                         </Link>
@@ -408,7 +408,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/orders/shipped"}
+                            to={"/seller/my-orders/shipped"}
                         >
                             Отправлено
                         </Link>
@@ -429,7 +429,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/orders/cancelled"}
+                            to={"/seller/my-orders/cancelled"}
                         >
                             Отменено
                         </Link>

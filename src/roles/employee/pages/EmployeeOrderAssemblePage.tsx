@@ -32,6 +32,9 @@ export const EmployeeOrderAssemblePage: FC<
         debouncedSearchValue,
         deliveryMode
     );
+    useEffect(() => {
+        setPage(1);
+    }, [deliveryMode, searchValue]);
     const { mutateAsync: packageMutate } = orderStatusMutation();
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
