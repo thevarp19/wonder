@@ -1,14 +1,8 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { useGetAllBoxes, useGetBoxes } from "@/modules/box/queries";
 import { GetBoxResponse } from "@/modules/box/types";
 import { DeleteOutlined } from "@ant-design/icons";
-import {
-    Button,
-    Modal,
-    Popconfirm,
-    Select,
-    Table,
-    TableColumnsType,
-} from "antd";
+import { Button, Modal, Popconfirm, Select, TableColumnsType } from "antd";
 import { FC, useState } from "react";
 import { useBindBoxToStore } from "../../forms";
 import { removeBoxFromStoreMutation } from "../../mutations";
@@ -128,7 +122,7 @@ export const StoreBoxesModal: FC<StoreBoxesModalProps> = ({ storeId }) => {
                         Добавить
                     </Button>
                 </div>
-                <Table
+                <CustomTable
                     className="mt-14 md:mt-4"
                     size="small"
                     rowKey={(record) => `${record.id}`}

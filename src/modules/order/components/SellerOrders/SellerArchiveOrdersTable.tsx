@@ -1,16 +1,18 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
-import { Table, TableColumnsType, Tag } from "antd";
+import { TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersSeller } from "../../queries";
 import { DeliveryMode, GetOrdersSellerContent } from "../../types";
+import { mapWonderStatus } from "../../utils";
 
 const columns: TableColumnsType<GetOrdersSellerContent> = [
     {
         title: "Номер заказа",
         render: (_, record) => (
-            <Link to={`/seller/orders/${record.code}`}>{record.code}</Link>
+            <Link to={`/seller/orders/${record.id}`}>{record.code}</Link>
         ),
     },
     // {
@@ -47,7 +49,24 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
     {
         title: "Статус",
         dataIndex: "wonder_status",
-        render: (_, record) => <Tag>{record.wonder_status}</Tag>,
+        render: (_, record) => {
+            const { text, color } = mapWonderStatus(record.wonder_status);
+            return (
+                <div style={{ color: color }} className={`!rounded-full`}>
+                    <span
+                        style={{
+                            display: "inline-block",
+                            width: "10px",
+                            height: "10px",
+                            backgroundColor: color,
+                            borderRadius: "50%",
+                            marginRight: "8px",
+                        }}
+                    ></span>
+                    {text}
+                </div>
+            );
+        },
     },
     // {
     //     title: "Торговая цена",
@@ -74,7 +93,7 @@ export const SellerArchiveOrdersTable: FC<SellerArchiveOrdersTableProps> = ({
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
-        <Table
+        <CustomTable
             columns={columns}
             dataSource={orders?.content}
             rowKey={"code"}

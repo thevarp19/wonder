@@ -1,13 +1,7 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
 import { DownloadOutlined } from "@ant-design/icons";
-import {
-    Button,
-    ConfigProvider,
-    Table,
-    TableColumnsType,
-    Tag,
-    Tooltip,
-} from "antd";
+import { Button, ConfigProvider, TableColumnsType, Tag, Tooltip } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -110,7 +104,7 @@ export const BalanceHistoryTable: FC<BalanceHistoryTableProps> = ({
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 dataSource={data?.content}
                 rowKey={"id"}

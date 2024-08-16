@@ -262,6 +262,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                         />
                     </div>
                     <Link
+                        target="_blank"
                         to={"/seller/auto-upload-instruction"}
                         style={{ color: "inherit", textDecoration: "inherit" }}
                     >
@@ -343,6 +344,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                                 Создавая учетную запись, вы соглашаетесь с
                                 нашими{" "}
                                 <Link
+                                    target="_blank"
                                     style={{
                                         color: "inherit",
                                         textDecoration: "inherit",

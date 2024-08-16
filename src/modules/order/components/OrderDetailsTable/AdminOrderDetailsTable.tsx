@@ -1,5 +1,6 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { PriceCell } from "@/components/ui/PriceCell";
-import { Table, TableColumnsType } from "antd";
+import { TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 // import { useGetOrder } from "../../queries";
@@ -44,7 +45,7 @@ export const AdminOrderDetailsTable: FC<AdminOrderDetailsTableProps> = ({}) => {
     // const { data, isPending } = useGetAdminOrder(orderId);
 
     return (
-        <Table
+        <CustomTable
             columns={columns}
             dataSource={[]}
             rowKey={"productVendorCode"}

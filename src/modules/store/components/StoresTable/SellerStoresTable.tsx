@@ -1,7 +1,8 @@
 import { pencilIcon } from "@/assets";
+import { CustomTable } from "@/components/ui/CustomTable";
 import { Image } from "@/components/ui/Image";
 import { cn } from "@/utils/shared.util";
-import { Button, ConfigProvider, Table, TableColumnsType, Tag } from "antd";
+import { Button, ConfigProvider, TableColumnsType, Tag } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -113,7 +114,7 @@ export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 dataSource={stores}
                 footer={() => (

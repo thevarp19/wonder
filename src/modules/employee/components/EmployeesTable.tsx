@@ -1,6 +1,7 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DeleteButton } from "@/components/ui/DeleteButton";
 import { EditOutlined, LockOutlined } from "@ant-design/icons";
-import { App, Button, Form, Input, Modal, Table, TableColumnsType } from "antd";
+import { App, Button, Form, Input, Modal, TableColumnsType } from "antd";
 import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { changeEmployeePassword } from "../api";
@@ -70,7 +71,7 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({ storeId }) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
-        <Table
+        <CustomTable
             columns={columns}
             dataSource={
                 employees?.map((employee) => ({ ...employee, storeId })) ?? []

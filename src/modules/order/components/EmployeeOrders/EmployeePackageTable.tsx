@@ -1,6 +1,7 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Table, TableColumnsType } from "antd";
+import { Button, ConfigProvider, TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -32,7 +33,7 @@ const columns: TableColumnsType<GetPackageOrdersEmployeeContent> = [
         dataIndex: "waybill",
         render: (_, record) =>
             record?.waybill ? (
-                <Link to={record?.waybill}>
+                <Link target="_blank" to={record?.waybill}>
                     <Button
                         danger
                         icon={
@@ -85,7 +86,7 @@ export const EmployeePackageTable: FC<EmployeePackageTableProps> = ({
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 dataSource={data?.content}
                 rowKey={"id"}

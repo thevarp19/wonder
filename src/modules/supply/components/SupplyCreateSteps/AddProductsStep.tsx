@@ -1,3 +1,4 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DeleteButton } from "@/components/ui/DeleteButton";
 import { ProductsUploadFromFile } from "@/modules/product/components/ProductsUploadFromFile";
 import { useInfiniteGetProducts } from "@/modules/product/queries";
@@ -12,7 +13,6 @@ import {
     InputNumber,
     Modal,
     Select,
-    Table,
     TableColumnsType,
 } from "antd";
 import { FC, useState } from "react";
@@ -152,7 +152,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                     }
                 />
             </Form.Item>
-            <Table
+            <CustomTable
                 pagination={false}
                 columns={columns}
                 className={cn("mb-4")}

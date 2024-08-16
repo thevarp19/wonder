@@ -1,10 +1,12 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
-import { Table, TableColumnsType, Tag } from "antd";
+import { TableColumnsType, Tag } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersAdmin } from "../../queries";
 import { DeliveryMode, GetOrdersAdminContent } from "../../types";
+import { mapWonderStatus } from "../../utils";
 
 interface OrdersTableProps {
     searchValue: string;
@@ -15,7 +17,7 @@ const columns: TableColumnsType<GetOrdersAdminContent> = [
     {
         title: "Номер заказа",
         render: (_, record) => (
-            <Link to={`/admin/orders/${record.code}`}>{record.code}</Link>
+            <Link to={`/admin/orders/${record.id}`}>{record.code}</Link>
         ),
     },
     {
@@ -48,7 +50,24 @@ const columns: TableColumnsType<GetOrdersAdminContent> = [
     {
         title: "Статус",
         dataIndex: "wonder_status",
-        render: (_, record) => <Tag>{record.wonder_status}</Tag>,
+        render: (_, record) => {
+            const { text, color } = mapWonderStatus(record.wonder_status);
+            return (
+                <div style={{ color: color }} className={`!rounded-full`}>
+                    <span
+                        style={{
+                            display: "inline-block",
+                            width: "10px",
+                            height: "10px",
+                            backgroundColor: color,
+                            borderRadius: "50%",
+                            marginRight: "8px",
+                        }}
+                    ></span>
+                    {text}
+                </div>
+            );
+        },
     },
 ];
 
@@ -68,7 +87,7 @@ export const AdminArchiveOrdersTable: FC<OrdersTableProps> = ({
         setPage(1);
     }, [searchValue]);
     return (
-        <Table
+        <CustomTable
             columns={columns}
             dataSource={orders?.content}
             rowKey={"code"}

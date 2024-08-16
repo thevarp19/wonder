@@ -1,12 +1,13 @@
 import { scan } from "@/assets";
 import { Title } from "@/components/shared/Title";
+import { CustomTable } from "@/components/ui/CustomTable";
 import { Image } from "@/components/ui/Image";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { useGetProductsByParams } from "@/modules/product/queries";
 import { useScannerResults } from "@/modules/scan/hooks";
 import { toScanProductsSearch } from "@/modules/scan/utils";
 import { cn } from "@/utils/shared.util";
-import { ConfigProvider, Table, TableColumnsType } from "antd";
+import { ConfigProvider, TableColumnsType } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
@@ -129,7 +130,7 @@ export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 loading={isPending}
                 dataSource={data?.content}

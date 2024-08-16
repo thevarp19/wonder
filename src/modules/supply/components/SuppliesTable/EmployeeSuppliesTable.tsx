@@ -1,6 +1,7 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { padNumbers } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Table, TableColumnsType, Tag } from "antd";
+import { Button, ConfigProvider, TableColumnsType, Tag } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useGetEmployeeSupplies } from "../../queries";
@@ -126,7 +127,7 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
                 },
             }}
         >
-            <Table
+            <CustomTable
                 loading={isPending}
                 columns={columns}
                 dataSource={data}

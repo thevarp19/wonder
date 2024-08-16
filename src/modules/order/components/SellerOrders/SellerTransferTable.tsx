@@ -1,5 +1,6 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
-import { ConfigProvider, Table, TableColumnsType } from "antd";
+import { ConfigProvider, TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { GetOrdersContent, GetTransferOrders } from "../../types";
@@ -77,7 +78,7 @@ export const SellerTransferTable: FC<SellerTransferTableProps> = ({
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 dataSource={data?.content}
                 rowKey={"id"}

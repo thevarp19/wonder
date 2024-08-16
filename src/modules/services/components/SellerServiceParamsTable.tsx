@@ -1,10 +1,10 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import {
     Button,
     Checkbox,
     ConfigProvider,
     Input,
     Select,
-    Table,
     TableColumnsType,
 } from "antd";
 import { FC, useState } from "react";
@@ -267,7 +267,7 @@ export const SellerServiceParamsTable: FC<SellerServiceParamsTableProps> = ({
                 },
             }}
         >
-            <Table
+            <CustomTable
                 className="h-full"
                 size={isSmallScreen ? "small" : "large"}
                 columns={columns}

@@ -1,4 +1,5 @@
-import { Table, TableColumnsType } from "antd";
+import { CustomTable } from "@/components/ui/CustomTable";
+import { TableColumnsType } from "antd";
 import { FC } from "react";
 import { XMLTableType } from "../types";
 interface XMLTableProps {}
@@ -64,7 +65,7 @@ const mockData: XMLTableType[] = [
 export const XMLTable: FC<XMLTableProps> = ({}) => {
     // const { data: stores, isPending } = useGetStores();
     return (
-        <Table
+        <CustomTable
             columns={columns}
             dataSource={mockData}
             rowKey={"storeId"}

@@ -1,5 +1,6 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, Table, TableColumnsType } from "antd";
+import { Button, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useGetSupply } from "../../queries";
@@ -77,7 +78,7 @@ export const SupplyDetailsTable: FC<SupplyDetailsTableProps> = ({
 }) => {
     const { data, isPending } = useGetSupply(supplyId);
     return (
-        <Table
+        <CustomTable
             columns={columns}
             dataSource={data}
             rowKey={"article"}

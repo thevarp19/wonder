@@ -1,5 +1,6 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
-import { ConfigProvider, Table, TableColumnsType, Tag } from "antd";
+import { ConfigProvider, TableColumnsType, Tag } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -72,7 +73,7 @@ export const EmployeeTransferTable: FC<EmployeeTransferTableProps> = ({
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 dataSource={orders?.content}
                 rowKey={"id"}

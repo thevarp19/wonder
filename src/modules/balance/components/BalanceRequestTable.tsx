@@ -1,3 +1,4 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { axiosAuthorized } from "@/lib/axios";
 import { UploadOutlined } from "@ant-design/icons";
 import { useQueryClient } from "@tanstack/react-query";
@@ -7,7 +8,6 @@ import {
     ConfigProvider,
     Modal,
     Select,
-    Table,
     TableColumnsType,
 } from "antd";
 import { RcFile } from "antd/es/upload";
@@ -96,7 +96,7 @@ export const BalanceRequestTable: FC<BalanceRequestTableProps> = ({
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 dataSource={data?.content}
                 rowKey={"id"}

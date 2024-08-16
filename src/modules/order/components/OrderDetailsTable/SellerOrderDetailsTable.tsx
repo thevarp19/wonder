@@ -1,7 +1,8 @@
 import { PriceCell } from "@/components/ui/PriceCell";
-import { Button, Table, TableColumnsType } from "antd";
+import { Button, TableColumnsType } from "antd";
 import { FC } from "react";
 // import { useGetOrder } from "../../queries";
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 // import { GetOrderById } from "../../types";
@@ -102,7 +103,7 @@ export const SellerOrderDetailsTable: FC<
     // const { data, isPending } = useGetSellerOrder(orderId);
 
     return (
-        <Table
+        <CustomTable
             columns={columns}
             dataSource={[]}
             rowKey={"productVendorCode"}

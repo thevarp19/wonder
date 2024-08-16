@@ -1,6 +1,7 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { padNumbers } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, Table, TableColumnsType, Tag } from "antd";
+import { Button, TableColumnsType, Tag } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useGetSellerSupplies } from "../../queries";
@@ -123,7 +124,11 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
 
     return (
         <div>
-            <Table loading={isPending} columns={columns} dataSource={data} />
+            <CustomTable
+                loading={isPending}
+                columns={columns}
+                dataSource={data}
+            />
         </div>
     );
 };

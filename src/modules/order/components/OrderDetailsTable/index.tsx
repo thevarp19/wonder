@@ -49,7 +49,7 @@
 //     const { data, isPending } = useGetOrder(orderId);
 
 //     return (
-//         <Table
+//         <CustomTable
 //             columns={columns}
 //             dataSource={data}
 //             rowKey={"productVendorCode"}

@@ -1,5 +1,6 @@
 import { scan } from "@/assets";
 import { Title } from "@/components/shared/Title";
+import { CustomTable } from "@/components/ui/CustomTable";
 import { Image } from "@/components/ui/Image";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { UpdateSizesForm } from "@/modules/product/components/UpdateSizesForm";
@@ -16,7 +17,6 @@ import {
     Menu,
     MenuProps,
     Modal,
-    Table,
     TableColumnsType,
 } from "antd";
 import { FC, useEffect, useState } from "react";
@@ -304,7 +304,7 @@ export const EmployeeSearchResultsTable: FC<{
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 loading={isPending}
                 dataSource={data?.content}

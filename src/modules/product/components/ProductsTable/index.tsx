@@ -1,5 +1,6 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { myLocalStorage } from "@/lib/storage/browserStorage";
-import { Button, ConfigProvider, Modal, Table, TableColumnsType } from "antd";
+import { Button, ConfigProvider, Modal, TableColumnsType } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useGetActiveCities, useGetProducts } from "../../queries";
@@ -109,7 +110,7 @@ export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
                     },
                 }}
             >
-                <Table
+                <CustomTable
                     columns={columns}
                     loading={isPending || cityPending}
                     // size="small"

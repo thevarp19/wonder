@@ -2,6 +2,7 @@ import { EmployeeArchiveOrdersPage } from "./EmployeeArchiveOrdersPage";
 import { EmployeeLoginPage } from "./EmployeeLoginPage";
 import { EmployeeOrderAssemblePage } from "./EmployeeOrderAssemblePage";
 import { EmployeeOrderCancelledPage } from "./EmployeeOrderCancelledPage";
+import { EmployeeOrderPackageDetailPage } from "./EmployeeOrderPackageDetailPage";
 import { EmployeeOrderPackagePage } from "./EmployeeOrderPackagePage";
 import { EmployeeOrderPage } from "./EmployeeOrderPage";
 import { EmployeeOrderShippedPage } from "./EmployeeOrderShippedPage";
@@ -18,6 +19,7 @@ export {
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,
     EmployeeOrderCancelledPage,
+    EmployeeOrderPackageDetailPage,
     EmployeeOrderPackagePage,
     EmployeeOrderPage,
     EmployeeOrderShippedPage,

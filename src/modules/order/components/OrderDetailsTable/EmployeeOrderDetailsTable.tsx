@@ -1,4 +1,5 @@
-import { ConfigProvider, Table, TableColumnsType } from "antd";
+import { CustomTable } from "@/components/ui/CustomTable";
+import { ConfigProvider, TableColumnsType } from "antd";
 import { FC } from "react";
 import { GetOrderDetailEmployee } from "../../types";
 
@@ -53,7 +54,7 @@ export const EmployeeOrderDetailsTable: FC<EmployeeOrderDetailsTableProps> = ({
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 dataSource={data?.seller_cell_products}
                 rowKey={"id"}

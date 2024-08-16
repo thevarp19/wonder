@@ -9,6 +9,7 @@ import {
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,
     EmployeeOrderCancelledPage,
+    EmployeeOrderPackageDetailPage,
     EmployeeOrderPackagePage,
     EmployeeOrderPage,
     EmployeeOrderShippedPage,
@@ -66,6 +67,10 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                     <Route
                         path="/orders/package"
                         element={<EmployeeOrderPackagePage />}
+                    />
+                    <Route
+                        path="/orders/package/:orderId"
+                        element={<EmployeeOrderPackageDetailPage />}
                     />
                     <Route
                         path="/orders/transfer"

@@ -1,6 +1,7 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
 import { PriceCell } from "@/components/ui/PriceCell";
-import { Table, TableColumnsType, Tag } from "antd";
+import { TableColumnsType, Tag } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -61,7 +62,7 @@ export const EmployeeOrdersTable: FC<EmployeeOrdersTableProps> = ({
         setPage(1);
     }, [deliveryMode, searchValue]);
     return (
-        <Table
+        <CustomTable
             columns={columns}
             dataSource={orders?.content}
             rowKey={"code"}

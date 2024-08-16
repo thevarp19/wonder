@@ -1,6 +1,7 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { FilterButton } from "@/components/ui/FilterButton";
 import { SearchInput } from "@/components/ui/SearchInput";
-import { Menu, MenuProps, Table, TableColumnsType } from "antd";
+import { Menu, MenuProps, TableColumnsType } from "antd";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -81,7 +82,7 @@ const columns: TableColumnsType<any> = [
 
 export const SellerSearchResultsTable: FC<{ searchValue: string }> = ({}) => {
     return (
-        <Table
+        <CustomTable
             dataSource={[
                 {
                     id: 1,

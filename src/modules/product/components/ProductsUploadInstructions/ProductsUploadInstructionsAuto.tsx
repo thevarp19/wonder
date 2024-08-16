@@ -7,14 +7,9 @@ import {
     userdataFilled,
     usersKaspi,
 } from "@/assets";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 export const ProductsUploadInstructionsAuto: FC = () => {
-    const [isChecked, setIsChecked] = useState(false);
-
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-    };
     return (
         <div className="flex flex-col gap-4">
             <h2 className="text-base font-semibold">
@@ -25,14 +20,8 @@ export const ProductsUploadInstructionsAuto: FC = () => {
                     Для автоматической импортации данных требуется предоставить
                     доступ к Кабинету продавца Каспи
                 </h2>
-                <div className="p-4 mb-4 bg-yellow-100 border-l-4 border-yellow-500">
-                    <h2>
-                        Перед началом совершения передачи данных, пожалуйста
-                        ознакомитесь с политикой конфиденциальности
-                    </h2>
-                </div>
             </div>
-            <div className="max-w-xl p-6 mx-auto bg-white border rounded-lg shadow-md ">
+            {/* <div className="max-w-xl p-6 mx-auto bg-white border rounded-lg shadow-md ">
                 <h2 className="mb-4 text-2xl font-semibold">
                     Политика конфиденциальности
                 </h2>
@@ -168,7 +157,7 @@ export const ProductsUploadInstructionsAuto: FC = () => {
                         .
                     </label>
                 </div>
-            </div>
+            </div> */}
             <div className="flex flex-col ">
                 <h2 className="mb-4 text-xl font-semibold">
                     1. Ознакомьтесь с политикой конфиденциальности и подтвердите

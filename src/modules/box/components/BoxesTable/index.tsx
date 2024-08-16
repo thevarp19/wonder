@@ -1,4 +1,5 @@
-import { ConfigProvider, Table, TableColumnsType } from "antd";
+import { CustomTable } from "@/components/ui/CustomTable";
+import { ConfigProvider, TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useGetAllBoxes } from "../../queries";
@@ -48,7 +49,7 @@ export const BoxesTable: FC<BoxesTableProps> = ({ searchValue }) => {
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 dataSource={boxes}
                 rowKey={"id"}

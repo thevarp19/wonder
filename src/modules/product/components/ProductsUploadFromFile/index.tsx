@@ -47,7 +47,9 @@ export const ProductsUploadFromFile: FC<ProductsUploadFromFileProps> = ({
                 Загрузка продуктов
             </h1>
 
-            <Link to="/seller/products/upload/instruction">Инструкция</Link>
+            <Link target="_blank" to="/seller/products/upload/instruction">
+                Инструкция
+            </Link>
 
             <div className="flex flex-col gap-2">
                 <label>Выберите тип загрузки</label>

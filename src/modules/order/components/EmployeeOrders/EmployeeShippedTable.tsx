@@ -1,6 +1,7 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
 import { PriceCell } from "@/components/ui/PriceCell";
-import { ConfigProvider, Table, TableColumnsType, Tag } from "antd";
+import { ConfigProvider, TableColumnsType, Tag } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -61,7 +62,7 @@ export const EmployeeShippedTable: FC<EmployeeShippedTableProps> = ({
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 dataSource={data?.content}
                 rowKey={"id"}

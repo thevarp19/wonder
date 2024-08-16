@@ -1,4 +1,5 @@
-import { ConfigProvider, Table, TableColumnsType } from "antd";
+import { CustomTable } from "@/components/ui/CustomTable";
+import { ConfigProvider, TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import {
@@ -57,7 +58,7 @@ export const BalanceAdminTable: FC<BalanceAdminTableProps> = ({
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 dataSource={data?.content}
                 rowKey={"id"}

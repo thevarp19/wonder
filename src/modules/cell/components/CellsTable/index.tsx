@@ -1,5 +1,6 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { GetDetailStoreResponse } from "@/modules/store/types";
-import { ConfigProvider, Table, TableColumnsType } from "antd";
+import { ConfigProvider, TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { GetCellResponse } from "../../types";
@@ -110,7 +111,7 @@ export const CellsTable: FC<CellsTableProps> = ({
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 dataSource={cells?.map((cell) => ({
                     ...cell,

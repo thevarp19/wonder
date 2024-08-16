@@ -1,4 +1,5 @@
-import { Table, TableColumnsType } from "antd";
+import { CustomTable } from "@/components/ui/CustomTable";
+import { TableColumnsType } from "antd";
 import { FC } from "react";
 import { GetSupplyProducts, SupplyEmployeeProduct } from "../../types";
 
@@ -38,7 +39,7 @@ export const SupplyEmployeeProductsTable: FC<
     SupplyEmployeeProductsTableProps
 > = ({ data, isPending }) => {
     return (
-        <Table
+        <CustomTable
             columns={columns}
             dataSource={data}
             rowKey={"id"}

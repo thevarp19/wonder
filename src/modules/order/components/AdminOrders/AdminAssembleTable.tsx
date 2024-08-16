@@ -1,13 +1,17 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
-import { ConfigProvider, Table, TableColumnsType, Tag } from "antd";
+import { ConfigProvider, TableColumnsType, Tag } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
+import { Link } from "react-router-dom";
 import { GetAssembleOrders, GetOrdersContent } from "../../types";
 
 const columns: TableColumnsType<GetOrdersContent> = [
     {
-        title: "ID заказа",
-        dataIndex: "code",
+        title: "Номер заказа",
+        render: (_, record) => (
+            <Link to={`/admin/orders/${record.id}`}>{record.code}</Link>
+        ),
     },
     {
         title: "Артикул",
@@ -72,7 +76,7 @@ export const AdminAssembleTable: FC<AdminAssembleTableProps> = ({
                 },
             }}
         >
-            <Table
+            <CustomTable
                 columns={columns}
                 dataSource={data?.content}
                 rowKey={"id"}

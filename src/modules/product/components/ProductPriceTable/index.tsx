@@ -1,3 +1,4 @@
+import { CustomTable } from "@/components/ui/CustomTable";
 import { myLocalStorage } from "@/lib/storage/browserStorage";
 import {
     Button,
@@ -7,7 +8,6 @@ import {
     Modal,
     Select,
     Switch,
-    Table,
     TableColumnsType,
 } from "antd";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
@@ -292,7 +292,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
                     },
                 }}
             >
-                <Table
+                <CustomTable
                     // @ts-ignore
                     showSorterTooltip={{ target: "sorter-icon" }}
                     columns={newColumns}
