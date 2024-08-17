@@ -12,8 +12,12 @@ import {
 
 const columns: TableColumnsType<GetPackageOrdersEmployeeContent> = [
     {
-        title: "ID заказа",
-        dataIndex: "order_code",
+        title: "Номер заказа",
+        render: (_, record) => (
+            <Link to={`/employee/orders/${record.order_entry}`}>
+                {record.order_code}
+            </Link>
+        ),
     },
     {
         title: "ID товара",
@@ -55,6 +59,10 @@ const columns: TableColumnsType<GetPackageOrdersEmployeeContent> = [
             ) : (
                 "-"
             ),
+    },
+    {
+        title: "",
+        render: (_) => <Button type="primary">!</Button>,
     },
 ];
 

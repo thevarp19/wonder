@@ -32,7 +32,11 @@ export interface CellPDFProps {
 export const CellPDF: FC<CellPDFProps> = ({ cells, store }) => {
     return (
         <Document>
-            <Page size={[164]} orientation="portrait" style={styles.anchor}>
+            <Page
+                size={[164, 114]}
+                orientation="portrait"
+                style={styles.anchor}
+            >
                 <View style={styles.root}>
                     <View style={styles.column}>
                         {cells.map((cell) => (

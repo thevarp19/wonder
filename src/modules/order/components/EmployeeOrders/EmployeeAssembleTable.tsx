@@ -1,8 +1,9 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
-import { TableColumnsType } from "antd";
+import { Button, TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
+import { Link } from "react-router-dom";
 import {
     GetAssembleOrdersEmployee,
     GetAssembleOrdersEmployeeContent,
@@ -10,8 +11,12 @@ import {
 
 const columns: TableColumnsType<GetAssembleOrdersEmployeeContent> = [
     {
-        title: "ID заказа",
-        dataIndex: "order_code",
+        title: "Номер заказа",
+        render: (_, record) => (
+            <Link to={`/employee/orders/${record.order_entry}`}>
+                {record.order_code}
+            </Link>
+        ),
     },
     {
         title: "ID товара",
@@ -38,6 +43,10 @@ const columns: TableColumnsType<GetAssembleOrdersEmployeeContent> = [
         render: (_, record) => (
             <DateCell timestamp={record?.order_creation_date} />
         ),
+    },
+    {
+        title: "Замена",
+        render: (_) => <Button type="primary">!</Button>,
     },
 ];
 

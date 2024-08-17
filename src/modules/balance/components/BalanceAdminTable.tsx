@@ -1,4 +1,5 @@
 import { CustomTable } from "@/components/ui/CustomTable";
+import { PriceCell } from "@/components/ui/PriceCell";
 import { TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -26,7 +27,10 @@ const columns: TableColumnsType<GetAdminReplenishmentContent> = [
     {
         title: "Баланс",
         dataIndex: "balance",
-        render: (_, record) => <span>{record.seller.balance}</span>,
+
+        render: (_, record) => (
+            <PriceCell price={Number(record.seller.balance)} />
+        ),
     },
 ];
 

@@ -4,12 +4,15 @@ import { PriceCell } from "@/components/ui/PriceCell";
 import { TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
+import { Link } from "react-router-dom";
 import { GetOrdersContent, GetTransferOrders } from "../../types";
 
 const columns: TableColumnsType<GetOrdersContent> = [
     {
-        title: "ID заказа",
-        dataIndex: "code",
+        title: "Номер заказа",
+        render: (_, record) => (
+            <Link to={`/admin/orders/${record.id}`}>{record.code}</Link>
+        ),
     },
     // {
     //     title: "Артикул",

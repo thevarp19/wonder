@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         display: "flex",
         alignItems: "center",
-        fontSize: 8,
+        fontSize: 6,
         // paddingVertical: 10,
         // borderBottom: 0.5,
         // marginBottom: "3mm",
