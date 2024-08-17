@@ -11,10 +11,17 @@ export const DateCell: FC<DateCellProps> = ({ timestamp }) => {
 
     let dateObject: Date | null = null;
 
-    if (typeof timestamp === "string") {
+    if (typeof timestamp === "string" && timestamp.includes("T")) {
         dateObject = new Date(timestamp);
-    } else if (typeof timestamp === "number") {
-        dateObject = new Date(timestamp);
+    } else {
+        let numericTimestamp =
+            typeof timestamp === "string" ? parseInt(timestamp, 10) : timestamp;
+
+        if (numericTimestamp < 1e12) {
+            numericTimestamp *= 1000;
+        }
+
+        dateObject = new Date(numericTimestamp);
     }
 
     if (!dateObject || isNaN(dateObject.getTime())) {

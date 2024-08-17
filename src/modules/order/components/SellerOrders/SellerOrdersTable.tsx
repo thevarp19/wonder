@@ -1,11 +1,12 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
+import { PriceCell } from "@/components/ui/PriceCell";
 import { TableColumnsType, Tag } from "antd";
 import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetOrdersSeller } from "../../queries";
 import { DeliveryMode, GetOrdersSellerContent } from "../../types";
-import { mapWonderStatus } from "../../utils";
+import { mapDeliveryMode, mapWonderStatus } from "../../utils";
 
 const columns: TableColumnsType<GetOrdersSellerContent> = [
     {
@@ -16,10 +17,27 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
     },
     {
         title: "Тип доставки",
-        dataIndex: "deliveryMode",
-        render: (_, record) => (
-            <Tag className="!rounded-full">{record.delivery_mode}</Tag>
-        ),
+        dataIndex: "delivery_mode",
+        render: (_, record) => {
+            const { text, color } = mapDeliveryMode(record.delivery_mode);
+            return (
+                <div className="flex ">
+                    <Tag
+                        color={color}
+                        style={{
+                            borderRadius: "20px",
+                            padding: "0 8px",
+                            backgroundColor: color,
+                            color: "black",
+                            fontWeight: "500",
+                            fontSize: 14,
+                        }}
+                    >
+                        {text}
+                    </Tag>
+                </div>
+            );
+        },
     },
     {
         title: "Время заказа",
@@ -38,7 +56,7 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
     },
     {
         title: "Сумма заказа",
-        render: (_, record) => <div>{record.total_price} KZT</div>,
+        render: (_, record) => <PriceCell price={record.total_price} />,
     },
     {
         title: "Обслуживание",
@@ -50,7 +68,10 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
         render: (_, record) => {
             const { text, color } = mapWonderStatus(record.wonder_status);
             return (
-                <div style={{ color: color }} className={`!rounded-full`}>
+                <div
+                    style={{ color: color }}
+                    className={`!rounded-full whitespace-nowrap`}
+                >
                     <span
                         style={{
                             display: "inline-block",
@@ -70,10 +91,6 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
         title: "Склад",
         dataIndex: "warehouse",
     },
-    // {
-    //     title: "Торговая цена",
-    //     render: (_, record) => <div>{record.} KZT</div>,
-    // },
 ];
 
 interface SellerOrdersTableProps {
@@ -85,7 +102,7 @@ export const SellerOrdersTable: FC<SellerOrdersTableProps> = ({
     searchValue,
     deliveryMode,
 }) => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetOrdersSeller(
         page,
         10,
@@ -93,7 +110,7 @@ export const SellerOrdersTable: FC<SellerOrdersTableProps> = ({
         deliveryMode
     );
     useEffect(() => {
-        setPage(1);
+        setPage(0);
     }, [deliveryMode, searchValue]);
     return (
         <CustomTable

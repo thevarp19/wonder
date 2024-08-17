@@ -1,5 +1,5 @@
 import { CustomTable } from "@/components/ui/CustomTable";
-import { ConfigProvider, TableColumnsType } from "antd";
+import { TableColumnsType } from "antd";
 import { FC } from "react";
 import { GetOrderDetailEmployee } from "../../types";
 
@@ -42,25 +42,12 @@ export const EmployeeOrderDetailsTable: FC<EmployeeOrderDetailsTableProps> = ({
     ];
 
     return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Table: {
-                        headerBg: "#fff",
-                        headerColor: "#1C1C1C66",
-                        headerBorderRadius: 10,
-                        headerSplitColor: "#fff",
-                    },
-                },
-            }}
-        >
-            <CustomTable
-                columns={columns}
-                dataSource={data?.seller_cell_products}
-                rowKey={"id"}
-                loading={loading}
-                scroll={{ x: "max-content" }}
-            />
-        </ConfigProvider>
+        <CustomTable
+            columns={columns}
+            dataSource={data?.seller_cell_products}
+            rowKey={"id"}
+            loading={loading}
+            scroll={{ x: "max-content" }}
+        />
     );
 };

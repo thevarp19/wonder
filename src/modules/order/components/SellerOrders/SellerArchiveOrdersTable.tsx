@@ -1,12 +1,13 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
+import { PriceCell } from "@/components/ui/PriceCell";
 import { TableColumnsType, Tag } from "antd";
 import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersSeller } from "../../queries";
 import { DeliveryMode, GetOrdersSellerContent } from "../../types";
-import { mapWonderStatus } from "../../utils";
+import { mapDeliveryMode, mapWonderStatus } from "../../utils";
 
 const columns: TableColumnsType<GetOrdersSellerContent> = [
     {
@@ -15,22 +16,34 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
             <Link to={`/seller/orders/${record.id}`}>{record.code}</Link>
         ),
     },
-    // {
-    //     title: "Название Склада",
-    //     dataIndex: "sellerName",
-    // },
+
     {
-        title: "Склад",
-        dataIndex: "warehouse",
+        title: "Тип доставки",
+        dataIndex: "delivery_mode",
+        render: (_, record) => {
+            const { text, color } = mapDeliveryMode(record.delivery_mode);
+            return (
+                <div className="flex ">
+                    <Tag
+                        color={color}
+                        style={{
+                            borderRadius: "20px",
+                            padding: "0 8px",
+                            backgroundColor: color,
+                            color: "black",
+                            fontWeight: "500",
+                            fontSize: 14,
+                        }}
+                    >
+                        {text}
+                    </Tag>
+                </div>
+            );
+        },
     },
     {
         title: "Время заказа",
         render: (_, record) => <DateCell timestamp={record.creation_date} />,
-    },
-    {
-        title: "Тип доставки",
-        dataIndex: "deliveryMode",
-        render: (_, record) => <Tag>{record.delivery_mode}</Tag>,
     },
     {
         title: "Дата передачи",
@@ -44,7 +57,15 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
     },
     {
         title: "Сумма заказа",
-        render: (_, record) => <div>{record.total_price} KZT</div>,
+        render: (_, record) => <PriceCell price={record.total_price} />,
+    },
+    {
+        title: "Обслуживание",
+        render: (_) => <div>-</div>,
+    },
+    {
+        title: "Склад",
+        dataIndex: "warehouse",
     },
     {
         title: "Статус",
@@ -52,7 +73,10 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
         render: (_, record) => {
             const { text, color } = mapWonderStatus(record.wonder_status);
             return (
-                <div style={{ color: color }} className={`!rounded-full`}>
+                <div
+                    style={{ color: color }}
+                    className={`!rounded-full whitespace-nowrap`}
+                >
                     <span
                         style={{
                             display: "inline-block",
@@ -68,10 +92,6 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
             );
         },
     },
-    // {
-    //     title: "Торговая цена",
-    //     render: (_, record) => <div>{record.} KZT</div>,
-    // },
 ];
 
 interface SellerArchiveOrdersTableProps {
@@ -83,7 +103,7 @@ export const SellerArchiveOrdersTable: FC<SellerArchiveOrdersTableProps> = ({
     searchValue,
     // deliveryMode,
 }) => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetOrdersSeller(
         page,
         10,

@@ -20,7 +20,7 @@ export function createProductsFromFile(formData: FormData, importType: string) {
 }
 
 export function getProducts(
-    // page: number = 1,
+    // page: number = 0,
     // size: number = 10,
     // searchValue: string = "",
     isPublished: boolean | null = null,
@@ -43,7 +43,7 @@ export async function getProductsOptions({
     return data;
 }
 export function getProductsPrices(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     cities: number[] = [],
@@ -104,7 +104,7 @@ export function getEnabledCount() {
 }
 
 export function getProductsWithSizes(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     search: string = "",
     hasSizes: boolean | null = null
@@ -116,7 +116,7 @@ export function getProductsWithSizes(
     return axiosAuthorized.get<GetProductsWithSizesResponse>(url);
 }
 export function getProductsByParams(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     byVendorCode: boolean = false,

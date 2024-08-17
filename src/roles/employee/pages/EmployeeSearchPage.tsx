@@ -7,7 +7,7 @@ import { useGetProductsByParams } from "@/modules/product/queries";
 import { useScannerResults } from "@/modules/scan/hooks";
 import { toScanProductsSearch } from "@/modules/scan/utils";
 import { cn } from "@/utils/shared.util";
-import { ConfigProvider, TableColumnsType } from "antd";
+import { TableColumnsType } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
@@ -106,7 +106,7 @@ const columns: TableColumnsType<any> = [
 export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
     searchValue,
 }) => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const { data, isPending } = useGetProductsByParams(
         page,
         undefined,
@@ -118,35 +118,22 @@ export const EmployeeSearchResultsTable: FC<{ searchValue: string }> = ({
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Table: {
-                        headerBg: "#fff",
-                        headerColor: "#1C1C1C66",
-                        headerBorderRadius: 10,
-                        headerSplitColor: "#fff",
-                    },
+        <CustomTable
+            columns={columns}
+            loading={isPending}
+            dataSource={data?.content}
+            rowKey={(record) => record.vendorCode}
+            pagination={{
+                pageSize: 10,
+                total: data?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
                 },
+                current: page + 1,
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
             }}
-        >
-            <CustomTable
-                columns={columns}
-                loading={isPending}
-                dataSource={data?.content}
-                rowKey={(record) => record.vendorCode}
-                pagination={{
-                    pageSize: 10,
-                    total: data?.totalElements,
-                    showSizeChanger: false,
-                    onChange(page) {
-                        setPage(page - 1);
-                    },
-                    current: page + 1,
-                    position: isSmallScreen ? ["bottomCenter"] : undefined,
-                }}
-                scroll={{ x: "max-content" }}
-            />
-        </ConfigProvider>
+            scroll={{ x: "max-content" }}
+        />
     );
 };

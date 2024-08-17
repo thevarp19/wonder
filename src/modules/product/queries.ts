@@ -103,7 +103,7 @@ export const useGetProductsByParams = (
 };
 
 export const useGetProductsPrices = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     cities: number[] = [],

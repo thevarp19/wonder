@@ -36,7 +36,7 @@ const columns: TableColumnsType<GetProductContent> = [
 ];
 
 export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
-    // const [page, setPage] = useState(1);
+    // const [page, setPage] = useState(0);
     const [activeStores, setActiveStores] = useState<string[]>(
         myLocalStorage?.get("activeStores") || ["алматы"]
     );

@@ -38,7 +38,7 @@ import {
 } from "./types";
 
 export const useGetOrdersAdmin = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -97,7 +97,7 @@ export const useGetOrdersSellerOwn = (
 };
 
 export const useGetOrdersEmployee = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -116,7 +116,7 @@ export const useGetOrdersEmployee = (
     });
 };
 export const useGetAssembleOrderEmployee = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -141,7 +141,7 @@ export const useGetAssembleOrderEmployee = (
     });
 };
 export const useGetAssembleOrderSeller = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -166,7 +166,7 @@ export const useGetAssembleOrderSeller = (
     });
 };
 export const useGetAssembleOrderAdmin = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -191,7 +191,7 @@ export const useGetAssembleOrderAdmin = (
     });
 };
 export const useGetPackageOrderEmployee = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -216,7 +216,7 @@ export const useGetPackageOrderEmployee = (
     });
 };
 export const useGetPackageOrderSeller = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -241,7 +241,7 @@ export const useGetPackageOrderSeller = (
     });
 };
 export const useGetPackageOrderAdmin = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -266,7 +266,7 @@ export const useGetPackageOrderAdmin = (
     });
 };
 export const useGetTransferOrderEmployee = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -291,7 +291,7 @@ export const useGetTransferOrderEmployee = (
     });
 };
 export const useGetTransferOrderSeller = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -316,7 +316,7 @@ export const useGetTransferOrderSeller = (
     });
 };
 export const useGetTransferOrderAdmin = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -341,7 +341,7 @@ export const useGetTransferOrderAdmin = (
     });
 };
 export const useGetShippedOrderSeller = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -366,7 +366,7 @@ export const useGetShippedOrderSeller = (
     });
 };
 export const useGetShippedOrderEmployee = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -391,7 +391,7 @@ export const useGetShippedOrderEmployee = (
     });
 };
 export const useGetShippedOrderAdmin = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -416,7 +416,7 @@ export const useGetShippedOrderAdmin = (
     });
 };
 export const useGetCancelledOrderSeller = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -441,7 +441,7 @@ export const useGetCancelledOrderSeller = (
     });
 };
 export const useGetCancelledOrderEmployee = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode
@@ -466,7 +466,7 @@ export const useGetCancelledOrderEmployee = (
     });
 };
 export const useGetCancelledOrderAdmin = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode

@@ -250,7 +250,7 @@ export const EmployeeSearchResultsTable: FC<{
     searchValue: string;
     filterKey: string;
 }> = ({ searchValue, filterKey }) => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const hasSizes =
         filterKey === "scanned"
             ? true
@@ -292,35 +292,22 @@ export const EmployeeSearchResultsTable: FC<{
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Table: {
-                        headerBg: "#fff",
-                        headerColor: "#1C1C1C66",
-                        headerBorderRadius: 10,
-                        headerSplitColor: "#fff",
-                    },
+        <CustomTable
+            columns={columns}
+            loading={isPending}
+            dataSource={data?.content}
+            rowKey={(record) => record.vendor_code}
+            pagination={{
+                pageSize: 10,
+                total: data?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
                 },
+                current: page + 1,
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
             }}
-        >
-            <CustomTable
-                columns={columns}
-                loading={isPending}
-                dataSource={data?.content}
-                rowKey={(record) => record.vendor_code}
-                pagination={{
-                    pageSize: 10,
-                    total: data?.totalElements,
-                    showSizeChanger: false,
-                    onChange(page) {
-                        setPage(page - 1);
-                    },
-                    current: page + 1,
-                    position: isSmallScreen ? ["bottomCenter"] : undefined,
-                }}
-                scroll={{ x: "max-content" }}
-            />
-        </ConfigProvider>
+            scroll={{ x: "max-content" }}
+        />
     );
 };

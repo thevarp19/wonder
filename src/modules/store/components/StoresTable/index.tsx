@@ -2,7 +2,7 @@ import { employeesIcon, pencilIcon } from "@/assets";
 import { CustomTable } from "@/components/ui/CustomTable";
 import { Image } from "@/components/ui/Image";
 import { cn } from "@/utils/shared.util";
-import { Button, ConfigProvider, TableColumnsType } from "antd";
+import { Button, TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -101,34 +101,20 @@ export const StoresTable: FC<StoresTableProps> = ({}) => {
     const { data: stores, isPending } = useGetStores();
 
     return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Table: {
-                        headerBg: "#fff",
-                        headerColor: "#1C1C1C66",
-                        headerBorderRadius: 10,
-                        headerSplitColor: "#fff",
-                    },
-                },
+        <CustomTable
+            columns={columns}
+            dataSource={
+                stores?.sort((a, b) => a.warehouse.id - b.warehouse.id) || []
+            }
+            rowKey={(record) => record.warehouse.id}
+            loading={isPending}
+            locale={{
+                emptyText: "Нет данных",
             }}
-        >
-            <CustomTable
-                columns={columns}
-                dataSource={
-                    stores?.sort((a, b) => a.warehouse.id - b.warehouse.id) ||
-                    []
-                }
-                rowKey={(record) => record.warehouse.id}
-                loading={isPending}
-                locale={{
-                    emptyText: "Нет данных",
-                }}
-                pagination={{
-                    position: isSmallScreen ? ["bottomCenter"] : undefined,
-                }}
-                scroll={{ x: "max-content" }}
-            />
-        </ConfigProvider>
+            pagination={{
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
+            }}
+            scroll={{ x: "max-content" }}
+        />
     );
 };

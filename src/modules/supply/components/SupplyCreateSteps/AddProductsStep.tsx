@@ -38,12 +38,6 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                 <a href={record.product.vendor_code}>{record.product.title}</a>
             ),
         },
-        // {
-        //     title: "Цена в Алматы",
-        //     render: (_, record) => (
-        //         <span>{record.product.counts[0].price}</span>
-        //     ),
-        // },
         {
             title: "Количество",
             render: (_, record) => (

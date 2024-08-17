@@ -52,7 +52,7 @@ import {
 //         },
 //     });
 // };
-export const useGetAdminLastOrders = (page: number = 1, size: number = 5) => {
+export const useGetAdminLastOrders = (page: number = 0, size: number = 5) => {
     return useQuery<GetLastOrdersResponse>({
         queryKey: [`lastOrders`, page, size],
         queryFn: async () => {
@@ -62,7 +62,7 @@ export const useGetAdminLastOrders = (page: number = 1, size: number = 5) => {
     });
 };
 export const useGetSellerProductCount = (
-    page: number = 1,
+    page: number = 0,
     size: number = 5
 ) => {
     return useQuery<GetProductCountResponse>({

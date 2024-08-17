@@ -17,7 +17,7 @@ export const EmployeeOrderCancelledPage: FC<
     const debouncedSearchValue = useDebounce(searchValue, 500);
     const [current, setCurrent] = useState("all");
     const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("ALL");
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetCancelledOrderEmployee(
         page,
         10,
@@ -25,7 +25,7 @@ export const EmployeeOrderCancelledPage: FC<
         deliveryMode
     );
     useEffect(() => {
-        setPage(1);
+        setPage(0);
     }, [deliveryMode, searchValue]);
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);

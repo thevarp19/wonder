@@ -1,6 +1,7 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
-import { ConfigProvider, TableColumnsType, Tag } from "antd";
+import { PriceCell } from "@/components/ui/PriceCell";
+import { TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -13,25 +14,26 @@ const columns: TableColumnsType<GetOrdersContent> = [
             <Link to={`/admin/orders/${record.id}`}>{record.code}</Link>
         ),
     },
-    {
-        title: "Артикул",
-        dataIndex: "product_vendor_codes",
-        render: (product_vendor_codes) =>
-            product_vendor_codes.map((code: any, index: any) => (
-                <Tag key={index}>{code}</Tag>
-            )),
-    },
+
     {
         title: "Название склада",
         dataIndex: "store_name",
         render: (_, record) => <span>{record?.store_name}</span>,
     },
     {
+        title: "Артикул",
+        dataIndex: "product_vendor_codes",
+        render: (product_vendor_codes) =>
+            product_vendor_codes.map((code: any, index: any) => (
+                <div key={index}>{code}</div>
+            )),
+    },
+    {
         title: "Название товара",
         dataIndex: "product_titles",
         render: (product_titles) =>
             product_titles.map((title: any, index: any) => (
-                <Tag key={index}>{title}</Tag>
+                <div key={index}>{title}</div>
             )),
     },
     {
@@ -45,6 +47,14 @@ const columns: TableColumnsType<GetOrdersContent> = [
         render: (_, record) => (
             <DateCell timestamp={record.transmission_date} />
         ),
+    },
+    {
+        title: "Сумма заказа",
+        render: (_, record) => <PriceCell price={record.total_price} />,
+    },
+    {
+        title: "Обслуживание",
+        render: (_) => <div>-</div>,
     },
 ];
 
@@ -64,35 +74,22 @@ export const AdminPackageTable: FC<AdminPackageTableProps> = ({
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Table: {
-                        headerBg: "#fff",
-                        headerColor: "#1C1C1C66",
-                        headerBorderRadius: 10,
-                        headerSplitColor: "#fff",
-                    },
+        <CustomTable
+            columns={columns}
+            dataSource={data?.content}
+            rowKey={"id"}
+            loading={isPending}
+            pagination={{
+                pageSize: 10,
+                total: data?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
                 },
+                current: page + 1,
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
             }}
-        >
-            <CustomTable
-                columns={columns}
-                dataSource={data?.content}
-                rowKey={"id"}
-                loading={isPending}
-                pagination={{
-                    pageSize: 10,
-                    total: data?.totalElements,
-                    showSizeChanger: false,
-                    onChange(page) {
-                        setPage(page - 1);
-                    },
-                    current: page + 1,
-                    position: isSmallScreen ? ["bottomCenter"] : undefined,
-                }}
-                scroll={{ x: "max-content" }}
-            />
-        </ConfigProvider>
+            scroll={{ x: "max-content" }}
+        />
     );
 };

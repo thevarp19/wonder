@@ -1,13 +1,12 @@
 // import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/EmployeeOrderTable";
 
 import { DateCell } from "@/components/ui/DateCell";
-import { FormikInput } from "@/components/ui/FormikInput";
+import { Loading } from "@/components/ui/Loading";
 import { EmployeeOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable/EmployeeOrderDetailsTable";
-import { useCancelOrder } from "@/modules/order/forms";
 import {} from "@/modules/order/mutations";
 import { useGetEmployeeOrder } from "@/modules/order/queries";
-import { Button, Form, Modal, Tag } from "antd";
-import { FC, useState } from "react";
+import { mapWonderStatus } from "@/modules/order/utils";
+import { FC } from "react";
 import { useParams } from "react-router-dom";
 
 interface EmployeeOrderPageProps {}
@@ -17,6 +16,12 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
 
     const { data, isPending } = useGetEmployeeOrder(orderIdRaw ?? "");
     const orderCode = data?.code?.toString() ?? "";
+    const { text, color } = mapWonderStatus(
+        data?.wonder_status || "Неизвестно"
+    );
+    if (isPending) {
+        return <Loading />;
+    }
     return (
         <div>
             <h2 className="pb-4 text-2xl font-semibold">
@@ -26,10 +31,25 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
                 <div className="flex flex-col w-1/2 gap-3 p-5 rounded-lg bg-gray-50">
                     <h3 className="font-bold">Информация о заказе</h3>
                     <div className="flex flex-col gap-1">
-                        <p>
+                        <div className="flex gap-3">
                             <strong>Статус:</strong>{" "}
-                            <Tag> {data?.wonder_status}</Tag>
-                        </p>
+                            <div
+                                style={{ color: color }}
+                                className={`!rounded-full`}
+                            >
+                                <span
+                                    style={{
+                                        display: "inline-block",
+                                        width: "10px",
+                                        height: "10px",
+                                        backgroundColor: color,
+                                        borderRadius: "50%",
+                                        marginRight: "8px",
+                                    }}
+                                ></span>
+                                {text}
+                            </div>
+                        </div>
                         <p>
                             <strong>Название магазина:</strong>{" "}
                             {data?.kaspi_store_name}
@@ -71,75 +91,8 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-end gap-5 my-4">
-                <CancelOrderModal orderId={orderIdRaw || ""} />
-            </div>
+
             <EmployeeOrderDetailsTable data={data} loading={isPending} />
         </div>
-    );
-};
-const CancelOrderModal = ({ orderId }: { orderId: string }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const { formik, mutation } = useCancelOrder(orderId);
-    return (
-        <>
-            <Modal
-                title="Отмена продукта"
-                open={isModalOpen}
-                cancelButtonProps={{ style: { width: "100%" } }}
-                onCancel={() => setIsModalOpen(false)}
-                cancelText="Назад"
-                okButtonProps={{ style: { display: "none" } }}
-                destroyOnClose
-            >
-                <Form
-                    layout="vertical"
-                    className="flex flex-col w-full max-w-xl gap-2 px-10"
-                >
-                    <FormikInput
-                        name="cancellation_reason"
-                        formik={formik}
-                        formItemProps={{
-                            label: "Причина",
-                            required: true,
-                        }}
-                        inputProps={{
-                            size: "large",
-                            style: { width: "100%" },
-                        }}
-                    />
-                    <FormikInput
-                        name="cancellation_comment"
-                        formik={formik}
-                        formItemProps={{
-                            label: "Коментарий",
-                            required: true,
-                        }}
-                        inputProps={{
-                            size: "large",
-                            style: { width: "100%" },
-                        }}
-                    />
-                    <Button
-                        type="primary"
-                        loading={mutation.isPending}
-                        className="w-full md:w-auto"
-                        onClick={() => {
-                            formik.handleSubmit();
-                            setIsModalOpen(false);
-                        }}
-                    >
-                        Отменить
-                    </Button>
-                </Form>
-            </Modal>
-            <Button
-                type="primary"
-                size="large"
-                onClick={() => setIsModalOpen(true)}
-            >
-                Отменить заказ
-            </Button>
-        </>
     );
 };

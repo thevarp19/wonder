@@ -6,7 +6,7 @@ import {
 } from "./types";
 
 export const useGetAdminReplenishment = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = ""
 ) => {
@@ -23,7 +23,7 @@ export const useGetAdminReplenishment = (
     });
 };
 export const useGetSellerReplenishment = (
-    page: number = 1,
+    page: number = 0,
     size: number = 10
 ) => {
     return useQuery<GetSellerReplenishmentResponse>({

@@ -7,6 +7,7 @@ import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersEmployee } from "../../queries";
 import { DeliveryMode, GetOrdersEmployeeContent } from "../../types";
+import { mapDeliveryMode, mapWonderStatus } from "../../utils";
 
 const columns: TableColumnsType<GetOrdersEmployeeContent> = [
     {
@@ -15,28 +16,71 @@ const columns: TableColumnsType<GetOrdersEmployeeContent> = [
             <Link to={`/employee/orders/${record.id}`}>{record.code}</Link>
         ),
     },
-    {
-        title: "Время заказа",
-        render: (_, record) => <DateCell timestamp={record?.creation_date} />,
-    },
+
     {
         title: "Название магазина",
         dataIndex: "kaspi_store_name",
     },
     {
         title: "Тип доставки",
-        dataIndex: "deliveryMode",
-        render: (_, record) => <Tag>{record.delivery_mode}</Tag>,
+        dataIndex: "delivery_mode",
+        render: (_, record) => {
+            const { text, color } = mapDeliveryMode(record.delivery_mode);
+            return (
+                <div className="flex ">
+                    <Tag
+                        color={color}
+                        style={{
+                            borderRadius: "20px",
+                            padding: "0 8px",
+                            backgroundColor: color,
+                            color: "black",
+                            fontWeight: "500",
+                            fontSize: 14,
+                        }}
+                        className="!flex !justify-center w-full max-w-max"
+                    >
+                        {text}
+                    </Tag>
+                </div>
+            );
+        },
+        width: 120,
     },
-
+    {
+        title: "Время заказа",
+        render: (_, record) => <DateCell timestamp={record?.creation_date} />,
+    },
     {
         title: "Цена",
         render: (_, record) => <PriceCell price={record.total_price} />,
     },
     {
         title: "Статус",
-        dataIndex: "state",
-        render: (_, record) => <Tag>{record?.wonder_status}</Tag>,
+        dataIndex: "wonder_status",
+        render: (_, record) => {
+            const { text, color } = mapWonderStatus(
+                record?.wonder_status || "Неизвестно"
+            );
+            return (
+                <div
+                    style={{ color: color }}
+                    className={`!rounded-full whitespace-nowrap`}
+                >
+                    <span
+                        style={{
+                            display: "inline-block",
+                            width: "10px",
+                            height: "10px",
+                            backgroundColor: color,
+                            borderRadius: "50%",
+                            marginRight: "8px",
+                        }}
+                    ></span>
+                    {text}
+                </div>
+            );
+        },
     },
 ];
 
@@ -49,7 +93,7 @@ export const EmployeeOrdersTable: FC<EmployeeOrdersTableProps> = ({
     searchValue,
     deliveryMode,
 }) => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetOrdersEmployee(
         page,
         10,
@@ -59,7 +103,7 @@ export const EmployeeOrdersTable: FC<EmployeeOrdersTableProps> = ({
 
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
     useEffect(() => {
-        setPage(1);
+        setPage(0);
     }, [deliveryMode, searchValue]);
     return (
         <CustomTable

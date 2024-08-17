@@ -1,6 +1,6 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { GetDetailStoreResponse } from "@/modules/store/types";
-import { ConfigProvider, TableColumnsType } from "antd";
+import { TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { GetCellResponse } from "../../types";
@@ -99,37 +99,23 @@ export const CellsTable: FC<CellsTableProps> = ({
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Table: {
-                        headerBg: "#fff",
-                        headerColor: "#1C1C1C66",
-                        headerBorderRadius: 10,
-                        headerSplitColor: "#fff",
-                    },
-                },
+        <CustomTable
+            columns={columns}
+            dataSource={cells?.map((cell) => ({
+                ...cell,
+                store: store!,
+                storeId: storeId,
+                count:
+                    groupedCells[`${cell.width}x${cell.height}x${cell.length}`]
+                        ?.length || 0,
+            }))}
+            pagination={{
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
             }}
-        >
-            <CustomTable
-                columns={columns}
-                dataSource={cells?.map((cell) => ({
-                    ...cell,
-                    store: store!,
-                    storeId: storeId,
-                    count:
-                        groupedCells[
-                            `${cell.width}x${cell.height}x${cell.length}`
-                        ]?.length || 0,
-                }))}
-                pagination={{
-                    position: isSmallScreen ? ["bottomCenter"] : undefined,
-                }}
-                scroll={{ x: "max-content" }}
-                rowKey={"id"}
-                loading={isPending || isStorePending}
-            />
-        </ConfigProvider>
+            scroll={{ x: "max-content" }}
+            rowKey={"id"}
+            loading={isPending || isStorePending}
+        />
     );
 };
 

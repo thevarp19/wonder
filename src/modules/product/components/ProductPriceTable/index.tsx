@@ -163,7 +163,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
     debouncedSearchValue,
     isPublished,
 }) => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
 
     const [activeStores, setActiveStores] = useState<string[]>(
         myLocalStorage?.get("activeStores") || ["алматы"]
@@ -185,7 +185,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
         isPublished
     );
     useEffect(() => {
-        setPage(1);
+        setPage(0);
     }, [debouncedSearchValue]);
     useEffect(() => {
         myLocalStorage?.set("activeStores", activeStores);
@@ -234,7 +234,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
             .sort((a, b) => a.localeCompare(b))
             .map((store) => ({
                 title: `${store.toLocaleUpperCase()}`,
-                width: 120,
+
                 render: (_: any, record: GetProductWithPrices) => (
                     <ProductPriceCell
                         store={store}
@@ -438,11 +438,11 @@ function ProductPriceCell({
     const getColorHex = (color: string) => {
         switch (color) {
             case "red":
-                return "#FF0000";
+                return "#FF415352";
             case "yellow":
-                return "#FFFF00";
+                return "#FFC5558F";
             case "green":
-                return "#008000";
+                return "#91FC6C85";
             default:
                 return "#FFFFFF";
         }
@@ -485,7 +485,7 @@ function ProductPriceCell({
             ) : (
                 <div
                     style={{
-                        backgroundColor: color,
+                        backgroundColor: backgroundColor,
                     }}
                     className="flex items-center justify-center gap-2 py-1 font-semibold border rounded-2xl"
                 >

@@ -17,7 +17,7 @@ import {
 } from "./types";
 
 export function getOrdersAdmin(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -28,7 +28,7 @@ export function getOrdersAdmin(
 }
 
 export function getOrdersSeller(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -38,7 +38,7 @@ export function getOrdersSeller(
     );
 }
 export function getOrdersSellerOwn(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -49,7 +49,7 @@ export function getOrdersSellerOwn(
 }
 
 export function getOrdersEmployee(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -59,13 +59,13 @@ export function getOrdersEmployee(
     );
 }
 export function cancelOrderAdmin(
-    id: number,
+    id: string,
     values: { cancellation_reason: string; cancellation_comment: string }
 ) {
     return axiosAuthorized.post(`/api/order-admin/cancel/${id}/`, values);
 }
 export function getAssembleOrderEmployee(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -75,7 +75,7 @@ export function getAssembleOrderEmployee(
     );
 }
 export function getAssembleOrderSeller(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -85,7 +85,7 @@ export function getAssembleOrderSeller(
     );
 }
 export function getAssembleOrderAdmin(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -95,7 +95,7 @@ export function getAssembleOrderAdmin(
     );
 }
 export function getPackageOrderEmployee(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -105,7 +105,7 @@ export function getPackageOrderEmployee(
     );
 }
 export function getPackageOrderSeller(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -115,7 +115,7 @@ export function getPackageOrderSeller(
     );
 }
 export function getPackageOrderAdmin(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -125,7 +125,7 @@ export function getPackageOrderAdmin(
     );
 }
 export function getTransferOrderEmployee(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -135,7 +135,7 @@ export function getTransferOrderEmployee(
     );
 }
 export function getTransferOrderSeller(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -145,7 +145,7 @@ export function getTransferOrderSeller(
     );
 }
 export function getTransferOrderAdmin(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -155,7 +155,7 @@ export function getTransferOrderAdmin(
     );
 }
 export function getShippedOrderSeller(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -165,7 +165,7 @@ export function getShippedOrderSeller(
     );
 }
 export function getShippedOrderEmployee(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -175,7 +175,7 @@ export function getShippedOrderEmployee(
     );
 }
 export function getShippedOrderAdmin(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -185,7 +185,7 @@ export function getShippedOrderAdmin(
     );
 }
 export function getCancelledOrderSeller(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -195,7 +195,7 @@ export function getCancelledOrderSeller(
     );
 }
 export function getCancelledOrderEmployee(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
@@ -205,13 +205,13 @@ export function getCancelledOrderEmployee(
     );
 }
 export function getCancelledOrderAdmin(
-    page: number = 1,
+    page: number = 0,
     size: number = 10,
     searchValue: string = "",
     deliveryMode: DeliveryMode = "ALL"
 ) {
     return axiosAuthorized.get<GetCancelledOrders>(
-        `/api/order-admin/assemble/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+        `/api/order-admin/cancelled/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
 

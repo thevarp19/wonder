@@ -1,7 +1,7 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { padNumbers } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, TableColumnsType, Tag } from "antd";
+import { Button, TableColumnsType, Tag } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useGetEmployeeSupplies } from "../../queries";
@@ -115,25 +115,12 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
     ];
 
     return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Table: {
-                        headerBg: "#fff",
-                        headerColor: "#1C1C1C66",
-                        headerBorderRadius: 10,
-                        headerSplitColor: "#fff",
-                    },
-                },
-            }}
-        >
-            <CustomTable
-                loading={isPending}
-                columns={columns}
-                dataSource={data}
-                rowKey={"id"}
-                scroll={{ x: "max-content" }}
-            />
-        </ConfigProvider>
+        <CustomTable
+            loading={isPending}
+            columns={columns}
+            dataSource={data}
+            rowKey={"id"}
+            scroll={{ x: "max-content" }}
+        />
     );
 };

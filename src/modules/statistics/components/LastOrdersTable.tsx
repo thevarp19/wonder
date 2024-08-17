@@ -35,7 +35,7 @@ const columns: TableColumnsType<GetLastOrdersContent> = [
 export const LastOrdersTable: FC<ProductsCountTableProps> = ({}) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
 
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const { data: lastOrders, isPending } = useGetAdminLastOrders(page, 5);
 
     return (

@@ -6,6 +6,7 @@ import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { GetOrdersEmployee, GetOrdersEmployeeContent } from "../../types";
+import { mapDeliveryMode } from "../../utils";
 
 const columns: TableColumnsType<GetOrdersEmployeeContent> = [
     {
@@ -14,22 +15,41 @@ const columns: TableColumnsType<GetOrdersEmployeeContent> = [
             <Link to={`/employee/orders/${record.id}`}>{record.code}</Link>
         ),
     },
-    {
-        title: "Время заказа",
-        render: (_, record) => <DateCell timestamp={record?.creation_date} />,
-    },
+
     {
         title: "Название магазина",
         dataIndex: "kaspi_store_name",
     },
     {
         title: "Тип доставки",
-        dataIndex: "deliveryMode",
-        render: (_, record) => <Tag>{record.delivery_mode}</Tag>,
+        dataIndex: "delivery_mode",
+        render: (_, record) => {
+            const { text, color } = mapDeliveryMode(record.delivery_mode);
+            return (
+                <div className="flex ">
+                    <Tag
+                        color={color}
+                        style={{
+                            borderRadius: "20px",
+                            padding: "0 8px",
+                            backgroundColor: color,
+                            color: "black",
+                            fontWeight: "500",
+                            fontSize: 14,
+                        }}
+                    >
+                        {text}
+                    </Tag>
+                </div>
+            );
+        },
     },
-
     {
-        title: "Цена",
+        title: "Время заказа",
+        render: (_, record) => <DateCell timestamp={record?.creation_date} />,
+    },
+    {
+        title: "Сумма заказа",
         render: (_, record) => <PriceCell price={record.total_price} />,
     },
 ];

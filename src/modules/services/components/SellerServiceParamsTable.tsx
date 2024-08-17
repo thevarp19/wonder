@@ -1,12 +1,5 @@
 import { CustomTable } from "@/components/ui/CustomTable";
-import {
-    Button,
-    Checkbox,
-    ConfigProvider,
-    Input,
-    Select,
-    TableColumnsType,
-} from "antd";
+import { Button, Checkbox, Input, Select, TableColumnsType } from "antd";
 import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useServiceParams } from "../forms";
@@ -61,7 +54,7 @@ export const SellerServiceParamsTable: FC<SellerServiceParamsTableProps> = ({
 }) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
 
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
 
     const { data, isPending } = useGetServiceParams(page, 10, searchValue);
     const ExpandedRowForm: FC<{ record: GetServiceItemsContent }> = ({
@@ -255,41 +248,28 @@ export const SellerServiceParamsTable: FC<SellerServiceParamsTableProps> = ({
         );
     };
     return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Table: {
-                        headerBg: "#fff",
-                        headerColor: "#1C1C1C66",
-                        headerBorderRadius: 10,
-                        headerSplitColor: "#fff",
-                    },
+        <CustomTable
+            className="h-full"
+            size={isSmallScreen ? "small" : "large"}
+            columns={columns}
+            loading={isPending}
+            dataSource={data?.content}
+            rowKey={(record) => record.id}
+            pagination={{
+                pageSize: 10,
+                total: data?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
                 },
+                current: page + 1,
             }}
-        >
-            <CustomTable
-                className="h-full"
-                size={isSmallScreen ? "small" : "large"}
-                columns={columns}
-                loading={isPending}
-                dataSource={data?.content}
-                rowKey={(record) => record.id}
-                pagination={{
-                    pageSize: 10,
-                    total: data?.totalElements,
-                    showSizeChanger: false,
-                    onChange(page) {
-                        setPage(page - 1);
-                    },
-                    current: page + 1,
-                }}
-                expandable={{
-                    expandedRowRender: (record) => (
-                        <ExpandedRowForm record={record} />
-                    ),
-                }}
-                scroll={{ x: "max-content" }}
-            />
-        </ConfigProvider>
+            expandable={{
+                expandedRowRender: (record) => (
+                    <ExpandedRowForm record={record} />
+                ),
+            }}
+            scroll={{ x: "max-content" }}
+        />
     );
 };

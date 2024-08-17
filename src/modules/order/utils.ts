@@ -9,3 +9,21 @@ export const mapWonderStatus = (status: string) => {
 
     return statusMapping[status] || { text: status, color: "default" };
 };
+
+export const mapDeliveryMode = (deliveryMode: string) => {
+    const deliveryModeMapping: {
+        [key: string]: { text: string; color: string };
+    } = {
+        Замлер: { text: "Замлер", color: "#bfc7fe" },
+        Express: { text: "Express", color: "#b3d1ff" },
+        Самовывоз: { text: "Самовывоз", color: "#ffe1cc" },
+        "Доставка продавца": { text: "Доставка продавца", color: "#ccffcc" },
+    };
+
+    return (
+        deliveryModeMapping[deliveryMode] || {
+            text: deliveryMode,
+            color: "default",
+        }
+    );
+};

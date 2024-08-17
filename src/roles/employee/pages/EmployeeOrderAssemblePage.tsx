@@ -25,7 +25,7 @@ export const EmployeeOrderAssemblePage: FC<
     const hasCalledEffect = useRef(false);
     const [current, setCurrent] = useState("all");
     const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("ALL");
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetAssembleOrderEmployee(
         page,
         10,
@@ -33,7 +33,7 @@ export const EmployeeOrderAssemblePage: FC<
         deliveryMode
     );
     useEffect(() => {
-        setPage(1);
+        setPage(0);
     }, [deliveryMode, searchValue]);
     const { mutateAsync: packageMutate } = orderStatusMutation();
     const onClick: MenuProps["onClick"] = (e) => {

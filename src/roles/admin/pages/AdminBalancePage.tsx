@@ -28,7 +28,7 @@ export const AdminBalancePage: FC<AdminBalancePageProps> = () => {
     const [current, setCurrent] = useState(
         searchParams.get("menu_x") || "requests"
     );
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const { data, isPending } = useGetAdminReplenishment(
         page,
         10,

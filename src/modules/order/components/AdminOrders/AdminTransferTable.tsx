@@ -1,6 +1,7 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
-import { ConfigProvider, TableColumnsType } from "antd";
+import { PriceCell } from "@/components/ui/PriceCell";
+import { TableColumnsType } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { GetOrdersContent, GetTransferOrders } from "../../types";
@@ -43,6 +44,14 @@ const columns: TableColumnsType<GetOrdersContent> = [
             <DateCell timestamp={record.transmission_date} />
         ),
     },
+    {
+        title: "Сумма заказа",
+        render: (_, record) => <PriceCell price={record.total_price} />,
+    },
+    {
+        title: "Обслуживание",
+        render: (_) => <div>-</div>,
+    },
 ];
 
 interface AdminTransferTableProps {
@@ -61,35 +70,22 @@ export const AdminTransferTable: FC<AdminTransferTableProps> = ({
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Table: {
-                        headerBg: "#fff",
-                        headerColor: "#1C1C1C66",
-                        headerBorderRadius: 10,
-                        headerSplitColor: "#fff",
-                    },
+        <CustomTable
+            columns={columns}
+            dataSource={data?.content}
+            rowKey={"id"}
+            loading={isPending}
+            pagination={{
+                pageSize: 10,
+                total: data?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
                 },
+                current: page + 1,
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
             }}
-        >
-            <CustomTable
-                columns={columns}
-                dataSource={data?.content}
-                rowKey={"id"}
-                loading={isPending}
-                pagination={{
-                    pageSize: 10,
-                    total: data?.totalElements,
-                    showSizeChanger: false,
-                    onChange(page) {
-                        setPage(page - 1);
-                    },
-                    current: page + 1,
-                    position: isSmallScreen ? ["bottomCenter"] : undefined,
-                }}
-                scroll={{ x: "max-content" }}
-            />
-        </ConfigProvider>
+            scroll={{ x: "max-content" }}
+        />
     );
 };

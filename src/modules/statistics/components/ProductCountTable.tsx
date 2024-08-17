@@ -37,7 +37,7 @@ const columns: TableColumnsType<GetProductCountContent> = [
     },
 ];
 export const ProductsCountTable: FC<ProductsCountTableProps> = ({}) => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
 
     const { data: products, isPending } = useGetSellerProductCount(page, 5);

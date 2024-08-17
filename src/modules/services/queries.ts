@@ -3,7 +3,7 @@ import { getSellerProductsWithSizes, getServiceParams } from "./api";
 import { GetSellerProductsSizes, GetServiceItemsResponse } from "./types";
 
 export const useGetServiceParams = (
-    page: number = 1,
+    page: number = 0,
     size: number = 5,
     search: string = ""
 ) => {
@@ -16,7 +16,7 @@ export const useGetServiceParams = (
     });
 };
 // export const useGetProductsSizes = (
-//     page: number = 1,
+//     page: number = 0,
 //     size: number = 10,
 //     search: string = ""
 // ) => {

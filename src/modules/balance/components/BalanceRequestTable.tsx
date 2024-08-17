@@ -2,14 +2,7 @@ import { CustomTable } from "@/components/ui/CustomTable";
 import { axiosAuthorized } from "@/lib/axios";
 import { UploadOutlined } from "@ant-design/icons";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-    App,
-    Button,
-    ConfigProvider,
-    Modal,
-    Select,
-    TableColumnsType,
-} from "antd";
+import { App, Button, Modal, Select, TableColumnsType } from "antd";
 import { RcFile } from "antd/es/upload";
 import { Upload } from "antd/lib";
 import { FC, useState } from "react";
@@ -84,36 +77,23 @@ export const BalanceRequestTable: FC<BalanceRequestTableProps> = ({
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Table: {
-                        headerBg: "#fff",
-                        headerColor: "#1C1C1C66",
-                        headerBorderRadius: 10,
-                        headerSplitColor: "#fff",
-                    },
+        <CustomTable
+            columns={columns}
+            dataSource={data?.content}
+            rowKey={"id"}
+            loading={isPending}
+            pagination={{
+                pageSize: 10,
+                total: data?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
                 },
+                current: page + 1,
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
             }}
-        >
-            <CustomTable
-                columns={columns}
-                dataSource={data?.content}
-                rowKey={"id"}
-                loading={isPending}
-                pagination={{
-                    pageSize: 10,
-                    total: data?.totalElements,
-                    showSizeChanger: false,
-                    onChange(page) {
-                        setPage(page - 1);
-                    },
-                    current: page + 1,
-                    position: isSmallScreen ? ["bottomCenter"] : undefined,
-                }}
-                scroll={{ x: "max-content" }}
-            />
-        </ConfigProvider>
+            scroll={{ x: "max-content" }}
+        />
     );
 };
 

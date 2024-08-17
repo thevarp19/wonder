@@ -7,7 +7,7 @@ import { Button, Form, Modal, Popconfirm } from "antd";
 import { FC, useState } from "react";
 
 export const SellerBalancePage: FC = () => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetSellerReplenishment(page, 10);
     return (
         <div className="h-full">

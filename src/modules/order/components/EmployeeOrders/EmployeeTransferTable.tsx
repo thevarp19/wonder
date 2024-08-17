@@ -6,6 +6,7 @@ import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetTransferOrderEmployee } from "../../queries";
 import { DeliveryMode, GetTransferOrdersEmployeeContent } from "../../types";
+import { mapDeliveryMode } from "../../utils";
 
 const columns: TableColumnsType<GetTransferOrdersEmployeeContent> = [
     {
@@ -22,7 +23,28 @@ const columns: TableColumnsType<GetTransferOrdersEmployeeContent> = [
     {
         title: "Тип доставки",
         dataIndex: "delivery_mode",
-        render: (_, record) => <Tag>{record.delivery_mode}</Tag>,
+        render: (_, record) => {
+            const { text, color } = mapDeliveryMode(record.delivery_mode);
+            return (
+                <div className="flex ">
+                    <Tag
+                        color={color}
+                        style={{
+                            borderRadius: "20px",
+                            padding: "0 8px",
+                            backgroundColor: color,
+                            color: "black",
+                            fontWeight: "500",
+                            fontSize: 14,
+                        }}
+                        className="!flex !justify-center w-full max-w-max"
+                    >
+                        {text}
+                    </Tag>
+                </div>
+            );
+        },
+        width: 120,
     },
 
     {
@@ -48,7 +70,7 @@ export const EmployeeTransferTable: FC<EmployeeTransferTableProps> = ({
     searchValue,
     deliveryMode,
 }) => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetTransferOrderEmployee(
         page,
         10,
@@ -56,7 +78,7 @@ export const EmployeeTransferTable: FC<EmployeeTransferTableProps> = ({
         deliveryMode
     );
     useEffect(() => {
-        setPage(1);
+        setPage(0);
     }, [deliveryMode, searchValue]);
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 

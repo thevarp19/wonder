@@ -2,7 +2,6 @@ import { Protected } from "@/context/Protected";
 import { useAppSelector } from "@/redux/utils";
 import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { EmployeeOrderPage } from "../employee/pages";
 import { AdminLayout } from "./AdminLayout";
 import {
     AdminArchiveOrdersPage,
@@ -11,6 +10,7 @@ import {
     AdminOrderAssemblePage,
     AdminOrderCancelledPage,
     AdminOrderPackagePage,
+    AdminOrderPage,
     AdminOrderShippedPage,
     AdminOrdersPage,
     AdminOrderTransferPage,
@@ -103,7 +103,7 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                     <Route path="/balance" element={<AdminBalancePage />} />
                     <Route
                         path="/orders/:orderId"
-                        element={<EmployeeOrderPage />}
+                        element={<AdminOrderPage />}
                     />
                 </Route>
             </Route>

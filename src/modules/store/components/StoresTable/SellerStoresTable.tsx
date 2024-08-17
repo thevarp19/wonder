@@ -2,7 +2,7 @@ import { pencilIcon } from "@/assets";
 import { CustomTable } from "@/components/ui/CustomTable";
 import { Image } from "@/components/ui/Image";
 import { cn } from "@/utils/shared.util";
-import { Button, ConfigProvider, TableColumnsType, Tag } from "antd";
+import { Button, TableColumnsType, Tag } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -102,39 +102,26 @@ export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
         },
     ];
     return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Table: {
-                        headerBg: "#fff",
-                        headerColor: "#1C1C1C66",
-                        headerBorderRadius: 10,
-                        headerSplitColor: "#fff",
-                    },
-                },
+        <CustomTable
+            columns={columns}
+            dataSource={stores}
+            footer={() => (
+                <div className="flex justify-start">
+                    <Button
+                        size="large"
+                        type="primary"
+                        className="w-full md:w-max !rounded-md"
+                        href="/seller/settings/create-store"
+                    >
+                        Создать новый склад
+                    </Button>
+                </div>
+            )}
+            loading={isPending}
+            pagination={{
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
             }}
-        >
-            <CustomTable
-                columns={columns}
-                dataSource={stores}
-                footer={() => (
-                    <div className="flex justify-start">
-                        <Button
-                            size="large"
-                            type="primary"
-                            className="w-full md:w-max !rounded-md"
-                            href="/seller/settings/create-store"
-                        >
-                            Создать новый склад
-                        </Button>
-                    </div>
-                )}
-                loading={isPending}
-                pagination={{
-                    position: isSmallScreen ? ["bottomCenter"] : undefined,
-                }}
-                scroll={{ x: "max-content" }}
-            />
-        </ConfigProvider>
+            scroll={{ x: "max-content" }}
+        />
     );
 };

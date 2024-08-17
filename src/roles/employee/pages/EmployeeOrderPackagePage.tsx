@@ -25,7 +25,7 @@ export const EmployeeOrderPackagePage: FC<
     const hasCalledEffect = useRef(false);
     const [current, setCurrent] = useState("all");
     const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("ALL");
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetPackageOrderEmployee(
         page,
         10,

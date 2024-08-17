@@ -15,12 +15,12 @@ export function getSellerStatistics(duration: string) {
         `/api/analytics/seller/?type=${duration}`
     );
 }
-export function getAdminLastOrders(page: number = 1, size: number = 5) {
+export function getAdminLastOrders(page: number = 0, size: number = 5) {
     return axiosAuthorized.get<GetLastOrdersResponse>(
         `/api/analytics/admin/active-orders/?page=${page}&size=${size}`
     );
 }
-export function getSellerProductCount(page: number = 1, size: number = 5) {
+export function getSellerProductCount(page: number = 0, size: number = 5) {
     return axiosAuthorized.get<GetProductCountResponse>(
         `/api/analytics/seller/products/?page=${page}&size=${size}`
     );

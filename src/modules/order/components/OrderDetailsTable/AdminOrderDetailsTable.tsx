@@ -1,55 +1,53 @@
 import { CustomTable } from "@/components/ui/CustomTable";
-import { PriceCell } from "@/components/ui/PriceCell";
 import { TableColumnsType } from "antd";
 import { FC } from "react";
-import { Link } from "react-router-dom";
-// import { useGetOrder } from "../../queries";
+import { GetOrderDetailEmployee } from "../../types";
 
 interface AdminOrderDetailsTableProps {
-    orderId: number;
+    data: GetOrderDetailEmployee | undefined;
+    loading: boolean;
 }
-
-const columns: TableColumnsType<any> = [
-    {
-        title: "ID",
-        render: (_, record) => (
-            <Link to={`/product/${record.productVendorCode}`}>
-                {record.productVendorCode}
-            </Link>
-        ),
-    },
-    {
-        title: "Артикул",
-        dataIndex: "productArticle",
-    },
-    {
-        title: "Название продукта",
-        dataIndex: "productName",
-    },
-    {
-        title: "Номер ячейки",
-        dataIndex: "cellCode",
-    },
-    {
-        title: "Артикул поставщика",
-        dataIndex: "productVendorCode",
-    },
-    {
-        title: "Цена продажи",
-        dataIndex: "productSellPrice",
-        render: (text) => <PriceCell price={text} />,
-    },
-];
-
-export const AdminOrderDetailsTable: FC<AdminOrderDetailsTableProps> = ({}) => {
-    // const { data, isPending } = useGetAdminOrder(orderId);
+interface SellerCellProduct {
+    id: number;
+    product_vendor_code: string;
+    product_title: string;
+    cell_number: string;
+    order_entry: string;
+}
+export const AdminOrderDetailsTable: FC<AdminOrderDetailsTableProps> = ({
+    data,
+    loading,
+}) => {
+    const columns: TableColumnsType<SellerCellProduct> = [
+        {
+            title: "Артикул продукта",
+            dataIndex: "product_vendor_code",
+            key: "product_vendor_code",
+        },
+        {
+            title: "Бар код",
+            dataIndex: "id",
+            key: "id",
+        },
+        {
+            title: "Название продукта",
+            dataIndex: "product_title",
+            key: "product_title",
+        },
+        {
+            title: "Ячейка продукта",
+            dataIndex: "cell_number",
+            key: "cell_number",
+        },
+    ];
 
     return (
         <CustomTable
             columns={columns}
-            dataSource={[]}
-            rowKey={"productVendorCode"}
-            loading={false}
+            dataSource={data?.seller_cell_products}
+            rowKey={"id"}
+            loading={loading}
+            scroll={{ x: "max-content" }}
         />
     );
 };

@@ -1,7 +1,7 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, TableColumnsType, Tag, Tooltip } from "antd";
+import { Button, TableColumnsType, Tag, Tooltip } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -92,36 +92,23 @@ export const BalanceHistoryTable: FC<BalanceHistoryTableProps> = ({
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
-        <ConfigProvider
-            theme={{
-                components: {
-                    Table: {
-                        headerBg: "#fff",
-                        headerColor: "#1C1C1C66",
-                        headerBorderRadius: 10,
-                        headerSplitColor: "#fff",
-                    },
+        <CustomTable
+            columns={columns}
+            dataSource={data?.content}
+            rowKey={"id"}
+            loading={isPending}
+            title={() => "История пополнений"}
+            pagination={{
+                pageSize: 10,
+                total: data?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
                 },
+                current: page + 1,
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
             }}
-        >
-            <CustomTable
-                columns={columns}
-                dataSource={data?.content}
-                rowKey={"id"}
-                loading={isPending}
-                title={() => "История пополнений"}
-                pagination={{
-                    pageSize: 10,
-                    total: data?.totalElements,
-                    showSizeChanger: false,
-                    onChange(page) {
-                        setPage(page - 1);
-                    },
-                    current: page + 1,
-                    position: isSmallScreen ? ["bottomCenter"] : undefined,
-                }}
-                scroll={{ x: "max-content" }}
-            />
-        </ConfigProvider>
+            scroll={{ x: "max-content" }}
+        />
     );
 };
