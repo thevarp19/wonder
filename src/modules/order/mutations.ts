@@ -2,7 +2,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { App } from "antd";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { cancelOrderAdmin, orderStatus } from "./api";
+import {
+    cancelOrderAdmin,
+    orderCodeConfirm,
+    orderCodeRequest,
+    orderStatus,
+} from "./api";
 import { ProductStatusChangeRequest } from "./types";
 
 export const orderStatusMutation = () => {
@@ -53,6 +58,39 @@ export const cancelOrderMutation = (
                 queryKey: [`orders-seller`],
             });
             navigate(`/${role}/orders`);
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
+        },
+    });
+};
+
+export const orderCodeRequestMutation = (orderId: string) => {
+    const { message } = App.useApp();
+    return useMutation<void, AxiosError<any>, void>({
+        async mutationFn() {
+            await orderCodeRequest(orderId);
+        },
+        onSuccess() {
+            message.success("На ваш каспи отправлен код!");
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.message}`);
+        },
+    });
+};
+export const orderCodeConfirmMutation = (orderId: string) => {
+    const { message } = App.useApp();
+    const queryClient = useQueryClient();
+    return useMutation<void, AxiosError<any>, { code: string }>({
+        async mutationFn(values: { code: string }) {
+            await orderCodeConfirm(orderId, values.code); // Ensure the function handles the code properly.
+        },
+        onSuccess() {
+            message.success("Успешно!");
+            queryClient.invalidateQueries({
+                queryKey: [`order-detail-employee`],
+            });
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);

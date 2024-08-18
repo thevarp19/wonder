@@ -70,7 +70,7 @@ export const AddReplenishmentModal: FC = () => {
                         name="iban"
                         formik={formik}
                         formItemProps={{
-                            label: "IBAN",
+                            label: "Номер телефона",
                             required: true,
                         }}
                         inputProps={{

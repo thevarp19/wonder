@@ -7,7 +7,7 @@ import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetOrdersSellerOwn } from "../../queries";
 import { DeliveryMode, GetOrdersSellerContent } from "../../types";
-import { mapDeliveryMode, mapWonderStatus } from "../../utils";
+import { mapDeliveryMode, mapOrderStatus } from "../../utils";
 
 const columns: TableColumnsType<GetOrdersSellerContent> = [
     {
@@ -70,7 +70,7 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
         title: "Статус",
         dataIndex: "wonder_status",
         render: (_, record) => {
-            const { text, color } = mapWonderStatus(record.wonder_status);
+            const { text, color } = mapOrderStatus(record.wonder_status);
             return (
                 <div
                     style={{ color: color }}

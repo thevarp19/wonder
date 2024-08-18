@@ -19,12 +19,9 @@ export function createProductsFromFile(formData: FormData, importType: string) {
     );
 }
 
-export function getProducts(
-    // page: number = 0,
-    // size: number = 10,
-    // searchValue: string = "",
-    isPublished: boolean | null = null,
-    cityId: number = 1
+export function getProductsQuantity(
+    cityId: number = 1,
+    isPublished: boolean | null = null
 ) {
     let url = `/api/seller-city-product-price-quantity/?city=${cityId}`;
     if (isPublished !== null) {

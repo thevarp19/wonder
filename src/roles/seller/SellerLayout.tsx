@@ -54,6 +54,8 @@ function pathToKey(key: string) {
             return "balance";
         case "/seller/my-orders":
             return "my-orders";
+        case "/seller/my-orders/pickup":
+            return "my-orders-pickup";
         case "/seller/orders/new":
             return "orders-new";
         case "/seller/orders/signing":
@@ -432,6 +434,27 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                             to={"/seller/my-orders/cancelled"}
                         >
                             Отменено
+                        </Link>
+                    ),
+                },
+                {
+                    key: "my-order-pickup",
+                    icon: (
+                        <AuditOutlined
+                            style={{
+                                fontSize: isSmallScreen ? "24px" : "14px",
+                            }}
+                        />
+                    ),
+                    label: (
+                        <Link
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }}
+                            to={"/seller/my-orders/pickup"}
+                        >
+                            Самовывоз
                         </Link>
                     ),
                 },

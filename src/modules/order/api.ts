@@ -227,3 +227,17 @@ export function orderStatus(values: ProductStatusChangeRequest[]) {
         values
     );
 }
+export function orderCodeRequest(id: string) {
+    return axiosAuthorized.put(`/api/order-employee/${id}/complete/`);
+}
+export function orderCodeConfirm(id: string, code: string) {
+    return axiosAuthorized.patch(
+        `/api/order-employee/${id}/complete/`,
+        {},
+        {
+            headers: {
+                "X-Security-Code": code,
+            },
+        }
+    );
+}

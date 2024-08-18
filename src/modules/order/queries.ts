@@ -493,7 +493,7 @@ export const useGetCancelledOrderAdmin = (
 
 export const useGetEmployeeOrder = (id: string) => {
     return useQuery<GetOrderDetailEmployee>({
-        queryKey: [`order-detail-${id}`],
+        queryKey: [`order-detail-employee`, id],
         queryFn: async () => {
             const { data } = await getEmployeeOrderById(id);
             return data;

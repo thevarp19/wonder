@@ -21,7 +21,7 @@ const columns: TableColumnsType<GetAdminReplenishmentContent> = [
             `${record.seller.first_name} ${record.seller.last_name}`,
     },
     {
-        title: "IBAN",
+        title: "Номер телефона",
         dataIndex: "iban",
     },
     {

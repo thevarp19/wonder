@@ -1,10 +1,10 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import {
     getEnabledCount,
-    getProducts,
     getProductsByParams,
     getProductsOptions,
     getProductsPrices,
+    getProductsQuantity,
     getProductsWithSizes,
     getSellerActiveCities,
 } from "./api";
@@ -19,20 +19,13 @@ import {
 } from "./types";
 
 export const useGetProducts = (
-    // page: number = 0,
-    // size: number = 10,
-    // searchValue: string = "",
+    cityId: number,
     isPublished: boolean | null = null
 ) => {
     return useQuery<GetProductContent[]>({
         queryKey: [`products`, isPublished],
         queryFn: async () => {
-            const { data } = await getProducts(
-                // page,
-                // size,
-                // searchValue,
-                isPublished
-            );
+            const { data } = await getProductsQuantity(cityId, isPublished);
             return data;
         },
     });

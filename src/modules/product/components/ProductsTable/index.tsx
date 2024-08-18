@@ -1,72 +1,84 @@
 import { CustomTable } from "@/components/ui/CustomTable";
-import { myLocalStorage } from "@/lib/storage/browserStorage";
-import { Button, ConfigProvider, Modal, TableColumnsType } from "antd";
-import { FC, useEffect, useState } from "react";
+import { Loading } from "@/components/ui/Loading";
+import { Button, ConfigProvider, Modal, Select, TableColumnsType } from "antd";
+import {
+    Dispatch,
+    FC,
+    SetStateAction,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
 import { useMediaQuery } from "react-responsive";
 import { useGetActiveCities, useGetProducts } from "../../queries";
-import { GetProductContent } from "../../types";
-import { StoreCheckboxes } from "../ProductPriceTable";
+import { GetProductContent, ProductStoreCity } from "../../types";
 
 interface ProductsTableProps {
     searchValue?: string;
     isPublished: boolean | null;
 }
 
-const columns: TableColumnsType<GetProductContent> = [
-    {
-        title: "Артикул",
-        dataIndex: "vendor_code",
-    },
-    {
-        title: "Название",
-        dataIndex: "title",
-    },
-
-    {
-        title: "Количество в Алматы",
-        render: (_, record) => (
-            <span>{record?.warehouse_quantities[0]?.quantity}</span>
-        ),
-    },
-
-    // {
-    //     title: "Количество в Астане",
-    //     render: (_, record) => <span>{record.counts[1].count}</span>,
-    // },
-];
-
 export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
-    // const [page, setPage] = useState(0);
-    const [activeStores, setActiveStores] = useState<string[]>(
-        myLocalStorage?.get("activeStores") || ["алматы"]
-    );
+    const [selectedCity, setSelectedCity] = useState<number | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // const { data: productsCount } = useGetProductsPrices(
-    //     page,
-    //     undefined,
-    //     searchValue,
-    //     isPublished
-    // );
-    // useEffect(() => {
-    //     setPage(1);
-    // }, [searchValue]);
     const { data: cities, isPending: cityPending } = useGetActiveCities();
-    // const activeStoreIds =
-    //     cities
-    //         ?.filter((city) => activeStores.includes(city.name.toLowerCase()))
-    //         .map((city) => city.id) || [];
 
-    const { data: products, isPending } = useGetProducts(
-        // page,
-        // undefined,
-        // searchValue,
-        isPublished
-    );
-    useEffect(() => {
-        myLocalStorage?.set("activeStores", activeStores);
-    }, [activeStores]);
+    const {
+        data: products,
+        isPending,
+        refetch,
+    } = useGetProducts(selectedCity ?? 0, isPublished);
+
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
+
+    useEffect(() => {
+        if (selectedCity !== null) {
+            refetch();
+        }
+    }, [selectedCity, refetch]);
+
+    if (isPending) {
+        <Loading />;
+    }
+    const columns: TableColumnsType<GetProductContent> = useMemo(() => {
+        const baseColumns: TableColumnsType<GetProductContent> = [
+            {
+                title: "Артикул",
+                dataIndex: "vendor_code",
+                key: "vendor_code",
+            },
+            {
+                title: "Название",
+                dataIndex: "title",
+                key: "title",
+            },
+            {
+                title: "Price",
+                dataIndex: "price",
+                key: "price",
+            },
+        ];
+
+        const warehouseColumns =
+            selectedCity && products?.length
+                ? products[0].warehouse_quantities.map((warehouse) => ({
+                      title: warehouse.kaspi_warehouse_id,
+                      dataIndex: `warehouse_${warehouse.kaspi_warehouse_id}`,
+                      key: `warehouse_${warehouse.kaspi_warehouse_id}`,
+                      render: (_: unknown, record: GetProductContent) => {
+                          const quantity = record.warehouse_quantities.find(
+                              (wq) =>
+                                  wq.kaspi_warehouse_id ===
+                                  warehouse.kaspi_warehouse_id
+                          )?.quantity;
+                          return quantity ?? "-";
+                      },
+                  }))
+                : [];
+
+        return [...baseColumns, ...warehouseColumns];
+    }, [products, selectedCity]);
 
     return (
         <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
@@ -74,16 +86,12 @@ export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
                 title="Склады"
                 open={isModalOpen}
                 cancelText="Назад"
-                onCancel={() => {
-                    setIsModalOpen(false);
-                }}
-                onOk={() => {
-                    setIsModalOpen(false);
-                }}
+                onCancel={() => setIsModalOpen(false)}
+                onOk={() => setIsModalOpen(false)}
             >
-                <StoreCheckboxes
-                    checked={activeStores}
-                    setChecked={setActiveStores}
+                <StoreSelect
+                    selectedCity={selectedCity}
+                    setSelectedCity={setSelectedCity}
                     cities={cities || []}
                 />
             </Modal>
@@ -113,22 +121,40 @@ export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
                 <CustomTable
                     columns={columns}
                     loading={isPending || cityPending}
-                    // size="small"
                     dataSource={products ?? []}
                     rowKey={(record) => record.vendor_code}
                     pagination={{
-                        // pageSize: 10,
-                        // total: products?.totalElements,
-                        // showSizeChanger: false,
-                        // onChange(page) {
-                        //     setPage(page - 1);
-                        // },
-                        // current: page + 1,
                         position: isSmallScreen ? ["bottomCenter"] : undefined,
                     }}
                     scroll={{ x: "max-content" }}
                 />
             </ConfigProvider>
         </div>
+    );
+};
+
+interface StoreSelectProps {
+    selectedCity: number | null;
+    setSelectedCity: Dispatch<SetStateAction<number | null>>;
+    cities: ProductStoreCity[];
+}
+
+export const StoreSelect: FC<StoreSelectProps> = ({
+    selectedCity,
+    setSelectedCity,
+    cities,
+}) => {
+    return (
+        <Select
+            value={selectedCity}
+            onChange={(value) => setSelectedCity(value)}
+            style={{ width: "100%" }}
+        >
+            {cities.map((city) => (
+                <Select.Option key={city.id} value={city.id}>
+                    {city.name}
+                </Select.Option>
+            ))}
+        </Select>
     );
 };

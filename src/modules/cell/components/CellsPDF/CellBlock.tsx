@@ -20,13 +20,16 @@ Font.register({
 
 const styles = StyleSheet.create({
     barcode: {
-        width: "48mm", // 58 mm wide
-        height: "32.55mm", // 40 mm tall
+        width: "48mm",
+        height: "24mm",
     },
     cell: {
+        width: 164,
+        height: 114,
         flexDirection: "column",
         display: "flex",
         alignItems: "center",
+        justifyContent: "center",
         fontSize: 6,
         // paddingVertical: 10,
         // borderBottom: 0.5,
@@ -62,7 +65,7 @@ export const CellBlockPDF: FC<CellBlockProps> = ({ cell, store }) => {
     return (
         <Document>
             <Page
-                size={[164, 114]}
+                size={[164, 150]}
                 orientation={"portrait"}
                 wrap={true}
                 style={styles.anchor}

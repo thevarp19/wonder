@@ -81,6 +81,7 @@ export const EmployeeOrderTransferPage: FC<
                         </div>
                     </div>
                 </div>
+
                 <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
                     <EmployeeTransferTable
                         searchValue={debouncedSearchValue}

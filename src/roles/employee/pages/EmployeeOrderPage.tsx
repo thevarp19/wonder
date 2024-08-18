@@ -3,10 +3,14 @@
 import { DateCell } from "@/components/ui/DateCell";
 import { Loading } from "@/components/ui/Loading";
 import { EmployeeOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable/EmployeeOrderDetailsTable";
-import {} from "@/modules/order/mutations";
+import {
+    orderCodeConfirmMutation,
+    orderCodeRequestMutation,
+} from "@/modules/order/mutations";
 import { useGetEmployeeOrder } from "@/modules/order/queries";
 import { mapWonderStatus } from "@/modules/order/utils";
-import { FC } from "react";
+import { Button, Input, Modal } from "antd";
+import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 
 interface EmployeeOrderPageProps {}
@@ -19,6 +23,7 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
     const { text, color } = mapWonderStatus(
         data?.wonder_status || "Неизвестно"
     );
+
     if (isPending) {
         return <Loading />;
     }
@@ -93,6 +98,83 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
             </div>
 
             <EmployeeOrderDetailsTable data={data} loading={isPending} />
+            {data?.wonder_status === "TRANSFER" &&
+                data?.is_kaspi_delivery === false && (
+                    <CodeConfirmModal orderId={orderIdRaw ?? ""} />
+                )}
+            {data?.wonder_status === "TRANSFER" && (
+                <Button
+                    type="primary"
+                    size="large"
+                    className="!w-[250px]"
+                    onClick={() => {}}
+                >
+                    Передать заказ
+                </Button>
+            )}
         </div>
+    );
+};
+export const CodeConfirmModal: FC<{ orderId: string }> = ({ orderId }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [verificationCode, setVerificationCode] = useState("");
+    const orderCodeMutation = orderCodeRequestMutation(orderId);
+    const orderConfirmMutation = orderCodeConfirmMutation(orderId);
+
+    const handleConfirm = () => {
+        orderConfirmMutation.mutate({ code: verificationCode });
+        setIsModalOpen(false);
+    };
+
+    return (
+        <>
+            <Modal
+                title={`Заказ - ${orderId}`}
+                open={isModalOpen}
+                onCancel={() => setIsModalOpen(false)}
+                footer={[
+                    <Button
+                        key="back"
+                        onClick={() => setIsModalOpen(false)}
+                        style={{ width: "100%" }}
+                    >
+                        Назад
+                    </Button>,
+                    <Button
+                        type="primary"
+                        onClick={handleConfirm}
+                        style={{
+                            width: "100%",
+                            marginTop: "8px",
+                            marginInlineStart: 0,
+                        }}
+                    >
+                        Подтвердить
+                    </Button>,
+                ]}
+                destroyOnClose
+            >
+                <div className="h-[200px] flex flex-col gap-5 ">
+                    <p>Введите проверочный код</p>
+                    <Input
+                        value={verificationCode}
+                        onChange={(e) => setVerificationCode(e.target.value)}
+                        placeholder="Введите проверочный код"
+                        style={{ borderRadius: "20px" }}
+                    />
+                </div>
+            </Modal>
+            <Button
+                type="primary"
+                size="large"
+                className="!w-[250px]"
+                onClick={() => {
+                    orderCodeMutation.mutate();
+                    setIsModalOpen(true);
+                }}
+            >
+                Передать заказ
+            </Button>
+        </>
     );
 };

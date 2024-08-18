@@ -7,7 +7,7 @@ export const items: MenuProps["items"] = [
         key: "all",
     },
     {
-        label: "Замлер",
+        label: "Заммлер",
         key: "zamler",
     },
     {

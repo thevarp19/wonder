@@ -98,6 +98,10 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                         element={<div>Coming soon!</div>}
                     />
                     <Route
+                        path="/my-orders/pickup"
+                        element={<div>Coming soon!</div>}
+                    />
+                    <Route
                         path="/my-orders/transfer"
                         element={<div>Coming soon!</div>}
                     />
@@ -133,6 +137,7 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                         path="/orders/new"
                         element={<div>Coming soon!</div>}
                     />
+
                     <Route
                         path="/orders/signing"
                         element={<div>Coming soon!</div>}

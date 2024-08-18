@@ -67,7 +67,7 @@ const CalculationResult: React.FC<CalculationResultProps> = ({
                                 </Text>
                             </div>
                             <div className="mb-2">
-                                <Text>Доставка до Замлера: </Text>
+                                <Text>Доставка до Заммлера: </Text>
                                 <Text>{response.cost.delivery} ₸</Text>
                             </div>
                         </div>
