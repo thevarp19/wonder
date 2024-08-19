@@ -32,11 +32,11 @@ const columns: TableColumnsType<GetAdminReplenishmentContent> = [
         dataIndex: "seller.email",
         render: (_, record) => <span>{record.seller.email}</span>,
     },
-    {
-        title: "Номер телефона",
-        dataIndex: "seller.phone_number",
-        render: (_, record) => <span>{record.seller.phone_number}</span>,
-    },
+    // {
+    //     title: "Номер телефона",
+    //     dataIndex: "seller.phone_number",
+    //     render: (_, record) => <span>{record.seller.phone_number}</span>,
+    // },
 
     {
         title: "Номер телефона",
