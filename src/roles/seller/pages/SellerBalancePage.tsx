@@ -2,6 +2,7 @@ import { FormikInput } from "@/components/ui/FormikInput";
 import { BalanceHistoryTable } from "@/modules/balance/components/BalanceHistoryTable";
 import { useAddReplenishment } from "@/modules/balance/forms";
 import { useGetSellerReplenishment } from "@/modules/balance/queries";
+import { phoneNumberChangeHandler } from "@/utils/form.util";
 import { cn } from "@/utils/shared.util";
 import { Button, Form, Modal, Popconfirm } from "antd";
 import { FC, useState } from "react";
@@ -72,12 +73,20 @@ export const AddReplenishmentModal: FC = () => {
                         formItemProps={{
                             label: "Номер телефона",
                             required: true,
+                            className: cn("w-full"),
                         }}
                         inputProps={{
+                            placeholder: "Номер телефона",
                             size: "large",
-                            style: { width: "100%" },
+                            onChange: (e) => {
+                                phoneNumberChangeHandler(
+                                    e,
+                                    formik.handleChange
+                                );
+                            },
                         }}
                     />
+
                     <FormikInput
                         name="amount"
                         formik={formik}
@@ -88,6 +97,7 @@ export const AddReplenishmentModal: FC = () => {
                         inputProps={{
                             size: "large",
                             style: { width: "100%" },
+                            suffix: "₸",
                         }}
                     />
 
