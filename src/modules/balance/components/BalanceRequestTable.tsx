@@ -1,4 +1,5 @@
 import { CustomTable } from "@/components/ui/CustomTable";
+import { PriceCell } from "@/components/ui/PriceCell";
 import { axiosAuthorized } from "@/lib/axios";
 import { UploadOutlined } from "@ant-design/icons";
 import { useQueryClient } from "@tanstack/react-query";
@@ -38,10 +39,14 @@ const columns: TableColumnsType<GetAdminReplenishmentContent> = [
     },
 
     {
-        title: "IBAN",
+        title: "Номер телефона",
         dataIndex: "iban",
     },
-
+    {
+        title: "Сумма",
+        dataIndex: "amount",
+        render: (_, record) => <PriceCell price={Number(record.amount)} />,
+    },
     {
         title: "Статус",
         render: (_, record) => <ReplenishmentStatusChange record={record} />,
