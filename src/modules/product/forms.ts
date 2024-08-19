@@ -100,9 +100,9 @@ export function getPriceChanges(state: ProductPriceChangeState): string[] {
                 (cityPrice) =>
                     `${cityPrice.productName}: ${
                         cityPrice.cityName
-                    } ${formatPrice(cityPrice.prevPrice)} KZT -> ${formatPrice(
+                    } ${formatPrice(cityPrice.prevPrice)} ₸ -> ${formatPrice(
                         cityPrice.newPrice
-                    )} KZT`
+                    )} ₸`
             )
             .join("; ");
         cityPriceChanges.push(priceChanges);

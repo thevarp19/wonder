@@ -244,6 +244,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
                         addCityPriceChange={addCityPriceChange}
                     />
                 ),
+                width: 150,
             })),
     ];
 

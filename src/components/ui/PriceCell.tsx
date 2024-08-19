@@ -6,5 +6,5 @@ interface PriceCellProps {
 }
 
 export const PriceCell: FC<PriceCellProps> = ({ price }) => {
-    return <div>{formatPrice(price)} KZT</div>;
+    return <div>{formatPrice(price)} ₸</div>;
 };

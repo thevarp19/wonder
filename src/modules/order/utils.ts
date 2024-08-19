@@ -36,7 +36,7 @@ export const mapDeliveryMode = (deliveryMode: string) => {
         Замлер: { text: "Заммлер", color: "#FFB9BF" },
         Express: { text: "Express", color: "#b3d1ff" },
         Самовывоз: { text: "Самовывоз", color: "#ffe1cc" },
-        "Доставка продавца": { text: "Доставка продавца", color: "#ccffcc" },
+        "Доставка продавца": { text: "Моя доставка", color: "#ccffcc" },
     };
 
     return (

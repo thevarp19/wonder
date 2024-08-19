@@ -1,5 +1,6 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
+import { PriceCell } from "@/components/ui/PriceCell";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, TableColumnsType, Tag, Tooltip } from "antd";
 import { FC } from "react";
@@ -11,10 +12,6 @@ import {
 } from "../types";
 
 const columns: TableColumnsType<GetSellerReplenishmentContent> = [
-    // {
-    //     title: "ID",
-    //     dataIndex: "id",
-    // },
     {
         title: "Статус",
         dataIndex: "status",
@@ -35,13 +32,15 @@ const columns: TableColumnsType<GetSellerReplenishmentContent> = [
         render: (_, record) => <DateCell timestamp={record.completed_at} />,
     },
     {
-        title: "IBAN",
+        title: "Номер телефона",
         dataIndex: "iban",
     },
     {
         title: "Сумма",
         dataIndex: "amount",
+        render: (_, record) => <PriceCell price={Number(record.amount)} />,
     },
+
     {
         title: "Чек",
         dataIndex: "check_url",

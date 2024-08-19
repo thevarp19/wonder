@@ -17,11 +17,10 @@ export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
 
     const { data: cities, isPending: cityPending } = useGetActiveCities();
 
-    const {
-        data: products,
-        isPending,
-        isLoading,
-    } = useGetProducts(selectedCity ?? 0, isPublished);
+    const { data: products, isPending } = useGetProducts(
+        selectedCity ?? 0,
+        isPublished
+    );
     // const products = [
     //     {
     //         id: 393223,
