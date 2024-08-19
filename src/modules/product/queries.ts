@@ -23,7 +23,7 @@ export const useGetProducts = (
     isPublished: boolean | null = null
 ) => {
     return useQuery<GetProductContent[]>({
-        queryKey: [`products`, isPublished],
+        queryKey: [`products`, cityId, isPublished],
         queryFn: async () => {
             const { data } = await getProductsQuantity(cityId, isPublished);
             return data;

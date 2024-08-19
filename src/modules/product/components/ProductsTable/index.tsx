@@ -1,14 +1,7 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { Loading } from "@/components/ui/Loading";
 import { Button, ConfigProvider, Modal, Select, TableColumnsType } from "antd";
-import {
-    Dispatch,
-    FC,
-    SetStateAction,
-    useEffect,
-    useMemo,
-    useState,
-} from "react";
+import { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useGetActiveCities, useGetProducts } from "../../queries";
 import { GetProductContent, ProductStoreCity } from "../../types";
@@ -27,20 +20,34 @@ export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
     const {
         data: products,
         isPending,
-        refetch,
+        isLoading,
     } = useGetProducts(selectedCity ?? 0, isPublished);
-
+    // const products = [
+    //     {
+    //         id: 393223,
+    //         warehouse_quantities: [
+    //             { quantity: 10, kaspi_warehouse_id: "PP2" },
+    //             { quantity: 14, kaspi_warehouse_id: "PP3" },
+    //             { quantity: 9, kaspi_warehouse_id: "PP5" },
+    //         ],
+    //         vendor_code: "121216142_668012306",
+    //         title: "Super Crest SCT-8050 черный",
+    //         price: "18490",
+    //     },
+    //     {
+    //         id: 393233,
+    //         warehouse_quantities: [
+    //             { quantity: 11, kaspi_warehouse_id: "PP1" },
+    //             { quantity: 4, kaspi_warehouse_id: "PP2" },
+    //             { quantity: 5, kaspi_warehouse_id: "PP9" },
+    //         ],
+    //         vendor_code: "121216142_668012306",
+    //         title: "Super Crest SCT-8050 черный",
+    //         price: "18490",
+    //     },
+    // ];
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
-    useEffect(() => {
-        if (selectedCity !== null) {
-            refetch();
-        }
-    }, [selectedCity, refetch]);
-
-    if (isPending) {
-        <Loading />;
-    }
     const columns: TableColumnsType<GetProductContent> = useMemo(() => {
         const baseColumns: TableColumnsType<GetProductContent> = [
             {
@@ -54,32 +61,39 @@ export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
                 key: "title",
             },
             {
-                title: "Price",
+                title: "Цена",
                 dataIndex: "price",
                 key: "price",
             },
         ];
 
-        const warehouseColumns =
-            selectedCity && products?.length
-                ? products[0].warehouse_quantities.map((warehouse) => ({
-                      title: warehouse.kaspi_warehouse_id,
-                      dataIndex: `warehouse_${warehouse.kaspi_warehouse_id}`,
-                      key: `warehouse_${warehouse.kaspi_warehouse_id}`,
-                      render: (_: unknown, record: GetProductContent) => {
-                          const quantity = record.warehouse_quantities.find(
-                              (wq) =>
-                                  wq.kaspi_warehouse_id ===
-                                  warehouse.kaspi_warehouse_id
-                          )?.quantity;
-                          return quantity ?? "-";
-                      },
-                  }))
-                : [];
+        const warehouseIds = new Set<string>();
+        products?.forEach((product) => {
+            product.warehouse_quantities.forEach((warehouse) => {
+                warehouseIds.add(warehouse.kaspi_warehouse_id);
+            });
+        });
+
+        const warehouseColumns = Array.from(warehouseIds).map(
+            (warehouseId) => ({
+                title: warehouseId,
+                dataIndex: `warehouse_${warehouseId}`,
+                key: `warehouse_${warehouseId}`,
+                render: (_: unknown, record: GetProductContent) => {
+                    const quantity = record.warehouse_quantities.find(
+                        (wq) => wq.kaspi_warehouse_id === warehouseId
+                    )?.quantity;
+                    return quantity ?? "-";
+                },
+            })
+        );
 
         return [...baseColumns, ...warehouseColumns];
     }, [products, selectedCity]);
 
+    if (isPending) {
+        return <Loading />;
+    }
     return (
         <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
             <Modal
@@ -120,7 +134,7 @@ export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
             >
                 <CustomTable
                     columns={columns}
-                    loading={isPending || cityPending}
+                    loading={cityPending}
                     dataSource={products ?? []}
                     rowKey={(record) => record.vendor_code}
                     pagination={{
