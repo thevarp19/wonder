@@ -113,7 +113,9 @@ export const SellerOrderPage: FC<SellerOrderPageProps> = ({}) => {
                             </div>
                             <div>
                                 <p>{product?.services_cost?.storage} ₸</p>
-                                <p>{product?.services_cost?.package} ₸</p>
+                                <p>
+                                    {product?.services_cost?.general_package} ₸
+                                </p>
                                 <p>{product?.services_cost?.delivery} ₸</p>
                                 <p>{product?.services_cost?.issuance} ₸</p>
                                 <p className="mt-2 font-bold">

@@ -6,7 +6,6 @@ import { useCancelOrder } from "@/modules/order/forms";
 import { useGetAdminOrder } from "@/modules/order/queries";
 import { mapWonderStatus } from "@/modules/order/utils";
 import { Button, Form, Modal } from "antd";
-// import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/EmployeeOrderTable";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -20,9 +19,11 @@ export const AdminOrderPage: FC<AdminOrderPageProps> = ({}) => {
     const { text, color } = mapWonderStatus(
         data?.wonder_status || "Неизвестно"
     );
+
     if (isPending) {
         return <Loading />;
     }
+
     return (
         <div className="pb-32 md:pb-0">
             <h2 className="pb-4 text-2xl font-semibold">
@@ -95,6 +96,8 @@ export const AdminOrderPage: FC<AdminOrderPageProps> = ({}) => {
                 <CancelOrderModal orderId={orderIdRaw || ""} role="admin" />
             </div>
             <AdminOrderDetailsTable data={data} loading={isPending} />
+
+            {/* Render service cost details below the table */}
             <div className="grid grid-cols-2 gap-3">
                 {data?.seller_cell_products.map((product) => (
                     <div
@@ -107,20 +110,40 @@ export const AdminOrderPage: FC<AdminOrderPageProps> = ({}) => {
                         </h3>
                         <div className="flex justify-between">
                             <div>
+                                <p>Сумма за Расходники</p>
+                                <p>Работа</p>
+                                <p>Прибыль</p>
                                 <p>Хранение</p>
                                 <p>Упаковка</p>
+                                <p>Упаковано</p>
+                                <p>Общая упаковка</p>
                                 <p>Доставка</p>
                                 <p>Выдача</p>
-                                <p className="mt-2 font-bold">Общая сумма</p>
+                                <p className="mt-2 font-bold">Конечная цена</p>
+                                <p>Доп Оплата</p>
                             </div>
                             <div>
+                                <p>
+                                    {
+                                        product?.services_cost
+                                            ?.amount_for_consumables
+                                    }{" "}
+                                    ₸
+                                </p>
+                                <p>{product?.services_cost?.employee} ₸</p>
+                                <p>{product?.services_cost?.profit} ₸</p>
                                 <p>{product?.services_cost?.storage} ₸</p>
                                 <p>{product?.services_cost?.package} ₸</p>
+                                <p>{product?.services_cost?.packaged} ₸</p>
+                                <p>
+                                    {product?.services_cost?.general_package} ₸
+                                </p>
                                 <p>{product?.services_cost?.delivery} ₸</p>
                                 <p>{product?.services_cost?.issuance} ₸</p>
                                 <p className="mt-2 font-bold">
                                     {product?.services_cost?.final_price} ₸
                                 </p>
+                                <p>{product?.services_cost?.add_payment} ₸</p>
                             </div>
                         </div>
                     </div>
@@ -129,6 +152,7 @@ export const AdminOrderPage: FC<AdminOrderPageProps> = ({}) => {
         </div>
     );
 };
+
 export const CancelOrderModal = ({
     orderId,
     role,

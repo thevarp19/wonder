@@ -26,16 +26,18 @@ import {
 } from "./api";
 import {
     DeliveryMode,
+    GetAdminOrderDetail,
     GetAssembleOrders,
     GetAssembleOrdersEmployee,
     GetCancelledOrders,
-    GetOrderDetail,
+    GetEmployeeOrderDetail,
     GetOrderPackageDetails,
     GetOrdersAdmin,
     GetOrdersEmployee,
     GetOrdersSeller,
     GetPackageOrders,
     GetPackageOrdersEmployee,
+    GetSellerOrderDetail,
     GetShippedOrders,
     GetTransferOrders,
     GetTransferOrdersEmployee,
@@ -505,7 +507,7 @@ export const useGetPackageDetails = (id: string, packed: boolean) => {
     });
 };
 export const useGetAdminOrder = (id: string) => {
-    return useQuery<GetOrderDetail>({
+    return useQuery<GetAdminOrderDetail>({
         queryKey: [`order-detail-admin`, id],
         queryFn: async () => {
             const { data } = await getAdminOrderById(id);
@@ -514,7 +516,7 @@ export const useGetAdminOrder = (id: string) => {
     });
 };
 export const useGetSellerOrder = (id: string) => {
-    return useQuery<GetOrderDetail>({
+    return useQuery<GetSellerOrderDetail>({
         queryKey: [`order-detail-seller`, id],
         queryFn: async () => {
             const { data } = await getSellerOrderById(id);
@@ -523,7 +525,7 @@ export const useGetSellerOrder = (id: string) => {
     });
 };
 export const useGetEmployeeOrder = (id: string) => {
-    return useQuery<GetOrderDetail>({
+    return useQuery<GetEmployeeOrderDetail>({
         queryKey: [`order-detail-employee`, id],
         queryFn: async () => {
             const { data } = await getEmployeeOrderById(id);

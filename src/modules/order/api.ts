@@ -1,16 +1,18 @@
 import { axiosAuthorized } from "@/lib/axios";
 import {
     DeliveryMode,
+    GetAdminOrderDetail,
     GetAssembleOrders,
     GetAssembleOrdersEmployee,
     GetCancelledOrders,
-    GetOrderDetail,
+    GetEmployeeOrderDetail,
     GetOrderPackageDetails,
     GetOrdersAdmin,
     GetOrdersEmployee,
     GetOrdersSeller,
     GetPackageOrders,
     GetPackageOrdersEmployee,
+    GetSellerOrderDetail,
     GetShippedOrders,
     GetTransferOrders,
     GetTransferOrdersEmployee,
@@ -222,13 +224,17 @@ export function getPackageDetails(id: string, packed: boolean) {
     );
 }
 export function getAdminOrderById(id: string) {
-    return axiosAuthorized.get<GetOrderDetail>(`/api/order-admin/${id}/`);
+    return axiosAuthorized.get<GetAdminOrderDetail>(`/api/order-admin/${id}/`);
 }
 export function getSellerOrderById(id: string) {
-    return axiosAuthorized.get<GetOrderDetail>(`/api/order-seller/${id}/`);
+    return axiosAuthorized.get<GetSellerOrderDetail>(
+        `/api/order-seller/${id}/`
+    );
 }
 export function getEmployeeOrderById(id: string) {
-    return axiosAuthorized.get<GetOrderDetail>(`/api/order-employee/${id}/`);
+    return axiosAuthorized.get<GetEmployeeOrderDetail>(
+        `/api/order-employee/${id}/`
+    );
 }
 
 export function orderStatus(values: ProductStatusChangeRequest[]) {

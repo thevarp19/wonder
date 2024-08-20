@@ -135,13 +135,52 @@ export interface GetPackageProduct {
     order_entry: string;
 }
 
-export interface GetOrderDetail {
+export interface GetEmployeeOrderDetail {
+    id: string;
+    kaspi_store_name: string;
+    delivery_mode: string;
+    wonder_status: string;
+    seller_cell_products: {
+        id: number;
+        order_entry: string;
+        product_vendor_code: string;
+        product_title: string;
+        cell_number: string;
+        services_cost: null;
+    }[];
+    customer: Customer;
+    delivery_address: string | null;
+    code: string;
+    total_price: number;
+    payment_mode: string;
+    planned_delivery_date: bigint | null;
+    creation_date: bigint;
+    delivery_cost_for_seller: number;
+    is_kaspi_delivery: boolean;
+    credit_term: number | null;
+    signature_required: boolean;
+    pre_order: boolean;
+    delivery_cost: number;
+    state: string;
+    assembled: boolean;
+    packaged: boolean;
+    status: string;
+    approved_by_bank_date: bigint;
+    cancellation_reason: string | null;
+    cancellation_comment: string | null;
+    transmission_date: string | null;
+    receiving_date: bigint | null;
+    seller: number;
+    kaspi_delivery: number;
+}
+export interface GetAdminOrderDetail {
     id: string;
     delivery_mode: string;
     wonder_status: string;
     warehouse_address: string;
     seller_cell_products: {
         id: number;
+        order_entry: string;
         product_vendor_code: string;
         product_title: string;
         cell_number: string;
@@ -158,24 +197,17 @@ export interface GetOrderDetail {
             packaged: number;
             add_payment: number;
         };
-        order_entry: string;
     }[];
-    customer: {
-        id: string;
-        name: string;
-        cell_phone: string;
-        first_name: string;
-        last_name: string;
-    };
+    customer: Customer;
     delivery_address: string;
     code: string;
     total_price: number;
     payment_mode: string;
-    planned_delivery_date: bigint;
+    planned_delivery_date: bigint | null;
     creation_date: bigint;
     delivery_cost_for_seller: number;
     is_kaspi_delivery: boolean;
-    credit_term: number;
+    credit_term: number | null;
     signature_required: boolean;
     pre_order: boolean;
     delivery_cost: number;
@@ -184,21 +216,65 @@ export interface GetOrderDetail {
     packaged: boolean;
     status: string;
     approved_by_bank_date: bigint;
-    cancellation_reason: string;
-    cancellation_comment: string;
-    transmission_date: string;
-    receiving_date: bigint;
+    cancellation_reason: string | null;
+    cancellation_comment: string | null;
+    transmission_date: string | null;
+    receiving_date: bigint | null;
+    seller: number;
+    kaspi_delivery: number;
+}
+export interface GetSellerOrderDetail {
+    id: string;
+    delivery_mode: string;
+    wonder_status: string;
+    warehouse: string;
+    seller_cell_products: {
+        id: number;
+        product_vendor_code: string;
+        product_title: string;
+        cell_number: string;
+        services_cost: {
+            storage: number;
+            delivery: number;
+            general_package: number;
+            issuance: number;
+            final_price: number;
+        };
+        order_entry: string;
+    }[];
+    customer: Customer;
+    delivery_address: string;
+    code: string;
+    total_price: number;
+    payment_mode: string;
+    planned_delivery_date: bigint | null;
+    creation_date: bigint;
+    delivery_cost_for_seller: number;
+    is_kaspi_delivery: boolean;
+    credit_term: number | null;
+    signature_required: boolean;
+    pre_order: boolean;
+    delivery_cost: number;
+    state: string;
+    assembled: boolean;
+    packaged: boolean;
+    status: string;
+    approved_by_bank_date: bigint;
+    cancellation_reason: string | null;
+    cancellation_comment: string | null;
+    transmission_date: string | null;
+    receiving_date: bigint | null;
     seller: number;
     kaspi_delivery: number;
 }
 
-export type DeliveryMode =
-    | "ALL"
-    | "EXPRESS"
-    | "ZAMLER"
-    | "PICKUP"
-    | "ARCHIVE"
-    | "";
+export interface Customer {
+    id: string;
+    name: string;
+    cell_phone: string;
+    first_name: string;
+    last_name: string;
+}
 
 export type OrderEmployeeStatus = "ASSEMBLE" | "PACKAGING" | "TRANSFER" | "END";
 
@@ -207,3 +283,10 @@ export interface ProductStatusChangeRequest {
     order_entry: string;
     status: string;
 }
+export type DeliveryMode =
+    | "ALL"
+    | "EXPRESS"
+    | "ZAMLER"
+    | "PICKUP"
+    | "ARCHIVE"
+    | "";

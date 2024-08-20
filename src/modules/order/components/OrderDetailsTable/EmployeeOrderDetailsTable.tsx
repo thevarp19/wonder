@@ -1,10 +1,10 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { TableColumnsType } from "antd";
 import { FC } from "react";
-import { GetOrderDetail } from "../../types";
+import { GetEmployeeOrderDetail } from "../../types";
 
 interface EmployeeOrderDetailsTableProps {
-    data: GetOrderDetail | undefined;
+    data: GetEmployeeOrderDetail | undefined;
     loading: boolean;
 }
 interface SellerCellProduct {

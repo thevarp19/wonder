@@ -1,10 +1,10 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { TableColumnsType } from "antd";
 import { FC } from "react";
-import { GetOrderDetail } from "../../types";
+import { GetAdminOrderDetail } from "../../types";
 
 interface AdminOrderDetailsTableProps {
-    data: GetOrderDetail | undefined;
+    data: GetAdminOrderDetail | undefined;
     loading: boolean;
 }
 interface SellerCellProduct {
