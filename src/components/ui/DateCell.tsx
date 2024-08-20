@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 interface DateCellProps {
-    timestamp: number | string;
+    timestamp: number | string | bigint;
 }
 
 export const DateCell: FC<DateCellProps> = ({ timestamp }) => {
@@ -10,6 +10,10 @@ export const DateCell: FC<DateCellProps> = ({ timestamp }) => {
     }
 
     let dateObject: Date | null = null;
+
+    if (typeof timestamp === "bigint") {
+        timestamp = Number(timestamp);
+    }
 
     if (typeof timestamp === "string" && timestamp.includes("T")) {
         dateObject = new Date(timestamp);

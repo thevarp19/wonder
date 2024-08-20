@@ -1,4 +1,3 @@
-// import { OrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx";
 import { DateCell } from "@/components/ui/DateCell";
 import { Loading } from "@/components/ui/Loading";
 import { SellerOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable/SellerOrderDetailsTable";
@@ -21,6 +20,7 @@ export const SellerOrderPage: FC<SellerOrderPageProps> = ({}) => {
     if (isPending) {
         return <Loading />;
     }
+
     return (
         <div>
             <h2 className="pb-4 text-2xl font-semibold">
@@ -50,8 +50,7 @@ export const SellerOrderPage: FC<SellerOrderPageProps> = ({}) => {
                             </div>
                         </div>
                         <p>
-                            <strong>Название магазина:</strong>{" "}
-                            {data?.kaspi_store_name}
+                            <strong>Название магазина:</strong> {data?.seller}
                         </p>
                         <p>
                             <strong>Тип доставки:</strong> {data?.delivery_mode}
@@ -94,6 +93,37 @@ export const SellerOrderPage: FC<SellerOrderPageProps> = ({}) => {
                 <CancelOrderModal orderId={orderIdRaw || ""} role="seller" />
             </div>
             <SellerOrderDetailsTable data={data} loading={isPending} />
+            <div className="grid grid-cols-2 gap-3">
+                {data?.seller_cell_products.map((product) => (
+                    <div
+                        key={product.id}
+                        className="flex flex-col gap-3 p-5 mt-4 rounded-lg bg-gray-50"
+                    >
+                        <h3 className="font-semibold">
+                            Обслуживание - {product.product_title} (
+                            {product.product_vendor_code})
+                        </h3>
+                        <div className="flex justify-between">
+                            <div>
+                                <p>Хранение</p>
+                                <p>Упаковка</p>
+                                <p>Доставка</p>
+                                <p>Выдача</p>
+                                <p className="mt-2 font-bold">Общая сумма</p>
+                            </div>
+                            <div>
+                                <p>{product?.services_cost?.storage} ₸</p>
+                                <p>{product?.services_cost?.package} ₸</p>
+                                <p>{product?.services_cost?.delivery} ₸</p>
+                                <p>{product?.services_cost?.issuance} ₸</p>
+                                <p className="mt-2 font-bold">
+                                    {product?.services_cost?.final_price} ₸
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

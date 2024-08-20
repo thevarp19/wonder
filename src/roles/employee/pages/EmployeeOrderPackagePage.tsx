@@ -4,7 +4,6 @@ import { EmployeePackageTable } from "@/modules/order/components/EmployeeOrders/
 import { deliveryModes, items } from "@/modules/order/const";
 import { useGetPackageOrderEmployee } from "@/modules/order/queries";
 import { DeliveryMode } from "@/modules/order/types";
-import { useScannerMultipleResults } from "@/modules/scan/hooks";
 import { toScanOrdersTransfer } from "@/modules/scan/utils";
 import { cn, useDebounce } from "@/utils/shared.util";
 import { Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
@@ -15,7 +14,7 @@ interface EmployeeOrderPackagePageProps {}
 export const EmployeeOrderPackagePage: FC<
     EmployeeOrderPackagePageProps
 > = () => {
-    let scannedProducts = useScannerMultipleResults();
+    // let scannedProducts = useScannerMultipleResults();
     const [searchValue, setSearchValue] = useState("");
     const debouncedSearchValue = useDebounce(searchValue, 500);
     // const hasCalledEffect = useRef(false);

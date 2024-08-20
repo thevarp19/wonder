@@ -56,8 +56,7 @@ export const EmployeeOrderPage: FC<EmployeeOrderPageProps> = ({}) => {
                             </div>
                         </div>
                         <p>
-                            <strong>Название магазина:</strong>{" "}
-                            {data?.kaspi_store_name}
+                            <strong>Название магазина:</strong> {data?.seller}
                         </p>
                         <p>
                             <strong>Тип доставки:</strong> {data?.delivery_mode}

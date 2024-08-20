@@ -134,16 +134,30 @@ export interface GetPackageProduct {
     waybill: string;
     order_entry: string;
 }
+
 export interface GetOrderDetail {
     id: string;
-    kaspi_store_name: string;
     delivery_mode: string;
     wonder_status: string;
+    warehouse_address: string;
     seller_cell_products: {
         id: number;
         product_vendor_code: string;
         product_title: string;
         cell_number: string;
+        services_cost: {
+            storage: number;
+            delivery: number;
+            general_package: number;
+            issuance: number;
+            final_price: number;
+            amount_for_consumables: number;
+            employee: number;
+            profit: number;
+            package: number;
+            packaged: number;
+            add_payment: number;
+        };
         order_entry: string;
     }[];
     customer: {
@@ -157,8 +171,8 @@ export interface GetOrderDetail {
     code: string;
     total_price: number;
     payment_mode: string;
-    planned_delivery_date: number;
-    creation_date: number;
+    planned_delivery_date: bigint;
+    creation_date: bigint;
     delivery_cost_for_seller: number;
     is_kaspi_delivery: boolean;
     credit_term: number;
@@ -169,11 +183,12 @@ export interface GetOrderDetail {
     assembled: boolean;
     packaged: boolean;
     status: string;
-    approved_by_bank_date: number;
+    approved_by_bank_date: bigint;
     cancellation_reason: string;
     cancellation_comment: string;
-    transmission_date: number;
-    receiving_date: number;
+    transmission_date: string;
+    receiving_date: bigint;
+    seller: number;
     kaspi_delivery: number;
 }
 
