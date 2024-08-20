@@ -44,7 +44,7 @@ const CalculationResult: React.FC<CalculationResultProps> = ({
                         </div>
                         <div className="mb-2">
                             <Text strong>Кол-во единиц товара: </Text>
-                            <Text>{formData[index]?.quantity}</Text>
+                            <Text>{response.quantity}</Text>
                         </div>
                     </div>
                     <div className="flex w-1/2 gap-5">
@@ -54,7 +54,7 @@ const CalculationResult: React.FC<CalculationResultProps> = ({
                             </h2>
                             <div className="mb-2">
                                 <Text>Приемка: </Text>
-                                <Text>{response.cost.employee} ₸</Text>
+                                <Text>{response.cost.issuance} ₸</Text>
                             </div>
                             <div className="mb-2">
                                 <Text>Хранение: </Text>
@@ -62,9 +62,7 @@ const CalculationResult: React.FC<CalculationResultProps> = ({
                             </div>
                             <div className="mb-2">
                                 <Text>Упаковка: </Text>
-                                <Text>
-                                    {response.cost.amount_for_consumables} ₸
-                                </Text>
+                                <Text>{response.cost.general_package} ₸</Text>
                             </div>
                             <div className="mb-2">
                                 <Text>Доставка до Заммлера: </Text>

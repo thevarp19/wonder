@@ -3,7 +3,7 @@ import { FormikInput } from "@/components/ui/FormikInput";
 import { Loading } from "@/components/ui/Loading";
 import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable/AdminOrderDetailsTable";
 import { useCancelOrder } from "@/modules/order/forms";
-import { useGetEmployeeOrder } from "@/modules/order/queries";
+import { useGetAdminOrder } from "@/modules/order/queries";
 import { mapWonderStatus } from "@/modules/order/utils";
 import { Button, Form, Modal } from "antd";
 // import { AdminOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable.tsx/EmployeeOrderTable";
@@ -15,7 +15,7 @@ interface AdminOrderPageProps {}
 export const AdminOrderPage: FC<AdminOrderPageProps> = ({}) => {
     const { orderId: orderIdRaw } = useParams();
 
-    const { data, isPending } = useGetEmployeeOrder(orderIdRaw ?? "");
+    const { data, isPending } = useGetAdminOrder(orderIdRaw ?? "");
     const orderCode = data?.code?.toString() ?? "";
     const { text, color } = mapWonderStatus(
         data?.wonder_status || "Неизвестно"

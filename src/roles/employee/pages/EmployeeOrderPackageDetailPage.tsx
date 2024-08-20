@@ -1,79 +1,42 @@
-import { scan, searchIcon } from "@/assets";
 import { Image } from "@/components/ui/Image";
-import { EmployeePackageTable } from "@/modules/order/components/EmployeeOrders/EmployeePackageTable";
-import { deliveryModes, items } from "@/modules/order/const";
+import { Loading } from "@/components/ui/Loading";
+import { EmployeePackageDetailTable } from "@/modules/order/components/EmployeeOrders/EmployeePackageDetailTable";
 import { orderStatusMutation } from "@/modules/order/mutations";
-import { useGetPackageOrderEmployee } from "@/modules/order/queries";
-import {
-    DeliveryMode,
-    ProductStatusChangeRequest,
-} from "@/modules/order/types";
-import { useScannerMultipleResults } from "@/modules/scan/hooks";
-import { toScanOrdersTransfer } from "@/modules/scan/utils";
-import { cn, useDebounce } from "@/utils/shared.util";
-import { Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
-import { FC, useEffect, useRef, useState } from "react";
+import { useGetPackageDetails } from "@/modules/order/queries";
+import { Button, Checkbox } from "antd";
+import { FC, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const EmployeeOrderPackageDetailPage: FC = () => {
-    let scannedProducts = useScannerMultipleResults();
-    const [searchValue, setSearchValue] = useState("");
-    const debouncedSearchValue = useDebounce(searchValue, 500);
-    const hasCalledEffect = useRef(false);
-    const [current, setCurrent] = useState("all");
-    const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("ALL");
-    const [page, setPage] = useState(0);
-    const { data: orders, isPending } = useGetPackageOrderEmployee(
-        page,
-        10,
-        debouncedSearchValue,
-        deliveryMode
+    const { orderId: orderIdRaw } = useParams();
+    const [isPacked, setIsPacked] = useState(false);
+    const { data, isPending } = useGetPackageDetails(
+        orderIdRaw || "",
+        isPacked
     );
+    const navigate = useNavigate();
     const { mutateAsync: transferMutate } = orderStatusMutation();
-    const onClick: MenuProps["onClick"] = (e) => {
-        setCurrent(e.key);
-        setDeliveryMode(deliveryModes[e.key]);
+
+    if (isPending || !data) {
+        return <Loading />;
+    }
+
+    const handlePackedChange = (e: any) => {
+        setIsPacked(e.target.checked);
     };
-    // const newSearchParams = new URLSearchParams(window.location.search);
 
-    useEffect(() => {
-        if (hasCalledEffect.current) return;
-
-        const assembleProductsHandler = async () => {
-            if (scannedProducts.length > 0 && orders) {
-                const cleanedProductIds = scannedProducts.map((p) =>
-                    p.replace(/^0+/, "")
-                );
-
-                const scannedProductIdsSet = new Set(cleanedProductIds);
-
-                const filteredOrders = orders.content.filter((order) =>
-                    scannedProductIdsSet.has(order.id.toString())
-                );
-
-                const requests: ProductStatusChangeRequest[] =
-                    filteredOrders.map((order) => ({
-                        id: order.id,
-                        order_entry: order.order_entry,
-                        status: "TRANSFER",
-                    }));
-
-                transferMutate(requests);
-            }
-        };
-
-        if (!isPending) {
-            assembleProductsHandler();
-            hasCalledEffect.current = true;
-        }
-
-        // newSearchParams.delete("result");
-        // newSearchParams.delete("type");
-        // newSearchParams.delete("step");
-        // const newUrl = `${
-        //     window.location.pathname
-        // }?${newSearchParams.toString()}`;
-        // window.history.replaceState(null, "", newUrl);
-    }, [scannedProducts, orders, isPending]);
+    const handleCompleteOrder = async () => {
+        try {
+            await transferMutate([
+                {
+                    id: data.product.id,
+                    order_entry: data.product.order_code,
+                    status: "TRANSFER",
+                },
+            ]);
+            navigate("/employee/orders/package");
+        } catch (error) {}
+    };
 
     return (
         <div className="flex flex-col h-full gap-5">
@@ -82,66 +45,140 @@ export const EmployeeOrderPackageDetailPage: FC = () => {
                 <Button
                     type="primary"
                     size="large"
-                    onClick={toScanOrdersTransfer}
+                    href={data.product.waybill}
                     className="!flex !items-center !justify-center min-w-[200px] !gap-2 w-max"
                 >
-                    <Image
-                        src={scan}
-                        alt="scan"
-                        className={cn("min-w-5 h-5")}
-                    />
-                    <h2 className="md:text-[12px] text-[16px] text-white">
-                        CКАНИРОВАТЬ
+                    <h2 className="text-[14px] text-white uppercase">
+                        Скачать накладную
                     </h2>
                 </Button>
             </div>
+
+            <div>
+                <EmployeePackageDetailTable
+                    data={data.product}
+                    isPending={isPending}
+                />
+            </div>
+
             <div className="flex flex-col gap-5">
-                <div className="overflow-x-auto bg-[#F7F9FB] md:pt-0 pt-2 rounded-lg">
-                    <div className="min-w-[600px] flex justify-between">
-                        <ConfigProvider
-                            theme={{
-                                components: {
-                                    Menu: {
-                                        itemBg: "#F7F9FB",
-                                        colorSplit: "#F7F9FB",
-                                    },
-                                },
-                            }}
-                        >
-                            <Menu
-                                items={items}
-                                mode="horizontal"
-                                className="w-full !font-bold"
-                                onClick={onClick}
-                                selectedKeys={[current]}
-                            />
-                        </ConfigProvider>
-                        <div className="flex items-center gap-4 px-2 rounded-lg">
-                            <Input
-                                prefix={
-                                    <Image
-                                        src={searchIcon}
-                                        alt="searchIcon"
-                                        className={cn("w-5 h-5")}
-                                    />
-                                }
-                                placeholder="Поиск"
-                                value={searchValue}
-                                className="!min-w-[217px]"
-                                onChange={(e) => {
-                                    setSearchValue(e.target.value);
-                                }}
-                            />
+                <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
+                    <div className="flex justify-between gap-5">
+                        {data?.bubble_schema_base64 && (
+                            <div className="flex flex-col items-center p-5 border border-black rounded-[20px]">
+                                <Image
+                                    src={`data:image/png;base64,${data?.bubble_schema_base64}`}
+                                    alt="Bubble Wrap Schema"
+                                    className="w-full "
+                                />
+                                <h3>Пузырчатая Пленка</h3>
+                            </div>
+                        )}
+                        {data?.stretch_schema_base64 && (
+                            <div className="flex flex-col items-center p-5 border border-black  rounded-[20px]">
+                                <Image
+                                    src={`data:image/png;base64,${data?.stretch_schema_base64}`}
+                                    alt="Stretch Wrap Schema"
+                                    className="w-full "
+                                />
+                                <h3>Стретч Пленка</h3>
+                            </div>
+                        )}
+                        <div className="mt-5">
+                            <ul className="flex flex-col gap-2 pl-5 list-disc">
+                                <li>
+                                    Курьерский пакет:{" "}
+                                    {data.courier_package ? "Да" : "Нет"}
+                                </li>
+                                <li>
+                                    Этикетка: Осторожно! Стекло!:{" "}
+                                    {data.label_caution_class ? "Да" : "Нет"}
+                                </li>
+                                <li>
+                                    Этикетка: Манипуляционный знак:{" "}
+                                    {data.label_manipulation_sign
+                                        ? "Да"
+                                        : "Нет"}
+                                </li>
+                                <li>
+                                    Этикетка: Огнеопасно!:{" "}
+                                    {data.label_flammable ? "Да" : "Нет"}
+                                </li>
+                                <li>
+                                    Этикетка: Осторожно! Аккумуляторные
+                                    батареи!:{" "}
+                                    {data.label_careful_rechargeable_battery
+                                        ? "Да"
+                                        : "Нет"}
+                                </li>
+                                <li>
+                                    Скотч для хрупких товаров:{" "}
+                                    {data.adhesive_tape_for_fragile_goods
+                                        ? "Да"
+                                        : "Нет"}
+                                </li>
+                                <li>
+                                    Количество этикеток пузырчатой пленки:{" "}
+                                    {data.number_of_labels_of_bubble_wrap}
+                                </li>
+                                <li>
+                                    Количество этикеток стретч-пленки:{" "}
+                                    {data.number_of_labels_of_stretch_film}
+                                </li>
+                                <li>
+                                    Тип курьерского пакета:{" "}
+                                    {data.courier_package_type}
+                                </li>
+                                <li>Тип доставки: {data.delivery_type}</li>
+                                <li>
+                                    Дополнительные упаковки:{" "}
+                                    {data.additional_wraps}
+                                </li>
+                                <li>
+                                    Тип самой дешевой упаковки:{" "}
+                                    {data.cheapest_wrap_type}
+                                </li>
+                                <li>
+                                    Количество сегментов самой дешевой упаковки:{" "}
+                                    {data.cheapest_number_of_segments}
+                                </li>
+                                <li>
+                                    Количество сегментов стретч-пленки самой
+                                    дешевой упаковки:{" "}
+                                    {data.cheapest_stretch_number_of_segments}
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                </div>
-                <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
-                    <EmployeePackageTable
-                        data={orders}
-                        isPending={isPending}
-                        setPage={setPage}
-                        page={page}
-                    />
+
+                    <div className="flex items-start justify-between py-10">
+                        <div className="flex flex-col">
+                            <div className="bg-[#EF7214F7] p-2 rounded-lg  w-max">
+                                <Checkbox
+                                    checked={isPacked}
+                                    onChange={handlePackedChange}
+                                    className="!text-white"
+                                >
+                                    Упакованный
+                                </Checkbox>
+                            </div>
+                            <p className="mt-2 text-sm">
+                                * Товар прибыл в упакованном виде
+                            </p>
+                        </div>
+                        <div className="flex justify-end">
+                            <div className="mt-auto">
+                                <Button
+                                    type="primary"
+                                    size="large"
+                                    className="!flex !items-center !justify-center min-w-[200px] !gap-2 w-max"
+                                    onClick={handleCompleteOrder}
+                                >
+                                    Завершить
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

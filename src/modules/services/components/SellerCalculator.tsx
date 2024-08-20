@@ -209,7 +209,7 @@ const ServiceItem: FC<ServiceItemProps> = ({
                                 >
                                     Скотч для хрупких товаров
                                 </Checkbox>
-                                <Checkbox
+                                {/* <Checkbox
                                     checked={
                                         formik.values[serviceIndex].parameters
                                             .box
@@ -222,7 +222,7 @@ const ServiceItem: FC<ServiceItemProps> = ({
                                     }
                                 >
                                     Коробка
-                                </Checkbox>
+                                </Checkbox> */}
                                 <Checkbox
                                     checked={
                                         formik.values[serviceIndex].parameters
@@ -359,7 +359,6 @@ export const SellerCalculator: FC = () => {
             ...formik.values,
             {
                 parameters: {
-                    box: false,
                     courier_package: false,
                     label_caution_class: false,
                     label_manipulation_sign: false,

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import {
+    getAdminOrderById,
     getAssembleOrderAdmin,
     getAssembleOrderEmployee,
     getAssembleOrderSeller,
@@ -11,9 +12,11 @@ import {
     getOrdersEmployee,
     getOrdersSeller,
     getOrdersSellerOwn,
+    getPackageDetails,
     getPackageOrderAdmin,
     getPackageOrderEmployee,
     getPackageOrderSeller,
+    getSellerOrderById,
     getShippedOrderAdmin,
     getShippedOrderEmployee,
     getShippedOrderSeller,
@@ -26,7 +29,8 @@ import {
     GetAssembleOrders,
     GetAssembleOrdersEmployee,
     GetCancelledOrders,
-    GetOrderDetailEmployee,
+    GetOrderDetail,
+    GetOrderPackageDetails,
     GetOrdersAdmin,
     GetOrdersEmployee,
     GetOrdersSeller,
@@ -491,8 +495,35 @@ export const useGetCancelledOrderAdmin = (
     });
 };
 
+export const useGetPackageDetails = (id: string, packed: boolean) => {
+    return useQuery<GetOrderPackageDetails>({
+        queryKey: [`order-package`, id, packed],
+        queryFn: async () => {
+            const { data } = await getPackageDetails(id, packed);
+            return data;
+        },
+    });
+};
+export const useGetAdminOrder = (id: string) => {
+    return useQuery<GetOrderDetail>({
+        queryKey: [`order-detail-admin`, id],
+        queryFn: async () => {
+            const { data } = await getAdminOrderById(id);
+            return data;
+        },
+    });
+};
+export const useGetSellerOrder = (id: string) => {
+    return useQuery<GetOrderDetail>({
+        queryKey: [`order-detail-seller`, id],
+        queryFn: async () => {
+            const { data } = await getSellerOrderById(id);
+            return data;
+        },
+    });
+};
 export const useGetEmployeeOrder = (id: string) => {
-    return useQuery<GetOrderDetailEmployee>({
+    return useQuery<GetOrderDetail>({
         queryKey: [`order-detail-employee`, id],
         queryFn: async () => {
             const { data } = await getEmployeeOrderById(id);

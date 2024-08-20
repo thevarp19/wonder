@@ -28,7 +28,7 @@ export function updateServiceParams(
 }
 export function calculateParams(values: CalculatorRequest[]) {
     return axiosAuthorized.post<CalculatorResponse[]>(
-        `/api/service/calculate/`,
+        `/api/service/calculate/v2/`,
         values
     );
 }

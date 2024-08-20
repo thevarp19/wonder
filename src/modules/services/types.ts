@@ -53,29 +53,29 @@ export interface UpdateServiceParamsRequest {
     need_super_safe: boolean;
 }
 export interface CalculatorResponse {
+    input_data: {
+        courier_package: boolean;
+        label_caution_class: boolean;
+        label_manipulation_sign: boolean;
+        label_flammable: boolean;
+        label_careful_rechargeable_battery: boolean;
+        adhesive_tape_for_fragile_goods: boolean;
+        number_of_labels_of_bubble_wrap: number;
+        number_of_labels_of_stretch_film: number;
+        need_super_safe: boolean;
+    };
+    quantity: number;
     cost: {
-        thermal_label: number;
-        cost_of_scotch_tape: number;
-        cost_of_bubble_wrap: number;
-        cost_of_stretch_wrap: number;
-        manipulation_sign: number;
-        care_glass: number;
-        care_batteries: number;
-        flammable: number;
-        mandatory_courier_package: number;
-        courier_package: number;
-        amount_for_consumables: number;
         storage: number;
         delivery: number;
-        employee: number;
-        profit: number;
+        general_package: number;
+        issuance: number;
         final_price: number;
     };
     total_cost: number;
 }
 export interface CalculatorRequest {
     parameters: {
-        box: boolean;
         courier_package: boolean;
         label_caution_class: boolean;
         label_manipulation_sign: boolean;

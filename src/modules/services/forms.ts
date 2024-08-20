@@ -54,7 +54,6 @@ export const useCalculateParams = () => {
         initialValues: [
             {
                 parameters: {
-                    box: false,
                     courier_package: false,
                     label_caution_class: false,
                     label_manipulation_sign: false,

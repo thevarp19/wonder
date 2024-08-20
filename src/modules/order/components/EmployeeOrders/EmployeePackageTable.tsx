@@ -22,6 +22,11 @@ const columns: TableColumnsType<GetPackageOrdersEmployeeContent> = [
     {
         title: "ID товара",
         dataIndex: "id",
+        render: (_, record) => (
+            <Link to={`/employee/orders/package/${record.id}`}>
+                {record.id}
+            </Link>
+        ),
     },
     {
         title: "Артикул",

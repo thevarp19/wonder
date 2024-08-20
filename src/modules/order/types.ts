@@ -106,7 +106,35 @@ export interface GetOrdersEmployeeContent {
     wonder_status?: string;
 }
 
-export interface GetOrderDetailEmployee {
+export interface GetOrderPackageDetails {
+    courier_package: boolean;
+    label_caution_class: boolean;
+    label_manipulation_sign: boolean;
+    label_flammable: boolean;
+    label_careful_rechargeable_battery: boolean;
+    adhesive_tape_for_fragile_goods: boolean;
+    number_of_labels_of_bubble_wrap: number;
+    number_of_labels_of_stretch_film: number;
+    courier_package_type: number;
+    delivery_type: string;
+    additional_wraps: number;
+    cheapest_wrap_type: string;
+    cheapest_number_of_segments: number;
+    cheapest_stretch_number_of_segments: number;
+    bubble_schema_base64: string;
+    stretch_schema_base64: string;
+    product: GetPackageProduct;
+}
+export interface GetPackageProduct {
+    id: number;
+    product_vendor_code: string;
+    product_title: string;
+    order_code: string;
+    order_creation_date: string;
+    waybill: string;
+    order_entry: string;
+}
+export interface GetOrderDetail {
     id: string;
     kaspi_store_name: string;
     delivery_mode: string;

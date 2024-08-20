@@ -4,7 +4,8 @@ import {
     GetAssembleOrders,
     GetAssembleOrdersEmployee,
     GetCancelledOrders,
-    GetOrderDetailEmployee,
+    GetOrderDetail,
+    GetOrderPackageDetails,
     GetOrdersAdmin,
     GetOrdersEmployee,
     GetOrdersSeller,
@@ -215,10 +216,19 @@ export function getCancelledOrderAdmin(
     );
 }
 
-export function getEmployeeOrderById(id: string) {
-    return axiosAuthorized.get<GetOrderDetailEmployee>(
-        `/api/order-employee/${id}/`
+export function getPackageDetails(id: string, packed: boolean) {
+    return axiosAuthorized.get<GetOrderPackageDetails>(
+        `/api/seller-product/calculator/${id}/${packed ? 1 : 0}/`
     );
+}
+export function getAdminOrderById(id: string) {
+    return axiosAuthorized.get<GetOrderDetail>(`/api/order-admin/${id}/`);
+}
+export function getSellerOrderById(id: string) {
+    return axiosAuthorized.get<GetOrderDetail>(`/api/order-seller/${id}/`);
+}
+export function getEmployeeOrderById(id: string) {
+    return axiosAuthorized.get<GetOrderDetail>(`/api/order-employee/${id}/`);
 }
 
 export function orderStatus(values: ProductStatusChangeRequest[]) {

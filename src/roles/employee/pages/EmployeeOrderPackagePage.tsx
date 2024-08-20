@@ -2,17 +2,13 @@ import { scan, searchIcon } from "@/assets";
 import { Image } from "@/components/ui/Image";
 import { EmployeePackageTable } from "@/modules/order/components/EmployeeOrders/EmployeePackageTable";
 import { deliveryModes, items } from "@/modules/order/const";
-import { orderStatusMutation } from "@/modules/order/mutations";
 import { useGetPackageOrderEmployee } from "@/modules/order/queries";
-import {
-    DeliveryMode,
-    ProductStatusChangeRequest,
-} from "@/modules/order/types";
+import { DeliveryMode } from "@/modules/order/types";
 import { useScannerMultipleResults } from "@/modules/scan/hooks";
 import { toScanOrdersTransfer } from "@/modules/scan/utils";
 import { cn, useDebounce } from "@/utils/shared.util";
 import { Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useState } from "react";
 
 interface EmployeeOrderPackagePageProps {}
 
@@ -22,7 +18,7 @@ export const EmployeeOrderPackagePage: FC<
     let scannedProducts = useScannerMultipleResults();
     const [searchValue, setSearchValue] = useState("");
     const debouncedSearchValue = useDebounce(searchValue, 500);
-    const hasCalledEffect = useRef(false);
+    // const hasCalledEffect = useRef(false);
     const [current, setCurrent] = useState("all");
     const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("ALL");
     const [page, setPage] = useState(0);
@@ -32,52 +28,52 @@ export const EmployeeOrderPackagePage: FC<
         debouncedSearchValue,
         deliveryMode
     );
-    const { mutateAsync: transferMutate } = orderStatusMutation();
+    // const { mutateAsync: transferMutate } = orderStatusMutation();
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
         setDeliveryMode(deliveryModes[e.key]);
     };
     // const newSearchParams = new URLSearchParams(window.location.search);
 
-    useEffect(() => {
-        if (hasCalledEffect.current) return;
+    // useEffect(() => {
+    //     if (hasCalledEffect.current) return;
 
-        const assembleProductsHandler = async () => {
-            if (scannedProducts.length > 0 && orders) {
-                const cleanedProductIds = scannedProducts.map((p) =>
-                    p.replace(/^0+/, "")
-                );
+    //     const assembleProductsHandler = async () => {
+    //         if (scannedProducts.length > 0 && orders) {
+    //             const cleanedProductIds = scannedProducts.map((p) =>
+    //                 p.replace(/^0+/, "")
+    //             );
 
-                const scannedProductIdsSet = new Set(cleanedProductIds);
+    //             const scannedProductIdsSet = new Set(cleanedProductIds);
 
-                const filteredOrders = orders.content.filter((order) =>
-                    scannedProductIdsSet.has(order.id.toString())
-                );
+    //             const filteredOrders = orders.content.filter((order) =>
+    //                 scannedProductIdsSet.has(order.id.toString())
+    //             );
 
-                const requests: ProductStatusChangeRequest[] =
-                    filteredOrders.map((order) => ({
-                        id: order.id,
-                        order_entry: order.order_entry,
-                        status: "TRANSFER",
-                    }));
+    //             const requests: ProductStatusChangeRequest[] =
+    //                 filteredOrders.map((order) => ({
+    //                     id: order.id,
+    //                     order_entry: order.order_entry,
+    //                     status: "TRANSFER",
+    //                 }));
 
-                transferMutate(requests);
-            }
-        };
+    //             transferMutate(requests);
+    //         }
+    //     };
 
-        if (!isPending) {
-            assembleProductsHandler();
-            hasCalledEffect.current = true;
-        }
+    //     if (!isPending) {
+    //         assembleProductsHandler();
+    //         hasCalledEffect.current = true;
+    //     }
 
-        // newSearchParams.delete("result");
-        // newSearchParams.delete("type");
-        // newSearchParams.delete("step");
-        // const newUrl = `${
-        //     window.location.pathname
-        // }?${newSearchParams.toString()}`;
-        // window.history.replaceState(null, "", newUrl);
-    }, [scannedProducts, orders, isPending]);
+    //     // newSearchParams.delete("result");
+    //     // newSearchParams.delete("type");
+    //     // newSearchParams.delete("step");
+    //     // const newUrl = `${
+    //     //     window.location.pathname
+    //     // }?${newSearchParams.toString()}`;
+    //     // window.history.replaceState(null, "", newUrl);
+    // }, [scannedProducts, orders, isPending]);
 
     return (
         <div className="flex flex-col h-full gap-5">

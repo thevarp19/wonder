@@ -2,7 +2,7 @@
 import { DateCell } from "@/components/ui/DateCell";
 import { Loading } from "@/components/ui/Loading";
 import { SellerOrderDetailsTable } from "@/modules/order/components/OrderDetailsTable/SellerOrderDetailsTable";
-import { useGetEmployeeOrder } from "@/modules/order/queries";
+import { useGetSellerOrder } from "@/modules/order/queries";
 import { mapWonderStatus } from "@/modules/order/utils";
 import { CancelOrderModal } from "@/roles/admin/pages/AdminOrderPage";
 import { FC } from "react";
@@ -13,7 +13,7 @@ interface SellerOrderPageProps {}
 export const SellerOrderPage: FC<SellerOrderPageProps> = ({}) => {
     const { orderId: orderIdRaw } = useParams();
 
-    const { data, isPending } = useGetEmployeeOrder(orderIdRaw ?? "");
+    const { data, isPending } = useGetSellerOrder(orderIdRaw ?? "");
     const orderCode = data?.code?.toString() ?? "";
     const { text, color } = mapWonderStatus(
         data?.wonder_status || "Неизвестно"
