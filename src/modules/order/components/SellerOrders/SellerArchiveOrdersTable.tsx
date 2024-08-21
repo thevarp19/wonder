@@ -2,12 +2,11 @@ import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
 import { PriceCell } from "@/components/ui/PriceCell";
 import { TableColumnsType, Tag } from "antd";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import { useGetOrdersSeller } from "../../queries";
-import { DeliveryMode, GetOrdersSellerContent } from "../../types";
-import { mapDeliveryMode, mapWonderStatus } from "../../utils";
+import { GetOrdersSeller, GetOrdersSellerContent } from "../../types";
+import { mapDeliveryMode, mapStatusArchive } from "../../utils";
 
 const columns: TableColumnsType<GetOrdersSellerContent> = [
     {
@@ -71,7 +70,7 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
         title: "Статус",
         dataIndex: "wonder_status",
         render: (_, record) => {
-            const { text, color } = mapWonderStatus(record.wonder_status);
+            const { text, color } = mapStatusArchive(record.wonder_status);
             return (
                 <div
                     style={{ color: color }}
@@ -95,32 +94,29 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
 ];
 
 interface SellerArchiveOrdersTableProps {
-    searchValue: string;
-    deliveryMode?: DeliveryMode;
+    data: GetOrdersSeller | undefined;
+    isPending: boolean;
+    setPage: (page: number) => void;
+    page: number;
 }
 
 export const SellerArchiveOrdersTable: FC<SellerArchiveOrdersTableProps> = ({
-    searchValue,
-    // deliveryMode,
+    data,
+    isPending,
+    setPage,
+    page,
 }) => {
-    const [page, setPage] = useState(0);
-    const { data: orders, isPending } = useGetOrdersSeller(
-        page,
-        10,
-        searchValue,
-        "ARCHIVE"
-    );
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
         <CustomTable
             columns={columns}
-            dataSource={orders?.content}
+            dataSource={data?.content}
             rowKey={"code"}
             loading={isPending}
             pagination={{
                 pageSize: 10,
-                total: orders?.totalElements,
+                total: data?.totalElements,
                 showSizeChanger: false,
                 onChange(page) {
                     setPage(page - 1);

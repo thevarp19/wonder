@@ -9,6 +9,19 @@ export const mapWonderStatus = (status: string) => {
 
     return statusMapping[status] || { text: status, color: "default" };
 };
+export const mapStatusArchive = (status: string) => {
+    const statusMapping: { [key: string]: { text: string; color: string } } = {
+        // ASSEMBLE: { text: "Сборка", color: "#8A8CD9" },
+        // PACKAGING: { text: "Упаковка", color: "#FFC555" },
+        // TRANSFER: { text: "Передача", color: "#59A8D4" },
+        // END: { text: "Отправлено", color: "#4AA785" },
+        CANCELLED: { text: "Отменен", color: "#FF707D" },
+        CANCELLING: { text: "Отменение", color: "#FFC555" },
+        COMPLETED: { text: "Завершенный", color: "#4AA785" },
+    };
+
+    return statusMapping[status] || { text: status, color: "default" };
+};
 
 export const mapOrderStatus = (status: string) => {
     const statusMapping: { [key: string]: { text: string; color: string } } = {

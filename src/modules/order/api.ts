@@ -29,6 +29,36 @@ export function getOrdersAdmin(
         `/api/order-admin/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
+export function getOrdersAdminArchive(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetOrdersAdmin>(
+        `/api/order-admin/archive/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getOrdersSellerArchive(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetOrdersSeller>(
+        `/api/order-seller/archive/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getOrdersEmployeeArchive(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetOrdersEmployee>(
+        `/api/order-employee/archive/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
 
 export function getOrdersSeller(
     page: number = 0,

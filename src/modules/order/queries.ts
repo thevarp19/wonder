@@ -9,8 +9,11 @@ import {
     getCancelledOrderSeller,
     getEmployeeOrderById,
     getOrdersAdmin,
+    getOrdersAdminArchive,
     getOrdersEmployee,
+    getOrdersEmployeeArchive,
     getOrdersSeller,
+    getOrdersSellerArchive,
     getOrdersSellerOwn,
     getPackageDetails,
     getPackageOrderAdmin,
@@ -121,6 +124,82 @@ export const useGetOrdersEmployee = (
         },
     });
 };
+export const useGetOrdersAdminArchive = (
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetOrdersAdmin>({
+        queryKey: [
+            `orders-admin-archive`,
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getOrdersAdminArchive(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetOrdersSellerArchive = (
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetOrdersSeller>({
+        queryKey: [
+            `orders-seller-archive`,
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getOrdersSellerArchive(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetOrdersEmployeeArchive = (
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetOrdersEmployee>({
+        queryKey: [
+            `orders-employee-archive`,
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+        ],
+        queryFn: async () => {
+            const { data } = await getOrdersEmployeeArchive(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+
 export const useGetAssembleOrderEmployee = (
     page: number = 0,
     size: number = 10,
