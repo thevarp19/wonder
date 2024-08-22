@@ -8,6 +8,7 @@ import {
     getCancelledOrderEmployee,
     getCancelledOrderSeller,
     getEmployeeOrderById,
+    getNewOrdersSeller,
     getOrdersAdmin,
     getOrdersAdminArchive,
     getOrdersEmployee,
@@ -23,6 +24,7 @@ import {
     getShippedOrderAdmin,
     getShippedOrderEmployee,
     getShippedOrderSeller,
+    getSignOrdersSeller,
     getTransferOrderAdmin,
     getTransferOrderEmployee,
     getTransferOrderSeller,
@@ -34,6 +36,7 @@ import {
     GetAssembleOrdersEmployee,
     GetCancelledOrders,
     GetEmployeeOrderDetail,
+    GetNewSignOrders,
     GetOrderPackageDetails,
     GetOrdersAdmin,
     GetOrdersEmployee,
@@ -144,6 +147,44 @@ export const useGetOrdersAdminArchive = (
                 size,
                 searchValue,
                 deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetNewOrdersSeller = (
+    page: number = 0,
+    size: number = 10
+    // searchValue: string = "",
+    // deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetNewSignOrders>({
+        queryKey: [`orders-seller-new`, page, size],
+        queryFn: async () => {
+            const { data } = await getNewOrdersSeller(
+                page,
+                size
+                // searchValue,
+                // deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetSignOrdersSeller = (
+    page: number = 0,
+    size: number = 10
+    // searchValue: string = "",
+    // deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetNewSignOrders>({
+        queryKey: [`orders-seller-sign`, page, size],
+        queryFn: async () => {
+            const { data } = await getSignOrdersSeller(
+                page,
+                size
+                // searchValue,
+                // deliveryMode
             );
             return data;
         },

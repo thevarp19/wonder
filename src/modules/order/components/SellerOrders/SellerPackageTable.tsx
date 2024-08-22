@@ -53,14 +53,14 @@ const columns: TableColumnsType<GetOrdersContent> = [
     },
 ];
 
-interface EmployeePackageTableProps {
+interface SellerPackageTableProps {
     data: GetPackageOrders | undefined;
     isPending: boolean;
     setPage: (page: number) => void;
     page: number;
 }
 
-export const SellerPackageTable: FC<EmployeePackageTableProps> = ({
+export const SellerPackageTable: FC<SellerPackageTableProps> = ({
     data,
     isPending,
     setPage,

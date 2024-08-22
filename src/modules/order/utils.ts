@@ -16,7 +16,7 @@ export const mapStatusArchive = (status: string) => {
         // TRANSFER: { text: "Передача", color: "#59A8D4" },
         // END: { text: "Отправлено", color: "#4AA785" },
         CANCELLED: { text: "Отменен", color: "#FF707D" },
-        CANCELLING: { text: "Отменение", color: "#FFC555" },
+        CANCELLING: { text: "Идет отмена", color: "#FFC555" },
         COMPLETED: { text: "Завершенный", color: "#4AA785" },
     };
 

@@ -6,6 +6,7 @@ import {
     GetAssembleOrdersEmployee,
     GetCancelledOrders,
     GetEmployeeOrderDetail,
+    GetNewSignOrders,
     GetOrderPackageDetails,
     GetOrdersAdmin,
     GetOrdersEmployee,
@@ -47,6 +48,26 @@ export function getOrdersSellerArchive(
 ) {
     return axiosAuthorized.get<GetOrdersSeller>(
         `/api/order-seller/archive/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getNewOrdersSeller(
+    page: number = 0,
+    size: number = 10
+    // searchValue: string = "",
+    // deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetNewSignOrders>(
+        `/api/order-seller/new/?page=${page}&size=${size}`
+    );
+}
+export function getSignOrdersSeller(
+    page: number = 0,
+    size: number = 10
+    // searchValue: string = "",
+    // deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetNewSignOrders>(
+        `/api/order-seller/sign-required/?page=${page}&size=${size}`
     );
 }
 export function getOrdersEmployeeArchive(

@@ -13,6 +13,7 @@ import {
     SellerCreateStorePage,
     SellerHomePage,
     SellerLoginPage,
+    SellerNewOrdersPage,
     SellerOrderAssemblePage,
     SellerOrderCancelledPage,
     SellerOrderPackagePage,
@@ -27,6 +28,7 @@ import {
     SellerRegisterPage,
     SellerServiceParamsPage,
     SellerSettingsPage,
+    SellerSignOrdersPage,
     SellerSupplyCreatePage,
     SellerSupplyDetailsPage,
     SellerSupplyPage,
@@ -135,12 +137,12 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                     />
                     <Route
                         path="/orders/new"
-                        element={<div>Coming soon!</div>}
+                        element={<SellerNewOrdersPage />}
                     />
 
                     <Route
                         path="/orders/signing"
-                        element={<div>Coming soon!</div>}
+                        element={<SellerSignOrdersPage />}
                     />
                     <Route
                         path="/orders/archive"
