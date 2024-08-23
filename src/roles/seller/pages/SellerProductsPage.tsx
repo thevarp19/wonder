@@ -1,6 +1,5 @@
 import { ProductPriceTable } from "@/modules/product/components/ProductPriceTable";
 import { ProductsTable } from "@/modules/product/components/ProductsTable";
-import { ProductsUploadFromFile } from "@/modules/product/components/ProductsUploadFromFile";
 import { useGetEnabledProductCount } from "@/modules/product/queries";
 import { useDebounce } from "@/utils/shared.util";
 import { SearchOutlined } from "@ant-design/icons";
@@ -20,10 +19,10 @@ const items: MenuProps["items"] = [
         label: "Товары",
         key: "products",
     },
-    {
-        label: "Импорт продукта",
-        key: "upload",
-    },
+    // {
+    //     label: "Импорт продукта",
+    //     key: "upload",
+    // },
 ];
 
 export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
@@ -137,11 +136,11 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                         />
                     </div>
                 )}
-                {current === "upload" && (
+                {/* {current === "upload" && (
                     <div className="h-full bg-white rounded-t-lg">
                         <ProductsUploadFromFile />
                     </div>
-                )}
+                )} */}
             </div>
         </div>
     );

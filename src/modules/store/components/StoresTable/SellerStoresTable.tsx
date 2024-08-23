@@ -66,7 +66,7 @@ export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
                 record.warehouse.is_warehouse ? "Да" : "Нет",
         },
         {
-            title: "Проставка",
+            title: "Поставка",
             render: (_, record) =>
                 record?.wonder_warehouse?.can_receive_supply ? "Да" : "Нет",
         },

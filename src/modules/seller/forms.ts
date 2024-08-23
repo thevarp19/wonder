@@ -29,6 +29,8 @@ export const useUpdateSellerProfile = (
             kaspi_token: "",
             first_name: "",
             last_name: "",
+            merchant_email: "",
+            merchant_password: "",
             email: "",
             xml: "",
             balance: "",
@@ -38,9 +40,17 @@ export const useUpdateSellerProfile = (
         validateOnChange: true,
         onSubmit: async (values) => {
             const formData = new FormData();
+
             Object.entries(values).forEach(([key, value]) => {
-                formData.append(key, value as string | Blob);
+                if (value !== initialValues?.[key as keyof GetSellerProfile]) {
+                    if (key === "avatar" && value instanceof File) {
+                        formData.append(key, value);
+                    } else if (key !== "avatar") {
+                        formData.append(key, value as string | Blob);
+                    }
+                }
             });
+
             await mutation.mutateAsync(formData);
         },
     });

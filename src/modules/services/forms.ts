@@ -16,7 +16,6 @@ export const useServiceParams = (
     const mutation = updateServiceParamsMutation(id);
     const formik = useFormik<UpdateServiceParamsRequest>({
         initialValues: {
-            box: false,
             courier_package: false,
             label_caution_class: false,
             label_manipulation_sign: false,

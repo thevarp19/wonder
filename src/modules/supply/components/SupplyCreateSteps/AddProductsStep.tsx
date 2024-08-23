@@ -42,7 +42,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
             title: "Количество",
             render: (_, record) => (
                 <span>
-                    <Form.Item label="Количество" className="!mb-4">
+                    <Form.Item className="!mb-4">
                         <InputNumber
                             name="quantity"
                             min={0}

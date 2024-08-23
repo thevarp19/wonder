@@ -41,7 +41,6 @@ export interface GetProductsSizesContent {
 }
 
 export interface UpdateServiceParamsRequest {
-    box: boolean;
     courier_package: boolean;
     label_caution_class: boolean;
     label_manipulation_sign: boolean;

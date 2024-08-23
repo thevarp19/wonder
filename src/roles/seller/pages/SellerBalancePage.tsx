@@ -2,6 +2,7 @@ import { FormikInput } from "@/components/ui/FormikInput";
 import { BalanceHistoryTable } from "@/modules/balance/components/BalanceHistoryTable";
 import { useAddReplenishment } from "@/modules/balance/forms";
 import { useGetSellerReplenishment } from "@/modules/balance/queries";
+import { useGetSellerProfile } from "@/modules/seller/queries";
 import { phoneNumberChangeHandler } from "@/utils/form.util";
 import { cn } from "@/utils/shared.util";
 import { Button, Form, Modal, Popconfirm } from "antd";
@@ -10,6 +11,7 @@ import { FC, useState } from "react";
 export const SellerBalancePage: FC = () => {
     const [page, setPage] = useState(0);
     const { data: orders, isPending } = useGetSellerReplenishment(page, 10);
+    const { data, isPending: balancePending } = useGetSellerProfile();
     return (
         <div className="h-full">
             <div className="flex flex-col gap-5">
@@ -17,7 +19,9 @@ export const SellerBalancePage: FC = () => {
                     <h2 className="text-2xl font-semibold ">Баланс</h2>
                 </div>
                 <div className="text-lg">
-                    <h2>Доступно: 0 ₸ </h2>
+                    <h2>{`Доступно: ${
+                        balancePending ? 0 : data?.balance
+                    } ₸`}</h2>
                 </div>
                 <div className="flex justify-end w-full">
                     <AddReplenishmentModal />

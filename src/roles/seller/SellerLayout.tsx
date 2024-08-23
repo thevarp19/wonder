@@ -460,7 +460,22 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                 },
             ],
         },
-
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/seller/orders/archive"}
+                >
+                    Архив
+                </Link>
+            ),
+            key: "orders-archive",
+            icon: (
+                <HistoryOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
         {
             label: (
                 <Link
@@ -538,22 +553,6 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             key: "service-params",
             icon: (
                 <ProductOutlined
-                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
-                />
-            ),
-        },
-        {
-            label: (
-                <Link
-                    style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller/orders/archive"}
-                >
-                    Архив
-                </Link>
-            ),
-            key: "orders-archive",
-            icon: (
-                <HistoryOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

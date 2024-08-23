@@ -301,22 +301,6 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/admin/settings"}
-                >
-                    Настройки
-                </Link>
-            ),
-            key: "settings",
-            icon: (
-                <SettingOutlined
-                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
-                />
-            ),
-        },
-        {
-            label: (
-                <Link
-                    style={{ color: "inherit", textDecoration: "inherit" }}
                     to={"/admin/orders/archive"}
                 >
                     Архив
@@ -325,6 +309,22 @@ export const AdminLayout: FC<AdminLayoutProps> = ({}) => {
             key: "orders-archive",
             icon: (
                 <HistoryOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/admin/settings"}
+                >
+                    Настройки
+                </Link>
+            ),
+            key: "settings",
+            icon: (
+                <SettingOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

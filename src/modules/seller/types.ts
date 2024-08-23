@@ -6,6 +6,8 @@ export interface GetSellerProfile {
     xml: string;
     balance: string;
     phone_number: string;
+    merchant_email: string;
+    merchant_password: string;
     kaspi_token: string;
     kaspi_store_name: string;
     kaspi_seller_id: string;

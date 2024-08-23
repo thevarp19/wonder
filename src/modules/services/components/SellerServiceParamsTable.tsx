@@ -134,14 +134,14 @@ export const SellerServiceParamsTable: FC<SellerServiceParamsTableProps> = ({
                         >
                             Скотч для хрупких товаров
                         </Checkbox>
-                        <Checkbox
+                        {/* <Checkbox
                             checked={formik.values.box}
                             onChange={(e) =>
                                 handleChange("box", e.target.checked)
                             }
                         >
                             Коробка
-                        </Checkbox>
+                        </Checkbox> */}
                         <Checkbox
                             checked={formik.values.courier_package}
                             onChange={(e) =>

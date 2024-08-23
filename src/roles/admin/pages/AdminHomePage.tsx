@@ -145,36 +145,37 @@ const ResultsCard = ({
                 <div className="text-xl sm:text-[32px] whitespace-nowrap">{`${
                     statistics?.value
                 } ${statisticsName === "Продажа" ? "₸" : ""}`}</div>
-                {statistics?.percentage !== null && (
-                    <div
-                        className={`flex justify-center items-center sm:p-2 ${percentColor}`}
-                    >
-                        {statistics?.percentage != null &&
-                        statistics?.percentage > 0 ? (
-                            <span className="flex items-center gap-[3px] sm:gap-[5px] text-[10px] sm:text-base">
-                                +{statistics?.percentage}%
-                                <Image
-                                    src={arrowRise}
-                                    alt="arrowRise"
-                                    className={cn(
-                                        "sm:w-5 sm:h-5 w-[14px] h-[14px]"
-                                    )}
-                                />
-                            </span>
-                        ) : (
-                            <span className="flex items-center gap-[3px] sm:gap-[5px] text-[10px] sm:text-base">
-                                {statistics?.percentage}%
-                                <Image
-                                    src={arrowFall}
-                                    alt="arrowFall"
-                                    className={cn(
-                                        "sm:w-5 sm:h-5 w-[14px] h-[14px]"
-                                    )}
-                                />
-                            </span>
-                        )}
-                    </div>
-                )}
+                {statistics?.percentage !== null &&
+                    statisticsName !== "Поставки" && (
+                        <div
+                            className={`flex justify-center items-center sm:p-2 ${percentColor}`}
+                        >
+                            {statistics?.percentage != null &&
+                            statistics?.percentage > 0 ? (
+                                <span className="flex items-center gap-[3px] sm:gap-[5px] text-[10px] sm:text-base">
+                                    +{statistics?.percentage}%
+                                    <Image
+                                        src={arrowRise}
+                                        alt="arrowRise"
+                                        className={cn(
+                                            "sm:w-5 sm:h-5 w-[14px] h-[14px]"
+                                        )}
+                                    />
+                                </span>
+                            ) : (
+                                <span className="flex items-center gap-[3px] sm:gap-[5px] text-[10px] sm:text-base">
+                                    {statistics?.percentage}%
+                                    <Image
+                                        src={arrowFall}
+                                        alt="arrowFall"
+                                        className={cn(
+                                            "sm:w-5 sm:h-5 w-[14px] h-[14px]"
+                                        )}
+                                    />
+                                </span>
+                            )}
+                        </div>
+                    )}
             </div>
         </div>
     );

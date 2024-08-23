@@ -177,6 +177,7 @@ const PackProductItem: FC<{
                 className="w-96"
             />
             <InputNumber
+                min={0}
                 value={value.quantity}
                 onChange={(newValue) => {
                     if (typeof newValue === "number") {

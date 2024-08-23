@@ -271,7 +271,10 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
                 />
             </Modal>
             <div className="flex items-center justify-between px-2 mb-4 md:px-4">
-                <div className="flex items-center w-full gap-4"></div>
+                <div className="flex items-center w-full gap-4">
+                    <Button type="primary">Скачать шаблон</Button>
+                    <Button type="primary">Загрузить прайс-лист</Button>
+                </div>
                 <Button
                     onClick={() => {
                         setIsModalOpen(true);
@@ -391,7 +394,7 @@ function SavePriceEditButton({
                         setIsEditable(false);
                     }}
                 >
-                    Очистить
+                    Отмена
                 </Button>
                 <Button
                     size="large"

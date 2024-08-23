@@ -6,7 +6,7 @@ export function getSellerProfile() {
 }
 
 export function updateSellerProfile(formData: FormData) {
-    return axiosAuthorized.put(`/api/sellers/profile/`, formData, {
+    return axiosAuthorized.patch(`/api/sellers/profile/`, formData, {
         headers: {
             "Content-Type": "multipart/form-data",
         },
