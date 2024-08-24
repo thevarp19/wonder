@@ -124,7 +124,7 @@ export const SellerProfileEdit: FC<SellerProfileEditProps> = ({
                     <FormikInput
                         name="merchant_email"
                         formik={formik}
-                        formItemProps={{ label: "Kaspi Почта", required: true }}
+                        formItemProps={{ label: "Kaspi логин", required: true }}
                         inputProps={{
                             disabled: !isEditing,
                         }}
