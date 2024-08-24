@@ -19,10 +19,6 @@ const items: MenuProps["items"] = [
         label: "Товары",
         key: "products",
     },
-    // {
-    //     label: "Импорт продукта",
-    //     key: "upload",
-    // },
 ];
 
 export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
@@ -54,7 +50,7 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
         <div className="h-full bg-white rounded-t-lg">
             <div className="flex flex-col gap-5">
                 <div className="overflow-x-auto bg-[#F7F9FB] md:p-2 p-0 pt-2 rounded-lg">
-                    <div className="min-w-[600px] flex justify-between">
+                    <div className="min-w-[600px] w-full flex justify-between">
                         <ConfigProvider
                             theme={{
                                 components: {
@@ -65,7 +61,7 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                                 },
                             }}
                         >
-                            <div className="flex items-center gap-6">
+                            <div className="flex items-center w-full gap-6">
                                 <Menu
                                     items={items}
                                     mode="horizontal"
