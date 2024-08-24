@@ -1,9 +1,19 @@
+import { updateImport } from "@/modules/product/api";
 import { ProductPriceTable } from "@/modules/product/components/ProductPriceTable";
 import { ProductsTable } from "@/modules/product/components/ProductsTable";
 import { useGetEnabledProductCount } from "@/modules/product/queries";
 import { useDebounce } from "@/utils/shared.util";
-import { SearchOutlined } from "@ant-design/icons";
-import { ConfigProvider, Input, Menu, MenuProps, Select, Spin } from "antd";
+import { ReloadOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+    App,
+    Button,
+    ConfigProvider,
+    Input,
+    Menu,
+    MenuProps,
+    Select,
+    Spin,
+} from "antd";
 import { FC, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 const { Option } = Select;
@@ -33,6 +43,8 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
     }, []);
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
     const [searchValue, setSearchValue] = useState("");
+    const { message } = App.useApp();
+
     const debouncedSearchValue = useDebounce(searchValue, 500);
     const handleChange = (value: string) => {
         setIsPublished(
@@ -46,6 +58,20 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
     useEffect(() => {
         setIsPublished(null);
     }, [productCount]);
+    const [loading, setLoading] = useState(false);
+
+    const handleUpdate = async () => {
+        setLoading(true);
+        try {
+            await updateImport();
+            message.success("Товары обновляються!");
+        } catch (error) {
+            message.error("Ошибка обновление!");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="h-full bg-white rounded-t-lg">
             <div className="flex flex-col gap-5">
@@ -61,7 +87,7 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                                 },
                             }}
                         >
-                            <div className="flex items-center gap-6">
+                            <div className="flex items-center w-full gap-6">
                                 <Menu
                                     items={items}
                                     mode="horizontal"
@@ -70,40 +96,49 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                                     selectedKeys={[current]}
                                     style={{ fontWeight: 600 }}
                                 />
-                                <Select
-                                    className="w-[200px]"
-                                    placeholder="Статус"
-                                    onChange={handleChange}
-                                    value={
-                                        isPublished === true
-                                            ? "published"
-                                            : isPublished === false
-                                            ? "unpublished"
-                                            : ""
-                                    }
-                                >
-                                    <Option value="">Не выбрано</Option>
-                                    <Option value="published">
-                                        {`Опубликовано (${
-                                            isPending ? (
-                                                <Spin size="small" />
-                                            ) : (
-                                                productCount?.enabled_count
-                                            )
-                                        })`}
-                                    </Option>
-                                    <Option value="unpublished">
-                                        {`Не опубликовано (${
-                                            isPending ? (
-                                                <Spin size="small" />
-                                            ) : (
-                                                productCount?.not_enabled_count
-                                            )
-                                        })`}
-                                    </Option>
-                                </Select>
+                                <div className="flex gap-5">
+                                    <Select
+                                        className="!min-w-[200px]"
+                                        placeholder="Статус"
+                                        onChange={handleChange}
+                                        value={
+                                            isPublished === true
+                                                ? "published"
+                                                : isPublished === false
+                                                ? "unpublished"
+                                                : ""
+                                        }
+                                    >
+                                        <Option value="">Не выбрано</Option>
+                                        <Option value="published">
+                                            {`Опубликовано (${
+                                                isPending ? (
+                                                    <Spin size="small" />
+                                                ) : (
+                                                    productCount?.enabled_count
+                                                )
+                                            })`}
+                                        </Option>
+                                        <Option value="unpublished">
+                                            {`Не опубликовано (${
+                                                isPending ? (
+                                                    <Spin size="small" />
+                                                ) : (
+                                                    productCount?.not_enabled_count
+                                                )
+                                            })`}
+                                        </Option>
+                                    </Select>
+                                </div>
                             </div>
                             <div className="flex items-center gap-4 px-2 rounded-lg">
+                                <Button
+                                    type="primary"
+                                    className="!w-[40px]"
+                                    icon={<ReloadOutlined spin={loading} />}
+                                    loading={loading}
+                                    onClick={handleUpdate}
+                                ></Button>
                                 <Input
                                     prefix={<SearchOutlined />}
                                     placeholder="Поиск"

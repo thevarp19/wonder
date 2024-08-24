@@ -85,6 +85,9 @@ export function createProductSize(
 export function autoUploadProductData(values: LoginRequest) {
     return axiosAuthorizedAutoUpload.post(`/products/import-products`, values);
 }
+export function updateImport() {
+    return axiosAuthorized.post(`/api/seller-product/import-update/`);
+}
 
 export function changeProductPrice(value: ChangeProductPriceRequest[]) {
     return axiosAuthorized.patch(`/api/seller-product/update/`, value);
