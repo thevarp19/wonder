@@ -76,8 +76,8 @@ export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
                 <Link
                     to={
                         warehouseStates[record.warehouse.id] === "Seller"
-                            ? `/seller/settings/update-store/${record.seller_warehouse.id}`
-                            : `/seller/settings/update-store/${record?.warehouse?.id}/activate`
+                            ? `/settings/update-store/${record.seller_warehouse.id}`
+                            : `/settings/update-store/${record?.warehouse?.id}/activate`
                     }
                     className="cursor-pointer"
                 >
@@ -111,7 +111,7 @@ export const SellerStoresTable: FC<SellerStoresTableProps> = ({}) => {
                         size="large"
                         type="primary"
                         className="w-full md:w-max !rounded-md"
-                        href="/seller/settings/create-store"
+                        href="/settings/create-store"
                     >
                         Создать новый склад
                     </Button>

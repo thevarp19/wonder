@@ -40,7 +40,7 @@ interface SellerRoutesProps {}
 export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
     const navigate = useNavigate();
     const navigateToSellerLogin = () => {
-        navigate("/seller/login", { replace: true });
+        navigate("/login", { replace: true });
     };
     const sellerAuth = useAppSelector((state) => state.seller.auth);
     return (

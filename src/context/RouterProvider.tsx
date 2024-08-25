@@ -1,4 +1,3 @@
-import { MainPage } from "@/MainPage";
 import { AdminRoutes } from "@/roles/admin/AdminRoutes";
 import { EmployeeRoutes } from "@/roles/employee/EmployeeRoutes";
 import { SellerRoutes } from "@/roles/seller/SellerRoutes";
@@ -10,9 +9,9 @@ interface RouterProviderProps {}
 export const RouterProvider: FC<RouterProviderProps> = ({}) => {
     return (
         <Routes>
-            <Route path="/" element={<MainPage />} />
+            <Route path="/*" element={<SellerRoutes />} />
             <Route path="/admin/*" element={<AdminRoutes />} />
-            <Route path="/seller/*" element={<SellerRoutes />} />
+            {/* <Route path="/seller/*" element={} /> */}
             <Route path="/employee/*" element={<EmployeeRoutes />} />
         </Routes>
     );

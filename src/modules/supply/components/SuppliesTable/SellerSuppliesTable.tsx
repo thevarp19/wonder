@@ -37,7 +37,7 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
             title: "Номер поставки",
             dataIndex: "id",
             render: (_, record) => (
-                <Link to={`/seller/supply/${record.id}`}>
+                <Link to={`/supply/${record.id}`}>
                     {padNumbers(record.id, 8)}
                 </Link>
             ),

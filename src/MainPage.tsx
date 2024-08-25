@@ -1,14 +1,11 @@
-import { cn } from "@/utils/shared.util";
-import { Button } from "antd";
 import { FC } from "react";
-import { HeaderLogo } from "./components/shared/HeaderLogo";
 
 interface MainPageProps {}
 
 export const MainPage: FC<MainPageProps> = ({}) => {
     return (
         <div className="flex flex-col justify-center w-screen h-screen bg-[#F7F9FB]">
-            <HeaderLogo />
+            {/* <HeaderLogo />
             <div className="flex justify-center w-full h-full md:pt-[70px] pt-0">
                 <section className="flex flex-col items-center gap-10 pt-10">
                     <div className="flex flex-col items-center gap-[80px]">
@@ -44,7 +41,7 @@ export const MainPage: FC<MainPageProps> = ({}) => {
                         </Button>
                     </div>
                 </section>
-            </div>
+            </div> */}
         </div>
     );
 };

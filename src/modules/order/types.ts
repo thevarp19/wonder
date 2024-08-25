@@ -141,9 +141,9 @@ export interface GetOrderPackageDetails {
 }
 export interface GetPackageProduct {
     id: number;
+    order_code: string;
     product_vendor_code: string;
     product_title: string;
-    order_code: string;
     order_creation_date: string;
     waybill: string;
     order_entry: string;

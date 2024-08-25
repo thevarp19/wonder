@@ -65,7 +65,7 @@ export const createStoreSellerMutation = () => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/seller/settings/?menu_x=stores");
+            navigate("/settings/?menu_x=stores");
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);
@@ -83,7 +83,7 @@ export const activateStoreSellerMutation = (wonder_id: number) => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/seller/settings/?menu_x=stores");
+            navigate("/settings/?menu_x=stores");
             queryClient.invalidateQueries({
                 queryKey: ["stores-seller"],
             });
@@ -150,7 +150,7 @@ export const updateStoreStatusSellerMutation = (id: number) => {
         },
         onSuccess() {
             message.success("Успешно!");
-            // navigate("/seller/settings/?menu_x=stores");
+            // navigate("/settings/?menu_x=stores");
             queryClient.invalidateQueries({
                 queryKey: ["stores-seller"],
             });
@@ -190,7 +190,7 @@ export const deleteStoreSellerMutation = (id: number) => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/seller/settings/?menu_x=stores");
+            navigate("/settings/?menu_x=stores");
             queryClient.invalidateQueries({
                 queryKey: ["stores-seller"],
             });
@@ -246,7 +246,7 @@ export const updateStoreSellerMutation = (id: number) => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/seller/settings/?menu_x=stores");
+            navigate("/settings/?menu_x=stores");
             queryClient.invalidateQueries({
                 queryKey: ["stores"],
             });

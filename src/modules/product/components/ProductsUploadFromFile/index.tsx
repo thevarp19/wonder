@@ -47,7 +47,7 @@ export const ProductsUploadFromFile: FC<ProductsUploadFromFileProps> = ({
                 Загрузка продуктов
             </h1>
 
-            <Link target="_blank" to="/seller/products/upload/instruction">
+            <Link target="_blank" to="/products/upload/instruction">
                 Инструкция
             </Link>
 

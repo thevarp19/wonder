@@ -120,10 +120,7 @@ export const StoreActivationForm: FC = () => {
                         />
                     </div>
                     <div className="flex gap-2 pt-5">
-                        <Link
-                            to="/seller/settings"
-                            className="w-full cursor-pointer"
-                        >
+                        <Link to="/settings" className="w-full cursor-pointer">
                             <Button
                                 // htmlType="submit"
                                 // type="primary"

@@ -263,7 +263,7 @@ export const SellerRegisterForm: FC<SellerRegisterFormProps> = ({}) => {
                     </div>
                     <Link
                         target="_blank"
-                        to={"/seller/auto-upload-instruction"}
+                        to={"/auto-upload-instruction"}
                         style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                         <h2 className="text-sm font-medium underline text-[#EF7214]">

@@ -19,7 +19,7 @@ export const SellerRegisterPage: FC<SellerRegisterPageProps> = ({}) => {
                         <span>
                             Уже есть аккаунт?{" "}
                             <Link
-                                to={"/seller/login"}
+                                to={"/login"}
                                 className="w-full visited:text-[#EF7214]"
                             >
                                 Вход

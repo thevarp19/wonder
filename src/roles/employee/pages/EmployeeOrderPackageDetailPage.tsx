@@ -45,7 +45,7 @@ export const EmployeeOrderPackageDetailPage: FC = () => {
                 <Button
                     type="primary"
                     size="large"
-                    href={data.product.waybill}
+                    href={data?.product.waybill}
                     className="!flex !items-center !justify-center min-w-[200px] !gap-2 w-max"
                 >
                     <h2 className="text-[14px] text-white uppercase">
@@ -56,7 +56,7 @@ export const EmployeeOrderPackageDetailPage: FC = () => {
 
             <div>
                 <EmployeePackageDetailTable
-                    data={data.product}
+                    data={data?.product}
                     isPending={isPending}
                 />
             </div>

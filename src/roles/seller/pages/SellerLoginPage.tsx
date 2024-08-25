@@ -13,7 +13,7 @@ interface SellerLoginPageProps {}
 export const SellerLoginPage: FC<SellerLoginPageProps> = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const navigateToHome = () => navigate("/seller");
+    const navigateToHome = () => navigate("/");
     const dispatch = useAppDispatch();
     const success = (data: LoginResponse) => {
         dispatch(sellerLoginSuccess(data));
@@ -51,7 +51,7 @@ export const SellerLoginPage: FC<SellerLoginPageProps> = () => {
                             <span className="">
                                 Нет аккаунта?{" "}
                                 <Link
-                                    to="/seller/register"
+                                    to="/register"
                                     className="w-full visited:text-[#EF7214]"
                                 >
                                     Регистрация

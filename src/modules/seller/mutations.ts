@@ -32,7 +32,7 @@ export const deleteProfileMutation = () => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/seller/login");
+            navigate("/login");
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);

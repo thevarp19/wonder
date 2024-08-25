@@ -51,7 +51,7 @@ export const sellerRegisterMutation = () => {
         },
         onSuccess() {
             message.success("Успешно!");
-            navigate("/seller/login");
+            navigate("/login");
         },
         onError(error) {
             const errorMessage =

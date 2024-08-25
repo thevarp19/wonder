@@ -133,7 +133,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                                                     size="small"
                                                     type="primary"
                                                     className="w-full"
-                                                    href="/seller/balance"
+                                                    href="/balance"
                                                 >
                                                     Пополнить
                                                 </Button>

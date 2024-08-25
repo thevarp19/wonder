@@ -30,47 +30,47 @@ import { Link, useLocation } from "react-router-dom";
 interface SellerLayoutProps {}
 
 function pathToKey(key: string) {
-    if (key.startsWith("/seller/settings/")) {
+    if (key.startsWith("/settings/")) {
         return "settings";
     }
     switch (key) {
-        case "/seller":
+        case "":
             return "home";
-        case "/seller/settings":
+        case "/settings":
             return "settings";
-        case "/seller/products":
+        case "/products":
             return "products";
-        case "/seller/supply":
+        case "/supply":
             return "supply";
-        case "/seller/service-params":
+        case "/service-params":
             return "service-params";
-        case "/seller/calculator":
+        case "/calculator":
             return "calculator";
-        case "/seller/supply/create":
+        case "/supply/create":
             return "supply";
-        case "/seller/orders":
+        case "/orders":
             return "orders";
-        case "/seller/balance":
+        case "/balance":
             return "balance";
-        case "/seller/my-orders":
+        case "/my-orders":
             return "my-orders";
-        case "/seller/my-orders/pickup":
+        case "/my-orders/pickup":
             return "my-orders-pickup";
-        case "/seller/orders/new":
+        case "/orders/new":
             return "orders-new";
-        case "/seller/orders/signing":
+        case "/orders/signing":
             return "orders-signing";
-        case "/seller/orders/archive":
+        case "/orders/archive":
             return "orders-archive";
-        case "/seller/orders/assemble":
+        case "/orders/assemble":
             return "order-assemble";
-        case "/seller/orders/package":
+        case "/orders/package":
             return "order-package";
-        case "/seller/orders/transfer":
+        case "/orders/transfer":
             return "order-transfer";
-        case "/seller/orders/shipped":
+        case "/orders/shipped":
             return "order-shipped";
-        case "/seller/orders/cancelled":
+        case "/orders/cancelled":
             return "order-cancelled";
         default:
             return "home";
@@ -79,72 +79,66 @@ function pathToKey(key: string) {
 const breadcrumbMapping: {
     [key: string]: { title: string | JSX.Element }[];
 } = {
-    "/seller": [{ title: "Меню" }, { title: <a href="/seller">Главная</a> }],
-    "/seller/settings": [
+    "": [{ title: "Меню" }, { title: <a href="">Главная</a> }],
+    "/settings": [
         { title: "Меню" },
-        { title: <a href="/seller/settings">Настройки</a> },
+        { title: <a href="/settings">Настройки</a> },
     ],
-    "/seller/orders": [
+    "/orders": [{ title: "Меню" }, { title: <a href="/orders">Заказы</a> }],
+    "/products": [
         { title: "Меню" },
-        { title: <a href="/seller/orders">Заказы</a> },
+        { title: <a href="/products">Продукты</a> },
     ],
-    "/seller/products": [
+    "/supply": [{ title: "Меню" }, { title: <a href="/supply">Поставки</a> }],
+    "/calculator": [
         { title: "Меню" },
-        { title: <a href="/seller/products">Продукты</a> },
+        { title: <a href="/calculator">Калькулятор</a> },
     ],
-    "/seller/supply": [
+    "/service-params": [
         { title: "Меню" },
-        { title: <a href="/seller/supply">Поставки</a> },
+        { title: <a href="/service-params">Параметры услуг</a> },
     ],
-    "/seller/calculator": [
-        { title: "Меню" },
-        { title: <a href="/seller/calculator">Калькулятор</a> },
-    ],
-    "/seller/service-params": [
-        { title: "Меню" },
-        { title: <a href="/seller/service-params">Параметры услуг</a> },
-    ],
-    "/seller/orders/assemble": [
+    "/orders/assemble": [
         { title: "Меню" },
         { title: <a href="">Заказы</a> },
         { title: <a href="">Сборка</a> },
     ],
-    "/seller/orders/package": [
+    "/orders/package": [
         { title: "Меню" },
         { title: <a href="">Заказы</a> },
         { title: <a href="">Упаковка</a> },
     ],
-    "/seller/orders/transfer": [
+    "/orders/transfer": [
         { title: "Меню" },
         { title: <a href="">Заказы</a> },
         { title: <a href="">Передача</a> },
     ],
-    "/seller/orders/shipped": [
+    "/orders/shipped": [
         { title: "Меню" },
         { title: <a href="">Заказы</a> },
         { title: <a href="">Отправлено</a> },
     ],
-    "/seller/orders/cancelled": [
+    "/orders/cancelled": [
         { title: "Меню" },
         { title: <a href="">Заказы</a> },
         { title: <a href="">Отменено</a> },
     ],
-    "/seller/orders/new": [
+    "/orders/new": [
         { title: "Меню" },
         { title: <a href="">Заказы</a> },
         { title: <a href="">Новый</a> },
     ],
-    "/seller/orders/signing": [
+    "/orders/signing": [
         { title: "Меню" },
         { title: <a href="">Заказы</a> },
         { title: <a href="">Подписание</a> },
     ],
-    "/seller/orders/archive": [
+    "/orders/archive": [
         { title: "Меню" },
         { title: <a href="">Заказы</a> },
         { title: <a href="">Архив</a> },
     ],
-    "/seller/balance": [{ title: "Меню" }, { title: <a href="">Баланс</a> }],
+    "/balance": [{ title: "Меню" }, { title: <a href="">Баланс</a> }],
 };
 export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
@@ -154,7 +148,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller"}
+                    to={"/"}
                 >
                     Главная
                 </Link>
@@ -170,7 +164,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller/balance"}
+                    to={"/balance"}
                 >
                     Баланс
                 </Link>
@@ -186,7 +180,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller/orders/new"}
+                    to={"/orders/new"}
                 >
                     Новые
                 </Link>
@@ -202,7 +196,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller/orders/signing"}
+                    to={"/orders/signing"}
                 >
                     На подписании
                 </Link>
@@ -218,7 +212,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller/orders"}
+                    to={"/orders"}
                 >
                     Заказы
                 </Link>
@@ -245,7 +239,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/orders/assemble"}
+                            to={"/orders/assemble"}
                         >
                             Сборка
                         </Link>
@@ -266,7 +260,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/orders/package"}
+                            to={"/orders/package"}
                         >
                             Упаковка
                         </Link>
@@ -287,7 +281,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/orders/transfer"}
+                            to={"/orders/transfer"}
                         >
                             Передача
                         </Link>
@@ -308,7 +302,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/orders/shipped"}
+                            to={"/orders/shipped"}
                         >
                             Отправлено
                         </Link>
@@ -329,7 +323,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/orders/cancelled"}
+                            to={"/orders/cancelled"}
                         >
                             Отменено
                         </Link>
@@ -341,7 +335,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller/my-orders"}
+                    to={"/my-orders"}
                 >
                     Мои Заказы
                 </Link>
@@ -368,7 +362,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/my-orders/package"}
+                            to={"/my-orders/package"}
                         >
                             Упаковка
                         </Link>
@@ -389,7 +383,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/my-orders/transfer"}
+                            to={"/my-orders/transfer"}
                         >
                             Передача
                         </Link>
@@ -410,7 +404,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/my-orders/shipped"}
+                            to={"/my-orders/shipped"}
                         >
                             Отправлено
                         </Link>
@@ -431,7 +425,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/my-orders/cancelled"}
+                            to={"/my-orders/cancelled"}
                         >
                             Отменено
                         </Link>
@@ -452,7 +446,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
                                 color: "inherit",
                                 textDecoration: "inherit",
                             }}
-                            to={"/seller/my-orders/pickup"}
+                            to={"/my-orders/pickup"}
                         >
                             Самовывоз
                         </Link>
@@ -464,7 +458,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller/orders/archive"}
+                    to={"/orders/archive"}
                 >
                     Архив
                 </Link>
@@ -480,7 +474,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller/products"}
+                    to={"/products"}
                 >
                     Товары
                 </Link>
@@ -497,7 +491,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller/supply"}
+                    to={"/supply"}
                 >
                     Поставки
                 </Link>
@@ -529,7 +523,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller/settings"}
+                    to={"/settings"}
                 >
                     Настройки
                 </Link>
@@ -545,7 +539,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             label: (
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
-                    to={"/seller/service-params"}
+                    to={"/service-params"}
                 >
                     Параметры услуг
                 </Link>
@@ -567,7 +561,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
     const profileItems: MenuProps["items"] = [
         {
             key: "profile",
-            label: <Link to={"/seller/profile"}>Профиль</Link>,
+            label: <Link to={"/profile"}>Профиль</Link>,
             icon: <ProfileOutlined />,
         },
         {
@@ -575,7 +569,7 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             danger: true,
             label: (
                 <Link
-                    to={"/"}
+                    to={"/login"}
                     onClick={() => {
                         dispatch(sellerLogout());
                     }}

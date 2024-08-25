@@ -104,10 +104,7 @@ export const CreateStoreSellerForm: FC<CreateStoreSellerFormProps> = () => {
                     >
                         Создать
                     </Button>
-                    <Link
-                        to="/seller/settings"
-                        className="w-full cursor-pointer"
-                    >
+                    <Link to="/settings" className="w-full cursor-pointer">
                         <Button
                             size={"large"}
                             className={cn("w-full !rounded-md")}

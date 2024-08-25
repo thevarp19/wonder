@@ -64,7 +64,7 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
         setLoading(true);
         try {
             await updateImport();
-            message.success("Товары обновляються!");
+            message.success("Товары обновляются!");
         } catch (error) {
             message.error("Ошибка обновление!");
         } finally {

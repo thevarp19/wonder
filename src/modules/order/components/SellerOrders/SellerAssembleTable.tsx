@@ -11,7 +11,7 @@ const columns: TableColumnsType<GetOrdersContent> = [
     {
         title: "Номер заказа",
         render: (_, record) => (
-            <Link to={`/seller/orders/${record.id}`}>{record.code}</Link>
+            <Link to={`/orders/${record.id}`}>{record.code}</Link>
         ),
     },
     {

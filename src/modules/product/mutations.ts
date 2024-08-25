@@ -135,7 +135,7 @@ export const autoUploadDataMutation = () => {
         onSuccess(response) {
             // message.success("Успешно!");
             message.success(response?.data?.detail);
-            navigate("/seller");
+            navigate("/");
         },
         onError(error) {
             message.error(`${error?.response?.data.message}`);

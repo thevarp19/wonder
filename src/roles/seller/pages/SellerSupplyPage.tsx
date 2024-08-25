@@ -18,7 +18,7 @@ export const SellerSupplyPage: FC<SellerSupplyPageProps> = ({}) => {
                 onClick={() => {
                     dispatch(reset());
                 }}
-                href="/seller/supply/create"
+                href="/supply/create"
                 type="primary"
             >
                 Создать новую поставку

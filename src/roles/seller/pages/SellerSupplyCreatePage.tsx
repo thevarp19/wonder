@@ -209,7 +209,7 @@ export const SellerSupplyCreatePage: FC<SellerSupplyCreatePageProps> = ({}) => {
                             onClick={() => {
                                 setTimeout(() => {
                                     dispatch(reset());
-                                    navigate("/seller/supply");
+                                    navigate("/supply");
                                 }, 500);
                             }}
                             type="primary"

@@ -29,7 +29,7 @@ const columns: TableColumnsType<GetPackageProduct> = [
 ];
 
 interface EmployeePackageDetailTableProps {
-    data: any | undefined;
+    data: GetPackageProduct | undefined;
     isPending: boolean;
 }
 
@@ -39,7 +39,7 @@ export const EmployeePackageDetailTable: FC<
     return (
         <CustomTable
             columns={columns}
-            dataSource={data}
+            dataSource={data ? [data] : undefined}
             rowKey={"id"}
             loading={isPending}
             scroll={{ x: "max-content" }}

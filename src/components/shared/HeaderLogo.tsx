@@ -1,6 +1,5 @@
 import { arrowLeftIcon, logo } from "@/assets";
 import { cn } from "@/utils/shared.util";
-import { Button } from "antd";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
@@ -40,9 +39,10 @@ export const HeaderLogo: FC<LogoProps> = ({ link }) => {
                         />
                     </div>
                 ) : (
-                    <Button type="primary" size="large">
-                        На главную страницу
-                    </Button>
+                    <></>
+                    // <Button type="primary" size="large">
+                    //     На главную страницу
+                    // </Button>
                 )}
             </Link>
         </div>
