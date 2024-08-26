@@ -39,7 +39,7 @@ export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({ formik }) => {
                         inputProps={{
                             size: "large",
                             style: { width: "100%" },
-                            onKeyDown: (e) => handleKeyDown(e, heightRef),
+                            onKeyDown: (e) => handleKeyDown(e, widthRef),
                         }}
                         inputRef={lengthRef}
                     />
@@ -49,7 +49,7 @@ export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({ formik }) => {
                         inputProps={{
                             size: "large",
                             style: { width: "100%" },
-                            onKeyDown: (e) => handleKeyDown(e, weightRef),
+                            onKeyDown: (e) => handleKeyDown(e, heightRef),
                         }}
                         inputRef={widthRef}
                         formItemProps={{
@@ -69,7 +69,7 @@ export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({ formik }) => {
                         inputProps={{
                             size: "large",
                             style: { width: "100%" },
-                            onKeyDown: (e) => handleKeyDown(e, widthRef),
+                            onKeyDown: (e) => handleKeyDown(e, weightRef),
                         }}
                         inputRef={heightRef}
                     />

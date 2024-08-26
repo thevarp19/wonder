@@ -102,7 +102,11 @@ export function getEnabledCount() {
         `/api/seller-product/enabled-count/`
     );
 }
-
+export function getExportFile() {
+    return axiosAuthorized.get(`/api/seller-product-quantity/export-xlsx/`, {
+        responseType: "blob",
+    });
+}
 export function getProductsWithSizes(
     page: number = 0,
     size: number = 10,

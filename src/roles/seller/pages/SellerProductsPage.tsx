@@ -1,7 +1,10 @@
 import { updateImport } from "@/modules/product/api";
 import { ProductPriceTable } from "@/modules/product/components/ProductPriceTable";
 import { ProductsTable } from "@/modules/product/components/ProductsTable";
-import { useGetEnabledProductCount } from "@/modules/product/queries";
+import {
+    useGetEnabledProductCount,
+    useGetExportFile,
+} from "@/modules/product/queries";
 import { useDebounce } from "@/utils/shared.util";
 import { SearchOutlined } from "@ant-design/icons";
 import {
@@ -44,7 +47,24 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
     const [searchValue, setSearchValue] = useState("");
     const { message } = App.useApp();
+    const { data: exportFile, refetch: fetchExportFile } = useGetExportFile();
 
+    const handleExport = useCallback(async () => {
+        try {
+            const result = await fetchExportFile();
+            if (result.data) {
+                const url = window.URL.createObjectURL(new Blob([result.data]));
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", "product_quantities.xlsx");
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            }
+        } catch (error) {
+            message.error("Ошибка при экспорте файла!");
+        }
+    }, [fetchExportFile]);
     const debouncedSearchValue = useDebounce(searchValue, 500);
     const handleChange = (value: string) => {
         setIsPublished(
@@ -109,7 +129,10 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                                     </Button>
                                     {current === "products" && (
                                         <div className="flex gap-5">
-                                            <Button type="primary">
+                                            <Button
+                                                type="primary"
+                                                onClick={handleExport}
+                                            >
                                                 Экспорт
                                             </Button>
                                             <Button type="primary">

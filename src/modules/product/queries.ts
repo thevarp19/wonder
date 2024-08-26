@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import {
     getEnabledCount,
+    getExportFile,
     getProductsByParams,
     getProductsOptions,
     getProductsPrices,
@@ -132,6 +133,17 @@ export const useGetActiveCities = () => {
         },
     });
 };
+export const useGetExportFile = () => {
+    return useQuery<Blob>({
+        queryKey: [`export-file`],
+        queryFn: async () => {
+            const response = await getExportFile();
+            return response.data;
+        },
+        enabled: false,
+    });
+};
+
 export const useGetEnabledProductCount = () => {
     return useQuery<ProductEnabledCount>({
         queryKey: [`enabled-product-count`],
