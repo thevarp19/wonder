@@ -87,7 +87,7 @@ const columns: TableColumnsType<any> = [
         key: "productName",
     },
     {
-        title: "Название склада",
+        title: "Название магазина",
         dataIndex: "shopName",
         key: "shopName",
     },

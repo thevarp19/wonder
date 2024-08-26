@@ -12,7 +12,12 @@ import { SellerOrderPage } from "./SellerOrderPage";
 import { SellerOrderShippedPage } from "./SellerOrderShippedPage";
 import { SellerOrdersPage } from "./SellerOrdersPage";
 import { SellerOrderTransferPage } from "./SellerOrderTransferPage";
+import { SellerOwnOrderCancelledPage } from "./SellerOwnOrderCancelledPage";
+import { SellerOwnOrderPackagePage } from "./SellerOwnOrderPackagePage";
+import { SellerOwnOrderShippedPage } from "./SellerOwnOrderShippedPage";
 import { SellerOwnOrdersPage } from "./SellerOwnOrdersPage";
+import { SellerOwnOrderTransferPage } from "./SellerOwnOrderTransferPage";
+import { SellerOwnPickupOrdersPage } from "./SellerOwnPickupOrdersPage";
 import { SellerProductSizesPage } from "./SellerProductSizesPage";
 import { SellerProductsPage } from "./SellerProductsPage";
 import { SellerProfilePage } from "./SellerProfilePage";
@@ -40,7 +45,12 @@ export {
     SellerOrderShippedPage,
     SellerOrdersPage,
     SellerOrderTransferPage,
+    SellerOwnOrderCancelledPage,
+    SellerOwnOrderPackagePage,
+    SellerOwnOrderShippedPage,
     SellerOwnOrdersPage,
+    SellerOwnOrderTransferPage,
+    SellerOwnPickupOrdersPage,
     SellerProductSizesPage,
     SellerProductsPage,
     SellerProfilePage,

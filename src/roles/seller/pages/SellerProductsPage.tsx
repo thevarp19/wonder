@@ -3,7 +3,7 @@ import { ProductPriceTable } from "@/modules/product/components/ProductPriceTabl
 import { ProductsTable } from "@/modules/product/components/ProductsTable";
 import { useGetEnabledProductCount } from "@/modules/product/queries";
 import { useDebounce } from "@/utils/shared.util";
-import { ReloadOutlined, SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 import {
     App,
     Button,
@@ -96,7 +96,28 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                                     selectedKeys={[current]}
                                     style={{ fontWeight: 600 }}
                                 />
+
                                 <div className="flex gap-5">
+                                    <Button
+                                        type="primary"
+                                        className=""
+                                        // icon={<ReloadOutlined spin={loading} />}
+                                        loading={loading}
+                                        onClick={handleUpdate}
+                                    >
+                                        Синхронизировать
+                                    </Button>
+                                    {current === "products" && (
+                                        <div className="flex gap-5">
+                                            <Button type="primary">
+                                                Экспорт
+                                            </Button>
+                                            <Button type="primary">
+                                                Импорт
+                                            </Button>
+                                        </div>
+                                    )}
+
                                     <Select
                                         className="!min-w-[200px]"
                                         placeholder="Статус"
@@ -132,13 +153,6 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                                 </div>
                             </div>
                             <div className="flex items-center gap-4 px-2 rounded-lg">
-                                <Button
-                                    type="primary"
-                                    className="!w-[40px]"
-                                    icon={<ReloadOutlined spin={loading} />}
-                                    loading={loading}
-                                    onClick={handleUpdate}
-                                ></Button>
                                 <Input
                                     prefix={<SearchOutlined />}
                                     placeholder="Поиск"

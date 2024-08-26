@@ -2,11 +2,10 @@ import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
 import { PriceCell } from "@/components/ui/PriceCell";
 import { TableColumnsType, Tag } from "antd";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import { useGetOrdersSellerOwn } from "../../queries";
-import { DeliveryMode, GetOrdersSellerContent } from "../../types";
+import { GetOrdersSeller, GetOrdersSellerContent } from "../../types";
 import { mapDeliveryMode, mapOrderStatus } from "../../utils";
 
 const columns: TableColumnsType<GetOrdersSellerContent> = [
@@ -17,7 +16,7 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
         ),
     },
     // {
-    //     title: "Название Склада",
+    //     title: "Название магазина",
     //     dataIndex: "sellerName",
     // },
     {
@@ -94,35 +93,29 @@ const columns: TableColumnsType<GetOrdersSellerContent> = [
 ];
 
 interface SellerOwnOrdersTableProps {
-    searchValue: string;
-    deliveryMode: DeliveryMode;
+    data: GetOrdersSeller | undefined;
+    isPending: boolean;
+    setPage: (page: number) => void;
+    page: number;
 }
 
 export const SellerOwnOrdersTable: FC<SellerOwnOrdersTableProps> = ({
-    searchValue,
-    deliveryMode,
+    data,
+    isPending,
+    setPage,
+    page,
 }) => {
-    const [page, setPage] = useState(0);
-    const { data: orders, isPending } = useGetOrdersSellerOwn(
-        page,
-        10,
-        searchValue,
-        deliveryMode
-    );
-
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
-    useEffect(() => {
-        setPage(0);
-    }, [deliveryMode, searchValue]);
+
     return (
         <CustomTable
             columns={columns}
-            dataSource={orders?.content}
+            dataSource={data?.content}
             rowKey={"code"}
             loading={isPending}
             pagination={{
                 pageSize: 10,
-                total: orders?.totalElements,
+                total: data?.totalElements,
                 showSizeChanger: false,
                 onChange(page) {
                     setPage(page - 1);

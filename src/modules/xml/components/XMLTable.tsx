@@ -9,7 +9,7 @@ const columns: TableColumnsType<XMLTableType> = [
         dataIndex: "storeId",
     },
     {
-        title: "Название склада",
+        title: "Название магазина",
         dataIndex: "storeName",
     },
     {

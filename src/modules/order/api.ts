@@ -11,6 +11,7 @@ import {
     GetOrdersAdmin,
     GetOrdersEmployee,
     GetOrdersSeller,
+    GetOwnOrdersPickup,
     GetPackageOrders,
     GetPackageOrdersEmployee,
     GetSellerOrderDetail,
@@ -60,6 +61,16 @@ export function getNewOrdersSeller(
         `/api/order-seller/new/?page=${page}&size=${size}`
     );
 }
+export function getOwnPickupOrdersSeller(
+    page: number = 0,
+    size: number = 10
+    // searchValue: string = "",
+    // deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetOwnOrdersPickup>(
+        `/api/order-seller/own/pickup/?page=${page}&size=${size}`
+    );
+}
 export function getSignOrdersSeller(
     page: number = 0,
     size: number = 10
@@ -91,6 +102,17 @@ export function getOrdersSeller(
         `/api/order-seller/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
+export function getOrdersSellerOwnByType(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL",
+    type: string
+) {
+    return axiosAuthorized.get<GetOrdersSeller>(
+        `/api/order-seller/own/kaspi/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}&status=${type}`
+    );
+}
 export function getOrdersSellerOwn(
     page: number = 0,
     size: number = 10,
@@ -101,7 +123,6 @@ export function getOrdersSellerOwn(
         `/api/order-seller/own/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
-
 export function getOrdersEmployee(
     page: number = 0,
     size: number = 10,

@@ -55,7 +55,15 @@ function pathToKey(key: string) {
         case "/my-orders":
             return "my-orders";
         case "/my-orders/pickup":
-            return "my-orders-pickup";
+            return "my-order-pickup";
+        case "/my-orders/package":
+            return "my-order-package";
+        case "/my-orders/transfer":
+            return "my-order-transfer";
+        case "/my-orders/shipped":
+            return "my-order-shipped";
+        case "/my-orders/cancelled":
+            return "my-order-cancelled";
         case "/orders/new":
             return "orders-new";
         case "/orders/signing":

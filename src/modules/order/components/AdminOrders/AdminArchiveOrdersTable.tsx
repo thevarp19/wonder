@@ -26,7 +26,10 @@ const columns: TableColumnsType<GetOrdersAdminContent> = [
         title: "Склад",
         dataIndex: "warehouse_address",
     },
-
+    {
+        title: "Название магазина",
+        dataIndex: "shop_name",
+    },
     {
         title: "Тип доставки",
         dataIndex: "delivery_mode",

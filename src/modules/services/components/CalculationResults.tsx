@@ -52,10 +52,7 @@ const CalculationResult: React.FC<CalculationResultProps> = ({
                             <h2 className="mb-3 text-lg font-bold">
                                 Услуги за единицу товара
                             </h2>
-                            <div className="mb-2">
-                                <Text>Приемка: </Text>
-                                <Text>{response.cost.issuance} ₸</Text>
-                            </div>
+
                             <div className="mb-2">
                                 <Text>Хранение: </Text>
                                 <Text>{response.cost.storage} ₸</Text>

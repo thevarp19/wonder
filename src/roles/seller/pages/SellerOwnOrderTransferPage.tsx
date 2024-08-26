@@ -2,24 +2,27 @@ import { searchIcon } from "@/assets";
 import { Image } from "@/components/ui/Image";
 import { SellerOwnOrdersTable } from "@/modules/order/components/SellerOrders/SellerOwnOrdersTable";
 import { deliveryModes, items } from "@/modules/order/const";
-import { useGetOrdersSellerOwn } from "@/modules/order/queries";
+import { useGetOrdersSellerOwnByType } from "@/modules/order/queries";
 import { DeliveryMode } from "@/modules/order/types";
 import { useDebounce } from "@/utils/shared.util";
 import { ConfigProvider, Input, Menu, MenuProps } from "antd";
 import { FC, useEffect, useState } from "react";
-interface SellerOwnOrdersPageProps {}
+interface SellerOwnOrderTransferPageProps {}
 
-export const SellerOwnOrdersPage: FC<SellerOwnOrdersPageProps> = ({}) => {
+export const SellerOwnOrderTransferPage: FC<
+    SellerOwnOrderTransferPageProps
+> = ({}) => {
     const [searchValue, setSearchValue] = useState("");
     const debouncedSearchValue = useDebounce(searchValue, 500);
     const [current, setCurrent] = useState("all");
     const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("ALL");
     const [page, setPage] = useState(0);
-    const { data: orders, isPending } = useGetOrdersSellerOwn(
+    const { data: orders, isPending } = useGetOrdersSellerOwnByType(
         page,
         10,
         debouncedSearchValue,
-        deliveryMode
+        deliveryMode,
+        "TRANSFER"
     );
     useEffect(() => {
         setPage(0);

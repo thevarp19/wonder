@@ -28,7 +28,7 @@ const columns: TableColumnsType<GetSupplyById> = [
         dataIndex: "boxTypeName",
     },
     {
-        title: "Название склада",
+        title: "Название магазина",
         dataIndex: "shopName",
     },
     {

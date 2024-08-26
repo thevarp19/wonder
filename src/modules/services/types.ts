@@ -83,7 +83,6 @@ export interface CalculatorRequest {
         adhesive_tape_for_fragile_goods: boolean;
         number_of_labels_of_bubble_wrap: number;
         number_of_labels_of_stretch_film: number;
-        need_super_safe: boolean;
     };
     sizes: ProductSize;
     days: number;

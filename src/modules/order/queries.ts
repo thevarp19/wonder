@@ -16,6 +16,8 @@ import {
     getOrdersSeller,
     getOrdersSellerArchive,
     getOrdersSellerOwn,
+    getOrdersSellerOwnByType,
+    getOwnPickupOrdersSeller,
     getPackageDetails,
     getPackageOrderAdmin,
     getPackageOrderEmployee,
@@ -41,6 +43,7 @@ import {
     GetOrdersAdmin,
     GetOrdersEmployee,
     GetOrdersSeller,
+    GetOwnOrdersPickup,
     GetPackageOrders,
     GetPackageOrdersEmployee,
     GetSellerOrderDetail,
@@ -107,6 +110,34 @@ export const useGetOrdersSellerOwn = (
         },
     });
 };
+export const useGetOrdersSellerOwnByType = (
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode,
+    type: string
+) => {
+    return useQuery<GetOrdersSeller>({
+        queryKey: [
+            "seller-own-orders-type",
+            page,
+            size,
+            searchValue,
+            deliveryMode,
+            type,
+        ],
+        queryFn: async () => {
+            const { data } = await getOrdersSellerOwnByType(
+                page,
+                size,
+                searchValue,
+                deliveryMode,
+                type
+            );
+            return data;
+        },
+    });
+};
 
 export const useGetOrdersEmployee = (
     page: number = 0,
@@ -162,6 +193,25 @@ export const useGetNewOrdersSeller = (
         queryKey: [`orders-seller-new`, page, size],
         queryFn: async () => {
             const { data } = await getNewOrdersSeller(
+                page,
+                size
+                // searchValue,
+                // deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetOwnPickupOrdersSeller = (
+    page: number = 0,
+    size: number = 10
+    // searchValue: string = "",
+    // deliveryMode: DeliveryMode
+) => {
+    return useQuery<GetOwnOrdersPickup>({
+        queryKey: [`orders-seller-own-pickup`, page, size],
+        queryFn: async () => {
+            const { data } = await getOwnPickupOrdersSeller(
                 page,
                 size
                 // searchValue,

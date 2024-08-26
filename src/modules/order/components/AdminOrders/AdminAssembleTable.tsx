@@ -15,7 +15,7 @@ const columns: TableColumnsType<GetOrdersContent> = [
         ),
     },
     {
-        title: "Название склада",
+        title: "Название магазина",
         dataIndex: "store_name",
         render: (_, record) => <span>{record?.store_name}</span>,
     },

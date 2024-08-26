@@ -21,7 +21,12 @@ import {
     SellerOrderShippedPage,
     SellerOrdersPage,
     SellerOrderTransferPage,
+    SellerOwnOrderCancelledPage,
+    SellerOwnOrderPackagePage,
+    SellerOwnOrderShippedPage,
     SellerOwnOrdersPage,
+    SellerOwnOrderTransferPage,
+    SellerOwnPickupOrdersPage,
     SellerProductSizesPage,
     SellerProductsPage,
     SellerProfilePage,
@@ -97,23 +102,23 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                     />
                     <Route
                         path="/my-orders/package"
-                        element={<div>Coming soon!</div>}
+                        element={<SellerOwnOrderPackagePage />}
                     />
                     <Route
                         path="/my-orders/pickup"
-                        element={<div>Coming soon!</div>}
+                        element={<SellerOwnPickupOrdersPage />}
                     />
                     <Route
                         path="/my-orders/transfer"
-                        element={<div>Coming soon!</div>}
+                        element={<SellerOwnOrderTransferPage />}
                     />
                     <Route
                         path="/my-orders/shipped"
-                        element={<div>Coming soon!</div>}
+                        element={<SellerOwnOrderShippedPage />}
                     />
                     <Route
                         path="/my-orders/cancelled"
-                        element={<div>Coming soon!</div>}
+                        element={<SellerOwnOrderCancelledPage />}
                     />
                     <Route
                         path="/orders/assemble"

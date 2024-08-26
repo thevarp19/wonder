@@ -26,7 +26,7 @@ export const createSupplyMutation = (
         onSuccess(data) {
             message.success("Успешно!");
             if (onSuccess) {
-                onSuccess(data.id, data.report_a4);
+                onSuccess(data.id, data.report_row);
             }
         },
         onError(error) {

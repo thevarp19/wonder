@@ -271,10 +271,7 @@ export const ProductPriceTable: FC<ProductPriceTableProps> = ({
                 />
             </Modal>
             <div className="flex items-center justify-between px-2 mb-4 md:px-4">
-                <div className="flex items-center w-full gap-4">
-                    <Button type="primary">Экспорт</Button>
-                    <Button type="primary">Импорт</Button>
-                </div>
+                <div className="flex items-center w-full gap-4"></div>
                 <Button
                     onClick={() => {
                         setIsModalOpen(true);

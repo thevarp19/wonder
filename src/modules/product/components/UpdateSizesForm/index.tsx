@@ -32,7 +32,7 @@ export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({ formik }) => {
                         name="length"
                         formik={formik}
                         formItemProps={{
-                            label: "Ширина (мм)",
+                            label: "Длина (см)",
                             className: "custom-no-after",
                             required: true,
                         }}
@@ -44,21 +44,6 @@ export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({ formik }) => {
                         inputRef={lengthRef}
                     />
                     <FormikNumberInput
-                        name="height"
-                        formik={formik}
-                        formItemProps={{
-                            label: "Высота (мм)",
-                            className: "custom-no-after",
-                            required: true,
-                        }}
-                        inputProps={{
-                            size: "large",
-                            style: { width: "100%" },
-                            onKeyDown: (e) => handleKeyDown(e, widthRef),
-                        }}
-                        inputRef={heightRef}
-                    />
-                    <FormikNumberInput
                         name="width"
                         formik={formik}
                         inputProps={{
@@ -68,10 +53,25 @@ export const UpdateSizesForm: FC<UpdateSizesFormProps> = ({ formik }) => {
                         }}
                         inputRef={widthRef}
                         formItemProps={{
-                            label: "Ширина (мм)",
+                            label: "Ширина (см)",
                             className: "custom-no-after",
                             required: true,
                         }}
+                    />
+                    <FormikNumberInput
+                        name="height"
+                        formik={formik}
+                        formItemProps={{
+                            label: "Высота (см)",
+                            className: "custom-no-after",
+                            required: true,
+                        }}
+                        inputProps={{
+                            size: "large",
+                            style: { width: "100%" },
+                            onKeyDown: (e) => handleKeyDown(e, widthRef),
+                        }}
+                        inputRef={heightRef}
                     />
                 </div>
                 <FormikInput

@@ -1,5 +1,6 @@
 import { CustomTable } from "@/components/ui/CustomTable";
-import { Button, Checkbox, Input, Select, TableColumnsType } from "antd";
+import { FormikNumberInput } from "@/components/ui/FormikInput";
+import { Button, Checkbox, TableColumnsType } from "antd";
 import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useServiceParams } from "../forms";
@@ -81,41 +82,32 @@ export const SellerServiceParamsTable: FC<SellerServiceParamsTableProps> = ({
                 <div className="flex gap-4">
                     <div className="flex flex-col gap-[10px]">
                         <div className="flex items-center gap-2">
-                            <label htmlFor={`bubble-wrap-${record.id}`}>
-                                Кол-во слоев Пузырчатой пленки :
-                            </label>
-                            <Input
-                                id={`bubble-wrap-${record.id}`}
-                                className="!w-[50px]"
-                                value={
-                                    formik.values
-                                        .number_of_labels_of_bubble_wrap
-                                }
-                                onChange={(e) =>
-                                    handleChange(
-                                        "number_of_labels_of_bubble_wrap",
-                                        e.target.value
-                                    )
-                                }
+                            <FormikNumberInput
+                                name={`number_of_labels_of_bubble_wrap`}
+                                formik={formik}
+                                formItemProps={{
+                                    label: "Кол-во слоев Пузырчатой пленки :",
+                                }}
+                                inputProps={{
+                                    className: "!w-[50px]",
+                                    max: 5,
+                                }}
                             />
                         </div>
                         <div className="flex items-center justify-end gap-2">
                             <label htmlFor={`stretch-wrap-${record.id}`}>
                                 Кол-во слоев Стретч пленки :
                             </label>
-                            <Input
-                                id={`stretch-wrap-${record.id}`}
-                                className="!w-[50px]"
-                                value={
-                                    formik.values
-                                        .number_of_labels_of_stretch_film
-                                }
-                                onChange={(e) =>
-                                    handleChange(
-                                        "number_of_labels_of_stretch_film",
-                                        e.target.value
-                                    )
-                                }
+                            <FormikNumberInput
+                                name={`number_of_labels_of_stretch_film`}
+                                formik={formik}
+                                formItemProps={{
+                                    className: "w-max !mb-0",
+                                }}
+                                inputProps={{
+                                    className: "!w-[50px] ",
+                                    max: 10,
+                                }}
                             />
                         </div>
                     </div>
@@ -202,7 +194,7 @@ export const SellerServiceParamsTable: FC<SellerServiceParamsTableProps> = ({
                             Этикетка: Огнеопасно!
                         </Checkbox>
                     </div>
-                    <div className="flex justify-center gap-2">
+                    {/* <div className="flex justify-center gap-2">
                         <label
                             htmlFor={`service-type-${record.id}`}
                             className="pt-1 whitespace-nowrap"
@@ -232,7 +224,7 @@ export const SellerServiceParamsTable: FC<SellerServiceParamsTableProps> = ({
                                 Стандарт
                             </Select.Option>
                         </Select>
-                    </div>
+                    </div> */}
                 </div>
                 {isDirty && (
                     <div className="flex mt-5">

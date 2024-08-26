@@ -32,6 +32,8 @@ export interface GetShippedOrders
 
 export interface GetCancelledOrders
     extends BasePaginationResponse<GetOrdersContent> {}
+export interface GetOwnOrdersPickup
+    extends BasePaginationResponse<GetOwnOrdersSellerPickupContent> {}
 
 export interface GetNewSignOrders
     extends BasePaginationResponse<GetNewSignOrdersSellerContent> {}
@@ -96,6 +98,16 @@ export interface GetNewSignOrdersSellerContent {
     delivery_address: string;
     payment_mode: string;
     signature_required: boolean;
+}
+export interface GetOwnOrdersSellerPickupContent {
+    id: string;
+    code: string;
+    customer: string;
+    total_price: number;
+    creation_date: bigint;
+    status: string;
+    warehouse_address: string;
+    payment_mode: string;
 }
 
 export interface GetOrdersAdminContent {

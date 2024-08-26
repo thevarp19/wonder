@@ -61,7 +61,6 @@ export const useCalculateParams = () => {
                     adhesive_tape_for_fragile_goods: false,
                     number_of_labels_of_bubble_wrap: 0,
                     number_of_labels_of_stretch_film: 0,
-                    need_super_safe: false,
                 },
                 sizes: {
                     length: 0,

@@ -179,7 +179,10 @@ const ServiceItem: FC<ServiceItemProps> = ({
                                         formItemProps={{
                                             label: "Кол-во слоев Пузырчатой пленки :",
                                         }}
-                                        inputProps={{ className: "!w-[100px]" }}
+                                        inputProps={{
+                                            className: "!w-[100px]",
+                                            max: 5,
+                                        }}
                                     />
                                 </div>
                                 <div className="flex items-center justify-end gap-2">
@@ -190,7 +193,10 @@ const ServiceItem: FC<ServiceItemProps> = ({
                                             className: "!w-auto",
                                             label: "Кол-во слоев Стретч пленки :",
                                         }}
-                                        inputProps={{ className: "!w-[100px]" }}
+                                        inputProps={{
+                                            className: "!w-[100px]",
+                                            max: 10,
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -311,7 +317,7 @@ const ServiceItem: FC<ServiceItemProps> = ({
                                         inputProps={{ className: "!w-[100px]" }}
                                     />
                                 </div>
-                                <div className="flex items-center">
+                                {/* <div className="flex items-center">
                                     <Checkbox
                                         checked={
                                             formik.values[serviceIndex]
@@ -326,7 +332,7 @@ const ServiceItem: FC<ServiceItemProps> = ({
                                     >
                                         Супер сейф
                                     </Checkbox>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         <div className="flex items-start gap-6">
@@ -367,7 +373,6 @@ export const SellerCalculator: FC = () => {
                     adhesive_tape_for_fragile_goods: false,
                     number_of_labels_of_bubble_wrap: 0,
                     number_of_labels_of_stretch_film: 0,
-                    need_super_safe: false,
                 },
                 sizes: {
                     length: 0,
