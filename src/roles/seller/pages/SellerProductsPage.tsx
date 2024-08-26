@@ -47,7 +47,7 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
     const [searchValue, setSearchValue] = useState("");
     const { message } = App.useApp();
-    const { data: exportFile, refetch: fetchExportFile } = useGetExportFile();
+    const { refetch: fetchExportFile } = useGetExportFile();
 
     const handleExport = useCallback(async () => {
         try {
