@@ -200,7 +200,10 @@ const UpdateSizesModal = ({
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { formik } = useUpdateProductSize(productId, product || null);
+    const { formik } = useUpdateProductSize(
+        product?.id || productId,
+        product || null
+    );
 
     return (
         <>
