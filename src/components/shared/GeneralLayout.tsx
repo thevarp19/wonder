@@ -144,6 +144,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                             </div>
                         </div>
                         <CustomMenu
+                            role={role}
                             menuItems={menuItems}
                             selectedKeys={selectedKeys}
                         />

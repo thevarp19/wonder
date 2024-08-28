@@ -44,7 +44,9 @@ export const createStoreMutation = () => {
             navigate("/admin/settings/?menu_x=stores");
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            console.log(error.response);
+
+            message.error(`${error?.response?.data}`);
         },
     });
 };
@@ -68,7 +70,7 @@ export const createStoreSellerMutation = () => {
             navigate("/settings/?menu_x=stores");
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.kaspi_warehouse_id}`);
         },
     });
 };

@@ -61,6 +61,14 @@ export const useCreateStore = () => {
 
     return { formik, mutation };
 };
+const createStoreSellerSchema = Yup.object().shape({
+    warehouse: Yup.object().shape({
+        street_number: requiredStringSchema(),
+        street_name: requiredStringSchema(),
+        city: Yup.number().required(),
+    }),
+    kaspi_warehouse_id: requiredStringSchema(),
+});
 export const useCreateStoreSeller = () => {
     const mutation = createStoreSellerMutation();
 
@@ -77,9 +85,9 @@ export const useCreateStoreSeller = () => {
             enabled: false,
             kaspi_warehouse_id: "",
         },
-        // validationSchema: createStoreSchema,
-        // validateOnBlur: true,
-        // validateOnChange: true,
+        validationSchema: createStoreSellerSchema,
+        validateOnBlur: true,
+        validateOnChange: true,
         onSubmit: handleSubmit,
     });
 
@@ -89,6 +97,12 @@ export const useCreateStoreSeller = () => {
 
     return { formik, mutation };
 };
+const kaspiWarehouseIdSchema = Yup.string()
+    .matches(
+        /^PP\d+$/,
+        "Kaspi ID должен начинаться с 'PP' и за ним должны следовать цифры."
+    )
+    .required("Kaspi ID обязателен для заполнения.");
 
 export const useActivateStoreSeller = (wonder_id: number) => {
     const mutation = activateStoreSellerMutation(wonder_id);
@@ -99,7 +113,7 @@ export const useActivateStoreSeller = (wonder_id: number) => {
             enabled: true,
         },
         validationSchema: Yup.object().shape({
-            kaspi_warehouse_id: requiredStringSchema(),
+            kaspi_warehouse_id: kaspiWarehouseIdSchema,
         }),
         validateOnBlur: true,
         validateOnChange: true,
