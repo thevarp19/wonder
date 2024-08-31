@@ -44,9 +44,7 @@ export const createStoreMutation = () => {
             navigate("/admin/settings/?menu_x=stores");
         },
         onError(error) {
-            console.log(error.response);
-
-            message.error(`${error?.response?.data}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -70,7 +68,7 @@ export const createStoreSellerMutation = () => {
             navigate("/settings/?menu_x=stores");
         },
         onError(error) {
-            message.error(`${error?.response?.data.kaspi_warehouse_id}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -91,7 +89,7 @@ export const activateStoreSellerMutation = (wonder_id: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -115,7 +113,7 @@ export const updateStoreStatusMutation = (id: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -138,7 +136,7 @@ export const updateStoreSupplyStatusMutation = (id: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -158,7 +156,7 @@ export const updateStoreStatusSellerMutation = (id: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -178,7 +176,7 @@ export const deleteStoreMutation = (id: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -198,7 +196,7 @@ export const deleteStoreSellerMutation = (id: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -226,7 +224,7 @@ export const updateStoreMutation = (id: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -254,7 +252,7 @@ export const updateStoreSellerMutation = (id: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -276,7 +274,7 @@ export const bindBoxToStoreMutation = () => {
             message.success("Успешно!");
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -299,7 +297,7 @@ export const removeBoxFromStoreMutation = () => {
             message.success("Успешно!");
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };

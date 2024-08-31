@@ -139,7 +139,7 @@ const ChangeEmployeePasswordModal = ({ id }: { id: number }) => {
             message.success("Успешно!");
             setIsModalOpen(false);
         } catch (e: any) {
-            message.error(e?.response?.data.message || "Ошибка");
+            message.error(`${e?.response?.data.error.message}`);
         } finally {
             setLoading(false);
         }

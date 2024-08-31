@@ -1,4 +1,7 @@
-import { requiredStringSchema } from "@/lib/validations/shared";
+import {
+    kaspiWarehouseIdSchema,
+    requiredStringSchema,
+} from "@/lib/validations/shared";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import * as Yup from "yup";
@@ -67,7 +70,7 @@ const createStoreSellerSchema = Yup.object().shape({
         street_name: requiredStringSchema(),
         city: Yup.number().required(),
     }),
-    kaspi_warehouse_id: requiredStringSchema(),
+    kaspi_warehouse_id: kaspiWarehouseIdSchema,
 });
 export const useCreateStoreSeller = () => {
     const mutation = createStoreSellerMutation();
@@ -97,12 +100,6 @@ export const useCreateStoreSeller = () => {
 
     return { formik, mutation };
 };
-const kaspiWarehouseIdSchema = Yup.string()
-    .matches(
-        /^PP\d+$/,
-        "Kaspi ID должен начинаться с 'PP' и за ним должны следовать цифры."
-    )
-    .required("Kaspi ID обязателен для заполнения.");
 
 export const useActivateStoreSeller = (wonder_id: number) => {
     const mutation = activateStoreSellerMutation(wonder_id);
@@ -178,7 +175,14 @@ export const useUpdateStore = (
 
     return { formik, mutation };
 };
-
+const updateStoreSellerSchema = Yup.object().shape({
+    warehouse: Yup.object().shape({
+        street_number: requiredStringSchema(),
+        street_name: requiredStringSchema(),
+        city: Yup.string().required(),
+    }),
+    kaspi_warehouse_id: kaspiWarehouseIdSchema,
+});
 export const useUpdateStoreSeller = (
     storeId: number,
     initialValues: GetDetailSellerStoreResponse | undefined
@@ -198,9 +202,9 @@ export const useUpdateStoreSeller = (
                 city: 0,
             },
         },
-        // validationSchema: updateStoreSchema,
-        // validateOnBlur: true,
-        // validateOnChange: true,
+        validationSchema: updateStoreSellerSchema,
+        validateOnBlur: true,
+        validateOnChange: true,
         onSubmit: handleSubmit,
     });
 

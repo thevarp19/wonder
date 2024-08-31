@@ -20,11 +20,7 @@ export const updateServiceParamsMutation = (id: number) => {
         },
 
         onError(error) {
-            const errorMessage =
-                error?.response?.data?.message ||
-                error.message ||
-                "Произошла ошибка";
-            message.error(errorMessage);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -41,11 +37,7 @@ export const calculateMutation = () => {
         },
 
         onError(error) {
-            const errorMessage =
-                error?.response?.data?.message ||
-                error.message ||
-                "Произошла ошибка";
-            message.error(errorMessage);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };

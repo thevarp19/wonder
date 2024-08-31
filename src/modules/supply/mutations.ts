@@ -30,7 +30,7 @@ export const createSupplyMutation = (
             }
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -54,7 +54,7 @@ export const acceptSupplyMutation = (
             }
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };

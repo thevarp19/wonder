@@ -17,7 +17,7 @@ export const createBoxMutation = () => {
             navigate("/admin/settings/?menu_x=boxes");
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -38,7 +38,7 @@ export const deleteBoxMutation = (id: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };

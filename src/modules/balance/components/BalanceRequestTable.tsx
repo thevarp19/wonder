@@ -178,6 +178,7 @@ export const UploadCheckModal: FC<UploadCheckModalProps> = ({
                 onUploadSuccess();
             }
         } catch (error) {
+            message.error(`${(error as any)?.response?.data.error.message}`);
             message.error("Ошибка при загрузке файла");
         }
     };

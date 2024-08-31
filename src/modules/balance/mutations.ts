@@ -19,7 +19,7 @@ export const addReplenishMutation = () => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -38,7 +38,7 @@ export const statusReplenishMutation = (id: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -57,7 +57,7 @@ export const statusReplenishMutation = (id: number) => {
 //             });
 //         },
 //         onError(error) {
-//             message.error(`${error?.response?.data.message}`);
+//             message.error(`${error?.response?.data.error.message}`);
 //         },
 //     });
 // };

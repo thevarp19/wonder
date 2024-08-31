@@ -1,3 +1,4 @@
+import { axiosAuthorized } from "@/lib/axios";
 import { updateImport } from "@/modules/product/api";
 import { ProductPriceTable } from "@/modules/product/components/ProductPriceTable";
 import { ProductsTable } from "@/modules/product/components/ProductsTable";
@@ -7,18 +8,11 @@ import {
 } from "@/modules/product/queries";
 import { useDebounce } from "@/utils/shared.util";
 import { SearchOutlined } from "@ant-design/icons";
-import {
-    App,
-    Button,
-    ConfigProvider,
-    Input,
-    Menu,
-    MenuProps,
-    Select,
-    Spin,
-} from "antd";
-import { FC, useCallback, useEffect, useState } from "react";
+import { App, Button, ConfigProvider, Input, Menu, Select, Spin } from "antd";
+import { MenuProps } from "antd/lib";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+
 const { Option } = Select;
 
 interface SellerProductsPageProps {}
@@ -40,14 +34,18 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
     const [current, setCurrent] = useState(
         searchParams.get("current") || "prices"
     );
-    const onClick: MenuProps["onClick"] = useCallback((e: any) => {
-        setCurrent(e.key);
-        setSearchParams({ current: e.key });
-    }, []);
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
     const [searchValue, setSearchValue] = useState("");
     const { message } = App.useApp();
     const { refetch: fetchExportFile } = useGetExportFile();
+    const [loading, setLoading] = useState(false);
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const onClick: MenuProps["onClick"] = useCallback((e: any) => {
+        setCurrent(e.key);
+        setSearchParams({ current: e.key });
+    }, []);
 
     const handleExport = useCallback(async () => {
         try {
@@ -65,7 +63,43 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
             message.error("Ошибка при экспорте файла!");
         }
     }, [fetchExportFile]);
+
+    const handleImportClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleUpload = async (file: File) => {
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            await axiosAuthorized.post(
+                `/api/seller-product-quantity/import-xlsx/`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+            message.success("Файл успешно загружен");
+        } catch (error) {
+            message.error(`${(error as any)?.response?.data.error.message}`);
+            message.error("Ошибка при загрузке файла");
+        }
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            handleUpload(file);
+        }
+    };
+
     const debouncedSearchValue = useDebounce(searchValue, 500);
+
     const handleChange = (value: string) => {
         setIsPublished(
             value === "published"
@@ -75,10 +109,10 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                 : null
         );
     };
+
     useEffect(() => {
         setIsPublished(null);
     }, [productCount]);
-    const [loading, setLoading] = useState(false);
 
     const handleUpdate = async () => {
         setLoading(true);
@@ -86,7 +120,7 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
             await updateImport();
             message.success("Товары обновляются!");
         } catch (error) {
-            message.error("Ошибка обновление!");
+            message.error("Ошибка обновления!");
         } finally {
             setLoading(false);
         }
@@ -116,12 +150,9 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                                     selectedKeys={[current]}
                                     style={{ fontWeight: 600 }}
                                 />
-
                                 <div className="flex gap-5">
                                     <Button
                                         type="primary"
-                                        className=""
-                                        // icon={<ReloadOutlined spin={loading} />}
                                         loading={loading}
                                         onClick={handleUpdate}
                                     >
@@ -135,12 +166,20 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                                             >
                                                 Экспорт
                                             </Button>
-                                            <Button type="primary">
+                                            <Button
+                                                type="primary"
+                                                onClick={handleImportClick}
+                                            >
                                                 Импорт
                                             </Button>
+                                            <input
+                                                type="file"
+                                                ref={fileInputRef}
+                                                style={{ display: "none" }}
+                                                onChange={handleFileChange}
+                                            />
                                         </div>
                                     )}
-
                                     <Select
                                         className="!min-w-[200px]"
                                         placeholder="Статус"
@@ -204,11 +243,6 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                         />
                     </div>
                 )}
-                {/* {current === "upload" && (
-                    <div className="h-full bg-white rounded-t-lg">
-                        <ProductsUploadFromFile />
-                    </div>
-                )} */}
             </div>
         </div>
     );

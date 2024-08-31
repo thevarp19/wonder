@@ -30,7 +30,7 @@ export const orderStatusMutation = () => {
             });
         },
         onError(error) {
-            message.error(`${error?.response}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -60,7 +60,7 @@ export const cancelOrderMutation = (
             navigate(`/${role}/orders`);
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -75,7 +75,7 @@ export const orderCodeRequestMutation = (orderId: string) => {
             message.success("На ваш каспи отправлен код!");
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -84,7 +84,7 @@ export const orderCodeConfirmMutation = (orderId: string) => {
     const queryClient = useQueryClient();
     return useMutation<void, AxiosError<any>, { code: string }>({
         async mutationFn(values: { code: string }) {
-            await orderCodeConfirm(orderId, values.code); // Ensure the function handles the code properly.
+            await orderCodeConfirm(orderId, values.code);
         },
         onSuccess() {
             message.success("Успешно!");
@@ -93,7 +93,7 @@ export const orderCodeConfirmMutation = (orderId: string) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };

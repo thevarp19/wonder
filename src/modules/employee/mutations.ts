@@ -23,7 +23,7 @@ export const createEmployeeMutation = (
             if (onSuccess) onSuccess();
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -50,7 +50,7 @@ export const updateEmployeeMutation = (
             if (onSuccess) onSuccess();
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -70,7 +70,7 @@ export const deleteEmployeeMutation = (id: number, storeId: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };

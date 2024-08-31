@@ -12,6 +12,13 @@ export const requiredBooleanSchema = (fieldName: string = "Это поле") =>
 export const emailSchema = () =>
     Yup.string().email("Некорректный адрес электронной почты!");
 
+export const kaspiWarehouseIdSchema = Yup.string()
+    .matches(
+        /^PP\d+$/,
+        "Kaspi ID должен начинаться с 'PP' и за ним должны следовать цифры."
+    )
+    .required("Kaspi ID обязателен для заполнения.");
+
 const KzPhoneNumberRegex = /^\+\d \d{3} \d{3} \d{2} \d{2}$/;
 
 export const KzPhoneNumberSchema = () =>

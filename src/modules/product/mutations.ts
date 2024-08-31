@@ -30,7 +30,7 @@ export const createProductsFromFileMutation = () => {
             message.success("Успешно!");
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -50,7 +50,7 @@ export const updateProductSizeMutation = (id: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -70,7 +70,7 @@ export const createProductSizeMutation = (id: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -98,7 +98,7 @@ export const changeProductsVisibilityMutation = () => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -120,7 +120,7 @@ export const changeProductPriceMutation = () => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -138,7 +138,7 @@ export const autoUploadDataMutation = () => {
             navigate("/");
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };

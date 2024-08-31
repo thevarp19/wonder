@@ -20,7 +20,7 @@ export const createCellMutation = (storeId: number, onSuccess?: () => void) => {
             if (onSuccess) onSuccess();
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -45,7 +45,7 @@ export const updateCellMutation = (
             if (onSuccess) onSuccess();
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -65,7 +65,7 @@ export const deleteCellMutation = (id: number, storeId: number) => {
             });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };

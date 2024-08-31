@@ -28,11 +28,7 @@ export const loginMutation = (success: (data: LoginResponse) => void) => {
             }
         },
         onError(error) {
-            const errorMessage =
-                error?.response?.data?.message ||
-                error.message ||
-                "Произошла ошибка";
-            message.error(errorMessage);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -54,13 +50,7 @@ export const sellerRegisterMutation = () => {
             navigate("/login");
         },
         onError(error) {
-            const errorMessage =
-                error?.response?.data?.message ||
-                Object.values(error?.response?.data || {})
-                    .flat()
-                    .join(", ") ||
-                "Произошла ошибка";
-            message.error(errorMessage);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };

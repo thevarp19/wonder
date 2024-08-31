@@ -26,7 +26,6 @@ export const useServiceParams = (
             number_of_labels_of_stretch_film: 0,
             need_super_safe: false,
         },
-
         onSubmit: handleSubmit,
     });
     function handleDirty() {

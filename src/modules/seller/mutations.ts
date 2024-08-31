@@ -17,7 +17,7 @@ export const sellerUpdateMutation = () => {
             queryClient.invalidateQueries({ queryKey: ["seller-profile"] });
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };
@@ -35,7 +35,7 @@ export const deleteProfileMutation = () => {
             navigate("/login");
         },
         onError(error) {
-            message.error(`${error?.response?.data.message}`);
+            message.error(`${error?.response?.data.error.message}`);
         },
     });
 };

@@ -3,7 +3,7 @@ import { Loading } from "@/components/ui/Loading";
 import { EmployeePackageDetailTable } from "@/modules/order/components/EmployeeOrders/EmployeePackageDetailTable";
 import { orderStatusMutation } from "@/modules/order/mutations";
 import { useGetPackageDetails } from "@/modules/order/queries";
-import { Button, Checkbox } from "antd";
+import { App, Button, Checkbox } from "antd";
 import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -14,6 +14,7 @@ export const EmployeeOrderPackageDetailPage: FC = () => {
         orderIdRaw || "",
         isPacked
     );
+    const { message } = App.useApp();
     const navigate = useNavigate();
     const { mutateAsync: transferMutate } = orderStatusMutation();
 
@@ -35,7 +36,9 @@ export const EmployeeOrderPackageDetailPage: FC = () => {
                 },
             ]);
             navigate("/employee/orders/package");
-        } catch (error) {}
+        } catch (error: any) {
+            message.error(`${error?.response?.data.error.message}`);
+        }
     };
 
     return (
