@@ -75,19 +75,16 @@ const columns: TableColumnsType<GetSellerReplenishmentContent> = [
     },
 ];
 
-interface BalanceHistoryTableProps {
+interface BalanceHistoryReplenishmentTableProps {
     data: GetSellerReplenishmentResponse | undefined;
     isPending: boolean;
     setPage: (page: number) => void;
     page: number;
 }
 
-export const BalanceHistoryTable: FC<BalanceHistoryTableProps> = ({
-    data,
-    isPending,
-    setPage,
-    page,
-}) => {
+export const BalanceHistoryReplenishmentTable: FC<
+    BalanceHistoryReplenishmentTableProps
+> = ({ data, isPending, setPage, page }) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     return (
@@ -96,7 +93,6 @@ export const BalanceHistoryTable: FC<BalanceHistoryTableProps> = ({
             dataSource={data?.content}
             rowKey={"id"}
             loading={isPending}
-            title={() => "История пополнений"}
             pagination={{
                 pageSize: 10,
                 total: data?.totalElements,

@@ -1,21 +1,25 @@
+import { myLocalStorage } from "@/lib/storage/browserStorage";
+import { useGetBoxes } from "@/modules/box/queries";
 import { useGetAvailableStores } from "@/modules/store/queries";
+import { useAppDispatch } from "@/redux/utils";
+import * as actions from "@/roles/seller/redux/supply/actions";
 import { useSupply } from "@/roles/seller/redux/supply/selectors";
 import { App, DatePicker, Select } from "antd";
 import dayjs, { Dayjs } from "dayjs";
+import "dayjs/locale/ru"; // Import Russian locale
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import updateLocale from "dayjs/plugin/updateLocale";
 import { FC, useEffect } from "react";
 
-import { myLocalStorage } from "@/lib/storage/browserStorage";
-import { useGetBoxes } from "@/modules/box/queries";
-import { useAppDispatch } from "@/redux/utils";
-import * as actions from "@/roles/seller/redux/supply/actions";
-import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 dayjs.extend(updateLocale);
+
+// Set the locale globally to Russian
+dayjs.locale("ru");
 dayjs.updateLocale("ru", {
-    // Update locale to Russian
     weekStart: 1,
 });
+
 interface ChooseDateAndStoreStepProps {}
 
 export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
@@ -99,7 +103,6 @@ export const ChooseDateAndStoreStep: FC<ChooseDateAndStoreStepProps> = ({}) => {
                 <div className="h-96 max-w-72 w-72 min-w-72">
                     <DatePicker
                         className="w-full"
-                        minDate={dayjs()}
                         format={"DD-MM-YYYY"}
                         placeholder="Выберите дату"
                         value={date ? dayjs(date, "DD-MM-YYYY") : undefined}

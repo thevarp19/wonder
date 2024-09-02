@@ -1,20 +1,12 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { DeleteButton } from "@/components/ui/DeleteButton";
-import { ProductsUploadFromFile } from "@/modules/product/components/ProductsUploadFromFile";
 import { useInfiniteGetProducts } from "@/modules/product/queries";
 import { useAppDispatch } from "@/redux/utils";
 import * as actions from "@/roles/seller/redux/supply/actions";
 import { useSupplyProducts } from "@/roles/seller/redux/supply/selectors";
 import { ProductQuantity } from "@/roles/seller/types/supply";
 import { cn, useDebounce } from "@/utils/shared.util";
-import {
-    Button,
-    Form,
-    InputNumber,
-    Modal,
-    Select,
-    TableColumnsType,
-} from "antd";
+import { Form, InputNumber, Select, TableColumnsType } from "antd";
 import { FC, useState } from "react";
 
 interface AddProductsStepProps {}
@@ -34,9 +26,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
         },
         {
             title: "Название",
-            render: (_, record) => (
-                <a href={record.product.vendor_code}>{record.product.title}</a>
-            ),
+            render: (_, record) => <span>{record.product.title}</span>,
         },
         {
             title: "Количество",
@@ -73,7 +63,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
         },
     ];
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handlePopupScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         if (!isFetchingNextPage) {
@@ -89,7 +79,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                 Пожалуйста, добавьте продукты
             </h1>
             <div className="my-4">
-                <Button type="primary" onClick={() => setIsModalOpen(true)}>
+                {/* <Button type="primary" onClick={() => setIsModalOpen(true)}>
                     Загрузить из файла
                 </Button>
                 <Modal
@@ -104,7 +94,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                             setIsModalOpen(false);
                         }}
                     />
-                </Modal>
+                </Modal> */}
             </div>
             <Form.Item className="w-full !mb-4">
                 <Select

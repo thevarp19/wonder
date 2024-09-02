@@ -1,6 +1,5 @@
 import { CustomTable } from "@/components/ui/CustomTable";
-import { FormikNumberInput } from "@/components/ui/FormikInput";
-import { Button, Checkbox, TableColumnsType } from "antd";
+import { Button, Checkbox, Input, TableColumnsType } from "antd";
 import { FC, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useServiceParams } from "../forms";
@@ -66,9 +65,17 @@ export const SellerServiceParamsTable: FC<SellerServiceParamsTableProps> = ({
             record.id
         );
 
-        const handleChange = (field: string, value: any) => {
-            const newValue = Math.max(0, Number(value) || 0);
+        const handleChangeNumber = (field: string, value: any, max: number) => {
+            let newValue = Math.max(0, Number(value) || 0);
+            if (newValue > max) {
+                newValue = max;
+            }
             formik.setFieldValue(field, newValue);
+            handleDirty();
+        };
+
+        const handleChangeBoolean = (field: string, value: boolean) => {
+            formik.setFieldValue(field, value);
             handleDirty();
         };
 
@@ -82,32 +89,43 @@ export const SellerServiceParamsTable: FC<SellerServiceParamsTableProps> = ({
                 <div className="flex gap-4">
                     <div className="flex flex-col gap-[10px]">
                         <div className="flex items-center gap-2">
-                            <FormikNumberInput
-                                name={`number_of_labels_of_bubble_wrap`}
-                                formik={formik}
-                                formItemProps={{
-                                    label: "Кол-во слоев Пузырчатой пленки :",
-                                }}
-                                inputProps={{
-                                    className: "!w-[50px]",
-                                    max: 5,
-                                }}
+                            <label htmlFor={`bubble-wrap-${record.id}`}>
+                                Кол-во слоев Пузырчатой пленки :
+                            </label>
+                            <Input
+                                id={`bubble-wrap-${record.id}`}
+                                className="!w-[50px]"
+                                value={
+                                    formik.values
+                                        .number_of_labels_of_bubble_wrap
+                                }
+                                onChange={(e) =>
+                                    handleChangeNumber(
+                                        "number_of_labels_of_bubble_wrap",
+                                        e.target.value,
+                                        5
+                                    )
+                                }
                             />
                         </div>
                         <div className="flex items-center justify-end gap-2">
                             <label htmlFor={`stretch-wrap-${record.id}`}>
                                 Кол-во слоев Стретч пленки :
                             </label>
-                            <FormikNumberInput
-                                name={`number_of_labels_of_stretch_film`}
-                                formik={formik}
-                                formItemProps={{
-                                    className: "w-max !mb-0",
-                                }}
-                                inputProps={{
-                                    className: "!w-[50px] ",
-                                    max: 10,
-                                }}
+                            <Input
+                                id={`stretch-wrap-${record.id}`}
+                                className="!w-[50px]"
+                                value={
+                                    formik.values
+                                        .number_of_labels_of_stretch_film
+                                }
+                                onChange={(e) =>
+                                    handleChangeNumber(
+                                        "number_of_labels_of_stretch_film",
+                                        e.target.value,
+                                        10
+                                    )
+                                }
                             />
                         </div>
                     </div>
@@ -118,7 +136,7 @@ export const SellerServiceParamsTable: FC<SellerServiceParamsTableProps> = ({
                                 formik.values.adhesive_tape_for_fragile_goods
                             }
                             onChange={(e) =>
-                                handleChange(
+                                handleChangeBoolean(
                                     "adhesive_tape_for_fragile_goods",
                                     e.target.checked
                                 )
@@ -137,7 +155,7 @@ export const SellerServiceParamsTable: FC<SellerServiceParamsTableProps> = ({
                         <Checkbox
                             checked={formik.values.courier_package}
                             onChange={(e) =>
-                                handleChange(
+                                handleChangeBoolean(
                                     "courier_package",
                                     e.target.checked
                                 )

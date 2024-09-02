@@ -154,7 +154,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                             "absolute bottom-0 flex justify-center items-center h-[40px] mb-[28px] ms-[3px] "
                         )}
                     >
-                        <Link to={logoLink} className="flex items-center">
+                        <Link to={"/"} className="flex items-center">
                             <Image
                                 src={icon}
                                 className={cn(
@@ -164,7 +164,7 @@ export const GeneralLayout: FC<GeneralLayoutProps> = ({
                             />
                         </Link>
                         <div className={cn({ hidden: collapsed })}>
-                            <Logo link={logoLink} />
+                            <Logo />
                         </div>
                     </div>
                 </Sider>

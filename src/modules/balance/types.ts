@@ -5,7 +5,16 @@ export interface GetAdminReplenishmentResponse
 
 export interface GetSellerReplenishmentResponse
     extends BasePaginationResponse<GetSellerReplenishmentContent> {}
+export interface GetSellerBalanceStatementResponse
+    extends BasePaginationResponse<GetSellerBalanceStatementContent> {}
 
+export interface GetSellerBalanceStatementContent {
+    id: number;
+    amount: number;
+    comment: string;
+    created_at: string;
+    seller: number;
+}
 export interface GetAdminReplenishmentContent {
     id: number;
     seller: {

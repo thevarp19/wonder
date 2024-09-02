@@ -1,16 +1,45 @@
 import { FormikInput } from "@/components/ui/FormikInput";
-import { BalanceHistoryTable } from "@/modules/balance/components/BalanceHistoryTable";
+import { BalanceHistoryReplenishmentTable } from "@/modules/balance/components/BalanceHistoryReplenishmentTable";
+import { BalanceHistoryStatementTable } from "@/modules/balance/components/BalanceHistoryStatementTable";
 import { useAddReplenishment } from "@/modules/balance/forms";
-import { useGetSellerReplenishment } from "@/modules/balance/queries";
+import {
+    useGetSellerBalanceStatement,
+    useGetSellerReplenishment,
+} from "@/modules/balance/queries";
 import { useGetSellerProfile } from "@/modules/seller/queries";
 import { phoneNumberChangeHandler } from "@/utils/form.util";
 import { cn } from "@/utils/shared.util";
-import { Button, Form, Modal, Popconfirm } from "antd";
+import { Button, ConfigProvider, Form, Menu, Modal, Popconfirm } from "antd";
+import { MenuProps } from "antd/lib";
 import { FC, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export const SellerBalancePage: FC = () => {
+    const items: MenuProps["items"] = [
+        {
+            label: "История пополнений",
+            key: "replenishment",
+        },
+        {
+            label: "История списаний",
+            key: "statement",
+        },
+    ];
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [current, setCurrent] = useState(
+        searchParams.get("menu_x") || "replenishment"
+    );
+    const onClick: MenuProps["onClick"] = (e) => {
+        setCurrent(e.key);
+        setSearchParams({ menu_x: e.key });
+    };
     const [page, setPage] = useState(0);
-    const { data: orders, isPending } = useGetSellerReplenishment(page, 10);
+    const { data: orders, isPending: orderPending } = useGetSellerReplenishment(
+        page,
+        10
+    );
+    const { data: statements, isPending: statementPending } =
+        useGetSellerBalanceStatement(page, 10);
     const { data, isPending: balancePending } = useGetSellerProfile();
     return (
         <div className="h-full">
@@ -26,13 +55,46 @@ export const SellerBalancePage: FC = () => {
                 <div className="flex justify-end w-full">
                     <AddReplenishmentModal />
                 </div>
-                <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
-                    <BalanceHistoryTable
-                        data={orders}
-                        isPending={isPending}
-                        setPage={setPage}
-                        page={page}
+                <ConfigProvider
+                    theme={{
+                        components: {
+                            Menu: {
+                                itemBg: "#F7F9FB",
+                                colorSplit: "#F7F9FB",
+                                borderRadius: 8,
+                            },
+                        },
+                    }}
+                >
+                    <Menu
+                        items={items}
+                        mode="horizontal"
+                        onClick={onClick}
+                        className="rounded-t-lg"
+                        selectedKeys={[
+                            ["replenishment", "statement"].includes(current)
+                                ? current
+                                : "replenishment",
+                        ]}
                     />
+                </ConfigProvider>
+                <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
+                    {current === "replenishment" && (
+                        <BalanceHistoryReplenishmentTable
+                            data={orders}
+                            isPending={orderPending}
+                            setPage={setPage}
+                            page={page}
+                        />
+                    )}
+                    {current === "statement" && (
+                        <BalanceHistoryStatementTable
+                            data={statements}
+                            isPending={statementPending}
+                            setPage={setPage}
+                            page={page}
+                        />
+                    )}
                 </div>
             </div>
         </div>

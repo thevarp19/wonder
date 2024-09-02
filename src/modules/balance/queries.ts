@@ -1,7 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAdminReplenishment, getSellerReplenishment } from "./api";
+import {
+    getAdminReplenishment,
+    getSellerBalanceStatement,
+    getSellerReplenishment,
+} from "./api";
 import {
     GetAdminReplenishmentResponse,
+    GetSellerBalanceStatementResponse,
     GetSellerReplenishmentResponse,
 } from "./types";
 
@@ -30,6 +35,18 @@ export const useGetSellerReplenishment = (
         queryKey: [`seller-replenishment`, page, size],
         queryFn: async () => {
             const { data } = await getSellerReplenishment(page, size);
+            return data;
+        },
+    });
+};
+export const useGetSellerBalanceStatement = (
+    page: number = 0,
+    size: number = 10
+) => {
+    return useQuery<GetSellerBalanceStatementResponse>({
+        queryKey: [`seller-statement`, page, size],
+        queryFn: async () => {
+            const { data } = await getSellerBalanceStatement(page, size);
             return data;
         },
     });

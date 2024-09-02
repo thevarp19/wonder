@@ -2,6 +2,7 @@ import { axiosAuthorized } from "@/lib/axios";
 import {
     AddReplenishmentRequest,
     GetAdminReplenishmentResponse,
+    GetSellerBalanceStatementResponse,
     GetSellerReplenishmentResponse,
 } from "./types";
 
@@ -17,6 +18,11 @@ export function getAdminReplenishment(
 export function getSellerReplenishment(page: number = 0, size: number = 10) {
     return axiosAuthorized.get<GetSellerReplenishmentResponse>(
         `/api/replenishment/seller/?page=${page}&size=${size}`
+    );
+}
+export function getSellerBalanceStatement(page: number = 0, size: number = 10) {
+    return axiosAuthorized.get<GetSellerBalanceStatementResponse>(
+        `/api/payment-history/seller/?page=${page}&size=${size}`
     );
 }
 

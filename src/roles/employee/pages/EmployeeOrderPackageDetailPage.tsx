@@ -31,7 +31,7 @@ export const EmployeeOrderPackageDetailPage: FC = () => {
             await transferMutate([
                 {
                     id: data.product.id,
-                    order_entry: data.product.order_code,
+                    order_entry: data.product.order_entry,
                     status: "TRANSFER",
                 },
             ]);
@@ -87,71 +87,78 @@ export const EmployeeOrderPackageDetailPage: FC = () => {
                                 <h3>Стретч Пленка</h3>
                             </div>
                         )}
-                        <div className="mt-5">
-                            <ul className="flex flex-col gap-2 pl-5 list-disc">
-                                <li>
-                                    Курьерский пакет:{" "}
-                                    {data.courier_package ? "Да" : "Нет"}
-                                </li>
-                                <li>
-                                    Этикетка: Осторожно! Стекло!:{" "}
-                                    {data.label_caution_class ? "Да" : "Нет"}
-                                </li>
-                                <li>
-                                    Этикетка: Манипуляционный знак:{" "}
-                                    {data.label_manipulation_sign
-                                        ? "Да"
-                                        : "Нет"}
-                                </li>
-                                <li>
-                                    Этикетка: Огнеопасно!:{" "}
-                                    {data.label_flammable ? "Да" : "Нет"}
-                                </li>
-                                <li>
-                                    Этикетка: Осторожно! Аккумуляторные
-                                    батареи!:{" "}
-                                    {data.label_careful_rechargeable_battery
-                                        ? "Да"
-                                        : "Нет"}
-                                </li>
-                                <li>
-                                    Скотч для хрупких товаров:{" "}
-                                    {data.adhesive_tape_for_fragile_goods
-                                        ? "Да"
-                                        : "Нет"}
-                                </li>
-                                <li>
-                                    Количество этикеток пузырчатой пленки:{" "}
-                                    {data.number_of_labels_of_bubble_wrap}
-                                </li>
-                                <li>
-                                    Количество этикеток стретч-пленки:{" "}
-                                    {data.number_of_labels_of_stretch_film}
-                                </li>
-                                <li>
-                                    Тип курьерского пакета:{" "}
-                                    {data.courier_package_type}
-                                </li>
-                                <li>Тип доставки: {data.delivery_type}</li>
-                                <li>
-                                    Дополнительные упаковки:{" "}
-                                    {data.additional_wraps}
-                                </li>
-                                <li>
-                                    Тип самой дешевой упаковки:{" "}
-                                    {data.cheapest_wrap_type}
-                                </li>
-                                <li>
-                                    Количество сегментов самой дешевой упаковки:{" "}
-                                    {data.cheapest_number_of_segments}
-                                </li>
-                                <li>
-                                    Количество сегментов стретч-пленки самой
-                                    дешевой упаковки:{" "}
-                                    {data.cheapest_stretch_number_of_segments}
-                                </li>
-                            </ul>
-                        </div>
+                        {!isPacked && (
+                            <div className="mt-5">
+                                <ul className="flex flex-col gap-2 pl-5 list-disc">
+                                    <li>
+                                        Курьерский пакет:{" "}
+                                        {data.courier_package ? "Да" : "Нет"}
+                                    </li>
+                                    <li>
+                                        Этикетка: Осторожно! Стекло!:{" "}
+                                        {data.label_caution_class
+                                            ? "Да"
+                                            : "Нет"}
+                                    </li>
+                                    <li>
+                                        Этикетка: Манипуляционный знак:{" "}
+                                        {data.label_manipulation_sign
+                                            ? "Да"
+                                            : "Нет"}
+                                    </li>
+                                    <li>
+                                        Этикетка: Огнеопасно!:{" "}
+                                        {data.label_flammable ? "Да" : "Нет"}
+                                    </li>
+                                    <li>
+                                        Этикетка: Осторожно! Аккумуляторные
+                                        батареи!:{" "}
+                                        {data.label_careful_rechargeable_battery
+                                            ? "Да"
+                                            : "Нет"}
+                                    </li>
+                                    <li>
+                                        Скотч для хрупких товаров:{" "}
+                                        {data.adhesive_tape_for_fragile_goods
+                                            ? "Да"
+                                            : "Нет"}
+                                    </li>
+                                    <li>
+                                        Количество этикеток пузырчатой пленки:{" "}
+                                        {data.number_of_labels_of_bubble_wrap}
+                                    </li>
+                                    <li>
+                                        Количество этикеток стретч-пленки:{" "}
+                                        {data.number_of_labels_of_stretch_film}
+                                    </li>
+                                    <li>
+                                        Тип курьерского пакета:{" "}
+                                        {data.courier_package_type}
+                                    </li>
+                                    <li>Тип доставки: {data.delivery_type}</li>
+                                    <li>
+                                        Дополнительные упаковки:{" "}
+                                        {data.additional_wraps}
+                                    </li>
+                                    <li>
+                                        Тип самой дешевой упаковки:{" "}
+                                        {data.cheapest_wrap_type}
+                                    </li>
+                                    <li>
+                                        Количество сегментов самой дешевой
+                                        упаковки:{" "}
+                                        {data.cheapest_number_of_segments}
+                                    </li>
+                                    <li>
+                                        Количество сегментов стретч-пленки самой
+                                        дешевой упаковки:{" "}
+                                        {
+                                            data.cheapest_stretch_number_of_segments
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                        )}
                     </div>
 
                     <div className="flex items-start justify-between py-10">
