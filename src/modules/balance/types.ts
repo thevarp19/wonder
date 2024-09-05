@@ -9,11 +9,16 @@ export interface GetSellerBalanceStatementResponse
     extends BasePaginationResponse<GetSellerBalanceStatementContent> {}
 
 export interface GetSellerBalanceStatementContent {
-    id: number;
-    amount: number;
-    comment: string;
-    created_at: string;
-    seller: number;
+    id: string;
+    code: string;
+    delivery_mode: string;
+    creation_date: number;
+    transmission_date: string;
+    receiving_date: number;
+    total_price: number;
+    wonder_status: string;
+    warehouse: string;
+    service_cost: string;
 }
 export interface GetAdminReplenishmentContent {
     id: number;
