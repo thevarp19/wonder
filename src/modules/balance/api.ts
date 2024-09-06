@@ -22,7 +22,7 @@ export function getSellerReplenishment(page: number = 0, size: number = 10) {
 }
 export function getSellerBalanceStatement(page: number = 0, size: number = 10) {
     return axiosAuthorized.get<GetSellerBalanceStatementResponse>(
-        `/api/payment-history/seller/?page=${page}&size=${size}`
+        `/api/order-seller/payment_history/?page=${page}&size=${size}`
     );
 }
 
