@@ -14,6 +14,7 @@ import {
     HistoryOutlined,
     HomeOutlined,
     LogoutOutlined,
+    MergeCellsOutlined,
     SearchOutlined,
     ShoppingCartOutlined,
     ThunderboltOutlined,
@@ -34,6 +35,8 @@ function pathToKey(key: string) {
             return "supplies";
         case "/employee/scan":
             return "scan";
+        case "/employee/refunds":
+            return "refunds";
         case "/employee/reports":
             return "reports";
         case "/employee/orders":
@@ -317,6 +320,22 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
             key: "reports",
             icon: (
                 <FileTextOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/refunds"}
+                >
+                    Возвраты
+                </Link>
+            ),
+            key: "refunds",
+            icon: (
+                <MergeCellsOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

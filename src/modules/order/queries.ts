@@ -8,6 +8,7 @@ import {
     getCancelledOrderEmployee,
     getCancelledOrderSeller,
     getEmployeeOrderById,
+    getEmployeeRefunds,
     getNewOrdersSeller,
     getOrdersAdmin,
     getOrdersAdminArchive,
@@ -38,6 +39,7 @@ import {
     GetAssembleOrdersEmployee,
     GetCancelledOrders,
     GetEmployeeOrderDetail,
+    GetEmployeeRefunds,
     GetNewSignOrders,
     GetOrderPackageDetails,
     GetOrdersAdmin,
@@ -50,6 +52,7 @@ import {
     GetShippedOrders,
     GetTransferOrders,
     GetTransferOrdersEmployee,
+    RefundMode,
 } from "./types";
 
 export const useGetOrdersAdmin = (
@@ -672,6 +675,15 @@ export const useGetPackageDetails = (id: string, packed: boolean) => {
         queryKey: [`order-package`, id, packed],
         queryFn: async () => {
             const { data } = await getPackageDetails(id, packed);
+            return data;
+        },
+    });
+};
+export const useGetEmployeeRefunds = (refundMode: RefundMode) => {
+    return useQuery<GetEmployeeRefunds[]>({
+        queryKey: [`employee-refunds`, refundMode],
+        queryFn: async () => {
+            const { data } = await getEmployeeRefunds(refundMode);
             return data;
         },
     });

@@ -17,6 +17,7 @@ import {
     EmployeeOrdersPage,
     EmployeeOrderTransferPage,
     EmployeeProductSizesPage,
+    EmployeeRefundsPage,
     EmployeeReportsPage,
     EmployeeSearchPage,
     EmployeeSuppliesPage,
@@ -108,6 +109,7 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                         path="/sizes"
                         element={<EmployeeProductSizesPage />}
                     />
+                    <Route path="/refunds" element={<EmployeeRefundsPage />} />
                     <Route path="/reports" element={<EmployeeReportsPage />} />
                     <Route
                         path="/reports/update-report/:reportId"

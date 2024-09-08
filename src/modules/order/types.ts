@@ -47,6 +47,22 @@ export interface GetAssembleOrdersEmployeeContent {
     order_creation_date: string;
     order_entry: string;
 }
+export interface GetEmployeeRefunds {
+    refundId: string;
+    applicationNumber: string;
+    tab: string;
+    reason: string;
+    plannedDate: string;
+    order: string;
+    productSku: string;
+    customer: string;
+    sum: number;
+    quantity: number;
+    unit: string;
+    weight: number;
+    description: string;
+    seller?: string;
+}
 export interface GetPackageOrdersEmployeeContent {
     id: number;
     product_vendor_code: string;
@@ -315,4 +331,11 @@ export type DeliveryMode =
     | "ZAMLER"
     | "PICKUP"
     | "ARCHIVE"
+    | "";
+export type RefundMode =
+    | "NEW"
+    | "ON_DELIVERY"
+    | "WAITING_DECISION"
+    | "DISPUTE"
+    | "CLOSED"
     | "";

@@ -6,6 +6,7 @@ import {
     GetAssembleOrdersEmployee,
     GetCancelledOrders,
     GetEmployeeOrderDetail,
+    GetEmployeeRefunds,
     GetNewSignOrders,
     GetOrderPackageDetails,
     GetOrdersAdmin,
@@ -19,6 +20,7 @@ import {
     GetTransferOrders,
     GetTransferOrdersEmployee,
     ProductStatusChangeRequest,
+    RefundMode,
 } from "./types";
 
 export function getOrdersAdmin(
@@ -59,6 +61,11 @@ export function getNewOrdersSeller(
 ) {
     return axiosAuthorized.get<GetNewSignOrders>(
         `/api/order-seller/new/?page=${page}&size=${size}`
+    );
+}
+export function getEmployeeRefunds(refundMode: RefundMode = "NEW") {
+    return axiosAuthorized.get<GetEmployeeRefunds[]>(
+        `/api/refunds/merchants/?tab=${refundMode}`
     );
 }
 export function getOwnPickupOrdersSeller(
