@@ -6,6 +6,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { EmployeeLayout } from "./EmployeeLayout";
 import {
     EmployeeArchiveOrdersPage,
+    EmployeeCreateReportPage,
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,
     EmployeeOrderCancelledPage,
@@ -16,8 +17,10 @@ import {
     EmployeeOrdersPage,
     EmployeeOrderTransferPage,
     EmployeeProductSizesPage,
+    EmployeeReportsPage,
     EmployeeSearchPage,
     EmployeeSuppliesPage,
+    EmployeeUpdateReportPage,
     ScanPage,
     SupplyDetailsPage,
 } from "./pages";
@@ -104,6 +107,15 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                     <Route
                         path="/sizes"
                         element={<EmployeeProductSizesPage />}
+                    />
+                    <Route path="/reports" element={<EmployeeReportsPage />} />
+                    <Route
+                        path="/reports/update-report/:reportId"
+                        element={<EmployeeUpdateReportPage />}
+                    />
+                    <Route
+                        path="/reports/create-report"
+                        element={<EmployeeCreateReportPage />}
                     />
                 </Route>
                 <Route path="/scan" element={<ScanLayout />}>

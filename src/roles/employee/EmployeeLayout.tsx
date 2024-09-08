@@ -10,6 +10,7 @@ import {
     CheckCircleOutlined,
     CloseCircleOutlined,
     FileOutlined,
+    FileTextOutlined,
     HistoryOutlined,
     HomeOutlined,
     LogoutOutlined,
@@ -33,6 +34,8 @@ function pathToKey(key: string) {
             return "supplies";
         case "/employee/scan":
             return "scan";
+        case "/employee/reports":
+            return "reports";
         case "/employee/orders":
             return "orders";
         case "/employee/orders/new":
@@ -298,6 +301,22 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
             key: "orders-archive",
             icon: (
                 <HistoryOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/reports"}
+                >
+                    Накладные
+                </Link>
+            ),
+            key: "reports",
+            icon: (
+                <FileTextOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

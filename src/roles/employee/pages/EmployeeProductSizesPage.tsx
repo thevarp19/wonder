@@ -7,8 +7,6 @@ import { UpdateSizesForm } from "@/modules/product/components/UpdateSizesForm";
 import { useUpdateProductSize } from "@/modules/product/forms";
 import { useGetProductsWithSizes } from "@/modules/product/queries";
 import { ProductSizes } from "@/modules/product/types";
-import { useScannerResults } from "@/modules/scan/hooks";
-import { toScanProductsSizes } from "@/modules/scan/utils";
 import { cn } from "@/utils/shared.util";
 import { EditOutlined } from "@ant-design/icons";
 import {
@@ -43,34 +41,36 @@ export const EmployeeProductSizesPage: FC<
     EmployeeProductSizesPageProps
 > = ({}) => {
     const [current, setCurrent] = useState("all");
-
-    const onClick: MenuProps["onClick"] = (e) => {
-        setCurrent(e.key);
-    };
-
-    const scanSearchValue = useScannerResults();
+    const [barcode, setBarcode] = useState("");
     const [searchValue, setSearchValue] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
 
+    useEffect(() => {
+        const handleKeyPress = (event: KeyboardEvent) => {
+            if (event.key === "Enter") {
+                if (barcode.length > 0) {
+                    setSearchValue(barcode);
+                    setSearchQuery(barcode);
+                    console.log("Barcode scanned:", barcode);
+                    setBarcode("");
+                }
+            } else {
+                setBarcode((prevBarcode) => prevBarcode + event.key);
+            }
+        };
+
+        window.addEventListener("keypress", handleKeyPress);
+
+        return () => {
+            window.removeEventListener("keypress", handleKeyPress);
+        };
+    }, [barcode]);
     const handleSearch = () => {
         setSearchQuery(searchValue);
     };
-
-    useEffect(() => {
-        if (scanSearchValue) {
-            setSearchQuery(scanSearchValue);
-            setSearchValue(scanSearchValue);
-
-            const newSearchParams = new URLSearchParams(window.location.search);
-            newSearchParams.delete("result");
-            newSearchParams.delete("type");
-            newSearchParams.delete("step");
-            const newUrl = `${
-                window.location.pathname
-            }?${newSearchParams.toString()}`;
-            window.history.replaceState(null, "", newUrl);
-        }
-    }, [scanSearchValue]);
+    const onClick: MenuProps["onClick"] = (e) => {
+        setCurrent(e.key);
+    };
 
     return (
         <div className="flex flex-col">
@@ -87,7 +87,7 @@ export const EmployeeProductSizesPage: FC<
                     </div>
                     <div
                         onClick={() => {
-                            toScanProductsSizes;
+                            // toScanProductsSizes;
                         }}
                         className="flex items-center justify-center bg-[#EF7214] rounded-md cursor-pointer py-[14px] md:w-[130px] w-full md:max-h-[32px] max-h-[47px] gap-2 px-2"
                     >
