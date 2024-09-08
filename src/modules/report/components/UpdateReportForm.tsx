@@ -110,13 +110,10 @@ export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
                         format="YYYY-MM-DD HH:mm"
                         className="w-full"
                         size="large"
-                        placeholder="Выберите дату и время"
+                        placeholder={`${moment(formik.values.created_at).format(
+                            "YYYY-MM-DD HH:mm"
+                        )}`}
                         onChange={handleDateChange}
-                        value={
-                            formik.values.created_at
-                                ? moment(formik.values.created_at)
-                                : null
-                        }
                     />
                 </Form.Item>
 
