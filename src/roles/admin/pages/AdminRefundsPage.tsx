@@ -8,7 +8,7 @@ import { cn } from "@/utils/shared.util";
 import { App, Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
 import { FC, useCallback, useState } from "react";
 
-interface EmployeeRefundsPageProps {}
+interface AdminRefundsPageProps {}
 export const items: MenuProps["items"] = [
     {
         label: "Новые",
@@ -39,7 +39,7 @@ export const deliveryModes: { [key: string]: RefundMode } = {
     closed: "CLOSED",
 };
 
-export const EmployeeRefundsPage: FC<EmployeeRefundsPageProps> = ({}) => {
+export const AdminRefundsPage: FC<AdminRefundsPageProps> = ({}) => {
     const [searchValue, setSearchValue] = useState("");
     const [current, setCurrent] = useState("new");
     const { message } = App.useApp();

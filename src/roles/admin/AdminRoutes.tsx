@@ -14,6 +14,7 @@ import {
     AdminOrderShippedPage,
     AdminOrdersPage,
     AdminOrderTransferPage,
+    AdminRefundsPage,
     AdminSettingsPage,
     CreateBoxPage,
     CreateStorePage,
@@ -101,6 +102,7 @@ export const AdminRoutes: FC<AdminRoutesProps> = ({}) => {
                         element={<AdminOrderCancelledPage />}
                     />
                     <Route path="/balance" element={<AdminBalancePage />} />
+                    <Route path="/refunds" element={<AdminRefundsPage />} />
                     <Route
                         path="/orders/:orderId"
                         element={<AdminOrderPage />}

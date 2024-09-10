@@ -7,13 +7,13 @@ import { useMediaQuery } from "react-responsive";
 import { useGetEmployeeRefunds } from "../../queries";
 import { GetEmployeeRefunds, RefundMode } from "../../types";
 
-interface EmployeeRefundsOrdersTableProps {
+interface RefundsOrdersTableProps {
     refundMode: RefundMode;
 }
 
-export const EmployeeRefundsOrdersTable: FC<
-    EmployeeRefundsOrdersTableProps
-> = ({ refundMode }) => {
+export const RefundsOrdersTable: FC<RefundsOrdersTableProps> = ({
+    refundMode,
+}) => {
     const { data, isPending } = useGetEmployeeRefunds(refundMode);
 
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });

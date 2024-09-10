@@ -8,6 +8,7 @@ import { AdminOrderPage } from "./AdminOrderPage";
 import { AdminOrderShippedPage } from "./AdminOrderShippedPage";
 import { AdminOrdersPage } from "./AdminOrdersPage";
 import { AdminOrderTransferPage } from "./AdminOrderTransferPage";
+import { AdminRefundsPage } from "./AdminRefundsPage";
 import { AdminSettingsPage } from "./AdminSettingsPage";
 import { CreateBoxPage } from "./CreateBoxPage";
 import { CreateStorePage } from "./CreateStorePage";
@@ -26,6 +27,7 @@ export {
     AdminOrderShippedPage,
     AdminOrdersPage,
     AdminOrderTransferPage,
+    AdminRefundsPage,
     AdminSettingsPage,
     CreateBoxPage,
     CreateStorePage,
