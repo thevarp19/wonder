@@ -9,6 +9,7 @@ import {
     getCancelledOrderSeller,
     getEmployeeOrderById,
     getEmployeeRefunds,
+    getExportRefundsFile,
     getNewOrdersSeller,
     getOrdersAdmin,
     getOrdersAdminArchive,
@@ -75,6 +76,16 @@ export const useGetOrdersAdmin = (
     });
 };
 
+export const useGetExportRefundsFile = () => {
+    return useQuery<Blob>({
+        queryKey: [`refunds-export-file`],
+        queryFn: async () => {
+            const response = await getExportRefundsFile();
+            return response.data;
+        },
+        enabled: false,
+    });
+};
 export const useGetOrdersSeller = (
     page: number = 0,
     size: number = 10,

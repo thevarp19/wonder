@@ -3,12 +3,9 @@ import {
     getEmployeeReportById,
     getEmployeeReports,
     getEmployeeStores,
+    getSellerReports,
 } from "./api";
-import {
-    GetEmployeeReports,
-    GetEmployeeReportsContent,
-    GetEmployeeStores,
-} from "./types";
+import { GetEmployeeStores, GetReports, GetReportsContent } from "./types";
 
 export const useGetEmployeeReports = (
     page: number = 0,
@@ -17,7 +14,7 @@ export const useGetEmployeeReports = (
     min_date: string = "",
     max_date: string = ""
 ) => {
-    return useQuery<GetEmployeeReports>({
+    return useQuery<GetReports>({
         queryKey: [
             `employee-reports`,
             page,
@@ -38,6 +35,34 @@ export const useGetEmployeeReports = (
         },
     });
 };
+export const useGetSellerReports = (
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    min_date: string = "",
+    max_date: string = ""
+) => {
+    return useQuery<GetReports>({
+        queryKey: [
+            `seller-reports`,
+            page,
+            size,
+            searchValue,
+            min_date,
+            max_date,
+        ],
+        queryFn: async () => {
+            const { data } = await getSellerReports(
+                page,
+                size,
+                searchValue,
+                min_date,
+                max_date
+            );
+            return data;
+        },
+    });
+};
 export const useGetEmployeeStores = () => {
     return useQuery<GetEmployeeStores>({
         queryKey: [`employee-stores`],
@@ -48,7 +73,7 @@ export const useGetEmployeeStores = () => {
     });
 };
 export const useGetEmployeeReportDetail = (reportId: string) => {
-    return useQuery<GetEmployeeReportsContent>({
+    return useQuery<GetReportsContent>({
         queryKey: [`employee-report-detail`, reportId],
         queryFn: async () => {
             const { data } = await getEmployeeReportById(reportId);

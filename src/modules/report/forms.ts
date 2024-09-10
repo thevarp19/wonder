@@ -1,10 +1,7 @@
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import { createReportMutation, updateReportMutation } from "./mutations";
-import {
-    CreateEmployeeReportRequest,
-    GetEmployeeReportsContent,
-} from "./types";
+import { CreateEmployeeReportRequest, GetReportsContent } from "./types";
 
 export const useCreateReport = () => {
     const mutation = createReportMutation();
@@ -37,7 +34,7 @@ export const useCreateReport = () => {
 
 export const useUpdateReport = (
     reportId: string,
-    initialValues: GetEmployeeReportsContent | undefined
+    initialValues: GetReportsContent | undefined
 ) => {
     const mutation = updateReportMutation(reportId);
 

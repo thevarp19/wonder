@@ -11,6 +11,7 @@ import {
     CheckCircleOutlined,
     CloseCircleOutlined,
     FileOutlined,
+    FileTextOutlined,
     HistoryOutlined,
     HomeOutlined,
     LogoutOutlined,
@@ -40,6 +41,8 @@ function pathToKey(key: string) {
             return "settings";
         case "/products":
             return "products";
+        case "/reports":
+            return "reports";
         case "/supply":
             return "supply";
         case "/service-params":
@@ -147,6 +150,7 @@ const breadcrumbMapping: {
         { title: <a href="">Архив</a> },
     ],
     "/balance": [{ title: "Меню" }, { title: <a href="">Баланс</a> }],
+    "/reports": [{ title: "Меню" }, { title: <a href="">Накладные</a> }],
 };
 export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });
@@ -474,6 +478,22 @@ export const SellerLayout: FC<SellerLayoutProps> = ({}) => {
             key: "orders-archive",
             icon: (
                 <HistoryOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/reports"}
+                >
+                    Накладные
+                </Link>
+            ),
+            key: "reports",
+            icon: (
+                <FileTextOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

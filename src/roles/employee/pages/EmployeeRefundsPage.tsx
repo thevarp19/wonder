@@ -2,10 +2,11 @@ import { searchIcon } from "@/assets";
 import { Title } from "@/components/shared/Title";
 import { Image } from "@/components/ui/Image";
 import { EmployeeRefundsOrdersTable } from "@/modules/order/components/EmployeeOrders/EmployeeRefundsOrdersTable";
+import { useGetExportRefundsFile } from "@/modules/order/queries";
 import { RefundMode } from "@/modules/order/types";
 import { cn } from "@/utils/shared.util";
-import { Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
-import { FC, useState } from "react";
+import { App, Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
+import { FC, useCallback, useState } from "react";
 
 interface EmployeeRefundsPageProps {}
 export const items: MenuProps["items"] = [
@@ -41,12 +42,29 @@ export const deliveryModes: { [key: string]: RefundMode } = {
 export const EmployeeRefundsPage: FC<EmployeeRefundsPageProps> = ({}) => {
     const [searchValue, setSearchValue] = useState("");
     const [current, setCurrent] = useState("new");
+    const { message } = App.useApp();
     const [refundMode, setRefundMode] = useState<RefundMode>("NEW");
-
+    const { refetch: fetchExportFile } = useGetExportRefundsFile();
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
         setRefundMode(deliveryModes[e.key]);
     };
+    const handleExport = useCallback(async () => {
+        try {
+            const result = await fetchExportFile();
+            if (result.data) {
+                const url = window.URL.createObjectURL(new Blob([result.data]));
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", "Отчет о возвратах.pdf");
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            }
+        } catch (error) {
+            message.error("Ошибка при экспорте файла!");
+        }
+    }, [fetchExportFile]);
     return (
         <div className="h-full">
             <div className="flex justify-between">
@@ -56,7 +74,7 @@ export const EmployeeRefundsPage: FC<EmployeeRefundsPageProps> = ({}) => {
                     size="large"
                     type="primary"
                     className="uppercase !min-w-[200px] "
-                    href="/employee/reports/create-report"
+                    onClick={handleExport}
                 >
                     Скачать
                 </Button>

@@ -8,7 +8,7 @@ import { Button, ConfigProvider, TableColumnsType } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import { useGetEmployeeReports } from "../queries";
+import { useGetSellerReports } from "../queries";
 import { GetReportsContent } from "../types";
 
 const columns: TableColumnsType<GetReportsContent> = [
@@ -17,11 +17,11 @@ const columns: TableColumnsType<GetReportsContent> = [
         render: (_, record) => <span>{record.id}</span>,
     },
 
-    {
-        title: "Название магазина",
-        dataIndex: "",
-        render: (_, record) => <span>{record.seller}</span>,
-    },
+    // {
+    //     title: "Название магазина",
+    //     dataIndex: "",
+    //     render: (_, record) => <span>{record.seller}</span>,
+    // },
 
     {
         title: "Время заказа",
@@ -64,19 +64,19 @@ const columns: TableColumnsType<GetReportsContent> = [
     },
 ];
 
-interface EmployeeReportTableProps {
+interface SellerReportTableProps {
     searchValue: string;
     min_date?: string;
     max_date?: string;
 }
 
-export const EmployeeReportTable: FC<EmployeeReportTableProps> = ({
+export const SellerReportTable: FC<SellerReportTableProps> = ({
     searchValue,
     min_date,
     max_date,
 }) => {
     const [page, setPage] = useState(0);
-    const { data: reports, isPending } = useGetEmployeeReports(
+    const { data: reports, isPending } = useGetSellerReports(
         page,
         10,
         searchValue,

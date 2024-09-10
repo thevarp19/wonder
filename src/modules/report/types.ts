@@ -1,11 +1,10 @@
 import { BasePaginationResponse } from "@/types";
 
-export interface GetEmployeeReports
-    extends BasePaginationResponse<GetEmployeeReportsContent> {}
+export interface GetReports extends BasePaginationResponse<GetReportsContent> {}
 
-export interface GetEmployeeReportsContent {
+export interface GetReportsContent {
     id: number;
-    seller: string;
+    seller?: string;
     check_url: string;
     created_at: string;
 }

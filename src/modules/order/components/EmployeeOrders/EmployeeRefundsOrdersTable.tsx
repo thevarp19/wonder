@@ -103,6 +103,7 @@ export const EmployeeRefundsOrdersTable: FC<
                         render: (_, record) => (
                             <span>{record.description}</span>
                         ),
+                        width: 300,
                     },
                     {
                         title: "Сумма заказа",

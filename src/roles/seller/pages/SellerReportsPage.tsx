@@ -1,7 +1,7 @@
 import { searchIcon } from "@/assets";
 import { Title } from "@/components/shared/Title";
 import { Image } from "@/components/ui/Image";
-import { EmployeeReportTable } from "@/modules/report/components/EmployeeReportTable";
+import { SellerReportTable } from "@/modules/report/components/SellerReportTable";
 import { cn, useDebounce } from "@/utils/shared.util";
 import { Button, ConfigProvider, DatePicker, Input } from "antd";
 import ruRU from "antd/lib/locale/ru_RU";
@@ -9,10 +9,10 @@ import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { FC, useState } from "react";
 
-interface EmployeeReportsPageProps {}
+interface SellerReportsPageProps {}
 const { RangePicker } = DatePicker;
 
-export const EmployeeReportsPage: FC<EmployeeReportsPageProps> = ({}) => {
+export const SellerReportsPage: FC<SellerReportsPageProps> = ({}) => {
     const [searchValue, setSearchValue] = useState("");
     const debouncedSearchValue = useDebounce(searchValue, 500);
 
@@ -65,14 +65,6 @@ export const EmployeeReportsPage: FC<EmployeeReportsPageProps> = ({}) => {
                         </Button>
                     </div>
                 </div>
-                <Button
-                    size="large"
-                    type="primary"
-                    className="uppercase"
-                    href="/employee/reports/create-report"
-                >
-                    Добавить накладную
-                </Button>
             </div>
             <div className="flex flex-col gap-5">
                 <div className="overflow-x-auto bg-[#F7F9FB] md:pt-0 pt-2 rounded-lg">
@@ -98,7 +90,7 @@ export const EmployeeReportsPage: FC<EmployeeReportsPageProps> = ({}) => {
                     </div>
                 </div>
                 <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
-                    <EmployeeReportTable
+                    <SellerReportTable
                         searchValue={debouncedSearchValue}
                         min_date={minDate || ""}
                         max_date={maxDate || ""}

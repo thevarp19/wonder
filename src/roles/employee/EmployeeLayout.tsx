@@ -116,6 +116,14 @@ const breadcrumbMapping: {
     ],
     "/employee/search": [{ title: "Меню" }, { title: <a href="">Поиск</a> }],
     "/employee/sizes": [{ title: "Меню" }, { title: <a href="">Размеры</a> }],
+    "/employee/reports": [
+        { title: "Меню" },
+        { title: <a href="">Накладные</a> },
+    ],
+    "/employee/refunds": [
+        { title: "Меню" },
+        { title: <a href="">Возвраты</a> },
+    ],
 };
 export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
     const isSmallScreen = useMediaQuery({ query: "(max-width: 640px" });

@@ -1,9 +1,5 @@
 import { axiosAuthorized } from "@/lib/axios";
-import {
-    GetEmployeeReports,
-    GetEmployeeReportsContent,
-    GetEmployeeStores,
-} from "./types";
+import { GetEmployeeStores, GetReports, GetReportsContent } from "./types";
 
 export function getEmployeeReports(
     page: number = 0,
@@ -13,8 +9,20 @@ export function getEmployeeReports(
     max_date: string = ""
     // deliveryMode: DeliveryMode = "ALL"
 ) {
-    return axiosAuthorized.get<GetEmployeeReports>(
+    return axiosAuthorized.get<GetReports>(
         `/api/zammler-check/?page=${page}&size=${size}&search=${searchValue}&min_date=${min_date}&max_date=${max_date}`
+    );
+}
+export function getSellerReports(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    min_date: string = "",
+    max_date: string = ""
+    // deliveryMode: DeliveryMode = "ALL"
+) {
+    return axiosAuthorized.get<GetReports>(
+        `/api/zammler-check/seller/?page=${page}&size=${size}&search=${searchValue}&min_date=${min_date}&max_date=${max_date}`
     );
 }
 export function createReportEmployee(formData: FormData) {
@@ -27,7 +35,5 @@ export function getEmployeeStores() {
     return axiosAuthorized.get<GetEmployeeStores>(`/api/sellers/stores/`);
 }
 export function getEmployeeReportById(id: string) {
-    return axiosAuthorized.get<GetEmployeeReportsContent>(
-        `/api/zammler-check/${id}/`
-    );
+    return axiosAuthorized.get<GetReportsContent>(`/api/zammler-check/${id}/`);
 }

@@ -22,6 +22,7 @@ import { SellerProductSizesPage } from "./SellerProductSizesPage";
 import { SellerProductsPage } from "./SellerProductsPage";
 import { SellerProfilePage } from "./SellerProfilePage";
 import { SellerRegisterPage } from "./SellerRegisterPage";
+import { SellerReportsPage } from "./SellerReportsPage";
 import { SellerServiceParamsPage } from "./SellerServiceParamsPage";
 import { SellerSettingsPage } from "./SellerSettingsPage";
 import { SellerSignOrdersPage } from "./SellerSignOrdersPage";
@@ -55,6 +56,7 @@ export {
     SellerProductsPage,
     SellerProfilePage,
     SellerRegisterPage,
+    SellerReportsPage,
     SellerServiceParamsPage,
     SellerSettingsPage,
     SellerSignOrdersPage,
