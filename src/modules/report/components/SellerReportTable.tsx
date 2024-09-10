@@ -1,8 +1,5 @@
-import { pencilIcon } from "@/assets";
 import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
-import { Image } from "@/components/ui/Image";
-import { cn } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, TableColumnsType } from "antd";
 import { FC, useEffect, useState } from "react";
@@ -46,21 +43,6 @@ const columns: TableColumnsType<GetReportsContent> = [
                 </Link>
             );
         },
-    },
-    {
-        title: "Редактировать",
-        render: (_, record) => (
-            <Link
-                to={`/employee/reports/update-report/${record.id}`}
-                className="cursor-pointer"
-            >
-                <Image
-                    src={pencilIcon}
-                    alt="pencilIcon"
-                    className={cn("w-7 h-7")}
-                />
-            </Link>
-        ),
     },
 ];
 
