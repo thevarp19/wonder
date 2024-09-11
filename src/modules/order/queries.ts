@@ -76,11 +76,11 @@ export const useGetOrdersAdmin = (
     });
 };
 
-export const useGetExportRefundsFile = () => {
+export const useGetExportRefundsFile = (refundMode: string) => {
     return useQuery<Blob>({
         queryKey: [`refunds-export-file`],
         queryFn: async () => {
-            const response = await getExportRefundsFile();
+            const response = await getExportRefundsFile(refundMode);
             return response.data;
         },
         enabled: false,

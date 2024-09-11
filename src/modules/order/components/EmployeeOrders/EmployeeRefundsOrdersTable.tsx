@@ -24,12 +24,13 @@ export const RefundsOrdersTable: FC<RefundsOrdersTableProps> = ({
         UNSUITABLE: "Получил не тот товар",
         DAMAGED: "Товар или упаковка повреждены",
         INCOMPLETE: "Неполная комплектация",
+        WRONG: "Неверный товар",
+        UNNEEDED: "Товар не нужен",
     };
     const stripSpanTags = (description: string) => {
         return description.replace(/<\s*span[^>]*>(.*?)<\s*\/\s*span>/g, "$1");
     };
 
-    // Apply the stripSpanTags function to each description in the data
     const cleanedData =
         data?.map((item) => ({
             ...item,

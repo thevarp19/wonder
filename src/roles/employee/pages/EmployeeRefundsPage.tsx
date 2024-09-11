@@ -44,7 +44,7 @@ export const EmployeeRefundsPage: FC<EmployeeRefundsPageProps> = ({}) => {
     const [current, setCurrent] = useState("new");
     const { message } = App.useApp();
     const [refundMode, setRefundMode] = useState<RefundMode>("NEW");
-    const { refetch: fetchExportFile } = useGetExportRefundsFile();
+    const { refetch: fetchExportFile } = useGetExportRefundsFile(refundMode);
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
         setRefundMode(deliveryModes[e.key]);

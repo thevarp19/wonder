@@ -51,7 +51,6 @@ export const EmployeeProductSizesPage: FC<
                 if (barcode.length > 0) {
                     setSearchValue(barcode);
                     setSearchQuery(barcode);
-                    console.log("Barcode scanned:", barcode);
                     setBarcode("");
                 }
             } else {

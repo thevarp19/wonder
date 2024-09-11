@@ -33,10 +33,13 @@ export function getOrdersAdmin(
         `/api/order-admin/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
-export function getExportRefundsFile() {
-    return axiosAuthorized.get(`/api/refunds/merchants/export-as-pdf/`, {
-        responseType: "blob",
-    });
+export function getExportRefundsFile(refundMode: string) {
+    return axiosAuthorized.get(
+        `/api/refunds/merchants/export-as-pdf/?tab=${refundMode}`,
+        {
+            responseType: "blob",
+        }
+    );
 }
 
 export function getOrdersAdminArchive(
