@@ -1,12 +1,21 @@
 import { Loading } from "@/components/ui/Loading";
 import { cn } from "@/utils/shared.util";
 import { InboxOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, Select, Upload, UploadProps } from "antd";
+import {
+    App,
+    Button,
+    DatePicker,
+    Form,
+    Select,
+    Upload,
+    UploadProps,
+} from "antd";
 import { UploadFile } from "antd/lib";
 import moment from "moment";
 import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUpdateReport } from "../forms";
+import { deleteReportMutation } from "../mutations";
 import { useGetEmployeeReportDetail, useGetEmployeeStores } from "../queries";
 import { GetEmployeeStores } from "../types";
 
@@ -18,9 +27,10 @@ export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const { data: initialValues, isPending: reportIsPending } =
         useGetEmployeeReportDetail(reportId);
+    const { message } = App.useApp();
     const { formik, mutation } = useUpdateReport(reportId, initialValues);
     const { data: stores, isPending } = useGetEmployeeStores();
-
+    const { mutateAsync } = deleteReportMutation(reportId);
     useEffect(() => {
         if (initialValues) {
             formik.resetForm({
@@ -52,6 +62,11 @@ export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
     const handleFileChange: UploadProps["onChange"] = ({
         fileList: newFileList,
     }) => {
+        const isLessThan1MB = (newFileList[0]?.size ?? 0) / 1024 / 1024 < 1;
+        if (!isLessThan1MB) {
+            message.error("Размер файла должен быть меньше 1 МБ!");
+            return;
+        }
         setFileList(newFileList);
         if (newFileList.length > 0) {
             setFileList(
@@ -136,7 +151,7 @@ export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
                     </Upload.Dragger>
                 </Form.Item>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-3">
                     <Button
                         htmlType="submit"
                         type="primary"
@@ -157,6 +172,16 @@ export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
                             Отмена
                         </Button>
                     </Link>
+                    <div
+                        onClick={async () => {
+                            await mutateAsync();
+                        }}
+                        className="flex justify-center"
+                    >
+                        <h2 className="underline text-[#FF0000] font-medium cursor-pointer">
+                            Удалить накладную
+                        </h2>
+                    </div>
                 </div>
             </Form>
         </div>

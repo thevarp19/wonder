@@ -8,7 +8,7 @@ export const EmployeeUpdateReportPage: FC<CreateReportPageProps> = ({}) => {
     const { reportId } = useParams();
 
     return (
-        <div className="flex flex-col items-center w-full h-full">
+        <div className="flex flex-col items-center w-full h-full gap-4">
             <h2 className="text-[18px] font-semibold">Накладная {reportId}</h2>
             <UpdateReportForm reportId={reportId || ""} />
         </div>

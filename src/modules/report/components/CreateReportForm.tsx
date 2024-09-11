@@ -1,6 +1,14 @@
 import { cn } from "@/utils/shared.util";
 import { InboxOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, Select, Upload, UploadProps } from "antd";
+import {
+    App,
+    Button,
+    DatePicker,
+    Form,
+    Select,
+    Upload,
+    UploadProps,
+} from "antd";
 import { UploadFile } from "antd/lib";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
@@ -13,7 +21,7 @@ interface CreateReportFormProps {}
 export const CreateReportForm: FC<CreateReportFormProps> = () => {
     const { formik, mutation } = useCreateReport();
     const [fileList, setFileList] = useState<UploadFile[]>([]);
-
+    const { message } = App.useApp();
     const { data: stores, isPending } = useGetEmployeeStores();
     const handleDateChange = (value: any) => {
         if (value) {
@@ -26,6 +34,11 @@ export const CreateReportForm: FC<CreateReportFormProps> = () => {
     const handleFileChange: UploadProps["onChange"] = ({
         fileList: newFileList,
     }) => {
+        const isLessThan1MB = (newFileList[0]?.size ?? 0) / 1024 / 1024 < 1;
+        if (!isLessThan1MB) {
+            message.error("Размер файла должен быть меньше 1 МБ!");
+            return;
+        }
         setFileList(newFileList);
         if (newFileList.length > 0) {
             setFileList(

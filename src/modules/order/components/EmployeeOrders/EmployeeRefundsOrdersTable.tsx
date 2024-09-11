@@ -18,6 +18,23 @@ export const RefundsOrdersTable: FC<RefundsOrdersTableProps> = ({
 
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
+    // Reason mapping object
+    const reasonMapping: { [key: string]: string } = {
+        POOR_QUALITY: "Товар плохого качества",
+        UNSUITABLE: "Получил не тот товар",
+        DAMAGED: "Товар или упаковка повреждены",
+        INCOMPLETE: "Неполная комплектация",
+    };
+    const stripSpanTags = (description: string) => {
+        return description.replace(/<\s*span[^>]*>(.*?)<\s*\/\s*span>/g, "$1");
+    };
+
+    // Apply the stripSpanTags function to each description in the data
+    const cleanedData =
+        data?.map((item) => ({
+            ...item,
+            description: stripSpanTags(item.description),
+        })) || [];
     const getColumns = (): TableColumnsType<GetEmployeeRefunds> => {
         switch (refundMode) {
             case "NEW":
@@ -48,7 +65,12 @@ export const RefundsOrdersTable: FC<RefundsOrdersTableProps> = ({
                     },
                     {
                         title: "Причина возврата",
-                        render: (_, record) => <span>{record?.reason}</span>,
+                        // Map reason using the reasonMapping object
+                        render: (_, record) => (
+                            <span>
+                                {reasonMapping[record?.reason] || record.reason}
+                            </span>
+                        ),
                     },
                 ];
             case "ON_DELIVERY":
@@ -81,7 +103,11 @@ export const RefundsOrdersTable: FC<RefundsOrdersTableProps> = ({
                     },
                     {
                         title: "Причина возврата",
-                        render: (_, record) => <span>{record?.reason}</span>,
+                        render: (_, record) => (
+                            <span>
+                                {reasonMapping[record?.reason] || record.reason}
+                            </span>
+                        ),
                     },
                 ];
             case "CLOSED":
@@ -115,7 +141,11 @@ export const RefundsOrdersTable: FC<RefundsOrdersTableProps> = ({
                     },
                     {
                         title: "Причина возврата",
-                        render: (_, record) => <span>{record?.reason}</span>,
+                        render: (_, record) => (
+                            <span>
+                                {reasonMapping[record?.reason] || record.reason}
+                            </span>
+                        ),
                     },
                 ];
             case "WAITING_DECISION":
@@ -146,7 +176,11 @@ export const RefundsOrdersTable: FC<RefundsOrdersTableProps> = ({
                     },
                     {
                         title: "Причина возврата",
-                        render: (_, record) => <span>{record?.reason}</span>,
+                        render: (_, record) => (
+                            <span>
+                                {reasonMapping[record?.reason] || record.reason}
+                            </span>
+                        ),
                     },
                 ];
             case "DISPUTE":
@@ -173,7 +207,11 @@ export const RefundsOrdersTable: FC<RefundsOrdersTableProps> = ({
                     },
                     {
                         title: "Причина возврата",
-                        render: (_, record) => <span>{record?.reason}</span>,
+                        render: (_, record) => (
+                            <span>
+                                {reasonMapping[record?.reason] || record.reason}
+                            </span>
+                        ),
                     },
                 ];
 
@@ -187,7 +225,7 @@ export const RefundsOrdersTable: FC<RefundsOrdersTableProps> = ({
     return (
         <CustomTable
             columns={columns}
-            dataSource={data}
+            dataSource={cleanedData}
             rowKey={"applicationNumber"}
             loading={isPending}
             pagination={{

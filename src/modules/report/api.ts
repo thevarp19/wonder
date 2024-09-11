@@ -37,3 +37,6 @@ export function getEmployeeStores() {
 export function getEmployeeReportById(id: string) {
     return axiosAuthorized.get<GetReportsContent>(`/api/zammler-check/${id}/`);
 }
+export function deleteEmployeeReport(id: string) {
+    return axiosAuthorized.delete(`/api/zammler-check/${id}/`);
+}
