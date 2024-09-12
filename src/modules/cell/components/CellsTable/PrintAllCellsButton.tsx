@@ -1,21 +1,33 @@
-import { GetDetailStoreResponse } from "@/modules/store/types";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import { Button, Modal } from "antd";
-import { FC, useState } from "react";
-import { GetCellResponse } from "../../types";
-import { CellPDF } from "../CellsPDF";
+import { App, Button } from "antd";
+import { FC, useCallback } from "react";
+import { useGetCellBarcodes } from "../../queries";
 
 interface PrintAllCellsButtonProps {
-    cells: GetCellResponse[] | undefined;
-    store: GetDetailStoreResponse;
+    storeId: number;
 }
 
 export const PrintAllCellsButton: FC<PrintAllCellsButtonProps> = ({
-    cells,
-    store,
+    storeId,
 }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    if (!cells) {
+    const { refetch: fetchFile } = useGetCellBarcodes(storeId);
+    const { message } = App.useApp();
+    const handleDownload = useCallback(async () => {
+        try {
+            const result = await fetchFile();
+            if (result.data) {
+                const url = window.URL.createObjectURL(new Blob([result.data]));
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", `Ячейки-${storeId}.pdf`);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            }
+        } catch (error) {
+            message.error("Ошибка при скачивании файла!");
+        }
+    }, [fetchFile]);
+    if (!storeId) {
         return (
             <Button
                 size="large"
@@ -29,64 +41,13 @@ export const PrintAllCellsButton: FC<PrintAllCellsButtonProps> = ({
     }
     return (
         <>
-            <CellsPDFModal
-                isModalOpen={isModalOpen}
-                store={store}
-                setIsModalOpen={setIsModalOpen}
-                cells={cells}
-            />
             <Button
-                onClick={() => {
-                    setIsModalOpen(true);
-                }}
+                onClick={handleDownload}
                 size="large"
                 className="w-full md:min-w-[180px] !rounded-md text-xs"
             >
                 Печать всех ячеек
             </Button>
         </>
-    );
-};
-
-interface CellsPDFModalProps {
-    isModalOpen?: boolean;
-    store: GetDetailStoreResponse;
-    setIsModalOpen: (value: boolean) => void;
-    cells: GetCellResponse[];
-}
-
-export const CellsPDFModal: FC<CellsPDFModalProps> = ({
-    isModalOpen,
-    setIsModalOpen,
-    store,
-    cells,
-}) => {
-    return (
-        <Modal
-            open={isModalOpen}
-            onCancel={() => {
-                setIsModalOpen(false);
-            }}
-            footer={(_, { CancelBtn }) => (
-                <div className="flex items-center justify-end gap-4">
-                    <CancelBtn />
-                    <PDFDownloadLink
-                        document={<CellPDF cells={cells} store={store} />}
-                        fileName={`Ячейка-${store.warehouse.id}.pdf`}
-                    >
-                        {({ loading }) =>
-                            loading
-                                ? "Загрузка документа..."
-                                : "Скачать сейчас!"
-                        }
-                    </PDFDownloadLink>
-                </div>
-            )}
-            title="Печать"
-        >
-            <PDFViewer showToolbar={true} width={"100%"} height={"100%"}>
-                <CellPDF cells={cells} store={store} />
-            </PDFViewer>
-        </Modal>
     );
 };

@@ -8,6 +8,16 @@ export function createCell(data: CreateCellRequest, id: number) {
 export function getCells(storeId: number) {
     return axiosAuthorized.get<GetCellResponse[]>(`/api/cell/${storeId}/`);
 }
+export function getCellBarcodeById(storeId: number, cellId: number) {
+    return axiosAuthorized.get(`/api/cell/${storeId}/barcodes/${cellId}/`, {
+        responseType: "blob",
+    });
+}
+export function getCellBarcodes(storeId: number) {
+    return axiosAuthorized.get(`/api/cell/${storeId}/barcodes/`, {
+        responseType: "blob",
+    });
+}
 
 export function updateCell(id: number, values: UpdateCellRequest) {
     return axiosAuthorized.patch(`/api/cell/detail/${id}/`, values);

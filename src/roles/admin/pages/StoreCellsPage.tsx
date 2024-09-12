@@ -29,16 +29,13 @@ export const StoreCellsPage: FC<StoreCellsPageProps> = ({}) => {
                 </h1>
                 <div className="flex flex-col items-center w-full gap-4 md:flex-row md:max-w-sm">
                     <CreateCellModal storeId={storeId} />
-                    {store && (
-                        <PrintAllCellsButton cells={cells} store={store} />
-                    )}
+                    {store && <PrintAllCellsButton storeId={storeId} />}
                 </div>
             </div>
             <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
                 <CellsTable
                     storeId={storeId}
                     isPending={isPending}
-                    store={store}
                     isStorePending={storePending}
                     cells={cells}
                 />

@@ -12,14 +12,13 @@ interface CellsTableProps {
     cells: GetCellResponse[] | undefined;
     isPending?: boolean;
     isStorePending?: boolean;
-    store: GetDetailStoreResponse | undefined;
-    storeId: number | undefined;
+    storeId: number;
 }
 
 interface CellsTableColumn extends GetCellResponse {
     count?: number;
     store: GetDetailStoreResponse;
-    storeId?: number | undefined;
+    storeId: number;
 }
 
 const columns: TableColumnsType<CellsTableColumn> = [
@@ -42,7 +41,7 @@ const columns: TableColumnsType<CellsTableColumn> = [
         title: "Печать",
         key: "print",
         render: (_, record) => (
-            <PrintCellButton store={record.store} cell={{ ...record }} />
+            <PrintCellButton storeId={record.storeId} cellId={record.id} />
         ),
     },
     {
@@ -92,7 +91,7 @@ export const CellsTable: FC<CellsTableProps> = ({
     isPending,
     isStorePending,
     storeId,
-    store,
+
     cells,
 }) => {
     const groupedCells = groupCellsBySize(cells || []);
@@ -103,7 +102,6 @@ export const CellsTable: FC<CellsTableProps> = ({
             columns={columns}
             dataSource={cells?.map((cell) => ({
                 ...cell,
-                store: store!,
                 storeId: storeId,
                 count:
                     groupedCells[`${cell.width}x${cell.height}x${cell.length}`]
