@@ -31,25 +31,31 @@ export const EmployeePlacementPage: FC<EmployeePlacementPageProps> = ({}) => {
             window.removeEventListener("keypress", handleKeyPress);
         };
     }, [barcode]);
-
-    const handleBarcodeScan = async () => {
-        if (isCellBarcode(barcode)) {
-            setCellBarcode(barcode);
-            const result = await fetchCellInfo();
-            if (result?.data) {
-                setCellInfo(result.data);
-                setScanningCell(false);
-                message.success("Ячейка успешно отсканирована!");
-            } else {
-                message.error("Ячейка не найдена!");
+    useEffect(() => {
+        const fetchInfo = async () => {
+            if (cellBarcode) {
+                const result = await fetchCellInfo();
+                if (result?.data) {
+                    setCellInfo(result.data);
+                    setScanningCell(false);
+                    message.success("Ячейка успешно отсканирована!");
+                } else {
+                    message.error("Ячейка не найдена!");
+                }
             }
+        };
+        fetchInfo();
+    }, [cellBarcode, fetchCellInfo]); // This useEffect runs whenever cellBarcode changes.
+
+    const handleBarcodeScan = () => {
+        if (isCellBarcode(barcode)) {
+            setCellBarcode(barcode); // This will trigger useEffect and fetch cell info.
         } else if (!scanningCell && cellInfo) {
             mutation.mutate(
                 { cellId: cellInfo.id, barcode },
                 {
                     onSuccess: async () => {
                         const updatedCellInfo = await fetchCellInfo();
-
                         if (updatedCellInfo?.data) {
                             setCellInfo(updatedCellInfo.data);
                         }
