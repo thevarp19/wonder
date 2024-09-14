@@ -32,10 +32,12 @@ export interface SupplyEmployeeProduct {
 
 export interface GetEmployeeSupplies {
     id: number;
+    seller_phone: string;
     seller_store: string;
-    seller_cell_phone: string;
-    box_total_quantity: string;
-    product_total_quantity: string;
+    declared_products: string;
+    accepted_products: string;
+    fallacy_products: string;
+    defective_products: string;
     created_at: string;
     date: string;
     report_a4: string;

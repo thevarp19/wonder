@@ -1,145 +1,134 @@
-import { ScanBoxStep } from "@/modules/scan/components/steps/ScanBoxStep";
-import { ScanCellStep } from "@/modules/scan/components/steps/ScanCellStep";
-import { ScanProductsStep } from "@/modules/scan/components/steps/ScanProductsStep";
-import { SubmitStep } from "@/modules/scan/components/steps/SubmitStep";
-import { acceptSupplyMutation } from "@/modules/supply/mutations";
-import { AcceptSupplyProductRequest } from "@/modules/supply/types";
-import { useAppDispatch, useAppSelector } from "@/redux/utils";
-import { cn } from "@/utils/shared.util";
-import { App, Button, Popconfirm, Steps } from "antd";
-import { FC, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { resetState } from "../redux/scan/actions";
+import { acceptProductsMutation } from "@/modules/scan/mutations";
+import { useGetScanInfo } from "@/modules/scan/queries";
+import { GetScanInfo } from "@/modules/scan/types";
+import { App, Checkbox, Input } from "antd";
+import { FC, useEffect, useState } from "react";
 
 interface ScanPageProps {}
 
-const steps = [
-    <ScanBoxStep />,
-    <ScanCellStep />,
-    <ScanProductsStep />,
-    <SubmitStep />,
-];
-
 export const ScanPage: FC<ScanPageProps> = ({}) => {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const [step, setStep] = useState(Number(searchParams.get("step")) || 0);
+    const [barcode, setBarcode] = useState<string>("");
+    const [defective, setDefective] = useState<boolean>(false);
+    const [boxInfo, setBoxInfo] = useState<GetScanInfo | null>(null);
     const { message } = App.useApp();
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    const supplyState = useAppSelector((state) => state.employee.scan);
-    const { mutateAsync, isPending } = acceptSupplyMutation(
-        supplyState.supplyId || -1
-    );
-    const onSubmit = async () => {
-        if (!supplyState.supplyId) {
-            message.error("Не определен идентификатор поставки");
-            return;
-        }
+    const mutation = acceptProductsMutation();
+    const { refetch } = useGetScanInfo(barcode);
 
-        const values: AcceptSupplyProductRequest = {
-            supply_boxes: supplyState.cells.map((cell) => ({
-                id: supplyState.boxBarcode,
-                supplier_box_products: cell.products.map((productId) => ({
-                    id: productId,
-                    cell: cell.barcode,
-                })),
-            })),
+    useEffect(() => {
+        const handleKeyPress = (event: KeyboardEvent) => {
+            if (event.key === "Enter") {
+                handleBarcodeScan();
+            } else {
+                setBarcode((prevBarcode) => prevBarcode + event.key);
+            }
         };
 
-        await mutateAsync(values);
-        dispatch(resetState());
-        navigate("/employee/supplies");
+        window.addEventListener("keypress", handleKeyPress);
+
+        return () => {
+            window.removeEventListener("keypress", handleKeyPress);
+        };
+    }, [barcode]);
+
+    const handleBarcodeScan = async () => {
+        if (barcode.startsWith("B") || (barcode.startsWith("P") && !boxInfo)) {
+            const result = await refetch();
+            if (result.data) {
+                setBoxInfo(result.data);
+            }
+        } else if (barcode.startsWith("P") && boxInfo) {
+            console.log("Attempting to accept product:", {
+                barcode,
+                defective,
+            });
+
+            mutation.mutate(
+                { barcode, defective: defective ? 1 : 0 },
+                {
+                    onSuccess: () => {
+                        console.log("Product accepted successfully.");
+                    },
+                    onError: (error) => {
+                        console.error("Error accepting product:", error);
+                        message.error(
+                            "Ошибка при принятии продукта. Пожалуйста, попробуйте снова."
+                        );
+                    },
+                }
+            );
+        }
+
+        setBarcode("");
     };
-    function nextStep() {
-        setSearchParams({ step: `${step + 1}` });
-        setStep((prev) => {
-            return prev + 1;
-        });
-    }
 
     return (
-        <div className="min-h-full bg-white rounded-t-sm">
-            <div className="p-2">
-                <h1 className="pb-2 text-lg font-semibold">Сканирование</h1>
-                <Steps
-                    className="!mb-4 text-sm"
-                    current={step}
-                    items={[
-                        {
-                            title: "Сканирование коробки",
-                        },
-                        {
-                            title: "Сканирование ячейки",
-                        },
-                        {
-                            title: "Сканирование продуктов",
-                        },
-                        {
-                            title: "Отправить",
-                        },
-                    ]}
-                />
-                {steps[step]}
-                <div className={cn("flex justify-end gap-4")}>
-                    {step !== 0 && step !== steps.length - 1 && (
-                        <Button
-                            className={cn("")}
-                            onClick={() => {
-                                setSearchParams({ step: `${step - 1}` });
-                                setStep((prev) => {
-                                    return prev - 1;
-                                });
-                            }}
+        <div className="min-h-full p-4 bg-white rounded-t-sm">
+            <h2 className="pb-2 text-lg font-semibold">Сканирование</h2>
+
+            {boxInfo ? (
+                <div>
+                    <div className="grid grid-cols-2 gap-4 mb-4 text-base">
+                        <div>
+                            <p>
+                                Номер поставки:{" "}
+                                <strong>{boxInfo.supply}</strong>
+                            </p>
+                            <p>
+                                Название магазина:{" "}
+                                <strong>{boxInfo.store_name}</strong>
+                            </p>
+                            <p>
+                                Кол-во продуктов:{" "}
+                                <strong>{boxInfo.product_count}</strong>
+                            </p>
+                            <p>
+                                Кол-во артикулов:{" "}
+                                <strong>{boxInfo.vendor_code_count}</strong>
+                            </p>
+                            <p>
+                                Кол-во коробок:{" "}
+                                <strong>{boxInfo.supply_box_count}</strong>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                Номер коробки:{" "}
+                                <strong>{boxInfo.supply_box_id}</strong>
+                            </p>
+                            <p>Продукты:</p>
+                            <ul>
+                                {boxInfo.products.map((product, index) => (
+                                    <li key={index}>
+                                        {product.product_name}:{" "}
+                                        <strong>{product.count}</strong>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div className="mb-4">
+                        <Checkbox
+                            checked={defective}
+                            onChange={(e) => setDefective(e.target.checked)}
                         >
-                            Преведущий
-                        </Button>
-                    )}
-                    {step !== steps.length - 1 && (
-                        <Button
-                            className={cn("")}
-                            onClick={nextStep}
-                            type="primary"
-                        >
-                            Следующий
-                        </Button>
-                    )}
-                    {step === steps.length - 1 && (
-                        <Button
-                            className={cn("")}
-                            onClick={() => {
-                                setSearchParams({ step: `0` });
-                                setStep(0);
-                            }}
-                        >
-                            Следующий коробка
-                        </Button>
-                    )}
-                    {step === steps.length - 1 && (
-                        <Button
-                            className={cn("")}
-                            onClick={() => {
-                                setSearchParams({ step: `1` });
-                                setStep(1);
-                            }}
-                        >
-                            Следующий ячейка
-                        </Button>
-                    )}
-                    {step === steps.length - 1 && (
-                        <Popconfirm
-                            title="Отправить продукты"
-                            description="Вы уверены, что отправите?"
-                            onConfirm={onSubmit}
-                        >
-                            <Button
-                                className={cn("")}
-                                type="primary"
-                                loading={isPending}
-                            >
-                                Отправить
-                            </Button>
-                        </Popconfirm>
-                    )}
+                            Бракованный
+                        </Checkbox>
+                    </div>
+                </div>
+            ) : (
+                <p>Отсканируйте коробку для получения информации.</p>
+            )}
+
+            <div className="flex items-center justify-center w-full h-full">
+                <div className="w-96 h-96">
+                    <Input
+                        disabled
+                        value={barcode}
+                        readOnly
+                        onChange={() => {}}
+                        placeholder="Сканируйте штрих-код"
+                    />
                 </div>
             </div>
         </div>

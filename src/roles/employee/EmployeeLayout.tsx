@@ -9,6 +9,7 @@ import {
     AuditOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
+    DatabaseOutlined,
     FileOutlined,
     FileTextOutlined,
     HistoryOutlined,
@@ -59,6 +60,8 @@ function pathToKey(key: string) {
             return "order-cancelled";
         case "/employee/search":
             return "search";
+        case "/employee/placement":
+            return "placement";
         case "/employee/sizes":
             return "sizes";
         default:
@@ -354,12 +357,28 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
                     style={{ color: "inherit", textDecoration: "inherit" }}
                     to={"/employee/supplies"}
                 >
-                    Поставки
+                    Приемка
                 </Link>
             ),
             key: "supplies",
             icon: (
                 <VerticalAlignTopOutlined
+                    style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
+                />
+            ),
+        },
+        {
+            label: (
+                <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to={"/employee/placement"}
+                >
+                    Размещение
+                </Link>
+            ),
+            key: "placement",
+            icon: (
+                <DatabaseOutlined
                     style={{ fontSize: isSmallScreen ? "24px" : "14px" }}
                 />
             ),

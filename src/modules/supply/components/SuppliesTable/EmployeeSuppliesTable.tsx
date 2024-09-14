@@ -1,7 +1,7 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { padNumbers } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, TableColumnsType, Tag } from "antd";
+import { Button, Select, TableColumnsType } from "antd";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useGetEmployeeSupplies } from "../../queries";
@@ -44,19 +44,62 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
             title: "Статус",
             dataIndex: "status",
             render: (status) => {
-                return <Tag>{status}</Tag>;
+                return (
+                    <Select
+                        defaultValue={status}
+                        onChange={(_, option) => console.log("status", option)}
+                        options={[
+                            { value: null, label: "Не выбрано" },
+                            { value: 1, label: "Принято" },
+                            { value: 2, label: "Брак" },
+                            { value: 3, label: "Отправлено" },
+                            { value: 4, label: "В процессе" },
+                            { value: 5, label: "Ошибка" },
+                            { value: 6, label: "Принято" },
+                        ]}
+                    ></Select>
+                );
             },
         },
         {
-            title: "Кол-во коробок",
-            dataIndex: "box_total_quantity",
+            title: "Заявлено",
+            dataIndex: "declared_products",
         },
         {
-            title: "Кол-во товаров",
-            dataIndex: "product_total_quantity",
+            title: "Принято",
+            dataIndex: "accepted_products",
+        },
+
+        {
+            title: "Ошибка",
+            dataIndex: "fallacy_products",
         },
         {
-            title: "Штрихкоды А4",
+            title: "Брак",
+            dataIndex: "defective_products",
+        },
+
+        {
+            title: "Доверенность",
+            render: (_, record) => {
+                return (
+                    <Link target="_blank" to={record.report_a4}>
+                        <Button
+                            danger
+                            loading={false}
+                            icon={
+                                <DownloadOutlined
+                                    color="#ef7214"
+                                    style={{ color: "#ef7214" }}
+                                />
+                            }
+                        ></Button>
+                    </Link>
+                );
+            },
+        },
+        {
+            title: "Штрихкоды в А4",
             render: (_, record) => {
                 return (
                     <Link target="_blank" to={record.report_a4}>

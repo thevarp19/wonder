@@ -37,7 +37,9 @@ export function getSellerSupplies() {
 }
 
 export function getEmployeeSupplies() {
-    return axiosAuthorized.get<GetEmployeeSupplies[]>(`/api/supply/employee/`);
+    return axiosAuthorized.get<GetEmployeeSupplies[]>(
+        `/api/supply/employee/v2/`
+    );
 }
 
 export function createSupply(data: CreateSupplyRequest) {

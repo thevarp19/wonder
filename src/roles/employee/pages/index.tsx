@@ -9,6 +9,7 @@ import { EmployeeOrderPage } from "./EmployeeOrderPage";
 import { EmployeeOrderShippedPage } from "./EmployeeOrderShippedPage";
 import { EmployeeOrdersPage } from "./EmployeeOrdersPage";
 import { EmployeeOrderTransferPage } from "./EmployeeOrderTransferPage";
+import { EmployeePlacementPage } from "./EmployeePlacementPage";
 import { EmployeeProductSizesPage } from "./EmployeeProductSizesPage";
 import { EmployeeRefundsPage } from "./EmployeeRefundsPage";
 import { EmployeeReportsPage } from "./EmployeeReportsPage";
@@ -30,6 +31,7 @@ export {
     EmployeeOrderShippedPage,
     EmployeeOrdersPage,
     EmployeeOrderTransferPage,
+    EmployeePlacementPage,
     EmployeeProductSizesPage,
     EmployeeRefundsPage,
     EmployeeReportsPage,
