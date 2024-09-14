@@ -109,11 +109,18 @@ export const EmployeePlacementPage: FC<EmployeePlacementPageProps> = ({}) => {
                             </p>
                         </div>
                     </div>
-
-                    <div className="p-5 border border-black rounded-md w-max">
-                        <h4 className="text-lg font-semibold ">
-                            Продукты в ячейке:
-                        </h4>
+                    <div className="flex items-center justify-center w-full h-full mt-5">
+                        <div className="pb-10 w-96">
+                            <Input
+                                disabled
+                                value={barcode}
+                                readOnly
+                                onChange={() => {}}
+                                placeholder="Сканируйте штрих-код"
+                            />
+                        </div>
+                    </div>
+                    <div className="p-1 border border-black rounded-md md:p-5 w-max">
                         {cellInfo.products.length > 0 ? (
                             <table>
                                 <thead>
@@ -144,18 +151,6 @@ export const EmployeePlacementPage: FC<EmployeePlacementPageProps> = ({}) => {
             ) : (
                 <p>Отсканируйте ячейку для получения информации.</p>
             )}
-
-            <div className="flex items-center justify-center w-full h-full mt-5">
-                <div className="w-96 h-96">
-                    <Input
-                        disabled
-                        value={barcode}
-                        readOnly
-                        onChange={() => {}}
-                        placeholder="Сканируйте штрих-код"
-                    />
-                </div>
-            </div>
         </div>
     );
 };
