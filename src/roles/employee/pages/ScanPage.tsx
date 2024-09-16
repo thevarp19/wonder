@@ -43,7 +43,7 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
             });
 
             mutation.mutate(
-                { barcode, defective: defective ? 1 : 0 },
+                { barcode, defective, supplyId: boxInfo.supply },
                 {
                     onSuccess: () => {
                         console.log("Product accepted successfully.");

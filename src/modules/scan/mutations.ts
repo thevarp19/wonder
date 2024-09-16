@@ -9,11 +9,14 @@ export const acceptProductsMutation = () => {
     return useMutation<
         void,
         AxiosError<any>,
-        { barcode: string; defective: number }
+        { supplyId: number; barcode: string; defective: boolean }
     >({
         async mutationFn(values) {
-            console.log("Sending request to accept product:", values);
-            await acceptProductByBarcode(values.barcode, values.defective);
+            await acceptProductByBarcode(
+                values.barcode,
+                values.supplyId,
+                values.defective
+            );
         },
         onSuccess() {
             message.success("Успешно!");

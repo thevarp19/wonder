@@ -9,10 +9,20 @@ export function getCellInfo(barcode: string) {
         `/api/cell/detail-by-barcode/${barcode}/`
     );
 }
-export function acceptProductByBarcode(barcode: string, defective: number = 0) {
-    return axiosAuthorized.post(`/api/supplier-box-product/acceptance/${barcode}/${defective}/
-`);
+export function acceptProductByBarcode(
+    barcode: string,
+    supplyId: number,
+    defective: boolean
+) {
+    return axiosAuthorized.put(
+        `/api/supplier-box-product/acceptance/${barcode}/`,
+        {
+            defective: defective,
+            supplied: supplyId,
+        }
+    );
 }
+
 export function placementProductByBarcode(cellId: number, barcode: string) {
     return axiosAuthorized.post(`/api/supplier-box-product/acceptance/cell/${cellId}/${barcode}/
 

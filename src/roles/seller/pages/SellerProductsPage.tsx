@@ -7,10 +7,20 @@ import {
     useGetExportFile,
 } from "@/modules/product/queries";
 import { useDebounce } from "@/utils/shared.util";
-import { SearchOutlined } from "@ant-design/icons";
-import { App, Button, ConfigProvider, Input, Menu, Select, Spin } from "antd";
+import { InboxOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+    App,
+    Button,
+    ConfigProvider,
+    Input,
+    Menu,
+    Modal,
+    Select,
+    Spin,
+    Upload,
+} from "antd";
 import { MenuProps } from "antd/lib";
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const { Option } = Select;
@@ -34,13 +44,11 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
     const [current, setCurrent] = useState(
         searchParams.get("current") || "prices"
     );
-    const [isPublished, setIsPublished] = useState<boolean | null>(null);
+    const [isPublished, setIsPublished] = useState<boolean>(true);
     const [searchValue, setSearchValue] = useState("");
     const { message } = App.useApp();
     const { refetch: fetchExportFile } = useGetExportFile();
     const [loading, setLoading] = useState(false);
-
-    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const onClick: MenuProps["onClick"] = useCallback((e: any) => {
         setCurrent(e.key);
@@ -64,54 +72,15 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
         }
     }, [fetchExportFile]);
 
-    const handleImportClick = () => {
-        fileInputRef.current?.click();
-    };
-
-    const handleUpload = async (file: File) => {
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append("file", file);
-
-        try {
-            await axiosAuthorized.post(
-                `/api/seller-product-quantity/import-xlsx/`,
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
-            message.success("Файл успешно загружен");
-        } catch (error) {
-            message.error(`${(error as any)?.response?.data.error.message}`);
-            message.error("Ошибка при загрузке файла");
-        }
-    };
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            handleUpload(file);
-        }
-    };
-
     const debouncedSearchValue = useDebounce(searchValue, 500);
 
     const handleChange = (value: string) => {
-        setIsPublished(
-            value === "published"
-                ? true
-                : value === "unpublished"
-                ? false
-                : null
-        );
+        setIsPublished(value === "published" ? true : false);
     };
 
     useEffect(() => {
-        setIsPublished(null);
+        setIsPublished(true);
+        console.log("productCount", productCount);
     }, [productCount]);
 
     const handleUpdate = async () => {
@@ -166,18 +135,7 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                                             >
                                                 Экспорт
                                             </Button>
-                                            <Button
-                                                type="primary"
-                                                onClick={handleImportClick}
-                                            >
-                                                Импорт
-                                            </Button>
-                                            <input
-                                                type="file"
-                                                ref={fileInputRef}
-                                                style={{ display: "none" }}
-                                                onChange={handleFileChange}
-                                            />
+                                            <UploadImportModal />
                                         </div>
                                     )}
                                     <Select
@@ -187,29 +145,25 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                                         value={
                                             isPublished === true
                                                 ? "published"
-                                                : isPublished === false
-                                                ? "unpublished"
-                                                : ""
+                                                : "unpublished"
                                         }
                                     >
-                                        <Option value="">Не выбрано</Option>
+                                        {/* <Option value="">Не выбрано</Option> */}
                                         <Option value="published">
-                                            {`Опубликовано (${
-                                                isPending ? (
-                                                    <Spin size="small" />
-                                                ) : (
-                                                    productCount?.enabled_count
-                                                )
-                                            })`}
+                                            Опубликовано{" "}
+                                            {isPending ? (
+                                                <Spin size="small" />
+                                            ) : (
+                                                `(${productCount?.enabled_count})`
+                                            )}
                                         </Option>
                                         <Option value="unpublished">
-                                            {`Не опубликовано (${
-                                                isPending ? (
-                                                    <Spin size="small" />
-                                                ) : (
-                                                    productCount?.not_enabled_count
-                                                )
-                                            })`}
+                                            Не опубликовано{" "}
+                                            {isPending ? (
+                                                <Spin size="small" />
+                                            ) : (
+                                                `(${productCount?.not_enabled_count})`
+                                            )}
                                         </Option>
                                     </Select>
                                 </div>
@@ -245,5 +199,64 @@ export const SellerProductsPage: FC<SellerProductsPageProps> = ({}) => {
                 )}
             </div>
         </div>
+    );
+};
+export const UploadImportModal: FC = ({}) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { message } = App.useApp();
+    const handleUpload = async (file: File) => {
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            await axiosAuthorized.post(
+                `/api/seller-product-quantity/import-xlsx/`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+            message.success("Файл успешно загружен");
+            setIsModalOpen(false);
+        } catch (error) {
+            message.error(`${(error as any)?.response?.data.error.message}`);
+        }
+        return false;
+    };
+
+    return (
+        <>
+            <Modal
+                title="Импорт"
+                open={isModalOpen}
+                onCancel={() => setIsModalOpen(false)}
+                cancelText="Назад"
+                okButtonProps={{ style: { display: "none" } }}
+                destroyOnClose
+            >
+                <Upload.Dragger
+                    multiple={false}
+                    maxCount={1}
+                    showUploadList={false}
+                    accept=".csv, .xls, .xlsx"
+                    beforeUpload={handleUpload}
+                >
+                    <p className="ant-upload-drag-icon">
+                        <InboxOutlined />
+                    </p>
+                    <p className="ant-upload-text">
+                        Нажмите или перетащите файл в эту область для загрузки
+                    </p>
+                    <p className="ant-upload-hint"></p>
+                </Upload.Dragger>
+            </Modal>{" "}
+            <Button type="primary" onClick={() => setIsModalOpen(true)}>
+                Импорт
+            </Button>
+        </>
     );
 };
