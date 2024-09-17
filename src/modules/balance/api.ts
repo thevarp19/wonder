@@ -1,4 +1,5 @@
 import { axiosAuthorized } from "@/lib/axios";
+import { DeliveryMode } from "../order/types";
 import {
     AddReplenishmentRequest,
     GetAdminReplenishmentResponse,
@@ -20,9 +21,14 @@ export function getSellerReplenishment(page: number = 0, size: number = 10) {
         `/api/replenishment/seller/?page=${page}&size=${size}`
     );
 }
-export function getSellerBalanceStatement(page: number = 0, size: number = 10) {
+export function getSellerBalanceStatement(
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
+) {
     return axiosAuthorized.get<GetSellerBalanceStatementResponse>(
-        `/api/order-seller/payment_history/?page=${page}&size=${size}`
+        `/api/order-seller/payment_history/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
     );
 }
 

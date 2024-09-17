@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { DeliveryMode } from "../order/types";
 import {
     getAdminReplenishment,
     getSellerBalanceStatement,
@@ -41,12 +42,19 @@ export const useGetSellerReplenishment = (
 };
 export const useGetSellerBalanceStatement = (
     page: number = 0,
-    size: number = 10
+    size: number = 10,
+    searchValue: string = "",
+    deliveryMode: DeliveryMode = "ALL"
 ) => {
     return useQuery<GetSellerBalanceStatementResponse>({
-        queryKey: [`seller-statement`, page, size],
+        queryKey: [`seller-statement`, page, size, deliveryMode, searchValue],
         queryFn: async () => {
-            const { data } = await getSellerBalanceStatement(page, size);
+            const { data } = await getSellerBalanceStatement(
+                page,
+                size,
+                searchValue,
+                deliveryMode
+            );
             return data;
         },
     });
