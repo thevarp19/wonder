@@ -216,7 +216,7 @@ const StatusSelect: FC<StatusSelectProps> = ({ record, onStatusChange }) => {
             await mutateAsync({ status: newStatus });
             setStatus(newStatus);
             onStatusChange(record.id, newStatus);
-            message.success("Статус успешно обновлен");
+
             queryClient.invalidateQueries({
                 queryKey: [`orders-employee-assemble`],
             });
@@ -230,6 +230,7 @@ const StatusSelect: FC<StatusSelectProps> = ({ record, onStatusChange }) => {
             value={status}
             loading={isPending}
             onChange={handleStatusChange}
+            className="w-[150px]"
             options={[
                 { value: "Отправлено", label: "Отправлено" },
                 { value: "В процессе", label: "В процессе" },

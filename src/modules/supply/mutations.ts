@@ -67,7 +67,7 @@ export const editSupplyStatusMutation = (supplyId: number) => {
             await editSupplyStatus(supplyId, values);
         },
         onSuccess() {
-            message.success("Успешно!");
+            message.success("Статус успешно обновлен");
         },
         onError(error) {
             message.error(`${error?.response?.data.error.message}`);
