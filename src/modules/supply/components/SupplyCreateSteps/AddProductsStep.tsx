@@ -19,7 +19,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
     const dispatch = useAppDispatch();
     const [searchValue, setSearchValue] = useState("");
     const [isPublished, setIsPublished] = useState<boolean | null>(null);
-    const debouncedSearchValue = useDebounce(searchValue, 500);
+    const debouncedSearchValue = useDebounce(searchValue, 600);
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
         useInfiniteGetProducts(10, debouncedSearchValue, isPublished);
     const { data: productCount, isPending: enabledPending } =
@@ -141,7 +141,7 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                         onPopupScroll={handlePopupScroll}
                         options={data?.pages.flatMap((page) =>
                             page.content.map((product) => ({
-                                label: product.title,
+                                label: `[${product.vendor_code}] - ${product.title} `,
                                 value: product.id,
                             }))
                         )}

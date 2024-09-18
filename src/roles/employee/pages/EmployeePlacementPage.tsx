@@ -109,17 +109,7 @@ export const EmployeePlacementPage: FC<EmployeePlacementPageProps> = ({}) => {
                             </p>
                         </div>
                     </div>
-                    <div className="flex items-center justify-center w-full h-full mt-5">
-                        <div className="pb-10 w-96">
-                            <Input
-                                disabled
-                                value={barcode}
-                                readOnly
-                                onChange={() => {}}
-                                placeholder="Сканируйте штрих-код"
-                            />
-                        </div>
-                    </div>
+
                     <div className="p-1 border border-black rounded-md md:p-5 w-max">
                         {cellInfo.products.length > 0 ? (
                             <table>
@@ -151,6 +141,17 @@ export const EmployeePlacementPage: FC<EmployeePlacementPageProps> = ({}) => {
             ) : (
                 <p>Отсканируйте ячейку для получения информации.</p>
             )}
+            <div className="flex items-center justify-center w-full h-full mt-5">
+                <div className="pb-10 w-96">
+                    <Input
+                        disabled
+                        value={barcode}
+                        readOnly
+                        onChange={() => {}}
+                        placeholder="Сканируйте штрих-код"
+                    />
+                </div>
+            </div>
         </div>
     );
 };

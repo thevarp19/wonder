@@ -3,7 +3,7 @@ import { axiosAuthorized } from "@/lib/axios";
 import { padNumbers } from "@/utils/shared.util";
 import { DownloadOutlined, UploadOutlined } from "@ant-design/icons";
 import { useQueryClient } from "@tanstack/react-query";
-import { App, Button, Modal, Select, TableColumnsType } from "antd";
+import { App, Button, Modal, TableColumnsType, Tag } from "antd";
 import { RcFile } from "antd/es/upload";
 import { Upload } from "antd/lib";
 import { FC, useState } from "react";
@@ -50,21 +50,7 @@ export const SellerSuppliesTable: FC<SellerSuppliesTableProps> = ({}) => {
             title: "Статус",
             dataIndex: "status",
             render: (status) => {
-                return (
-                    <Select
-                        defaultValue={status}
-                        onChange={(_, option) => console.log("status", option)}
-                        options={[
-                            { value: null, label: "Не выбрано" },
-                            { value: 1, label: "Принято" },
-                            { value: 2, label: "Брак" },
-                            { value: 3, label: "Отправлено" },
-                            { value: 4, label: "В процессе" },
-                            { value: 5, label: "Ошибка" },
-                            { value: 6, label: "Принято" },
-                        ]}
-                    ></Select>
-                );
+                return <Tag>{status}</Tag>;
             },
         },
         {

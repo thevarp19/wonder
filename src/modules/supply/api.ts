@@ -60,6 +60,13 @@ export function acceptSupplyProducts(
         values
     );
 }
+export function editSupplyStatus(supplyId: number, values: { status: string }) {
+    return axiosAuthorized.put(
+        `/api/supply/employee/edit/${supplyId}/`,
+        values
+    );
+}
+
 export function getSupplyReport(id: number) {
     return axiosAuthorized.get<GetSupplyReport>(
         `/api/supplies/seller/report/${id}`

@@ -1,10 +1,12 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { padNumbers } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, Select, TableColumnsType, Tooltip } from "antd";
-import { FC, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { App, Button, Select, TableColumnsType, Tooltip } from "antd";
+import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
+import { editSupplyStatusMutation } from "../../mutations";
 import { useGetEmployeeSupplies } from "../../queries";
 import { GetEmployeeSuppliesContent } from "../../types";
 
@@ -13,8 +15,22 @@ interface EmployeeSuppliesTableProps {}
 export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
     const [page, setPage] = useState(0);
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
-
     const { data, isPending } = useGetEmployeeSupplies(page, 10);
+    const [localData, setLocalData] = useState<GetEmployeeSuppliesContent[]>(
+        []
+    );
+    useEffect(() => {
+        if (data?.content) {
+            setLocalData(data.content);
+        }
+    }, [data]);
+    const handleStatusChange = (id: number, newStatus: string) => {
+        setLocalData((prevData) =>
+            prevData.map((item) =>
+                item.id === id ? { ...item, status: newStatus } : item
+            )
+        );
+    };
 
     const columns: TableColumnsType<GetEmployeeSuppliesContent> = [
         {
@@ -47,21 +63,12 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
         {
             title: "Статус",
             dataIndex: "status",
-            render: (status) => {
+            render: (_, record) => {
                 return (
-                    <Select
-                        defaultValue={status}
-                        onChange={(_, option) => console.log("status", option)}
-                        options={[
-                            { value: null, label: "Не выбрано" },
-                            { value: 1, label: "Принято" },
-                            { value: 2, label: "Брак" },
-                            { value: 3, label: "Отправлено" },
-                            { value: 4, label: "В процессе" },
-                            { value: 5, label: "Ошибка" },
-                            { value: 6, label: "Принято" },
-                        ]}
-                    ></Select>
+                    <StatusSelect
+                        record={record}
+                        onStatusChange={handleStatusChange}
+                    />
                 );
             },
         },
@@ -177,7 +184,7 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
         <CustomTable
             loading={isPending}
             columns={columns}
-            dataSource={data?.content}
+            dataSource={localData}
             rowKey={(record) => record.id}
             pagination={{
                 pageSize: 10,
@@ -190,6 +197,46 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
                 position: isSmallScreen ? ["bottomCenter"] : undefined,
             }}
             scroll={{ x: "max-content" }}
+        />
+    );
+};
+interface StatusSelectProps {
+    record: GetEmployeeSuppliesContent;
+    onStatusChange: (id: number, newStatus: string) => void;
+}
+
+const StatusSelect: FC<StatusSelectProps> = ({ record, onStatusChange }) => {
+    const [status, setStatus] = useState(record.status);
+    const { isPending, mutateAsync } = editSupplyStatusMutation(record.id);
+    const { message } = App.useApp();
+    const queryClient = useQueryClient();
+
+    const handleStatusChange = async (newStatus: string) => {
+        try {
+            await mutateAsync({ status: newStatus });
+            setStatus(newStatus);
+            onStatusChange(record.id, newStatus);
+            message.success("Статус успешно обновлен");
+            queryClient.invalidateQueries({
+                queryKey: [`orders-employee-assemble`],
+            });
+        } catch (error) {
+            message.error("Не удалось обновить статус");
+        }
+    };
+
+    return (
+        <Select
+            value={status}
+            loading={isPending}
+            onChange={handleStatusChange}
+            options={[
+                { value: "Отправлено", label: "Отправлено" },
+                { value: "В процессе", label: "В процессе" },
+                { value: "Брак", label: "Брак" },
+                { value: "Ошибка", label: "Ошибка" },
+                { value: "Принято", label: "Принято" },
+            ]}
         />
     );
 };

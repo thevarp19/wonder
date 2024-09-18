@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { App } from "antd";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { acceptSupplyProducts, createSupply } from "./api";
+import { acceptSupplyProducts, createSupply, editSupplyStatus } from "./api";
 import {
     AcceptSupplyProductRequest,
     CreateSupplyRequest,
@@ -52,6 +52,22 @@ export const acceptSupplyMutation = (
             if (onSuccess) {
                 onSuccess();
             }
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.error.message}`);
+        },
+    });
+};
+
+export const editSupplyStatusMutation = (supplyId: number) => {
+    const { message } = App.useApp();
+
+    return useMutation<void, AxiosError<any>, { status: string }>({
+        async mutationFn(values) {
+            await editSupplyStatus(supplyId, values);
+        },
+        onSuccess() {
+            message.success("Успешно!");
         },
         onError(error) {
             message.error(`${error?.response?.data.error.message}`);

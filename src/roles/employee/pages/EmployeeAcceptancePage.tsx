@@ -1,26 +1,49 @@
 import { acceptProductsMutation } from "@/modules/scan/mutations";
 import { useGetScanInfo } from "@/modules/scan/queries";
 import { GetScanInfo } from "@/modules/scan/types";
-import { Button, Checkbox, Input } from "antd";
-import { FC, useState } from "react";
+import { Checkbox, Input } from "antd";
+import { FC, useEffect, useState } from "react";
 
 interface EmployeeAcceptancePageProps {}
 
+const getBarcodeType = (barcode: string): "CELL" | "PRODUCT" | "BOX" | null => {
+    if (barcode.startsWith("C")) return "CELL";
+    if (barcode.startsWith("P")) return "PRODUCT";
+    if (barcode.startsWith("B")) return "BOX";
+    return null;
+};
 export const EmployeeAcceptancePage: FC<EmployeeAcceptancePageProps> = ({}) => {
     const [barcode, setBarcode] = useState<string>("");
     const [defective, setDefective] = useState<boolean>(false);
     const [boxInfo, setBoxInfo] = useState<GetScanInfo | null>(null);
-
     const mutation = acceptProductsMutation();
     const { refetch } = useGetScanInfo(barcode);
 
+    useEffect(() => {
+        const handleKeyPress = (event: KeyboardEvent) => {
+            if (event.key === "Enter") {
+                handleBarcodeScan();
+            } else {
+                setBarcode((prevBarcode) => prevBarcode + event.key);
+            }
+        };
+
+        window.addEventListener("keypress", handleKeyPress);
+
+        return () => {
+            window.removeEventListener("keypress", handleKeyPress);
+        };
+    }, [barcode]);
+
     const handleBarcodeScan = async () => {
-        if (barcode.startsWith("B") || (barcode.startsWith("P") && !boxInfo)) {
+        const barcodeType = getBarcodeType(barcode);
+
+        if (barcodeType === "BOX" || (barcodeType === "PRODUCT" && !boxInfo)) {
             const result = await refetch();
             if (result.data) {
                 setBoxInfo(result.data);
             }
-        } else if (barcode.startsWith("P") && boxInfo) {
+        } else if (barcodeType === "PRODUCT" && boxInfo) {
             mutation.mutate({ barcode, defective, supplyId: boxInfo.supply });
         }
 
@@ -86,16 +109,15 @@ export const EmployeeAcceptancePage: FC<EmployeeAcceptancePageProps> = ({}) => {
                 <p>Отсканируйте коробку для получения информации.</p>
             )}
 
-            <div className="flex flex-col items-center w-full h-full mt-10">
-                <div className="flex gap-5 mb-4 w-96">
+            <div className="flex items-center justify-center w-full h-full mt-10">
+                <div className="flex gap-5 mb-4 w-96 ">
                     <Input
+                        disabled
                         value={barcode}
-                        onChange={(e) => setBarcode(e.target.value)}
-                        placeholder="Введите штрих-код"
+                        readOnly
+                        onChange={() => {}}
+                        placeholder="Сканируйте штрих-код"
                     />
-                    <Button type="primary" onClick={handleBarcodeScan}>
-                        Ввод
-                    </Button>
                 </div>
             </div>
         </div>

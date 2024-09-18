@@ -30,14 +30,14 @@ export const EmployeeSuppliesPage: FC<EmployeeSuppliesPageProps> = ({}) => {
                     </div>
                 </div>
             </div>
-            <Link to={"/employee/scan"} className="w-full">
+            <Link to={"/employee/scan"} target="_blank" className="w-full">
                 <div className="flex items-center justify-center bg-[#EF7214] rounded-md cursor-pointer py-[20px] md:w-max w-full md:max-h-[32px] max-h-[47px] gap-2 px-6">
                     <Image
                         src={scan}
                         alt="scan"
                         className={cn("min-w-4 h-4")}
                     />
-                    <h2 className="text-white ">Начать сканирование</h2>
+                    <h2 className="text-white">Начать сканирование</h2>
                 </div>
             </Link>
             <EmployeeSuppliesTable />
