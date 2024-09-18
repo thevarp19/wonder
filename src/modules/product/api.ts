@@ -3,9 +3,9 @@ import { LoginRequest } from "../auth/types";
 import { UpdateProductSizeRequest } from "../store/types";
 import {
     ChangeProductPriceRequest,
-    GetProductContent,
     GetProductCoverResponse,
     GetProductPricesResponse,
+    GetProductResponse,
     GetProductsByParamsResponse,
     GetProductsWithSizesResponse,
     ProductEnabledCount,
@@ -20,22 +20,33 @@ export function createProductsFromFile(formData: FormData, importType: string) {
 }
 
 export function getProductsQuantity(
-    cityId: number = 1,
-    isPublished: boolean | null = null
+    page: number = 0,
+    size: number = 10,
+    cityId: number,
+    isPublished: boolean | null = true
 ) {
-    let url = `/api/seller-city-product-price-quantity/?city=${cityId}`;
+    let url = `/api/seller-product/warehose-quantity/?page=${page}&size=${size}&city=${cityId}`;
     if (isPublished !== null) {
         url += `&is_published=${isPublished}`;
     }
-    return axiosAuthorized.get<GetProductContent[]>(url);
+    return axiosAuthorized.get<GetProductResponse>(url);
 }
 
 export async function getProductsOptions({
-    pageParam = 1,
+    pageParam = 0,
     pageSize = 10,
     searchValue = "",
-}) {
-    let url = `/api/seller-product/cover/?page=${pageParam}&size=${pageSize}&title=${searchValue}`;
+    isPublished,
+}: {
+    pageParam?: number;
+    pageSize?: number;
+    searchValue?: string;
+    isPublished?: boolean | null;
+}): Promise<GetProductCoverResponse> {
+    let url = `/api/seller-product/cover/v2/?page=${pageParam}&size=${pageSize}&search=${searchValue}`;
+    if (isPublished !== undefined) {
+        url += `&is_published=${isPublished}`;
+    }
     const { data } = await axiosAuthorized.get<GetProductCoverResponse>(url);
     return data;
 }

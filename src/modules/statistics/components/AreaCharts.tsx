@@ -1,5 +1,5 @@
 import { Spin } from "antd";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
 import {
     Area,
@@ -74,9 +74,7 @@ export const AreaCharts: FC<AreaChartsProps> = ({
         ...item,
         creation_datetime: formatLocalDate(item.creation_datetime, duration),
     }));
-    useEffect(() => {
-        console.log(formattedData);
-    }, [formattedData]);
+
     if (loading) {
         <div className="flex items-center justify-center">
             <Spin size="large" />

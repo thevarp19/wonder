@@ -1,3 +1,10 @@
+import { BasePaginationResponse } from "@/types";
+
+export interface GetEmployeeSupplies
+    extends BasePaginationResponse<GetEmployeeSuppliesContent> {}
+export interface GetSellerSupplies
+    extends BasePaginationResponse<GetSellerSuppliesContent> {}
+
 export interface GetSupplyById {
     article: string;
     name: string;
@@ -30,19 +37,18 @@ export interface SupplyEmployeeProduct {
     status: string;
 }
 
-export interface GetEmployeeSupplies {
+export interface GetEmployeeSuppliesContent {
     id: number;
-    seller_phone: string;
     seller_store: string;
-    declared_products: string;
-    accepted_products: string;
-    fallacy_products: string;
-    defective_products: string;
+    seller_phone: string;
+    box_total_quantity: string;
+    product_total_quantity: string;
     created_at: string;
     date: string;
     report_a4: string;
     report_row: string;
     status: string;
+    power_of_attorney: string;
 }
 
 export interface CreateSupplyResponse {
@@ -78,7 +84,7 @@ export interface SupplyBoxProduct {
     productStateInStore: string;
 }
 
-export interface GetSellerSupply {
+export interface GetSellerSuppliesContent {
     id: number;
     seller_warehouse: string;
     created_at: string;
@@ -86,6 +92,7 @@ export interface GetSellerSupply {
     report_a4: string;
     report_row: string;
     status: string;
+    power_of_attorney: string;
 }
 export type SupplyState =
     | "START"

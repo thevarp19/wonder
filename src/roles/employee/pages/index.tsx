@@ -1,3 +1,4 @@
+import { EmployeeAcceptancePage } from "./EmployeeAcceptancePage";
 import { EmployeeArchiveOrdersPage } from "./EmployeeArchiveOrdersPage";
 import { EmployeeCreateReportPage } from "./EmployeeCreateReportPage";
 import { EmployeeLoginPage } from "./EmployeeLoginPage";
@@ -16,10 +17,10 @@ import { EmployeeReportsPage } from "./EmployeeReportsPage";
 import { EmployeeSearchPage } from "./EmployeeSearchPage";
 import { EmployeeSuppliesPage } from "./EmployeeSuppliesPage";
 import { EmployeeUpdateReportPage } from "./EmployeeUpdateReportPage";
-import { ScanPage } from "./ScanPage";
 import { SupplyDetailsPage } from "./SupplyDetailsPage";
 
 export {
+    EmployeeAcceptancePage,
     EmployeeArchiveOrdersPage,
     EmployeeCreateReportPage,
     EmployeeLoginPage,
@@ -38,6 +39,5 @@ export {
     EmployeeSearchPage,
     EmployeeSuppliesPage,
     EmployeeUpdateReportPage,
-    ScanPage,
     SupplyDetailsPage,
 };

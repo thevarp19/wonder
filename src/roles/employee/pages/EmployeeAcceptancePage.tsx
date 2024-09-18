@@ -1,34 +1,18 @@
 import { acceptProductsMutation } from "@/modules/scan/mutations";
 import { useGetScanInfo } from "@/modules/scan/queries";
 import { GetScanInfo } from "@/modules/scan/types";
-import { App, Checkbox, Input } from "antd";
-import { FC, useEffect, useState } from "react";
+import { Button, Checkbox, Input } from "antd";
+import { FC, useState } from "react";
 
-interface ScanPageProps {}
+interface EmployeeAcceptancePageProps {}
 
-export const ScanPage: FC<ScanPageProps> = ({}) => {
+export const EmployeeAcceptancePage: FC<EmployeeAcceptancePageProps> = ({}) => {
     const [barcode, setBarcode] = useState<string>("");
     const [defective, setDefective] = useState<boolean>(false);
     const [boxInfo, setBoxInfo] = useState<GetScanInfo | null>(null);
-    const { message } = App.useApp();
+
     const mutation = acceptProductsMutation();
     const { refetch } = useGetScanInfo(barcode);
-
-    useEffect(() => {
-        const handleKeyPress = (event: KeyboardEvent) => {
-            if (event.key === "Enter") {
-                handleBarcodeScan();
-            } else {
-                setBarcode((prevBarcode) => prevBarcode + event.key);
-            }
-        };
-
-        window.addEventListener("keypress", handleKeyPress);
-
-        return () => {
-            window.removeEventListener("keypress", handleKeyPress);
-        };
-    }, [barcode]);
 
     const handleBarcodeScan = async () => {
         if (barcode.startsWith("B") || (barcode.startsWith("P") && !boxInfo)) {
@@ -37,25 +21,7 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
                 setBoxInfo(result.data);
             }
         } else if (barcode.startsWith("P") && boxInfo) {
-            console.log("Attempting to accept product:", {
-                barcode,
-                defective,
-            });
-
-            mutation.mutate(
-                { barcode, defective, supplyId: boxInfo.supply },
-                {
-                    onSuccess: () => {
-                        console.log("Product accepted successfully.");
-                    },
-                    onError: (error) => {
-                        console.error("Error accepting product:", error);
-                        message.error(
-                            "Ошибка при принятии продукта. Пожалуйста, попробуйте снова."
-                        );
-                    },
-                }
-            );
+            mutation.mutate({ barcode, defective, supplyId: boxInfo.supply });
         }
 
         setBarcode("");
@@ -66,7 +32,7 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
             <h2 className="pb-2 text-lg font-semibold">Сканирование</h2>
 
             {boxInfo ? (
-                <div>
+                <div className="p-5 border border-black rounded-lg">
                     <div className="grid grid-cols-2 gap-4 mb-4 text-base">
                         <div>
                             <p>
@@ -107,7 +73,7 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
                         </div>
                     </div>
 
-                    <div className="mb-4">
+                    <div className="flex justify-center mb-4">
                         <Checkbox
                             checked={defective}
                             onChange={(e) => setDefective(e.target.checked)}
@@ -120,15 +86,16 @@ export const ScanPage: FC<ScanPageProps> = ({}) => {
                 <p>Отсканируйте коробку для получения информации.</p>
             )}
 
-            <div className="flex items-center justify-center w-full h-full">
-                <div className="w-96 h-96">
+            <div className="flex flex-col items-center w-full h-full mt-10">
+                <div className="flex gap-5 mb-4 w-96">
                     <Input
-                        disabled
                         value={barcode}
-                        readOnly
-                        onChange={() => {}}
-                        placeholder="Сканируйте штрих-код"
+                        onChange={(e) => setBarcode(e.target.value)}
+                        placeholder="Введите штрих-код"
                     />
+                    <Button type="primary" onClick={handleBarcodeScan}>
+                        Ввод
+                    </Button>
                 </div>
             </div>
         </div>

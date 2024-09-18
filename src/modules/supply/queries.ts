@@ -8,7 +8,7 @@ import {
 } from "./api";
 import {
     GetEmployeeSupplies,
-    GetSellerSupply,
+    GetSellerSupplies,
     GetSupplyById,
     GetSupplyProducts,
 } from "./types";
@@ -64,20 +64,20 @@ export const useGetSupplyBox = (boxBarCode: number) => {
     });
 };
 
-export const useGetSellerSupplies = () => {
-    return useQuery<GetSellerSupply[]>({
-        queryKey: [`seller-supplies`],
+export const useGetSellerSupplies = (page: number = 0, size: number = 10) => {
+    return useQuery<GetSellerSupplies>({
+        queryKey: [`seller-supplies`, page, size],
         queryFn: async () => {
-            const { data } = await getSellerSupplies();
+            const { data } = await getSellerSupplies(page, size);
             return data;
         },
     });
 };
-export const useGetEmployeeSupplies = () => {
-    return useQuery<GetEmployeeSupplies[]>({
-        queryKey: [`employee-supplies`],
+export const useGetEmployeeSupplies = (page: number = 0, size: number = 10) => {
+    return useQuery<GetEmployeeSupplies>({
+        queryKey: [`employee-supplies`, page, size],
         queryFn: async () => {
-            const { data } = await getEmployeeSupplies();
+            const { data } = await getEmployeeSupplies(page, size);
             return data;
         },
     });

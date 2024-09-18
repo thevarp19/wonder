@@ -10,9 +10,9 @@ import {
     getSellerActiveCities,
 } from "./api";
 import {
-    GetProductContent,
     GetProductCoverResponse,
     GetProductPricesResponse,
+    GetProductResponse,
     GetProductsByParamsResponse,
     GetProductsWithSizesResponse,
     ProductEnabledCount,
@@ -20,27 +20,39 @@ import {
 } from "./types";
 
 export const useGetProducts = (
+    page: number = 0,
+    size: number = 10,
     cityId: number,
-    isPublished: boolean | null = null
+    isPublished: boolean | null
 ) => {
-    return useQuery<GetProductContent[]>({
-        queryKey: [`products`, cityId, isPublished],
+    return useQuery<GetProductResponse>({
+        queryKey: [`products-quantity`, page, size, cityId, isPublished],
         queryFn: async () => {
-            const { data } = await getProductsQuantity(cityId, isPublished);
+            const { data } = await getProductsQuantity(
+                page,
+                size,
+                cityId,
+                isPublished
+            );
             return data;
         },
     });
 };
-export const useInfiniteGetProducts = (pageSize = 10, searchValue = "") => {
+export const useInfiniteGetProducts = (
+    pageSize: number = 10,
+    searchValue: string = "",
+    isPublished?: boolean | null
+) => {
     return useInfiniteQuery<GetProductCoverResponse>({
-        queryKey: ["products", searchValue],
-        queryFn: ({ pageParam = 1 }: any) =>
+        queryKey: ["products", searchValue, pageSize, isPublished],
+        queryFn: ({ pageParam = 0 }: any) =>
             getProductsOptions({
                 pageParam,
                 pageSize,
                 searchValue,
+                isPublished,
             }),
-        initialPageParam: 1,
+        initialPageParam: 0,
         getNextPageParam: (lastPage) => {
             return lastPage.last ? undefined : lastPage.page + 1;
         },

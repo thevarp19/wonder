@@ -19,18 +19,15 @@ export const acceptProductsMutation = () => {
             );
         },
         onSuccess() {
-            message.success("Успешно!");
+            message.success("Продукт успешно принят.");
 
             queryClient.invalidateQueries({
                 queryKey: [`employee-supplies`],
             });
         },
         onError(error) {
-            console.error("Error in mutation:", error);
             message.error(
-                `Error: ${
-                    error?.response?.data.error.message || "Unknown error"
-                }`
+                `${error?.response?.data.error.message || "Unknown error"}`
             );
         },
     });
@@ -44,7 +41,6 @@ export const placementProductsMutation = () => {
         { cellId: number; barcode: string }
     >({
         async mutationFn(values) {
-            console.log("Sending request to accept product:", values);
             await placementProductByBarcode(values.cellId, values.barcode);
         },
         onSuccess() {
@@ -58,11 +54,8 @@ export const placementProductsMutation = () => {
             });
         },
         onError(error) {
-            console.error("Error in mutation:", error);
             message.error(
-                `Error: ${
-                    error?.response?.data.error.message || "Unknown error"
-                }`
+                `${error?.response?.data.error.message || "Unknown error"}`
             );
         },
     });

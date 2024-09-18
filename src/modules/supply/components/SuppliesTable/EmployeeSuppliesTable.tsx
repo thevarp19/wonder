@@ -1,18 +1,22 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { padNumbers } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, Select, TableColumnsType } from "antd";
-import { FC } from "react";
+import { Button, Select, TableColumnsType, Tooltip } from "antd";
+import { FC, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { useGetEmployeeSupplies } from "../../queries";
-import { GetEmployeeSupplies } from "../../types";
+import { GetEmployeeSuppliesContent } from "../../types";
 
 interface EmployeeSuppliesTableProps {}
 
 export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
-    const { data, isPending } = useGetEmployeeSupplies();
+    const [page, setPage] = useState(0);
+    const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
-    const columns: TableColumnsType<GetEmployeeSupplies> = [
+    const { data, isPending } = useGetEmployeeSupplies(page, 10);
+
+    const columns: TableColumnsType<GetEmployeeSuppliesContent> = [
         {
             title: "ID заявки",
             dataIndex: "id",
@@ -25,7 +29,7 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
 
         {
             title: "Номер продавца",
-            dataIndex: "seller_cell_phone",
+            dataIndex: "seller_phone",
         },
         {
             title: "Название магазина",
@@ -78,15 +82,14 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
             title: "Брак",
             dataIndex: "defective_products",
         },
-
         {
             title: "Доверенность",
+            dataIndex: "power_of_attorney",
             render: (_, record) => {
-                return (
-                    <Link target="_blank" to={record.report_a4}>
+                return record.power_of_attorney ? (
+                    <Link target="_blank" to={record.power_of_attorney}>
                         <Button
                             danger
-                            loading={false}
                             icon={
                                 <DownloadOutlined
                                     color="#ef7214"
@@ -95,6 +98,19 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
                             }
                         ></Button>
                     </Link>
+                ) : (
+                    <Tooltip title="Доверенность отсутствует">
+                        <Button
+                            danger
+                            icon={
+                                <DownloadOutlined
+                                    color="#000000"
+                                    style={{ color: "#000000" }}
+                                />
+                            }
+                            disabled
+                        ></Button>
+                    </Tooltip>
                 );
             },
         },
@@ -161,8 +177,18 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
         <CustomTable
             loading={isPending}
             columns={columns}
-            dataSource={data}
-            rowKey={"id"}
+            dataSource={data?.content}
+            rowKey={(record) => record.id}
+            pagination={{
+                pageSize: 10,
+                total: data?.totalElements,
+                showSizeChanger: false,
+                onChange(page) {
+                    setPage(page - 1);
+                },
+                current: page + 1,
+                position: isSmallScreen ? ["bottomCenter"] : undefined,
+            }}
             scroll={{ x: "max-content" }}
         />
     );

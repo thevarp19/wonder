@@ -1,24 +1,41 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { DeleteButton } from "@/components/ui/DeleteButton";
-import { useInfiniteGetProducts } from "@/modules/product/queries";
+import {
+    useGetEnabledProductCount,
+    useInfiniteGetProducts,
+} from "@/modules/product/queries";
 import { useAppDispatch } from "@/redux/utils";
 import * as actions from "@/roles/seller/redux/supply/actions";
 import { useSupplyProducts } from "@/roles/seller/redux/supply/selectors";
 import { ProductQuantity } from "@/roles/seller/types/supply";
 import { cn, useDebounce } from "@/utils/shared.util";
-import { Form, InputNumber, Select, TableColumnsType } from "antd";
-import { FC, useState } from "react";
-
+import { Form, InputNumber, Select, Spin, TableColumnsType } from "antd";
+import { FC, useEffect, useState } from "react";
+const { Option } = Select;
 interface AddProductsStepProps {}
 
 export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
     const products = useSupplyProducts();
     const dispatch = useAppDispatch();
     const [searchValue, setSearchValue] = useState("");
+    const [isPublished, setIsPublished] = useState<boolean | null>(null);
     const debouncedSearchValue = useDebounce(searchValue, 500);
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
-        useInfiniteGetProducts(10, debouncedSearchValue);
-
+        useInfiniteGetProducts(10, debouncedSearchValue, isPublished);
+    const { data: productCount, isPending: enabledPending } =
+        useGetEnabledProductCount();
+    const handleSelectChange = (value: string) => {
+        setIsPublished(
+            value === "published"
+                ? true
+                : value === "unpublished"
+                ? false
+                : null
+        );
+    };
+    useEffect(() => {
+        setIsPublished(null);
+    }, [searchValue]);
     const columns: TableColumnsType<ProductQuantity> = [
         {
             title: "Артикул",
@@ -96,46 +113,80 @@ export const AddProductsStep: FC<AddProductsStepProps> = ({}) => {
                     />
                 </Modal> */}
             </div>
-            <Form.Item className="w-full !mb-4">
+            <div className="flex gap-5">
+                <Form.Item className="w-full !mb-4">
+                    <Select
+                        className="w-full"
+                        mode="multiple"
+                        allowClear
+                        loading={isPending}
+                        value={products.map((e: any) => e.product.id)}
+                        onSelect={(value) => {
+                            const p = data?.pages
+                                .flatMap((page) => page.content)
+                                .find((product) => product.id === value);
+                            p &&
+                                dispatch(
+                                    actions.addProduct({
+                                        ...p,
+                                        price: "",
+                                    })
+                                );
+                        }}
+                        onDeselect={(value) => {
+                            dispatch(actions.removeProduct(Number(value)));
+                        }}
+                        searchValue={searchValue}
+                        onSearch={setSearchValue}
+                        onPopupScroll={handlePopupScroll}
+                        options={data?.pages.flatMap((page) =>
+                            page.content.map((product) => ({
+                                label: product.title,
+                                value: product.id,
+                            }))
+                        )}
+                        filterOption={(input, option) =>
+                            !!option?.label
+                                ?.toString()
+                                .toLowerCase()
+                                .includes(input.toLowerCase())
+                        }
+                    />
+                </Form.Item>
                 <Select
-                    className="w-full"
-                    mode="multiple"
-                    allowClear
-                    loading={isPending}
-                    value={products.map((e: any) => e.product.id)}
-                    onSelect={(value) => {
-                        const p = data?.pages
-                            .flatMap((page) => page.content)
-                            .find((product) => product.id === value);
-                        p &&
-                            dispatch(
-                                actions.addProduct({
-                                    ...p,
-                                    warehouse_quantities: [],
-                                    price: "",
-                                })
-                            );
-                    }}
-                    onDeselect={(value) => {
-                        dispatch(actions.removeProduct(Number(value)));
-                    }}
-                    searchValue={searchValue}
-                    onSearch={setSearchValue}
-                    onPopupScroll={handlePopupScroll}
-                    options={data?.pages.flatMap((page) =>
-                        page.content.map((product) => ({
-                            label: product.title,
-                            value: product.id,
-                        }))
-                    )}
-                    filterOption={(input, option) =>
-                        !!option?.label
-                            ?.toString()
-                            .toLowerCase()
-                            .includes(input.toLowerCase())
+                    className="!min-w-[200px]"
+                    placeholder="Статус"
+                    onChange={handleSelectChange}
+                    value={
+                        isPublished === true
+                            ? "published"
+                            : isPublished === false
+                            ? "unpublished"
+                            : ""
                     }
-                />
-            </Form.Item>
+                >
+                    <Option value="">Не выбрано</Option>
+                    <Option value="published">
+                        {`Опубликовано (${
+                            enabledPending ? (
+                                <Spin size="small" />
+                            ) : (
+                                productCount?.enabled_count
+                            )
+                        })`}
+                    </Option>
+                    <Option value="unpublished">
+                        {`Не опубликовано (${
+                            enabledPending ? (
+                                <Spin size="small" />
+                            ) : (
+                                productCount?.not_enabled_count
+                            )
+                        })`}
+                    </Option>
+                </Select>
+            </div>
+
             <CustomTable
                 pagination={false}
                 columns={columns}

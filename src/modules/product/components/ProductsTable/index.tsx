@@ -1,5 +1,6 @@
 import { CustomTable } from "@/components/ui/CustomTable";
 import { Loading } from "@/components/ui/Loading";
+import { PriceCell } from "@/components/ui/PriceCell";
 import { Button, ConfigProvider, Modal, Select, TableColumnsType } from "antd";
 import { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -14,37 +15,16 @@ interface ProductsTableProps {
 export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
     const [selectedCity, setSelectedCity] = useState<number | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [page, setPage] = useState(0);
     const { data: cities, isPending: cityPending } = useGetActiveCities();
 
     const { data: products, isPending } = useGetProducts(
+        page,
+        10,
         selectedCity ?? 0,
         isPublished
     );
-    // const products = [
-    //     {
-    //         id: 393223,
-    //         warehouse_quantities: [
-    //             { quantity: 10, kaspi_warehouse_id: "PP2" },
-    //             { quantity: 14, kaspi_warehouse_id: "PP3" },
-    //             { quantity: 9, kaspi_warehouse_id: "PP5" },
-    //         ],
-    //         vendor_code: "121216142_668012306",
-    //         title: "Super Crest SCT-8050 черный",
-    //         price: "18490",
-    //     },
-    //     {
-    //         id: 393233,
-    //         warehouse_quantities: [
-    //             { quantity: 11, kaspi_warehouse_id: "PP1" },
-    //             { quantity: 4, kaspi_warehouse_id: "PP2" },
-    //             { quantity: 5, kaspi_warehouse_id: "PP9" },
-    //         ],
-    //         vendor_code: "121216142_668012306",
-    //         title: "Super Crest SCT-8050 черный",
-    //         price: "18490",
-    //     },
-    // ];
+
     const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
 
     const columns: TableColumnsType<GetProductContent> = useMemo(() => {
@@ -62,13 +42,15 @@ export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
             {
                 title: "Цена",
                 dataIndex: "price",
-                key: "price",
+                render: (_, record) => (
+                    <PriceCell price={Number(record.price)} />
+                ),
             },
         ];
 
         const warehouseIds = new Set<string>();
-        products?.forEach((product) => {
-            product.warehouse_quantities.forEach((warehouse) => {
+        products?.content?.forEach((product: GetProductContent) => {
+            product?.seller_warehouse_quantities?.forEach((warehouse: any) => {
                 warehouseIds.add(warehouse.kaspi_warehouse_id);
             });
         });
@@ -79,7 +61,7 @@ export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
                 dataIndex: `warehouse_${warehouseId}`,
                 key: `warehouse_${warehouseId}`,
                 render: (_: unknown, record: GetProductContent) => {
-                    const quantity = record.warehouse_quantities.find(
+                    const quantity = record.seller_warehouse_quantities?.find(
                         (wq) => wq.kaspi_warehouse_id === warehouseId
                     )?.quantity;
                     return quantity ?? "-";
@@ -134,9 +116,16 @@ export const ProductsTable: FC<ProductsTableProps> = ({ isPublished }) => {
                 <CustomTable
                     columns={columns}
                     loading={cityPending}
-                    dataSource={products ?? []}
+                    dataSource={products?.content ?? []}
                     rowKey={(record) => record.vendor_code}
                     pagination={{
+                        pageSize: 10,
+                        total: products?.totalElements,
+                        showSizeChanger: false,
+                        onChange(page) {
+                            setPage(page - 1);
+                        },
+                        current: page + 1,
                         position: isSmallScreen ? ["bottomCenter"] : undefined,
                     }}
                     scroll={{ x: "max-content" }}

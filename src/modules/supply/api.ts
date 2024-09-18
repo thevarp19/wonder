@@ -4,7 +4,7 @@ import {
     CreateSupplyRequest,
     CreateSupplyResponse,
     GetEmployeeSupplies,
-    GetSellerSupply,
+    GetSellerSupplies,
     GetSupplyById,
     GetSupplyProducts,
     GetSupplyReport,
@@ -32,13 +32,15 @@ export function getSupplyBox(boxBarCode: number) {
     );
 }
 
-export function getSellerSupplies() {
-    return axiosAuthorized.get<GetSellerSupply[]>(`/api/supply/seller/`);
+export function getSellerSupplies(page: number = 0, size: number = 10) {
+    return axiosAuthorized.get<GetSellerSupplies>(
+        `/api/supply/seller/?page=${page}&size=${size}`
+    );
 }
 
-export function getEmployeeSupplies() {
-    return axiosAuthorized.get<GetEmployeeSupplies[]>(
-        `/api/supply/employee/v2/`
+export function getEmployeeSupplies(page: number = 0, size: number = 10) {
+    return axiosAuthorized.get<GetEmployeeSupplies>(
+        `/api/supply/employee/v2/?page=${page}&size=${size}`
     );
 }
 

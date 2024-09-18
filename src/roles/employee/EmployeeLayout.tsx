@@ -372,6 +372,7 @@ export const EmployeeLayout: FC<EmployeeLayoutProps> = ({}) => {
                 <Link
                     style={{ color: "inherit", textDecoration: "inherit" }}
                     to={"/employee/placement"}
+                    target="_blank"
                 >
                     Размещение
                 </Link>

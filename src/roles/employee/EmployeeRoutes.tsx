@@ -5,6 +5,7 @@ import { FC } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { EmployeeLayout } from "./EmployeeLayout";
 import {
+    EmployeeAcceptancePage,
     EmployeeArchiveOrdersPage,
     EmployeeCreateReportPage,
     EmployeeLoginPage,
@@ -23,7 +24,6 @@ import {
     EmployeeSearchPage,
     EmployeeSuppliesPage,
     EmployeeUpdateReportPage,
-    ScanPage,
     SupplyDetailsPage,
 } from "./pages";
 
@@ -122,7 +122,7 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                     />
                 </Route>
                 <Route path="/scan" element={<ScanLayout />}>
-                    <Route index element={<ScanPage />} />
+                    <Route index element={<EmployeeAcceptancePage />} />
                 </Route>
                 <Route path="/placement" element={<ScanLayout />}>
                     <Route index element={<EmployeePlacementPage />} />
