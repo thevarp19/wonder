@@ -157,6 +157,16 @@ export function cancelOrderAdmin(
 ) {
     return axiosAuthorized.post(`/api/order-admin/cancel/${id}/`, values);
 }
+export function replacementOrderProductEmployee(
+    productId: number,
+    reason: "LOST" | "DEFECTIVE"
+) {
+    return axiosAuthorized.post<GetAssembleOrderProductEmployee>(
+        `/api/supplier-box-product/order/employee/assemble/order-product/replacement/${productId}/`,
+        { reason: reason }
+    );
+}
+
 export function getAssembleOrderEmployee(
     page: number = 0,
     size: number = 10,

@@ -7,8 +7,12 @@ import {
     orderCodeConfirm,
     orderCodeRequest,
     orderStatus,
+    replacementOrderProductEmployee,
 } from "./api";
-import { ProductStatusChangeRequest } from "./types";
+import {
+    GetAssembleOrderProductEmployee,
+    ProductStatusChangeRequest,
+} from "./types";
 
 export const orderStatusMutation = () => {
     const { message } = App.useApp();
@@ -58,6 +62,30 @@ export const cancelOrderMutation = (
                 queryKey: [`orders-seller`],
             });
             navigate(`/${role}/orders`);
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.error.message}`);
+        },
+    });
+};
+
+export const replacementOrderProductMutation = (productId: number) => {
+    const { message } = App.useApp();
+
+    return useMutation<
+        GetAssembleOrderProductEmployee,
+        AxiosError<any>,
+        { reason: "LOST" | "DEFECTIVE" }
+    >({
+        async mutationFn(values) {
+            const { data } = await replacementOrderProductEmployee(
+                productId,
+                values.reason
+            );
+            return data;
+        },
+        onSuccess() {
+            message.success("Успешно!");
         },
         onError(error) {
             message.error(`${error?.response?.data.error.message}`);
