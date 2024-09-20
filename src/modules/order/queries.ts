@@ -3,6 +3,7 @@ import {
     getAdminOrderById,
     getAssembleOrderAdmin,
     getAssembleOrderEmployee,
+    getAssembleOrderProductEmployee,
     getAssembleOrderSeller,
     getCancelledOrderAdmin,
     getCancelledOrderEmployee,
@@ -34,8 +35,10 @@ import {
     getTransferOrderSeller,
 } from "./api";
 import {
+    AssembleDeliveryMode,
     DeliveryMode,
     GetAdminOrderDetail,
+    GetAssembleOrderProductEmployee,
     GetAssembleOrders,
     GetAssembleOrdersEmployee,
     GetCancelledOrders,
@@ -324,6 +327,21 @@ export const useGetAssembleOrderEmployee = (
                 page,
                 size,
                 searchValue,
+                deliveryMode
+            );
+            return data;
+        },
+    });
+};
+export const useGetAssembleOrderProductEmployee = (
+    page: number = 0,
+    deliveryMode: AssembleDeliveryMode
+) => {
+    return useQuery<GetAssembleOrderProductEmployee>({
+        queryKey: ["orders-employee-assemble-product", page, deliveryMode],
+        queryFn: async () => {
+            const { data } = await getAssembleOrderProductEmployee(
+                page,
                 deliveryMode
             );
             return data;

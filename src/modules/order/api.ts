@@ -1,7 +1,9 @@
 import { axiosAuthorized } from "@/lib/axios";
 import {
+    AssembleDeliveryMode,
     DeliveryMode,
     GetAdminOrderDetail,
+    GetAssembleOrderProductEmployee,
     GetAssembleOrders,
     GetAssembleOrdersEmployee,
     GetCancelledOrders,
@@ -163,6 +165,14 @@ export function getAssembleOrderEmployee(
 ) {
     return axiosAuthorized.get<GetAssembleOrdersEmployee>(
         `/api/supplier-box-product/order/employee/assemble/?page=${page}&size=${size}&search=${searchValue}&state=${deliveryMode}`
+    );
+}
+export function getAssembleOrderProductEmployee(
+    page: number = 0,
+    deliveryMode: AssembleDeliveryMode = "EXPRESS"
+) {
+    return axiosAuthorized.get<GetAssembleOrderProductEmployee>(
+        `/api/supplier-box-product/order/employee/assemble/order-product/?index=${page}&delivery_type=${deliveryMode}`
     );
 }
 export function getAssembleOrderSeller(

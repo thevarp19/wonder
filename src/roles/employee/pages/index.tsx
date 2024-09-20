@@ -1,5 +1,6 @@
 import { EmployeeAcceptancePage } from "./EmployeeAcceptancePage";
 import { EmployeeArchiveOrdersPage } from "./EmployeeArchiveOrdersPage";
+import { EmployeeAssembleProductPage } from "./EmployeeAssembleProductPage";
 import { EmployeeCreateReportPage } from "./EmployeeCreateReportPage";
 import { EmployeeLoginPage } from "./EmployeeLoginPage";
 import { EmployeeOrderAssemblePage } from "./EmployeeOrderAssemblePage";
@@ -22,6 +23,7 @@ import { SupplyDetailsPage } from "./SupplyDetailsPage";
 export {
     EmployeeAcceptancePage,
     EmployeeArchiveOrdersPage,
+    EmployeeAssembleProductPage,
     EmployeeCreateReportPage,
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,

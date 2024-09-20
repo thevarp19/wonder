@@ -47,6 +47,16 @@ export interface GetAssembleOrdersEmployeeContent {
     order_creation_date: string;
     order_entry: string;
 }
+export interface GetAssembleOrderProductEmployee {
+    id: number;
+    order_code: string;
+    store: string;
+    vendor_code: string;
+    title: string;
+    barcode: string;
+    cell: string;
+    courier_transmission_planning_date: string;
+}
 export interface GetEmployeeRefunds {
     refundId: string;
     applicationNumber: string;
@@ -325,6 +335,7 @@ export interface ProductStatusChangeRequest {
     order_entry: string;
     status: string;
 }
+export type AssembleDeliveryMode = "EXPRESS" | "ZAMLER" | "PICKUP";
 export type DeliveryMode =
     | "ALL"
     | "EXPRESS"

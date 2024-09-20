@@ -7,6 +7,7 @@ import { EmployeeLayout } from "./EmployeeLayout";
 import {
     EmployeeAcceptancePage,
     EmployeeArchiveOrdersPage,
+    EmployeeAssembleProductPage,
     EmployeeCreateReportPage,
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,
@@ -68,6 +69,10 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                     <Route
                         path="/orders/assemble"
                         element={<EmployeeOrderAssemblePage />}
+                    />
+                    <Route
+                        path="/orders/assemble/product"
+                        element={<EmployeeAssembleProductPage />}
                     />
                     <Route
                         path="/orders/package"

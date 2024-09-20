@@ -230,13 +230,33 @@ const StatusSelect: FC<StatusSelectProps> = ({ record, onStatusChange }) => {
             value={status}
             loading={isPending}
             onChange={handleStatusChange}
-            className="w-[150px]"
+            className="w-[150px] "
             options={[
-                { value: "Отправлено", label: "Отправлено" },
-                { value: "В процессе", label: "В процессе" },
-                { value: "Брак", label: "Брак" },
-                { value: "Ошибка", label: "Ошибка" },
-                { value: "Принято", label: "Принято" },
+                {
+                    value: "Отправлено",
+                    label: "Отправлено",
+                    className: "bg-[#0070FF3D] mt-1",
+                },
+                {
+                    value: "В процессе",
+                    label: "В процессе",
+                    className: "bg-[#FFD6003D] mt-1",
+                },
+                {
+                    value: "Брак",
+                    label: "Брак",
+                    className: "bg-[#FF73815C] mt-1",
+                },
+                {
+                    value: "Ошибка",
+                    label: "Ошибка",
+                    className: "bg-[#FF73815C] mt-1",
+                },
+                {
+                    value: "Принято",
+                    label: "Принято",
+                    className: "bg-[#65F28538] mt-1",
+                },
             ]}
         />
     );

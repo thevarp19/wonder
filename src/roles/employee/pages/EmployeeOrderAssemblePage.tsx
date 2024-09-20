@@ -9,7 +9,6 @@ import {
     ProductStatusChangeRequest,
 } from "@/modules/order/types";
 import { useScannerMultipleResults } from "@/modules/scan/hooks";
-import { toScanOrdersPackage } from "@/modules/scan/utils";
 import { cn, useDebounce } from "@/utils/shared.util";
 import { Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
 import { FC, useEffect, useRef, useState } from "react";
@@ -91,7 +90,7 @@ export const EmployeeOrderAssemblePage: FC<
                 <Button
                     type="primary"
                     size="large"
-                    onClick={toScanOrdersPackage}
+                    href="/employee/orders/assemble/product"
                     className="!flex !items-center !justify-center min-w-[200px] !gap-2 w-max"
                 >
                     <Image
