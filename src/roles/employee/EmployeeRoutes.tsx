@@ -12,8 +12,8 @@ import {
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,
     EmployeeOrderCancelledPage,
-    EmployeeOrderPackageDetailPage,
     EmployeeOrderPackagePage,
+    EmployeeOrderPackageProductPage,
     EmployeeOrderPage,
     EmployeeOrderShippedPage,
     EmployeeOrdersPage,
@@ -79,8 +79,8 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                         element={<EmployeeOrderPackagePage />}
                     />
                     <Route
-                        path="/orders/package/:orderId"
-                        element={<EmployeeOrderPackageDetailPage />}
+                        path="/orders/package/product"
+                        element={<EmployeeOrderPackageProductPage />}
                     />
                     <Route
                         path="/orders/transfer"

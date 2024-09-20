@@ -326,7 +326,7 @@ export function getCancelledOrderAdmin(
     );
 }
 
-export function getPackageDetails(id: string, packed: boolean) {
+export function getPackageProduct(id: string, packed: boolean) {
     return axiosAuthorized.get<GetOrderPackageDetails>(
         `/api/seller-product/calculator/${id}/${packed ? 1 : 0}/`
     );

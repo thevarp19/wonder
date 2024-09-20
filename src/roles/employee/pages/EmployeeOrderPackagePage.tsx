@@ -4,7 +4,6 @@ import { EmployeePackageTable } from "@/modules/order/components/EmployeeOrders/
 import { deliveryModes, items } from "@/modules/order/const";
 import { useGetPackageOrderEmployee } from "@/modules/order/queries";
 import { DeliveryMode } from "@/modules/order/types";
-import { toScanOrdersTransfer } from "@/modules/scan/utils";
 import { cn, useDebounce } from "@/utils/shared.util";
 import { Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
 import { FC, useState } from "react";
@@ -14,10 +13,8 @@ interface EmployeeOrderPackagePageProps {}
 export const EmployeeOrderPackagePage: FC<
     EmployeeOrderPackagePageProps
 > = () => {
-    // let scannedProducts = useScannerMultipleResults();
     const [searchValue, setSearchValue] = useState("");
     const debouncedSearchValue = useDebounce(searchValue, 500);
-    // const hasCalledEffect = useRef(false);
     const [current, setCurrent] = useState("all");
     const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("ALL");
     const [page, setPage] = useState(0);
@@ -32,47 +29,6 @@ export const EmployeeOrderPackagePage: FC<
         setCurrent(e.key);
         setDeliveryMode(deliveryModes[e.key]);
     };
-    // const newSearchParams = new URLSearchParams(window.location.search);
-
-    // useEffect(() => {
-    //     if (hasCalledEffect.current) return;
-
-    //     const assembleProductsHandler = async () => {
-    //         if (scannedProducts.length > 0 && orders) {
-    //             const cleanedProductIds = scannedProducts.map((p) =>
-    //                 p.replace(/^0+/, "")
-    //             );
-
-    //             const scannedProductIdsSet = new Set(cleanedProductIds);
-
-    //             const filteredOrders = orders.content.filter((order) =>
-    //                 scannedProductIdsSet.has(order.id.toString())
-    //             );
-
-    //             const requests: ProductStatusChangeRequest[] =
-    //                 filteredOrders.map((order) => ({
-    //                     id: order.id,
-    //                     order_entry: order.order_entry,
-    //                     status: "TRANSFER",
-    //                 }));
-
-    //             transferMutate(requests);
-    //         }
-    //     };
-
-    //     if (!isPending) {
-    //         assembleProductsHandler();
-    //         hasCalledEffect.current = true;
-    //     }
-
-    //     // newSearchParams.delete("result");
-    //     // newSearchParams.delete("type");
-    //     // newSearchParams.delete("step");
-    //     // const newUrl = `${
-    //     //     window.location.pathname
-    //     // }?${newSearchParams.toString()}`;
-    //     // window.history.replaceState(null, "", newUrl);
-    // }, [scannedProducts, orders, isPending]);
 
     return (
         <div className="flex flex-col h-full gap-5">
@@ -81,7 +37,7 @@ export const EmployeeOrderPackagePage: FC<
                 <Button
                     type="primary"
                     size="large"
-                    onClick={toScanOrdersTransfer}
+                    href="/employee/orders/package/product"
                     className="!flex !items-center !justify-center min-w-[200px] !gap-2 w-max"
                 >
                     <Image

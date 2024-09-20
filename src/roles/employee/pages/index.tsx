@@ -5,8 +5,8 @@ import { EmployeeCreateReportPage } from "./EmployeeCreateReportPage";
 import { EmployeeLoginPage } from "./EmployeeLoginPage";
 import { EmployeeOrderAssemblePage } from "./EmployeeOrderAssemblePage";
 import { EmployeeOrderCancelledPage } from "./EmployeeOrderCancelledPage";
-import { EmployeeOrderPackageDetailPage } from "./EmployeeOrderPackageDetailPage";
 import { EmployeeOrderPackagePage } from "./EmployeeOrderPackagePage";
+import { EmployeeOrderPackageProductPage } from "./EmployeeOrderPackageProductPage";
 import { EmployeeOrderPage } from "./EmployeeOrderPage";
 import { EmployeeOrderShippedPage } from "./EmployeeOrderShippedPage";
 import { EmployeeOrdersPage } from "./EmployeeOrdersPage";
@@ -28,8 +28,8 @@ export {
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,
     EmployeeOrderCancelledPage,
-    EmployeeOrderPackageDetailPage,
     EmployeeOrderPackagePage,
+    EmployeeOrderPackageProductPage,
     EmployeeOrderPage,
     EmployeeOrderShippedPage,
     EmployeeOrdersPage,

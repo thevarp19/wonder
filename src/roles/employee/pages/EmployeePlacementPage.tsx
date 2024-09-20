@@ -45,11 +45,11 @@ export const EmployeePlacementPage: FC<EmployeePlacementPageProps> = ({}) => {
             }
         };
         fetchInfo();
-    }, [cellBarcode, fetchCellInfo]); // This useEffect runs whenever cellBarcode changes.
+    }, [cellBarcode, fetchCellInfo]);
 
     const handleBarcodeScan = () => {
         if (isCellBarcode(barcode)) {
-            setCellBarcode(barcode); // This will trigger useEffect and fetch cell info.
+            setCellBarcode(barcode);
         } else if (!scanningCell && cellInfo) {
             mutation.mutate(
                 { cellId: cellInfo.id, barcode },

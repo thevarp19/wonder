@@ -51,6 +51,7 @@ export interface GetAssembleOrderProductEmployee {
     id: number;
     order_code: string;
     store: string;
+    order_entry: string;
     vendor_code: string;
     title: string;
     barcode: string;
@@ -179,11 +180,13 @@ export interface GetOrderPackageDetails {
 }
 export interface GetPackageProduct {
     id: number;
-    order_code: string;
     product_vendor_code: string;
     product_title: string;
+    order_code: string;
     order_creation_date: string;
     waybill: string;
+    seller: string;
+    barcode_number: string;
     order_entry: string;
 }
 

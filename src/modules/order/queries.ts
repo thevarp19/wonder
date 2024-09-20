@@ -21,10 +21,10 @@ import {
     getOrdersSellerOwn,
     getOrdersSellerOwnByType,
     getOwnPickupOrdersSeller,
-    getPackageDetails,
     getPackageOrderAdmin,
     getPackageOrderEmployee,
     getPackageOrderSeller,
+    getPackageProduct,
     getSellerOrderById,
     getShippedOrderAdmin,
     getShippedOrderEmployee,
@@ -699,13 +699,14 @@ export const useGetCancelledOrderAdmin = (
     });
 };
 
-export const useGetPackageDetails = (id: string, packed: boolean) => {
+export const useGetPackageProduct = (id: string, packed: boolean) => {
     return useQuery<GetOrderPackageDetails>({
-        queryKey: [`order-package`, id, packed],
+        queryKey: [`order-package-product`, id, packed],
         queryFn: async () => {
-            const { data } = await getPackageDetails(id, packed);
+            const { data } = await getPackageProduct(id, packed);
             return data;
         },
+        enabled: false,
     });
 };
 export const useGetEmployeeRefunds = (refundMode: RefundMode) => {

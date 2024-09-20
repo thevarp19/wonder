@@ -2,26 +2,19 @@ import { scan, searchIcon } from "@/assets";
 import { Image } from "@/components/ui/Image";
 import { EmployeeAssembleTable } from "@/modules/order/components/EmployeeOrders/EmployeeAssembleTable";
 import { deliveryModes, items } from "@/modules/order/const";
-import { orderStatusMutation } from "@/modules/order/mutations";
 import { useGetAssembleOrderEmployee } from "@/modules/order/queries";
-import {
-    DeliveryMode,
-    ProductStatusChangeRequest,
-} from "@/modules/order/types";
-import { useScannerMultipleResults } from "@/modules/scan/hooks";
+import { DeliveryMode } from "@/modules/order/types";
 import { cn, useDebounce } from "@/utils/shared.util";
 import { Button, ConfigProvider, Input, Menu, MenuProps } from "antd";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface EmployeeOrderAssemblePageProps {}
 
 export const EmployeeOrderAssemblePage: FC<
     EmployeeOrderAssemblePageProps
 > = () => {
-    let scannedProducts = useScannerMultipleResults();
     const [searchValue, setSearchValue] = useState("");
     const debouncedSearchValue = useDebounce(searchValue, 500);
-    const hasCalledEffect = useRef(false);
     const [current, setCurrent] = useState("all");
     const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("ALL");
     const [page, setPage] = useState(0);
@@ -34,54 +27,10 @@ export const EmployeeOrderAssemblePage: FC<
     useEffect(() => {
         setPage(0);
     }, [deliveryMode, searchValue]);
-    const { mutateAsync: packageMutate } = orderStatusMutation();
     const onClick: MenuProps["onClick"] = (e) => {
         setCurrent(e.key);
         setDeliveryMode(deliveryModes[e.key]);
     };
-    // const newSearchParams = new URLSearchParams(window.location.search);
-
-    useEffect(() => {
-        if (hasCalledEffect.current) return;
-
-        const assembleProductsHandler = async () => {
-            if (scannedProducts.length > 0 && orders) {
-                const cleanedProductIds = scannedProducts.map((p) =>
-                    p.replace(/^0+/, "")
-                );
-                console.log("cleanedProductIds", cleanedProductIds);
-
-                const scannedProductIdsSet = new Set(cleanedProductIds);
-
-                const filteredOrders = orders.content.filter((order) =>
-                    scannedProductIdsSet.has(order.id.toString())
-                );
-                console.log("filteredOrders", filteredOrders);
-
-                const requests: ProductStatusChangeRequest[] =
-                    filteredOrders.map((order) => ({
-                        id: order.id,
-                        order_entry: order.order_entry,
-                        status: "PACKAGING",
-                    }));
-
-                packageMutate(requests);
-            }
-        };
-
-        if (!isPending) {
-            assembleProductsHandler();
-            hasCalledEffect.current = true;
-        }
-
-        // newSearchParams.delete("result");
-        // newSearchParams.delete("type");
-        // newSearchParams.delete("step");
-        // const newUrl = `${
-        //     window.location.pathname
-        // }?${newSearchParams.toString()}`;
-        // window.history.replaceState(null, "", newUrl);
-    }, [scannedProducts, orders, isPending]);
 
     return (
         <div className="flex flex-col h-full gap-5">
