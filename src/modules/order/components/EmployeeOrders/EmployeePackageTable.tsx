@@ -1,5 +1,7 @@
+import { scan } from "@/assets";
 import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
+import { Image } from "@/components/ui/Image";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, TableColumnsType } from "antd";
 import { FC } from "react";
@@ -65,7 +67,15 @@ const columns: TableColumnsType<GetPackageOrdersEmployeeContent> = [
     },
     {
         title: "",
-        render: (_) => <Button type="primary">!</Button>,
+        render: (_) => (
+            <Button
+                type="primary"
+                size="small"
+                className="max-w-[40px] min-h-[30px]"
+            >
+                <Image src={scan} alt="scan" className={"min-w-5 h-5"} />
+            </Button>
+        ),
     },
 ];
 

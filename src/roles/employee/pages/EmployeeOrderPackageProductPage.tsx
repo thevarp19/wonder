@@ -4,6 +4,7 @@ import { GetOrderPackageDetails } from "@/modules/order/types";
 import { LockOutlined, UnlockOutlined } from "@ant-design/icons";
 import { App, Button, Input } from "antd";
 import { FC, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export const EmployeeOrderPackageProductPage: FC = () => {
     const [barcode, setBarcode] = useState<string>("");
@@ -13,9 +14,13 @@ export const EmployeeOrderPackageProductPage: FC = () => {
     const [productData, setProductData] = useState<GetOrderPackageDetails>();
     const { message } = App.useApp();
 
-    const { refetch } = useGetPackageProduct(barcode, isPacked);
+    const { refetch, error } = useGetPackageProduct(barcode, isPacked);
     const { mutateAsync: transferMutate } = orderStatusMutation();
-
+    useEffect(() => {
+        if (error?.message) {
+            message.error("Не удалось получить данные о продукте");
+        }
+    }, [error, message]);
     useEffect(() => {
         const handleKeyPress = (event: KeyboardEvent) => {
             if (isScanning && isLocked) {
@@ -34,16 +39,6 @@ export const EmployeeOrderPackageProductPage: FC = () => {
         };
     }, [isScanning, isLocked, barcode]);
 
-    useEffect(() => {
-        if (isPacked) {
-            refetch().then((result) => {
-                if (result.data) {
-                    setProductData(result.data);
-                }
-            });
-        }
-    }, [isPacked, refetch]);
-
     const handleSearch = async () => {
         if (barcode) {
             try {
@@ -57,7 +52,6 @@ export const EmployeeOrderPackageProductPage: FC = () => {
             } catch (error) {
                 message.error("Не удалось получить данные о продукте");
             }
-            setBarcode("");
         }
     };
 
@@ -70,8 +64,6 @@ export const EmployeeOrderPackageProductPage: FC = () => {
                     status: "TRANSFER",
                 },
             ]);
-            message.success("Продукт успешно упакован");
-            // navigate("/employee/orders/package");
         } catch (error) {
             message.error("Не удалось упаковать продукт");
         }
@@ -80,6 +72,7 @@ export const EmployeeOrderPackageProductPage: FC = () => {
     const toggleLock = () => {
         setIsLocked((prev) => !prev);
         if (isLocked) {
+            setBarcode("");
             setIsScanning(false);
         } else {
             setIsScanning(true);
@@ -95,40 +88,62 @@ export const EmployeeOrderPackageProductPage: FC = () => {
         }
     };
 
-    const handleIsPacked = () => {
+    const handleIsPacked = async () => {
         setIsPacked(true);
+        setTimeout(clearProductData, 2000);
+        setIsScanning(true);
+        message.success("Продукт отмечен как упакованный");
+    };
+
+    const clearProductData = () => {
+        setProductData(undefined);
+        setBarcode("");
+        setIsPacked(false);
+        setIsLocked(true);
     };
 
     return (
         <div className="p-5">
             <div className="flex items-center justify-between mb-5">
                 <h1 className="text-2xl font-bold">Упаковка</h1>
-                <Button
-                    type="primary"
-                    size="large"
-                    href={productData?.product.waybill}
-                >
-                    Накладная
-                </Button>
+                {productData?.product.waybill ? (
+                    <Link
+                        to={`${productData?.product.waybill}`}
+                        target="_blank"
+                    >
+                        <Button type="primary" size="large">
+                            Накладная
+                        </Button>
+                    </Link>
+                ) : (
+                    <Button type="primary" disabled size="large">
+                        Накладная
+                    </Button>
+                )}
             </div>
 
             <div className="flex items-center gap-5 mb-8">
                 <Input
                     placeholder="Поиск по баркоду"
                     style={{ width: 300 }}
-                    value={barcode}
+                    value={isLocked ? "" : barcode}
                     onChange={handleManualBarcodeChange}
-                    readOnly={isLocked}
+                    disabled={isLocked}
                 />
                 <Button type="primary" onClick={handleSearch}>
                     Найти
                 </Button>
                 <Button
-                    icon={isLocked ? <LockOutlined /> : <UnlockOutlined />}
+                    icon={
+                        isLocked ? (
+                            <LockOutlined style={{ fontSize: 18 }} />
+                        ) : (
+                            <UnlockOutlined style={{ fontSize: 18 }} />
+                        )
+                    }
                     onClick={toggleLock}
                 />
             </div>
-
             {productData && (
                 <>
                     <div className="flex justify-between gap-10 p-8 border rounded-lg border-gray">
@@ -226,41 +241,55 @@ export const EmployeeOrderPackageProductPage: FC = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex gap-8">
-                            {productData.bubble_schema_base64 && (
-                                <div className="relative p-4 border border-black rounded h-max">
-                                    <h3 className="mb-2 text-lg font-bold">
-                                        Пузырчатая
-                                    </h3>
-                                    <img
-                                        src={`data:image/png;base64,${productData.bubble_schema_base64}`}
-                                        alt="Bubble Wrap Schema"
-                                        className="w-full h-[250px]"
-                                    />
-                                    <div className="absolute left-5 bottom-5 text-start text-[24px] font-bold">
-                                        {
-                                            productData.number_of_labels_of_bubble_wrap
-                                        }
+                        <div className="flex flex-col gap-8">
+                            <div className="flex gap-8">
+                                {productData.bubble_schema_base64 && (
+                                    <div className="relative p-4 border border-black rounded h-max">
+                                        <h3 className="mb-2 text-lg font-bold">
+                                            Пузырчатая
+                                        </h3>
+                                        <img
+                                            src={`data:image/png;base64,${productData.bubble_schema_base64}`}
+                                            alt="Bubble Wrap Schema"
+                                            className="w-full h-[250px]"
+                                        />
+                                        <div className="absolute left-5 bottom-5 text-start text-[24px] font-bold">
+                                            {
+                                                productData.number_of_labels_of_bubble_wrap
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                            )}
-                            {productData.bubble_schema_base64 && (
-                                <div className="relative p-4 border border-black rounded h-max">
-                                    <h3 className="mb-2 text-lg font-bold">
-                                        Стрейч
-                                    </h3>
-                                    <img
-                                        src={`data:image/png;base64,${productData.bubble_schema_base64}`}
-                                        alt="Stretch Wrap Schema"
-                                        className="w-full h-[250px]"
-                                    />
-                                    <div className="absolute left-5 bottom-5 text-start text-[24px]">
-                                        {
-                                            productData.number_of_labels_of_stretch_film
-                                        }
+                                )}
+                                {productData.bubble_schema_base64 && (
+                                    <div className="relative p-4 border border-black rounded h-max">
+                                        <h3 className="mb-2 text-lg font-bold">
+                                            Стрейч
+                                        </h3>
+                                        <img
+                                            src={`data:image/png;base64,${productData.bubble_schema_base64}`}
+                                            alt="Stretch Wrap Schema"
+                                            className="w-full h-[250px]"
+                                        />
+                                        <div className="absolute left-5 bottom-5 text-start text-[24px]">
+                                            {
+                                                productData.number_of_labels_of_stretch_film
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
+                            </div>
+                            <div className="flex justify-center">
+                                {productData.label_caution_class === true && (
+                                    <span className="px-2 py-1 text-xl border border-black rounded-lg">
+                                        Осторожно хрупкое!
+                                    </span>
+                                )}
+                                {productData.label_caution_class === false && (
+                                    <span className="px-2 py-1 text-xl border border-black rounded-lg">
+                                        Стандарт
+                                    </span>
+                                )}
+                            </div>
                         </div>
                     </div>
                     <div className="flex items-center justify-between mt-5">

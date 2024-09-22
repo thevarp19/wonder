@@ -706,7 +706,9 @@ export const useGetPackageProduct = (id: string, packed: boolean) => {
             const { data } = await getPackageProduct(id, packed);
             return data;
         },
-        enabled: false,
+
+        retry: 2,
+        enabled: packed,
     });
 };
 export const useGetEmployeeRefunds = (refundMode: RefundMode) => {
