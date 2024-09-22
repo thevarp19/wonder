@@ -49,7 +49,7 @@ export const ScanCellStep: FC<ScanCellStepProps> = ({}) => {
     }, [isError]);
     return (
         <div>
-            <p>Штрих-код коробки: {boxBarcode}</p>
+            <p>QR-код коробки: {boxBarcode}</p>
             {products && (
                 <div className="p-4 border-2 border-black w-max">
                     <p>Продукты в коробке:</p>

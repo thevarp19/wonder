@@ -116,7 +116,7 @@ export const EmployeeAcceptancePage: FC<EmployeeAcceptancePageProps> = ({}) => {
                         value={barcode}
                         readOnly
                         onChange={() => {}}
-                        placeholder="Сканируйте штрих-код"
+                        placeholder="Сканируйте QR-код"
                     />
                 </div>
             </div>

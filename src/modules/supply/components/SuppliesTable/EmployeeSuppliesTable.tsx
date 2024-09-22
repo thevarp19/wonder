@@ -122,7 +122,7 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
             },
         },
         {
-            title: "Штрихкоды в А4",
+            title: "QR-коды в А4",
             render: (_, record) => {
                 return (
                     <Link target="_blank" to={record.report_a4}>
@@ -141,7 +141,7 @@ export const EmployeeSuppliesTable: FC<EmployeeSuppliesTableProps> = ({}) => {
             },
         },
         {
-            title: "Штрихкоды в ряд",
+            title: "QR-коды в ряд",
             render: (_, record) => {
                 return (
                     <Link target="_blank" to={record.report_row}>

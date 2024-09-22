@@ -197,7 +197,7 @@ export const EmployeeOrderPackageProductPage: FC = () => {
                                     </p>
                                     <p>
                                         <span className="font-semibold">
-                                            Штрих код:
+                                            QR код:
                                         </span>{" "}
                                         {productData.product.barcode_number}
                                     </p>

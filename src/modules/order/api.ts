@@ -157,6 +157,22 @@ export function cancelOrderAdmin(
 ) {
     return axiosAuthorized.post(`/api/order-admin/cancel/${id}/`, values);
 }
+export function cancelOrderProductEmployee(
+    id: number,
+    values: {
+        reason:
+            | "BUYER_CANCELLATION_BY_MERCHANT"
+            | "BUYER_NOT_REACHABLE"
+            | "MERCHANT_OUT_OF_STOCK";
+        notes: string;
+    }
+) {
+    return axiosAuthorized.post(
+        `/api/supplier-box-product/employee/order-entry/cancel/${id}/`,
+        values
+    );
+}
+
 export function replacementOrderProductEmployee(
     productId: number,
     reason: "LOST" | "DEFECTIVE"

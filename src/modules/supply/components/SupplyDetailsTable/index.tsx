@@ -20,7 +20,7 @@ const columns: TableColumnsType<GetSupplyById> = [
         dataIndex: "vendorCode",
     },
     {
-        title: "Штрих-код коробки",
+        title: "QR-код коробки",
         dataIndex: "boxBarCode",
     },
     {

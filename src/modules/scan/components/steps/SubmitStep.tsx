@@ -98,7 +98,7 @@ export const SubmitStep: FC<SubmitStepProps> = ({}) => {
 function ProductsInCell({ cell }: { cell: ScanCell }) {
     return (
         <div className="w-full max-w-sm p-4 border border-black">
-            <p>Штрих-код ячейки: {cell.barcode}</p>
+            <p>QR-код ячейки: {cell.barcode}</p>
             <p>Продукты:</p>
             <ul>
                 {cell.products.map((product) => (

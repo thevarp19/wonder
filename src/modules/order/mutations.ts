@@ -4,6 +4,7 @@ import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import {
     cancelOrderAdmin,
+    cancelOrderProductEmployee,
     orderCodeConfirm,
     orderCodeRequest,
     orderStatus,
@@ -81,6 +82,36 @@ export const replacementOrderProductMutation = (productId: number) => {
             const { data } = await replacementOrderProductEmployee(
                 productId,
                 values.reason
+            );
+            return data;
+        },
+        onSuccess() {
+            message.success("Успешно!");
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.error.message}`);
+        },
+    });
+};
+
+export const cancelOrderProductMutation = (productId: number) => {
+    const { message } = App.useApp();
+
+    return useMutation<
+        GetAssembleOrderProductEmployee,
+        AxiosError<any>,
+        {
+            reason:
+                | "BUYER_CANCELLATION_BY_MERCHANT"
+                | "BUYER_NOT_REACHABLE"
+                | "MERCHANT_OUT_OF_STOCK";
+            notes: string;
+        }
+    >({
+        async mutationFn(values) {
+            const { data } = await cancelOrderProductEmployee(
+                productId,
+                values
             );
             return data;
         },

@@ -1,5 +1,6 @@
 import { DateCell } from "@/components/ui/DateCell";
 import {
+    cancelOrderProductMutation,
     orderStatusMutation,
     replacementOrderProductMutation,
 } from "@/modules/order/mutations";
@@ -72,7 +73,7 @@ export const EmployeeAssembleProductPage: React.FC = () => {
                         assembleProductsHandler();
                     } else {
                         message.error(
-                            "Отсканированный штрих-код не соответствует штрих-коду продукта"
+                            "Отсканированный QR-код не соответствует QR-коду продукта"
                         );
                         setBarcode("");
                     }
@@ -113,9 +114,7 @@ export const EmployeeAssembleProductPage: React.FC = () => {
         if (assembleProduct && barcode === assembleProduct.barcode) {
             assembleProductsHandler();
         } else {
-            message.error(
-                "Введенный штрих-код не соответствует штрих-коду продукта"
-            );
+            message.error("Введенный QR-код не соответствует QR-коду продукта");
             setBarcode("");
         }
     };
@@ -214,9 +213,7 @@ export const EmployeeAssembleProductPage: React.FC = () => {
                                     </span>
                                 </div>
                                 <div className="flex justify-between gap-5">
-                                    <span className="font-medium">
-                                        Штрих код:
-                                    </span>
+                                    <span className="font-medium">QR код:</span>
                                     <span className="font-semibold">
                                         {assembleProduct.barcode}
                                     </span>
@@ -243,7 +240,7 @@ export const EmployeeAssembleProductPage: React.FC = () => {
                                         ? isScanning
                                             ? "Сканирование..."
                                             : "Сканирование приостановлено"
-                                        : "Введите штрих-код вручную"
+                                        : "Введите QR-код вручную"
                                 }
                             />
                             <Button
@@ -257,7 +254,10 @@ export const EmployeeAssembleProductPage: React.FC = () => {
                             <Button onClick={handleSkip} loading={isPending}>
                                 Пропустить
                             </Button>
-                            <Button danger>Отмена</Button>
+                            <CancelProductModal
+                                loadingProduct={isPending}
+                                productId={assembleProduct?.id}
+                            />
                             <ReplacementProductModal
                                 loadingProduct={isPending}
                                 productId={assembleProduct?.id}
@@ -348,6 +348,110 @@ export const ReplacementProductModal: React.FC<
                 onClick={() => setIsModalOpen(true)}
             >
                 Замена товара
+            </Button>
+        </>
+    );
+};
+interface CancelProductModalProps {
+    productId: number | undefined;
+    loadingProduct: boolean;
+}
+export const CancelProductModal: React.FC<CancelProductModalProps> = ({
+    productId,
+    loadingProduct,
+}) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [reason, setReason] = useState<
+        | "BUYER_CANCELLATION_BY_MERCHANT"
+        | "BUYER_NOT_REACHABLE"
+        | "MERCHANT_OUT_OF_STOCK"
+    >("BUYER_CANCELLATION_BY_MERCHANT");
+    const [comment, setComment] = useState("");
+
+    const mutation = cancelOrderProductMutation(productId || -1);
+
+    const handleReplacement = () => {
+        mutation.mutate(
+            { reason: reason, notes: comment },
+            {
+                onSuccess: () => {
+                    setIsModalOpen(false);
+                },
+                onError: () => {
+                    setIsModalOpen(false);
+                },
+            }
+        );
+    };
+
+    return (
+        <>
+            <Modal
+                title="Отмена продукта"
+                open={isModalOpen}
+                cancelButtonProps={{ style: { width: "100%" } }}
+                onCancel={() => setIsModalOpen(false)}
+                cancelText="Назад"
+                okButtonProps={{ style: { display: "none" } }}
+                destroyOnClose
+            >
+                <div className="flex flex-col items-center gap-10">
+                    <div className="flex flex-col w-full gap-2">
+                        <h2 className="text-sm font-semibold">
+                            Причина отмены
+                        </h2>
+                        <Select
+                            value={reason}
+                            onChange={(
+                                value:
+                                    | "BUYER_CANCELLATION_BY_MERCHANT"
+                                    | "BUYER_NOT_REACHABLE"
+                                    | "MERCHANT_OUT_OF_STOCK"
+                            ) => setReason(value)}
+                            className="!w-full"
+                            options={[
+                                {
+                                    value: "BUYER_CANCELLATION_BY_MERCHANT",
+                                    label: "Отмена покупателем через продавца",
+                                },
+                                {
+                                    value: "BUYER_NOT_REACHABLE",
+                                    label: "Покупатель недоступен",
+                                },
+                                {
+                                    value: "MERCHANT_OUT_OF_STOCK",
+                                    label: "Продавец не имеет в наличии",
+                                },
+                            ]}
+                        />
+                    </div>
+                    <div className="flex flex-col w-full gap-2">
+                        <h2 className="text-sm font-semibold">Комментарий</h2>
+                        <Input
+                            name="comment"
+                            value={comment}
+                            onChange={(e) => {
+                                setComment(e.target.value);
+                            }}
+                            placeholder="Комментарий"
+                        />
+                    </div>
+                    <Button
+                        type="primary"
+                        loading={mutation.isPending}
+                        className="w-full"
+                        onClick={handleReplacement}
+                    >
+                        Замена
+                    </Button>
+                </div>
+            </Modal>
+            <Button
+                loading={loadingProduct}
+                danger
+                onClick={() => setIsModalOpen(true)}
+            >
+                Отмена
             </Button>
         </>
     );
