@@ -5,6 +5,7 @@ export interface GetReports extends BasePaginationResponse<GetReportsContent> {}
 export interface GetReportsContent {
     id: number;
     seller?: string;
+    store_name?: string;
     check_url: string;
     created_at: string;
 }

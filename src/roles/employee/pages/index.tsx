@@ -1,6 +1,7 @@
 import { EmployeeAcceptancePage } from "./EmployeeAcceptancePage";
 import { EmployeeArchiveOrdersPage } from "./EmployeeArchiveOrdersPage";
 import { EmployeeAssembleProductPage } from "./EmployeeAssembleProductPage";
+import { EmployeeCreateRefundReportPage } from "./EmployeeCreateRefundReportPage";
 import { EmployeeCreateReportPage } from "./EmployeeCreateReportPage";
 import { EmployeeLoginPage } from "./EmployeeLoginPage";
 import { EmployeeOrderAssemblePage } from "./EmployeeOrderAssemblePage";
@@ -17,6 +18,7 @@ import { EmployeeRefundsPage } from "./EmployeeRefundsPage";
 import { EmployeeReportsPage } from "./EmployeeReportsPage";
 import { EmployeeSearchPage } from "./EmployeeSearchPage";
 import { EmployeeSuppliesPage } from "./EmployeeSuppliesPage";
+import { EmployeeUpdateRefundReportPage } from "./EmployeeUpdateRefundReportPage";
 import { EmployeeUpdateReportPage } from "./EmployeeUpdateReportPage";
 import { SupplyDetailsPage } from "./SupplyDetailsPage";
 
@@ -24,6 +26,7 @@ export {
     EmployeeAcceptancePage,
     EmployeeArchiveOrdersPage,
     EmployeeAssembleProductPage,
+    EmployeeCreateRefundReportPage,
     EmployeeCreateReportPage,
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,
@@ -40,6 +43,7 @@ export {
     EmployeeReportsPage,
     EmployeeSearchPage,
     EmployeeSuppliesPage,
+    EmployeeUpdateRefundReportPage,
     EmployeeUpdateReportPage,
     SupplyDetailsPage,
 };

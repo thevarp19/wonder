@@ -14,23 +14,28 @@ import { UploadFile } from "antd/lib";
 import moment from "moment";
 import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useUpdateReport } from "../forms";
-import { deleteReportMutation } from "../mutations";
-import { useGetEmployeeReportDetail, useGetEmployeeStores } from "../queries";
+import { useUpdateRefundReport } from "../forms";
+import { deleteRefundReportMutation } from "../mutations";
+import {
+    useGetEmployeeRefundReportDetail,
+    useGetEmployeeStores,
+} from "../queries";
 import { GetEmployeeStores } from "../types";
 
-interface UpdateReportFormProps {
+interface UpdateRefundReportFormProps {
     reportId: string;
 }
 
-export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
+export const UpdateRefundReportForm: FC<UpdateRefundReportFormProps> = ({
+    reportId,
+}) => {
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const { data: initialValues, isPending: reportIsPending } =
-        useGetEmployeeReportDetail(reportId);
+        useGetEmployeeRefundReportDetail(reportId);
     const { message } = App.useApp();
-    const { formik, mutation } = useUpdateReport(reportId, initialValues);
+    const { formik, mutation } = useUpdateRefundReport(reportId, initialValues);
     const { data: stores, isPending } = useGetEmployeeStores();
-    const { mutateAsync } = deleteReportMutation(reportId);
+    const { mutateAsync } = deleteRefundReportMutation(reportId);
     useEffect(() => {
         if (initialValues) {
             formik.resetForm({

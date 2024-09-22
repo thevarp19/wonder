@@ -1,11 +1,14 @@
+import { pencilIcon } from "@/assets";
 import { CustomTable } from "@/components/ui/CustomTable";
 import { DateCell } from "@/components/ui/DateCell";
+import { Image } from "@/components/ui/Image";
+import { cn } from "@/utils/shared.util";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, TableColumnsType } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import { useGetSellerReports } from "../queries";
+import { useGetEmployeeRefundReports } from "../queries";
 import { GetReportsContent } from "../types";
 
 const columns: TableColumnsType<GetReportsContent> = [
@@ -14,11 +17,11 @@ const columns: TableColumnsType<GetReportsContent> = [
         render: (_, record) => <span>{record.id}</span>,
     },
 
-    // {
-    //     title: "Название магазина",
-    //     dataIndex: "",
-    //     render: (_, record) => <span>{record.seller}</span>,
-    // },
+    {
+        title: "Название магазина",
+        dataIndex: "",
+        render: (_, record) => <span>{record.store_name}</span>,
+    },
 
     {
         title: "Время заказа",
@@ -44,21 +47,36 @@ const columns: TableColumnsType<GetReportsContent> = [
             );
         },
     },
+    {
+        title: "Редактировать",
+        render: (_, record) => (
+            <Link
+                to={`/employee/reports/update-refund-report/${record.id}`}
+                className="cursor-pointer"
+            >
+                <Image
+                    src={pencilIcon}
+                    alt="pencilIcon"
+                    className={cn("w-7 h-7")}
+                />
+            </Link>
+        ),
+    },
 ];
 
-interface SellerReportTableProps {
+interface EmployeeRefundReportTableProps {
     searchValue: string;
     min_date?: string;
     max_date?: string;
 }
 
-export const SellerReportTable: FC<SellerReportTableProps> = ({
+export const EmployeeRefundReportTable: FC<EmployeeRefundReportTableProps> = ({
     searchValue,
     min_date,
     max_date,
 }) => {
     const [page, setPage] = useState(0);
-    const { data: reports, isPending } = useGetSellerReports(
+    const { data: reports, isPending } = useGetEmployeeRefundReports(
         page,
         10,
         searchValue,

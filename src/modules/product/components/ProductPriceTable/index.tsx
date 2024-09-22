@@ -59,6 +59,11 @@ const columns: TableColumnsType<GetProductWithPrices> = [
         width: 100,
         sorter: (a, b) => a.total_quantity - b.total_quantity,
     },
+    {
+        title: "Наличие",
+        render: (_) => <div className="">PP6, PP7</div>,
+        width: 100,
+    },
 ];
 
 function MainPriceCitySelect({

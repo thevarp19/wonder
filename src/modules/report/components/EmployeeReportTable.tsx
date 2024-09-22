@@ -13,7 +13,7 @@ import { GetReportsContent } from "../types";
 
 const columns: TableColumnsType<GetReportsContent> = [
     {
-        title: "Номер накладной",
+        title: "Номер чека",
         render: (_, record) => <span>{record.id}</span>,
     },
 
@@ -29,7 +29,7 @@ const columns: TableColumnsType<GetReportsContent> = [
     },
 
     {
-        title: "Накладная",
+        title: "Чек",
         render: (_, record) => {
             return (
                 <Link target="_blank" to={record.check_url}>

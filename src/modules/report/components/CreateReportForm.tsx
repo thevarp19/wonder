@@ -52,7 +52,7 @@ export const CreateReportForm: FC<CreateReportFormProps> = () => {
 
     return (
         <div className="flex flex-col gap-10 items-center md:border border-[#D9D9D9] rounded-[28px] md:px-[126px] px-4 md:py-[34px] pb-[68px] w-full md:w-auto">
-            <h2 className="text-[18px] font-semibold">Добавить накладную</h2>
+            <h2 className="text-[18px] font-semibold">Добавить чек</h2>
 
             <Form
                 onFinish={formik.submitForm}

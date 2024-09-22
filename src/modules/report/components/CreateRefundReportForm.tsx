@@ -1,4 +1,3 @@
-import { Loading } from "@/components/ui/Loading";
 import { cn } from "@/utils/shared.util";
 import { InboxOutlined } from "@ant-design/icons";
 import {
@@ -11,45 +10,19 @@ import {
     UploadProps,
 } from "antd";
 import { UploadFile } from "antd/lib";
-import moment from "moment";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
-import { useUpdateReport } from "../forms";
-import { deleteReportMutation } from "../mutations";
-import { useGetEmployeeReportDetail, useGetEmployeeStores } from "../queries";
+import { useCreateRefundReport } from "../forms";
+import { useGetEmployeeStores } from "../queries";
 import { GetEmployeeStores } from "../types";
 
-interface UpdateReportFormProps {
-    reportId: string;
-}
+interface CreateRefundReportFormProps {}
 
-export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
+export const CreateRefundReportForm: FC<CreateRefundReportFormProps> = () => {
+    const { formik, mutation } = useCreateRefundReport();
     const [fileList, setFileList] = useState<UploadFile[]>([]);
-    const { data: initialValues, isPending: reportIsPending } =
-        useGetEmployeeReportDetail(reportId);
     const { message } = App.useApp();
-    const { formik, mutation } = useUpdateReport(reportId, initialValues);
     const { data: stores, isPending } = useGetEmployeeStores();
-    const { mutateAsync } = deleteReportMutation(reportId);
-    useEffect(() => {
-        if (initialValues) {
-            formik.resetForm({
-                values: initialValues,
-            });
-
-            if (initialValues.check_url) {
-                setFileList([
-                    {
-                        uid: "-1",
-                        name: initialValues.check_url,
-                        status: "done",
-                        url: initialValues.check_url,
-                    },
-                ]);
-            }
-        }
-    }, [initialValues]);
-
     const handleDateChange = (value: any) => {
         if (value) {
             const date = new Date(value);
@@ -58,7 +31,6 @@ export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
             formik.setFieldValue("created_at", null);
         }
     };
-
     const handleFileChange: UploadProps["onChange"] = ({
         fileList: newFileList,
     }) => {
@@ -72,17 +44,15 @@ export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
             setFileList(
                 newFileList.map((file) => ({ ...file, status: "done" }))
             );
-            formik.setFieldValue("check_url", newFileList[0].originFileObj);
+            if (newFileList.length > 0) {
+                formik.setFieldValue("check_url", newFileList[0].originFileObj);
+            }
         }
     };
 
-    if (reportIsPending) {
-        return <Loading />;
-    }
-
     return (
         <div className="flex flex-col gap-10 items-center md:border border-[#D9D9D9] rounded-[28px] md:px-[126px] px-4 md:py-[34px] pb-[68px] w-full md:w-auto">
-            <h2 className="text-[18px] font-semibold">Редактировать чек</h2>
+            <h2 className="text-[18px] font-semibold">Добавить чек</h2>
 
             <Form
                 onFinish={formik.submitForm}
@@ -112,26 +82,21 @@ export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
                         onSelect={(_, option) => {
                             formik.setFieldValue("seller", option.value);
                         }}
-                        value={formik.values.seller} // Prefill selected value
                     />
                 </Form.Item>
-
                 <Form.Item
                     label="Дата и время создания"
                     className="w-full !mb-4"
                 >
                     <DatePicker
                         showTime={{ format: "HH:mm" }}
-                        format="YYYY-MM-DD HH:mm"
+                        format="YYYY-MM-DD / HH:mm"
                         className="w-full"
                         size="large"
-                        placeholder={`${moment(formik.values.created_at).format(
-                            "YYYY-MM-DD HH:mm"
-                        )}`}
+                        placeholder="Выберите дату и время"
                         onChange={handleDateChange}
                     />
                 </Form.Item>
-
                 <Form.Item label="Загрузить накладную" className="w-full !mb-4">
                     <Upload.Dragger
                         name="file"
@@ -150,8 +115,7 @@ export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
                         </p>
                     </Upload.Dragger>
                 </Form.Item>
-
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
                     <Button
                         htmlType="submit"
                         type="primary"
@@ -159,7 +123,7 @@ export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
                         className={cn("w-full !rounded-md")}
                         loading={mutation.isPending}
                     >
-                        Обновить
+                        Добавить
                     </Button>
                     <Link
                         to="/employee/reports"
@@ -172,16 +136,6 @@ export const UpdateReportForm: FC<UpdateReportFormProps> = ({ reportId }) => {
                             Отмена
                         </Button>
                     </Link>
-                    <div
-                        onClick={async () => {
-                            await mutateAsync();
-                        }}
-                        className="flex justify-center"
-                    >
-                        <h2 className="underline text-[#FF0000] font-medium cursor-pointer">
-                            Удалить накладную
-                        </h2>
-                    </div>
                 </div>
             </Form>
         </div>

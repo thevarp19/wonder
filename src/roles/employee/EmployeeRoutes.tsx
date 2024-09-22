@@ -8,6 +8,7 @@ import {
     EmployeeAcceptancePage,
     EmployeeArchiveOrdersPage,
     EmployeeAssembleProductPage,
+    EmployeeCreateRefundReportPage,
     EmployeeCreateReportPage,
     EmployeeLoginPage,
     EmployeeOrderAssemblePage,
@@ -24,6 +25,7 @@ import {
     EmployeeReportsPage,
     EmployeeSearchPage,
     EmployeeSuppliesPage,
+    EmployeeUpdateRefundReportPage,
     EmployeeUpdateReportPage,
     SupplyDetailsPage,
 } from "./pages";
@@ -124,6 +126,14 @@ export const EmployeeRoutes: FC<EmployeeRoutesProps> = ({}) => {
                     <Route
                         path="/reports/create-report"
                         element={<EmployeeCreateReportPage />}
+                    />
+                    <Route
+                        path="/reports/update-refund-report/:reportId"
+                        element={<EmployeeUpdateRefundReportPage />}
+                    />
+                    <Route
+                        path="/reports/create-refund-report"
+                        element={<EmployeeCreateRefundReportPage />}
                     />
                 </Route>
                 <Route path="/scan" element={<ScanLayout />}>

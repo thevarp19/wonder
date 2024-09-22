@@ -1,6 +1,7 @@
 import { searchIcon } from "@/assets";
 import { Title } from "@/components/shared/Title";
 import { Image } from "@/components/ui/Image";
+import { EmployeeRefundReportTable } from "@/modules/report/components/EmployeeRefundReportTable";
 import { EmployeeReportTable } from "@/modules/report/components/EmployeeReportTable";
 import { cn, useDebounce } from "@/utils/shared.util";
 import { Button, ConfigProvider, DatePicker, Input, Menu } from "antd";
@@ -66,9 +67,13 @@ export const EmployeeReportsPage: FC<EmployeeReportsPageProps> = ({}) => {
                     size="large"
                     type="primary"
                     className="uppercase"
-                    href="/employee/reports/create-report"
+                    href={
+                        current === "shipped"
+                            ? "/employee/reports/create-report"
+                            : "/employee/reports/create-refund-report"
+                    }
                 >
-                    Добавить накладную
+                    Добавить чек
                 </Button>
             </div>
             <div className="flex flex-col gap-5">
@@ -133,11 +138,19 @@ export const EmployeeReportsPage: FC<EmployeeReportsPageProps> = ({}) => {
                     </div>
                 </div>
                 <div className="overflow-x-auto w-full md:mb-0 mb-[70px]">
-                    <EmployeeReportTable
-                        searchValue={debouncedSearchValue}
-                        min_date={minDate || ""}
-                        max_date={maxDate || ""}
-                    />
+                    {current === "shipped" ? (
+                        <EmployeeReportTable
+                            searchValue={debouncedSearchValue}
+                            min_date={minDate || ""}
+                            max_date={maxDate || ""}
+                        />
+                    ) : (
+                        <EmployeeRefundReportTable
+                            searchValue={debouncedSearchValue}
+                            min_date={minDate || ""}
+                            max_date={maxDate || ""}
+                        />
+                    )}
                 </div>
             </div>
         </div>

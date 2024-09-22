@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import {
+    getEmployeeRefundReportById,
+    getEmployeeRefundReports,
     getEmployeeReportById,
     getEmployeeReports,
     getEmployeeStores,
@@ -25,6 +27,34 @@ export const useGetEmployeeReports = (
         ],
         queryFn: async () => {
             const { data } = await getEmployeeReports(
+                page,
+                size,
+                searchValue,
+                min_date,
+                max_date
+            );
+            return data;
+        },
+    });
+};
+export const useGetEmployeeRefundReports = (
+    page: number = 0,
+    size: number = 10,
+    searchValue: string = "",
+    min_date: string = "",
+    max_date: string = ""
+) => {
+    return useQuery<GetReports>({
+        queryKey: [
+            `employee-refund-reports`,
+            page,
+            size,
+            searchValue,
+            min_date,
+            max_date,
+        ],
+        queryFn: async () => {
+            const { data } = await getEmployeeRefundReports(
                 page,
                 size,
                 searchValue,
@@ -77,6 +107,15 @@ export const useGetEmployeeReportDetail = (reportId: string) => {
         queryKey: [`employee-report-detail`, reportId],
         queryFn: async () => {
             const { data } = await getEmployeeReportById(reportId);
+            return data;
+        },
+    });
+};
+export const useGetEmployeeRefundReportDetail = (reportId: string) => {
+    return useQuery<GetReportsContent>({
+        queryKey: [`employee-report-refund-detail`, reportId],
+        queryFn: async () => {
+            const { data } = await getEmployeeRefundReportById(reportId);
             return data;
         },
     });
