@@ -14,18 +14,23 @@ export const HeaderLogo: FC<LogoProps> = ({ link }) => {
 
     return (
         <div className="md:fixed static top-0 z-10 flex bg-white justify-between items-center md:flex-row flex-row-reverse w-full py-[10px] md:px-6 px-4 md:rounded-b-[32px] rounded-b-0">
-            <Link
-                to={link || "/"}
-                className="flex justify-center flex-1 md:justify-start"
-            >
-                <Image
-                    src={logo}
-                    alt="logo"
-                    className={cn(
-                        "sm:w-[150px] sm:h-[40px] w-[108px] h-[24px]"
-                    )}
-                />
-            </Link>
+            <div className="flex items-center gap-10">
+                {" "}
+                <Link
+                    to={link || "/"}
+                    className="flex justify-center flex-1 md:justify-start"
+                >
+                    <Image
+                        src={logo}
+                        alt="logo"
+                        className={cn(
+                            "sm:w-[150px] sm:h-[40px] w-[108px] h-[24px]"
+                        )}
+                    />
+                </Link>
+                <div className="text-lg">Блог</div>
+                <div className="text-lg">Wonder Education</div>
+            </div>
             <Link
                 to={"/"}
                 className="relative flex items-center justify-center"

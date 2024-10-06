@@ -1,7 +1,4 @@
-import {
-    kaspiWarehouseIdSchema,
-    requiredStringSchema,
-} from "@/lib/validations/shared";
+import { requiredStringSchema } from "@/lib/validations/shared";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import * as Yup from "yup";
@@ -70,7 +67,7 @@ const createStoreSellerSchema = Yup.object().shape({
         street_name: requiredStringSchema(),
         city: Yup.number().required(),
     }),
-    kaspi_warehouse_id: kaspiWarehouseIdSchema,
+    // kaspi_warehouse_id: kaspiWarehouseIdSchema,
 });
 export const useCreateStoreSeller = () => {
     const mutation = createStoreSellerMutation();
@@ -109,11 +106,11 @@ export const useActivateStoreSeller = (wonder_id: number) => {
             kaspi_warehouse_id: "",
             enabled: true,
         },
-        validationSchema: Yup.object().shape({
-            kaspi_warehouse_id: kaspiWarehouseIdSchema,
-        }),
-        validateOnBlur: true,
-        validateOnChange: true,
+        // validationSchema: Yup.object().shape({
+        //     kaspi_warehouse_id: kaspiWarehouseIdSchema,
+        // }),
+        // validateOnBlur: true,
+        // validateOnChange: true,
         onSubmit: handleSubmit,
     });
 
@@ -181,7 +178,7 @@ const updateStoreSellerSchema = Yup.object().shape({
         street_name: requiredStringSchema(),
         city: Yup.string().required(),
     }),
-    kaspi_warehouse_id: kaspiWarehouseIdSchema,
+    // kaspi_warehouse_id: kaspiWarehouseIdSchema,
 });
 export const useUpdateStoreSeller = (
     storeId: number,
