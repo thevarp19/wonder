@@ -381,3 +381,8 @@ export function orderCodeConfirm(id: string, code: string) {
         }
     );
 }
+export function assembleToPackage(id: number, code: string) {
+    return axiosAuthorized.post(
+        `/api/supplier-box-product/employee/assemble/${id}/${code}/`
+    );
+}

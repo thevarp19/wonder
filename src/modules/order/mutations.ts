@@ -3,6 +3,7 @@ import { App } from "antd";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import {
+    assembleToPackage,
     cancelOrderAdmin,
     cancelOrderProductEmployee,
     orderCodeConfirm,
@@ -144,6 +145,25 @@ export const orderCodeConfirmMutation = (orderId: string) => {
     return useMutation<void, AxiosError<any>, { code: string }>({
         async mutationFn(values: { code: string }) {
             await orderCodeConfirm(orderId, values.code);
+        },
+        onSuccess() {
+            message.success("Успешно!");
+            queryClient.invalidateQueries({
+                queryKey: [`order-detail-employee`],
+            });
+        },
+        onError(error) {
+            message.error(`${error?.response?.data.error.message}`);
+        },
+    });
+};
+
+export const assembleToPackageMutation = (productId: number) => {
+    const { message } = App.useApp();
+    const queryClient = useQueryClient();
+    return useMutation<void, AxiosError<any>, { code: string }>({
+        async mutationFn(values: { code: string }) {
+            await assembleToPackage(productId, values.code);
         },
         onSuccess() {
             message.success("Успешно!");

@@ -1,14 +1,13 @@
 import { DateCell } from "@/components/ui/DateCell";
 import {
+    assembleToPackageMutation,
     cancelOrderProductMutation,
-    orderStatusMutation,
     replacementOrderProductMutation,
 } from "@/modules/order/mutations";
 import { useGetAssembleOrderProductEmployee } from "@/modules/order/queries";
 import {
     AssembleDeliveryMode,
     GetAssembleOrderProductEmployee,
-    ProductStatusChangeRequest,
 } from "@/modules/order/types";
 import { LockOutlined, UnlockOutlined } from "@ant-design/icons";
 import { App, Button, Input, Modal, Radio, Select, Spin } from "antd";
@@ -24,7 +23,9 @@ export const EmployeeAssembleProductPage: React.FC = () => {
     const [isScanning, setIsScanning] = useState(true);
     const [isLocked, setIsLocked] = useState(true);
     const { message } = App.useApp();
-    const { mutateAsync: packageMutate } = orderStatusMutation();
+    const { mutateAsync: packageMutate } = assembleToPackageMutation(
+        assembleProduct?.id || -1
+    );
     const { data, isPending, refetch } = useGetAssembleOrderProductEmployee(
         page - 1,
         deliveryMode
@@ -41,16 +42,8 @@ export const EmployeeAssembleProductPage: React.FC = () => {
 
     const assembleProductsHandler = async () => {
         if (assembleProduct) {
-            const requests: ProductStatusChangeRequest[] = [
-                {
-                    id: assembleProduct.id,
-                    order_entry: assembleProduct.order_entry,
-                    status: "PACKAGING",
-                },
-            ];
-
             try {
-                await packageMutate(requests);
+                await packageMutate({ code: barcode });
                 message.success("Продукт успешно собран.");
                 refetch();
                 setBarcode("");
@@ -66,10 +59,7 @@ export const EmployeeAssembleProductPage: React.FC = () => {
         const handleKeyPress = (event: KeyboardEvent) => {
             if (isScanning && isLocked) {
                 if (event.key === "Enter") {
-                    if (
-                        assembleProduct &&
-                        barcode === assembleProduct.barcode
-                    ) {
+                    if (assembleProduct) {
                         assembleProductsHandler();
                     } else {
                         message.error(
@@ -111,7 +101,7 @@ export const EmployeeAssembleProductPage: React.FC = () => {
     };
 
     const handleManualSubmit = () => {
-        if (assembleProduct && barcode === assembleProduct.barcode) {
+        if (assembleProduct) {
             assembleProductsHandler();
         } else {
             message.error("Введенный QR-код не соответствует QR-коду продукта");
