@@ -30,6 +30,12 @@ export const HeaderLogo: FC<LogoProps> = ({ link }) => {
                 </Link>
                 <div className="text-lg">Блог</div>
                 <div className="text-lg">Wonder Education</div>
+                <Link
+                    to={"/calculator"}
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                >
+                    <div className="text-lg">Калькулятор</div>
+                </Link>
             </div>
             <Link
                 to={"/"}

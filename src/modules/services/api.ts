@@ -1,4 +1,4 @@
-import { axiosAuthorized } from "@/lib/axios";
+import { axios, axiosAuthorized } from "@/lib/axios";
 import {
     CalculatorRequest,
     CalculatorResponse,
@@ -27,7 +27,7 @@ export function updateServiceParams(
     );
 }
 export function calculateParams(values: CalculatorRequest[]) {
-    return axiosAuthorized.post<CalculatorResponse[]>(
+    return axios.post<CalculatorResponse[]>(
         `/api/service/calculate/v2/`,
         values
     );

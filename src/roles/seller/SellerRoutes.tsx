@@ -92,10 +92,10 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
                         path="/supply/create"
                         element={<SellerSupplyCreatePage />}
                     />
-                    <Route
+                    {/* <Route
                         path="/calculator"
                         element={<SellerCalculatorPage />}
-                    />
+                    /> */}
                     <Route path="/orders" element={<SellerOrdersPage />} />
                     <Route
                         path="/my-orders"
@@ -169,6 +169,14 @@ export const SellerRoutes: FC<SellerRoutesProps> = ({}) => {
             </Route>
             <Route path="/login" element={<SellerLoginPage />} />
             <Route path="/register" element={<SellerRegisterPage />} />
+            <Route
+                path="/calculator"
+                element={
+                    <div className="flex items-center justify-center w-screen h-screen">
+                        <SellerCalculatorPage />
+                    </div>
+                }
+            />
             <Route
                 path="/auto-upload-instruction"
                 element={
